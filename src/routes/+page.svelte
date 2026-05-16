@@ -1,3 +1,7 @@
+<script>
+  export const prerender = false;
+</script>
+
 <div class="hero">
   <video autoplay muted loop playsinline class="hero-video">
     <source src="/video/hero.mp4" type="video/mp4" />
@@ -12,6 +16,10 @@
 </div>
 
 <style>
+  :global(body) {
+    margin: 0;
+  }
+  
   .hero {
     position: relative;
     width: 100%;
