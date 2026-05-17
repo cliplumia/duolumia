@@ -1,5 +1,5 @@
-<video 
-  src="/video/hero.mp4" 
+<video
+  src="/hero.mp4" 
   autoplay 
   muted 
   loop 
