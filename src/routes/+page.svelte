@@ -1,6 +1,3 @@
-  // Rien pour l'instant
-</script>
-
 <section class="hero">
   <h1 class="logo-dore">ClipLumia</h1>
   <p class="sous-titre">Créez des vidéos et images IA d'exception sans crédits</p>
