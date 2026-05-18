@@ -1,146 +1,121 @@
-<svelte:head>
-<title>ClipLumia - Créez des vidéos et images IA sans crédits</title>
-<meta name="description" content="Générez des vidéos et images IA d'exception avec ClipLumia  Sans credit." /> 
-</svelte:head>
+  // Rien pour l'instant
+</script>
 
 <section class="hero">
-<video
-src="/hero.mp4"
-autoplay
-muted
-loop
-playsinline
-class="hero-video"
->
-</video>
-
-<div class="overlay"></div>
-
-<div class="container">
-<h1>ClipLumia</h1>
-<p class="subtitle">
-Créez des vidéos et images IA d'exception sans crédits
-</p>
-<a href="/generer" class="cta">Commencer à créer</a>
-</div>
-</section>
-
-<section class="features">
-<div class="container">
-<div class="grid">
-<div class="card">
-<h3>🚀 Illimité</h3>
-<p>Générez autant que vous voulez. Pas de crédits qui bloquent votre créativité.</p>
-</div>
-<div class="card">
-<h3>🎨 Qualité Pro</h3>
-<p>Modèles IA de dernière génération pour des rendus photo-réalistes.</p>
-</div>
-<div class="card">
-<h3>⚡ Rapide</h3>
-<p>Vos créations en quelques secondes. Pas d'attente interminable.</p>
-</div>
-</div>
-</div>
+  <h1 class="logo-dore">ClipLumia</h1>
+  <p class="sous-titre">Créez des vidéos et images IA d'exception sans crédits</p>
+ 
+  <a href="/generer" class="btn-dore">Visiter le site</a>
 </section>
 
 <style>
-.hero {
-position: relative;
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-text-align: center;
-padding: 2rem;
-overflow: hidden;
-}
-.hero-video {
-position: absolute;
-top: 50%;
-left: 50%;
-min-width: 100%;
-min-height: 100%;
-width: auto;
-height: auto;
-transform: translate(-50%, -50%);
-object-fit: cover;
-z-index: 1;
-}
-.overlay {
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background: rgba(0, 0, 0, 0.5);
-z-index: 2;
-}
-.container {
-position: relative;
-z-index: 3;
-max-width: 1200px;
-margin: 0 auto;
-}
-h1 {
-font-size: clamp(3rem, 8vw, 6rem);
-font-weight: 800;
-color: #fff;
-margin-bottom: 1.5rem;
-line-height: 1.1;
-text-shadow: 0 2px 20px rgba(0,0,0,0.5);
-}
-.subtitle {
-font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-color: #eee;
-margin-bottom: 2.5rem;
-max-width: 600px;
-margin-left: auto;
-margin-right: auto;
-text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-.cta {
-display: inline-block;
-padding: 1rem 2.5rem;
-background: linear-gradient(90deg, #ff6b6b, #feca57);
-color: #000;
-font-weight: 700;
-text-decoration: none;
-border-radius: 50px;
-transition: transform 0.2s, box-shadow 0.2s;
-}
-.cta:hover {
-transform: translateY(-2px);
-box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
-}
-.features {
-padding: 4rem 2rem;
-background: #0a0a0a;
-}
-.grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-gap: 2rem;
-}
-.card {
-background: #111;
-padding: 2rem;
-border-radius: 12px;
-border: 1px solid #222;
-}
-.card h3 {
-font-size: 1.5rem;
-margin-bottom: 1rem;
-color: #fff;
-}
-.card p {
-color: #888;
-line-height: 1.6;
-}
+  /* FOND BORDEAUX LUXE */
+  :global(body) {
+    background: #2C0B0E;
+    color: #F5F5F4;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+  }
 
-@media (max-width: 768px) {
-.hero { min-height: 80vh; padding: 3rem 1rem; }
-.features { padding: 3rem 1rem; }
-}
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+    background: radial-gradient(circle at 50% 50%, #4C1D1D, #2C0B0E);
+  }
+
+  /* LUEUR BORDEAUX */
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    background: #8B0000;
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.15;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+  }
+
+  /* TEXTE CLIPLUMIA DORÉ SCINTILLANT */
+  .logo-dore {
+    font-size: 80px;
+    font-weight: 800;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    background: linear-gradient(
+      90deg,
+      #BF953F,
+      #FCF6BA,
+      #B38728,
+      #FBF5B7,
+      #AA771C
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: scintille 3s linear infinite;
+    text-shadow: 0 0 30px rgba(191, 149, 63, 0.3);
+  }
+
+  @keyframes scintille {
+    to { background-position: 200% center; }
+  }
+
+  /* BOUTON DORÉ EN BAS */
+  .btn-dore {
+    margin-top: 60px;
+    padding: 16px 40px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(90deg, #BF953F, #AA771C);
+    color: #2C0B0E;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 20px rgba(191, 149, 63, 0.4);
+    transition: all 0.3s ease;
+  }
+
+  .btn-dore:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(191, 149, 63, 0.6);
+  }
+
+  .sous-titre {
+    font-size: 20px;
+    color: #D6D3D1;
+    margin-top: 20px;
+    z-index: 1;
+    max-width: 600px;
+  }
+
+  /* RESPONSIVE MOBILE */
+  @media (max-width: 768px) {
+    .logo-dore {
+      font-size: 48px;
+    }
+    .sous-titre {
+      font-size: 16px;
+    }
+    .btn-dore {
+      padding: 14px 32px;
+      font-size: 16px;
+    }
+  }
 </style> 
-
