@@ -1,18 +1,21 @@
 <script>
 import { page } from '$app/stores';
-import { onMount } from 'svelte';
 
 let menuOpen = false;
 
 function toggleMenu() {
 menuOpen = !menuOpen;
 }
+
+function closeMenu() {
+menuOpen = false;
+}
 </script>
 
 <header>
 <nav>
 <div class="logo">
-<a href="/">ClipLumia</a>
+<a href="/" on:click={closeMenu}>ClipLumia</a>
 </div>
 
 <button class="burger" on:click={toggleMenu} aria-label="Menu">
@@ -23,13 +26,13 @@ menuOpen = !menuOpen;
 
 <ul class:open={menuOpen}>
 <li class:active={$page.url.pathname === '/'}>
-<a href="/" on:click={() => menuOpen = false}>Accueil</a>
+<a href="/" on:click={closeMenu}>Accueil</a>
 </li>
 <li class:active={$page.url.pathname === '/generer'}>
-<a href="/generer" on:click={() => menuOpen = false}>Générer</a>
+<a href="/generer" on:click={closeMenu}>Générer</a>
 </li>
 <li class:active={$page.url.pathname === '/tarifs'}>
-<a href="/tarifs" on:click={() => menuOpen = false}>Tarifs</a>
+<a href="/tarifs" on:click={closeMenu}>Tarifs</a>
 </li>
 </ul>
 </nav>
@@ -37,9 +40,15 @@ menuOpen = !menuOpen;
 
 <style>
 header {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
 padding: 1rem 2rem;
-background: #0a0a0a;
+background: rgba(10, 10, 10, 0.8);
+backdrop-filter: blur(10px);
 border-bottom: 1px solid #222;
+z-index: 100;
 }
 nav {
 display: flex;
@@ -77,25 +86,28 @@ gap: 4px;
 background: none;
 border: none;
 cursor: pointer;
+padding: 0.5rem;
 }
 .burger span {
 width: 25px;
 height: 2px;
 background: #fff;
+transition: 0.3s;
 }
 
 @media (max-width: 768px) {
 .burger { display: flex; }
 ul {
 display: none;
-position: absolute;
-top: 70px;
+position: fixed;
+top: 65px;
 left: 0;
 right: 0;
-background: #0a0a0a;
+background: rgba(10, 10, 10, 0.98);
+backdrop-filter: blur(10px);
 flex-direction: column;
-padding: 1rem 2rem;
-gap: 1rem;
+padding: 2rem;
+gap: 1.5rem;
 border-bottom: 1px solid #222;
 }
 ul.open { display: flex; }
