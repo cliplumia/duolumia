@@ -1,6 +1,6 @@
 <svelte:head>
 <title>ClipLumia - Créez des vidéos et images IA sans crédits</title>
-<meta name="description" content="Générez des vidéos et images IA d'exception avec ClipLumia.Sans credit." /> 
+<meta name="description" content="Générez des vidéos et images IA d'exception avec ClipLumia  Sans credit." /> 
 </svelte:head>
 
 <section class="hero">
