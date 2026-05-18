@@ -1,0 +1,3 @@
+[build]
+  command = "npx svelte-kit sync && npm run build"
+  publish = "build" 
