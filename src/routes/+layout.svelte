@@ -1,12 +1,7 @@
 <script>
- import '@fontsource/fira-mono/index.css';
-	
-
-</script>
-
 <Header />
 	<slot />
-</main>
+
 
 <footer>
 	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
