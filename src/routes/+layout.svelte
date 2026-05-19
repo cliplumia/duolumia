@@ -8,7 +8,7 @@
 
 <footer>
   <p>© 2026 <span class="gold-shine">ClipLumia</span>. Tous droits réservés.</p>
-  <a href="/contact">Contact</a>
+  <a href="malto:contact.cliplumia@gmail.com">Contact</a>
 </footer>
 
 <style>
