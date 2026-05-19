@@ -1,14 +1,10 @@
 <script>
-	import Header from '$lib/header/Header.svelte';
  import '@fontsource/fira-mono/index.css';
-	import '../app.css';
-
+	
 
 </script>
 
 <Header />
-
-<main>
 	<slot />
 </main>
 
