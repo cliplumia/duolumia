@@ -1,5 +1,6 @@
-</script>
+<script>
 
+</script>
 <svelte:head>
   <title>ClipLumia - Générateur Vidéo & Image IA</title>
   <meta name="description" content="Créez des vidéos IA avec MiniMax, Luma IA, Gemini. Vous ne payez que ce que vous validez.">
