@@ -45,7 +45,6 @@
 <style>
   :global(body) {
     margin: 0;
-    /* VIOLET SOIE FORCÉ - 12 BANDES VISIBLES */
     background: 
       repeating-linear-gradient(
         180deg,
@@ -72,27 +71,11 @@
     scroll-behavior: smooth;
   }
 
-  /* ANIMATION VISIBLE DES VAGUES */
   @keyframes silk-wave {
     0%, 100% { background-position: 0% 0%; }
     50% { background-position: 0% 140px; }
   }
 
-  /* GRAIN TISSU POUR EFFET SOIE */
-  :global(body::before) {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.4;
-  }
-
-  /* HALO CENTRAL VIOLET */
   :global(body::after) {
     content: '';
     position: fixed;
@@ -140,21 +123,10 @@
     font-size: clamp(4rem, 14vw, 9rem);
     font-weight: 900;
     margin: 0 0 2rem 0;
-    /* OR BLANC PUR - 0 JAUNE */
     background: linear-gradient(
       105deg, 
-      #6B5B47 0%,
-      #C9A961 8%,
-      #F7E7A1 16%,
-      #FFFFFF 24%,
-      #F7E7A1 32%,
-      #E6C76B 40%,
-      #FFFFFF 48%,
-      #E6C76B 56%,
-      #F7E7A1 64%,
-      #FFFFFF 72%,
-      #C9A961 80%,
-      #6B5B47 100%
+      #6B5B47 0%, #C9A961 8%, #F7E7A1 16%, #FFFFFF 24%, #F7E7A1 32%, #E6C76B 40%, 
+      #FFFFFF 48%, #E6C76B 56%, #F7E7A1 64%, #FFFFFF 72%, #C9A961 80%, #6B5B47 100%
     );
     background-size: 300% auto;
     -webkit-background-clip: text;
@@ -229,37 +201,50 @@
   }
 
   .form-box {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 2rem;
-    max-width: 700px;
-    width: 100%;
-    backdrop-filter: blur(20px);
-  }
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 700px;
+  width: 100%;
+  backdrop-filter: blur(20px);
+}
 
-  textarea {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1rem;
-    color: white;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    resize: vertical;
-    margin-bottom: 1.5rem;
-  }
+textarea {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  resize: vertical;
+  margin-bottom: 1.5rem;
+}
 
-  .bouton-generate {
-    width: 100%;
-    background: linear-gradient(135deg, #F7E7A1 0%, #E6C76B 100%);
-    color: #0A0512;
-    font-weight: 700;
-    font-size: 1.1rem;
-    padding: 1.2rem;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-  }
+textarea::placeholder {
+  color: #64748B;
+}
+
+.bouton-generate {
+  width: 100%;
+  background: linear-gradient(135deg, #F7E7A1 0%, #E6C76B 100%);
+  color: #0A0512;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 1.2rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 30px rgba(230, 199, 107, 0.4);
+}
+
+.bouton-generate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(230, 199, 107, 0.6);
+}
 </style>
+
+  
