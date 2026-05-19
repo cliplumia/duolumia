@@ -1,5 +1,6 @@
 <script>
   // Logique du site viendra après
+  let prompt = "";
 </script>
 
 <svelte:head>
@@ -8,7 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </svelte:head>
 
-<main>
+<!-- SECTION 1 : HERO -->
+<section class="hero">
   <div class="badge">
     💎 Vous ne payez que ce que vous validez 💰
   </div>
@@ -33,7 +35,23 @@
   <p class="trust">
     🔓 Qualité HD • Sans engagement
   </p>
-</main>
+</section>
+
+<!-- SECTION 2 : GÉNÉRATEUR - MAINTENANT ELLE EXISTE -->
+<section id="generateur" class="generateur">
+  <h3>Décrivez votre idée</h3>
+  <div class="form-box">
+    <textarea 
+      bind:value={prompt} 
+      placeholder="Un astronaute qui danse sur la lune, style cinématographique..."
+      rows="4"
+    ></textarea>
+    <button class="bouton-generate">
+      Générer la vidéo →
+    </button>
+  </div>
+  <p class="note">Génération gratuite. Vous validez avant de payer.</p>
+</section>
 
 <style>
   :global(body) {
@@ -77,7 +95,7 @@
     z-index: 0;
   }
 
-  main {
+  section {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -125,18 +143,18 @@
     margin: 0 0 2rem 0;
     background: linear-gradient(
       105deg, 
-      #6B5B47 0%,      /* Bronze sombre */
-      #C9A961 10%,     /* Or rose */
-      #F7E7A1 20%,     /* Or champagne */
-      #FFFFFF 30%,     /* BLANC PUR */
-      #F7E7A1 40%,     /* Or champagne */
-      #E6C76B 50%,     /* Or classique */
-      #FFFFFF 60%,     /* BLANC PUR */
-      #E6C76B 70%,     /* Or classique */
-      #F7E7A1 80%,     /* Or champagne */
-      #FFFFFF 90%,     /* BLANC PUR */
-      #C9A961 95%,     /* Or rose */
-      #6B5B47 100%     /* Bronze sombre */
+      #6B5B47 0%,
+      #C9A961 10%,
+      #F7E7A1 20%,
+      #FFFFFF 30%,
+      #F7E7A1 40%,
+      #E6C76B 50%,
+      #FFFFFF 60%,
+      #E6C76B 70%,
+      #F7E7A1 80%,
+      #FFFFFF 90%,
+      #C9A961 95%,
+      #6B5B47 100%
     );
     background-size: 300% auto;
     -webkit-background-clip: text;
@@ -204,5 +222,70 @@
     font-size: 0.8rem;
     font-weight: 400;
     letter-spacing: 0.03em;
+  }
+
+  /* SECTION GÉNÉRATEUR */
+  .generateur {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(40px);
+  }
+
+  .generateur h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #F1F5F9;
+  }
+
+  .form-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 700px;
+    width: 100%;
+    backdrop-filter: blur(20px);
+  }
+
+  textarea {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: 1.5rem;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: rgba(247, 231, 161, 0.5);
+  }
+
+  .bouton-generate {
+    width: 100%;
+    background: linear-gradient(135deg, #F7E7A1 0%, #E6C76B 100%);
+    color: #0A0512;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 1.2rem;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .bouton-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(230, 199, 107, 0.5);
+  }
+
+  .note {
+    margin-top: 1.5rem;
+    color: #8B8BA7;
+    font-size: 0.85rem;
   }
 </style>
