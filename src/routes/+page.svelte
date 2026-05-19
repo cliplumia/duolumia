@@ -1,4 +1,6 @@
- import { onMount } from 'svelte';
+<script>
+import { onMount } from 'svelte';
+
   let canvas;
   
   onMount(() => {
