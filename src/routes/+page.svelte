@@ -1,217 +1,137 @@
-<script>
-import { onMount } from 'svelte';
-
-  let canvas;
-  
-  onMount(() => {
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    const particles = [];
-    for (let i = 0; i < 350; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 3,
-        speedX: Math.random() * 0.15 - 0.075,
-        speedY: Math.random() * 0.15 - 0.075,
-        opacity: Math.random() * 1 + 0.2,
-        twinkle: Math.random() * 0.03
-      });
-    }
-    
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.opacity += p.twinkle;
-        if (p.opacity > 1 || p.opacity < 0.2) p.twinkle *= -1;
-        
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 215, 0, ${p.opacity})`;
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = 'rgba(255, 215, 0, 0.8)';
-        ctx.fill();
-        ctx.shadowBlur = 0;
-        
-        p.x += p.speedX;
-        p.y += p.speedY;
-        if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
-    
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-  });
 </script>
 
-<canvas bind:this={canvas}></canvas>
+<svelte:head>
+  <title>ClipLumia - Générateur Vidéo & Image IA</title>
+  <meta name="description" content="Créez des vidéos IA avec MiniMax, Luma IA, Gemini. Vous ne payez que ce que vous validez.">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</svelte:head>
 
-<div class="page">
-  <div class="logo-wrap">
-    <div class="anneau-ellipse"></div>
-    <h1 class="logo-or">ClipLumia</h1>
+<main>
+  <!-- Badge -->
+  <div class="badge">
+    💎 Vous ne payez que ce que vous validez
   </div>
-  <p class="slogan">"Créez des vidéos et images IA d'exception sans crédits"</p>
-  <a href="/generer" class="btn-or">Visiter le site</a>
-</div>
+
+  <!-- Logo OR brillant ET scintillant -->
+  <h1 class="logo">
+    ClipLumia
+  </h1>
+
+  <!-- Titre -->
+  <h2 class="titre">
+    Générez des vidéos et images IA. <br/> Si elle vous plaît pas, elle compte pas.
+  </h2>
+
+  <p class="sous-titre">
+    Forfaits mensuels sans système de crédits. <br/>
+    Propulsé par MiniMax, Gemini, Luma IA et la synthèse vocale.
+  </p>
+
+  <!-- Bouton -->
+  <a href="/generer" class="bouton">
+    Essayer sans risque →
+  </a>
+
+  <p class="trust">
+    🔓 Aucun crédit perdu sur les ratés • Qualité HD
+  </p>
+</main>
 
 <style>
   :global(body) {
     margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background: #0A0515;
-  }
-
-  canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-  }
-
-  .page {
-    position: relative;
-    z-index: 2;
+    background: #000000;
+    background-image: 
+      radial-gradient(ellipse at top, #1a0b2e 0%, transparent 50%),
+      radial-gradient(ellipse at bottom, #2d1b4e 0%, #000000 50%),
+      linear-gradient(180deg, #000000 0%, #120821 50%, #000000 100%);
     min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    background: 
-      radial-gradient(ellipse 200% 60% at 50% 0%, rgba(200, 70, 110, 0.3) 0%, transparent 60%),
-      radial-gradient(ellipse 100% 100% at 50% 50%, rgba(100, 25, 130, 0.25) 0%, transparent 70%),
-      linear-gradient(180deg, #1F0A2E 0%, #140A1F 50%, #0A0515 100%);
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 2rem;
+    color: white;
   }
 
-  .logo-wrap {
-    position: relative;
-    margin-bottom: 50px;
+  .badge {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #FFD700;
+    padding: 0.5rem 1.5rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
   }
 
-  .anneau-ellipse {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-10deg);
-    width: 850px;
-    height: 110px;
-    background: conic-gradient(
-      from 0deg,
-      transparent 0deg,
-      rgba(255, 215, 0, 0.4) 30deg,
-      rgba(255, 223, 100, 1) 70deg,
-      rgba(255, 240, 160, 1) 90deg,
-      rgba(255, 223, 100, 1) 110deg,
-      rgba(255, 215, 0, 0.4) 150deg,
-      transparent 180deg,
-      transparent 360deg
-    );
-    filter: blur(25px);
-    border-radius: 50%;
-    animation: rotation-anneau 6s linear infinite;
-  }
-
-  @keyframes rotation-anneau {
-    from { transform: translate(-50%, -50%) rotate(-10deg); }
-    to { transform: translate(-50%, -50%) rotate(350deg); }
-  }
-
-  .logo-or {
-    position: relative;
-    z-index: 3;
-    font-size: 120px;
-    font-family: 'Georgia', serif;
-    font-weight: 400;
-    margin: 0;
-    letter-spacing: 10px;
-    background: linear-gradient(
-      105deg,
-      #5C4A00 0%,
-      #8B6914 10%,
-      #C9A227 20%,
-      #FFD700 30%,
-      #FFE55C 45%,
-      #FFFACD 50%,
-      #FFE55C 55%,
-      #FFD700 70%,
-      #C9A227 80%,
-      #8B6914 90%,
-      #5C4A00 100%
-    );
-    background-size: 250% auto;
-    background-clip: text;
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 900;
+    margin: 0 0 1.5rem 0;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #FFD700 50%, #FFED4E 75%, #FFD700 100%);
+    background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: or-brillant 2.5s linear infinite;
-    filter: drop-shadow(0 0 100px rgba(255, 215, 0, 1)) 
-            drop-shadow(0 0 200px rgba(255, 200, 100, 0.9))
-            drop-shadow(0 5px 40px rgba(0, 0, 0, 0.8));
+    background-clip: text;
+    animation: brillance 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
   }
 
-  @keyframes or-brillant {
-    0% { background-position: 0% center; }
-    100% { background-position: 250% center; }
+  @keyframes brillance {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
-  .slogan {
-    font-size: 30px;
-    color: #FFFAF0;
-    font-family: 'Georgia', serif;
-    font-weight: 300;
-    margin: 50px 0 0 0;
-    max-width: 950px;
-    line-height: 2;
-    text-shadow: 0 5px 40px rgba(0, 0, 0, 1);
-    text-align: center;
+  .titre {
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 0 1rem 0;
+    color: #FFFFFF;
+    max-width: 900px;
   }
 
-  .btn-or {
-    position: fixed;
-    bottom: 85px;
-    right: 85px;
-    padding: 20px 70px;
-    font-size: 24px;
-    font-family: 'Georgia', serif;
-    font-weight: 400;
-    border: 4px solid #FFD700;
-    border-radius: 60px;
-    background: linear-gradient(180deg, #FFE55C 0%, #FFD700 50%, #C9A227 100%);
-    color: #1A0F00;
+  .sous-titre {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: #B8B8D1;
+    line-height: 1.6;
+    margin: 0 0 2.5rem 0;
+    max-width: 600px;
+  }
+
+  .bouton {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #000000;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
     text-decoration: none;
-    z-index: 10;
-    box-shadow: 0 0 80px rgba(255, 215, 0, 1), 
-                0 0 160px rgba(255, 200, 100, 0.8),
-                inset 0 4px 0 rgba(255, 255, 255, 1),
-                inset 0 -4px 0 rgba(0, 0, 0, 0.4);
+    display: inline-block;
     transition: all 0.3s ease;
-    animation: glow-bouton 2s ease-in-out infinite;
+    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+    border: none;
+    cursor: pointer;
   }
 
-  @keyframes glow-bouton {
-    0%, 100% { box-shadow: 0 0 80px rgba(255, 215, 0, 1), 0 0 160px rgba(255, 200, 100, 0.8), inset 0 4px 0 rgba(255, 255, 255, 1), inset 0 -4px 0 rgba(0, 0, 0, 0.4); }
-    50% { box-shadow: 0 0 120px rgba(255, 215, 0, 1), 0 0 220px rgba(255, 200, 100, 1), inset 0 4px 0 rgba(255, 255, 255, 1), inset 0 -4px 0 rgba(0, 0, 0, 0.5); }
+  .bouton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 50px rgba(255, 215, 0, 0.6);
   }
 
-  .btn-or:hover {
-    transform: translateY(-8px) scale(1.08);
-  }
-
-  @media (max-width: 768px) {
-    .logo-or { font-size: 75px; letter-spacing: 5px; }
-    .anneau-ellipse { width: 500px; height: 80px; }
-    .slogan { font-size: 24px; padding: 0 35px; }
-    .btn-or { bottom: 55px; right: 35px; padding: 18px 60px; font-size: 22px; }
+  .trust {
+    margin-top: 1.5rem;
+    color: #8B8BA7;
+    font-size: 0.9rem;
   }
 </style>
-
