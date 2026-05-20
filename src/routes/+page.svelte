@@ -43,13 +43,15 @@
   .hero {
     height: 100vh;
     width: 100vw;
-    position: relative;
+    margin-left: calc(50% - 50vw);
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     background: radial-gradient(circle at center, #3a2a5c 0%, #2a1f4a 40%, #1a0f2e 70%, #0a0419 90%);
     overflow: hidden;
+    padding: 0 2rem;
+    box-sizing: border-box;
   }
 
   .content {
@@ -61,13 +63,31 @@
     font-family: 'Playfair Display', serif;
     font-size: 8rem;
     font-weight: 900;
-    color: #f0d090;
-    text-shadow: 
-      0 0 50px #f0c060,
-      0 0 90px #f0c060,
-      0 0 140px #ffaa00;
+    background: linear-gradient(
+      90deg,
+      #f0d090 0%,
+      #f0d090 35%,
+      #fffbe6 50%,
+      #f0d090 65%,
+      #f0d090 100%
+    );
+    background-size: 250% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 50px #f0c060) drop-shadow(0 0 90px rgba(240, 192, 96, 0.5));
     margin: 0 0 1.5rem 0;
     letter-spacing: -3px;
+    animation: shimmer 5s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% {
+      background-position: 100% center;
+    }
+    50% {
+      background-position: 0% center;
+    }
   }
 
   .subtitle {
