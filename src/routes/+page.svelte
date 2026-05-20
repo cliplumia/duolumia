@@ -7,7 +7,7 @@
 
 <svelte:head>
   <title>ClipLumia - Générez des vidéos et images IA</title>
-  <meta name="description" content="Parfait mensuel sans système de crédits. Propulsé par Midjourney, Gemini, Luma IA et la synthèse vocale." />
+  <meta name="description" content="Forfait mensuel sans crédits. Propulsé par Minimax , Gemini, Luma IA et la synthèse vocale." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
 <main class="hero">
   <div class="hero-content">
     <div class="badge">
-      ✨ Vous ne payez que pour vos vidéos ✨
+      💰​ Vous ne payez que ce que vous validez 🔥​ 
     </div>
     
     <h1 class="logo">ClipLumia</h1>
@@ -24,14 +24,16 @@
     <h2 class="subtitle">Générez des vidéos et images IA</h2>
     
     <p class="description">
-      Forfait mensuel sans système de crédits.<br>
-      Propulsé par MidJourney, Gemini, Luma IA et la synthèse vocale.
+      Forfait mensuel sans système de crédits 💥 <br>
+      Propulsé par MidJourney, Gemini, Luma IA et la synthèse vocale 💯
     </p>
-    
+
+
+
     <div class="form-box">
       <textarea 
         rows="4" 
-        placeholder="Décris ta vidéo ou image... Ex: Un chat astronaute dans l'espace, style cinématique 4K"
+        placeholder="Décris ta vidéo ou image... Ex: Un chat astronaute dans l'espace, style cinématique HD "
       ></textarea>
       
       <button class="bouton-generate">
@@ -46,51 +48,14 @@
 <style>
   :global(body) {
     margin: 0;
-    /* VIOLET SATIN ONDULÉ - SANS LIGNES */
+    /* VIOLET PROFOND + GLOW COMME TA VIDÉO */
     background: 
-      radial-gradient(ellipse 80% 50% at 20% 40%, rgba(139, 92, 246, 0.4) 0%, transparent 50%),
-      radial-gradient(ellipse 60% 50% at 80% 60%, rgba(124, 58, 237, 0.35) 0%, transparent 50%),
-      radial-gradient(ellipse 100% 80% at 50% 50%, rgba(91, 33, 182, 0.3) 0%, transparent 70%),
-      linear-gradient(180deg, #0A0512 0%, #1A0B2E 25%, #2D1B4E 50%, #1A0B2E 75%, #0A0512 100%);
-    background-size: 200% 200%, 180% 180%, 150% 150%, 100% 100%;
-    background-position: 0% 0%, 100% 100%, 50% 50%, 0% 0%;
-    animation: satin-flow 15s ease-in-out infinite alternate;
+      radial-gradient(ellipse 100% 60% at 50% 35%, rgba(139, 92, 246, 0.6) 0%, transparent 50%),
+      linear-gradient(180deg, #0A0512 0%, #1A0B2E 40%, #0A0512 100%);
     min-height: 100vh;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
     scroll-behavior: smooth;
-  }
-
-  @keyframes satin-flow {
-    0% { background-position: 0% 0%, 100% 100%, 50% 50%, 0% 0%; }
-    50% { background-position: 100% 50%, 0% 50%, 80% 20%, 0% 0%; }
-    100% { background-position: 50% 100%, 50% 0%, 20% 80%, 0% 0%; }
-  }
-
-  /* REFLET SATIN QUI BOUGE */
-  :global(body::before) {
-    content: '';
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      45deg,
-      transparent 30%,
-      rgba(255, 255, 255, 0.03) 40%,
-      rgba(255, 255, 255, 0.08) 50%,
-      rgba(255, 255, 255, 0.03) 60%,
-      transparent 70%
-    );
-    animation: satin-shine 8s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  @keyframes satin-shine {
-    0%, 100% { transform: translate(-30%, -30%) rotate(0deg); }
-    50% { transform: translate(30%, 30%) rotate(180deg); }
   }
 
   .hero {
@@ -146,9 +111,9 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: shimmer 8s ease-in-out infinite;
-    /* GLOW BRONZE SOURD */
-    filter: drop-shadow(0 0 25px rgba(168, 120, 60, 0.4)) 
-            drop-shadow(0 3px 15px rgba(139, 115, 85, 0.3));
+    /* GLOW BRONZE + GLOW VIOLET COMME TA VIDÉO */
+    filter: drop-shadow(0 0 60px rgba(139, 92, 246, 0.8))
+            drop-shadow(0 0 30px rgba(168, 120, 60, 0.5));
     letter-spacing: -0.03em;
     line-height: 1;
   }
@@ -164,6 +129,7 @@
     color: #E6E1FF;
     margin: 0;
     line-height: 1.2;
+    text-shadow: 0 2px 20px rgba(230, 225, 255, 0.3);
   }
 
   .description {
@@ -218,6 +184,7 @@
   .bouton-generate:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 40px rgba(230, 199, 107, 0.6);
+
   }
 
   .note {
@@ -226,5 +193,3 @@
     margin: 1rem 0 0 0;
   }
 </style>
-
-  
