@@ -2,13 +2,13 @@
 </script>
 
 <svelte:head>
-  <title>ClipLumia - Vidéos & Images IA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400&display=swap" rel="stylesheet">
+  <title>ClipLumia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 </svelte:head>
 
 <main>
-  <!-- HERO -->
   <section class="hero">
+    <div class="background"></div>
     <div class="particles"></div>
     
     <div class="content">
@@ -16,33 +16,7 @@
         <span class="ring"></span>
         <span class="text">ClipLumia</span>
       </h1>
-      
-      <p class="subtitle">
-        "Créez des vidéos et images IA d'exception<br>sans crédits💰 "
-      </p>
-      
-      <div class="cta-buttons">
-        <a href="#galerie" class="btn primary">Découvrir les créations</a>
-        <a href="#contact" class="btn secondary">Essayer gratuitement</a>
-      </div>
-    </div>
-
-    <div class="scroll-indicator">↓</div>
-  </section>
-
-  <!-- Galerie -->
-  <section id="galerie" class="section">
-    <h2>Galerie</h2>
-    <p>Nos plus belles créations IA arriveront bientôt...</p>
-  </section>
-
-  <!-- Contact -->
-  <section id="contact" class="section">
-    <h2>Contactez-nous</h2>
-    <p>Vous avez un projet ou des questions ?</p>
-    
-    <div class="contact-info">
-      <p><strong>Email :</strong> <a href="mailto:contact.cliplumia@gmail.com">contact.cliplumia@gmail.com</a></p>
+      <p class="subtitle">"Créez des vidéos et images IA d'exception<br>sans crédits ✨"</p>
     </div>
   </section>
 </main>
@@ -51,67 +25,55 @@
   :global(body) {
     margin: 0;
     padding: 0;
-    background: #0a0618;
-    color: white;
-    font-family: 'Inter', sans-serif;
+    overflow: hidden;
   }
 
   .hero {
     height: 100vh;
-    min-height: 650px;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #0c051f;
     overflow: hidden;
-    background: radial-gradient(circle at center, #2a1b4a 0%, #0a0618 70%);
+  }
+
+  .background {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, #3a1f5c 0%, #0c051f 60%);
   }
 
   .particles {
     position: absolute;
     inset: 0;
-    pointer-events: none;
+    background: 
+      radial-gradient(circle, rgba(255,255,255,0.9) 0.8px, transparent 1px),
+      radial-gradient(circle, rgba(255,215,0,0.6) 1px, transparent 1px);
+    background-size: 90px 90px, 140px 140px;
+    opacity: 0.35;
+    animation: stars 25s linear infinite;
   }
 
-  .particles::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: 
-      radial-gradient(circle, #fff 1px, transparent 1px),
-      radial-gradient(circle, #fff 1px, transparent 1px);
-    background-position: 0 0, 40px 60px;
-    background-size: 80px 80px;
-    opacity: 0.25;
-    animation: twinkle 8s infinite alternate;
-  }
-
-  .particles::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, #f8d47c 1.5px, transparent 1.5px);
-    background-size: 120px 120px;
-    opacity: 0.15;
-    animation: drift 35s linear infinite;
-  }
-
-  .content { 
-    position: relative; 
-    z-index: 2; 
-    text-align: center; 
-    max-width: 900px; 
-    padding: 0 20px; 
+  .content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
   }
 
   .logo {
     position: relative;
-    font-size: 7rem;
-    font-weight: 900;
     font-family: 'Playfair Display', serif;
-    margin: 0 0 1.5rem 0;
-    color: #f8d47c;
-    text-shadow: 0 0 30px #f8d47c, 0 0 60px #f8d47c, 0 0 100px #d4a017;
+    font-size: 9rem;
+    font-weight: 900;
+    color: #f8e8b0;
+    text-shadow: 
+      0 0 40px #f8d47c,
+      0 0 80px #f8d47c,
+      0 0 120px #ffaa00,
+      0 0 160px #ff8800;
+    margin: 0;
+    letter-spacing: -2px;
   }
 
   .ring {
@@ -119,92 +81,35 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 560px;
-    height: 160px;
-    border: 4px solid transparent;
-    border-top-color: #f8d47c;
+    width: 680px;
+    height: 190px;
+    border: 6px solid transparent;
+    border-top-color: #ffd700;
     border-radius: 50%;
-    box-shadow: 0 0 80px #f8d47c;
-    animation: orbit 18s linear infinite;
-    opacity: 0.75;
+    box-shadow: 0 0 90px #ffd700, 0 0 140px #ffaa00;
+    animation: orbit 10s linear infinite;
+    opacity: 0.9;
   }
 
-  .subtitle { 
-    font-size: 1.5rem; 
-    margin-bottom: 3rem; 
-    line-height: 1.4; 
+  .subtitle {
+    font-size: 1.45rem;
+    margin-top: 2rem;
+    color: #e0d0ff;
+    text-shadow: 0 0 20px rgba(255,255,255,0.3);
   }
 
-  .cta-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    padding: 16px 40px;
-    font-size: 1.15rem;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: 0.3s;
-  }
-
-  .primary {
-    background: linear-gradient(45deg, #f8d47c, #e8b53a);
-    color: #0a0618;
-    font-weight: bold;
-  }
-
-  .secondary {
-    border: 2px solid #f8d47c;
-    color: #f8d47c;
-  }
-
-  .scroll-indicator {
-    position: absolute;
-    bottom: 50px;
-    font-size: 2.2rem;
-    animation: bounce 2s infinite;
-  }
-
-  .section {
-    padding: 120px 20px;
-    text-align: center;
-  }
-
-  .contact-info {
-    margin-top: 30px;
-    font-size: 1.3rem;
-  }
-
-  .contact-info a {
-    color: #f8d47c;
-  }
-
-  /* Animations */
   @keyframes orbit {
     from { transform: translate(-50%, -50%) rotate(0deg); }
     to { transform: translate(-50%, -50%) rotate(360deg); }
   }
 
-  @keyframes twinkle {
-    0% { opacity: 0.2; }
-    100% { opacity: 0.4; }
-  }
-
-  @keyframes drift {
-    from { background-position: 0 0; }
-    to { background-position: 200px 150px; }
-  }
-
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(20px); }
+  @keyframes stars {
+    from { background-position: 0 0, 0 0; }
+    to { background-position: 200px 300px, -150px -200px; }
   }
 
   @media (max-width: 768px) {
-    .logo { font-size: 4.8rem; }
-    .ring { width: 360px; height: 110px; }
+    .logo { font-size: 5.5rem; }
+    .ring { width: 420px; height: 120px; }
   }
 </style>
