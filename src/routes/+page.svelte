@@ -1,13 +1,13 @@
 <script lang="ts">
-  // Tu peux mettre du JavaScript ici plus tard
 </script>
 
 <svelte:head>
-  <title>ClipLumia</title>
+  <title>ClipLumia - Vidéos & Images IA</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400&display=swap" rel="stylesheet">
 </svelte:head>
 
 <main>
+  <!-- HERO -->
   <section class="hero">
     <div class="particles"></div>
     
@@ -18,7 +18,7 @@
       </h1>
       
       <p class="subtitle">
-        "Créez des vidéos et images IA d'exception<br>sans crédits 💰"
+        "Créez des vidéos et images IA d'exception<br>sans crédits💰 "
       </p>
       
       <div class="cta-buttons">
@@ -28,6 +28,22 @@
     </div>
 
     <div class="scroll-indicator">↓</div>
+  </section>
+
+  <!-- Galerie -->
+  <section id="galerie" class="section">
+    <h2>Galerie</h2>
+    <p>Nos plus belles créations IA arriveront bientôt...</p>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <h2>Contactez-nous</h2>
+    <p>Vous avez un projet ou des questions ?</p>
+    
+    <div class="contact-info">
+      <p><strong>Email :</strong> <a href="mailto:contact.cliplumia@gmail.com">contact.cliplumia@gmail.com</a></p>
+    </div>
   </section>
 </main>
 
@@ -54,7 +70,6 @@
   .particles {
     position: absolute;
     inset: 0;
-    background: transparent;
     pointer-events: none;
   }
 
@@ -62,18 +77,31 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px);
-    background-size: 70px 70px;
-    opacity: 0.2;
-    animation: twinkle 10s infinite;
+    background-image: 
+      radial-gradient(circle, #fff 1px, transparent 1px),
+      radial-gradient(circle, #fff 1px, transparent 1px);
+    background-position: 0 0, 40px 60px;
+    background-size: 80px 80px;
+    opacity: 0.25;
+    animation: twinkle 8s infinite alternate;
   }
 
-  .content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    max-width: 900px;
-    padding: 0 20px;
+  .particles::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, #f8d47c 1.5px, transparent 1.5px);
+    background-size: 120px 120px;
+    opacity: 0.15;
+    animation: drift 35s linear infinite;
+  }
+
+  .content { 
+    position: relative; 
+    z-index: 2; 
+    text-align: center; 
+    max-width: 900px; 
+    padding: 0 20px; 
   }
 
   .logo {
@@ -83,10 +111,7 @@
     font-family: 'Playfair Display', serif;
     margin: 0 0 1.5rem 0;
     color: #f8d47c;
-    text-shadow: 
-      0 0 30px #f8d47c,
-      0 0 60px #f8d47c,
-      0 0 100px #d4a017;
+    text-shadow: 0 0 30px #f8d47c, 0 0 60px #f8d47c, 0 0 100px #d4a017;
   }
 
   .ring {
@@ -100,14 +125,14 @@
     border-top-color: #f8d47c;
     border-radius: 50%;
     box-shadow: 0 0 80px #f8d47c;
-    animation: orbit 15s linear infinite;
+    animation: orbit 18s linear infinite;
     opacity: 0.75;
   }
 
-  .subtitle {
-    font-size: 1.5rem;
-    margin-bottom: 3rem;
-    line-height: 1.4;
+  .subtitle { 
+    font-size: 1.5rem; 
+    margin-bottom: 3rem; 
+    line-height: 1.4; 
   }
 
   .cta-buttons {
@@ -143,14 +168,34 @@
     animation: bounce 2s infinite;
   }
 
+  .section {
+    padding: 120px 20px;
+    text-align: center;
+  }
+
+  .contact-info {
+    margin-top: 30px;
+    font-size: 1.3rem;
+  }
+
+  .contact-info a {
+    color: #f8d47c;
+  }
+
+  /* Animations */
   @keyframes orbit {
     from { transform: translate(-50%, -50%) rotate(0deg); }
     to { transform: translate(-50%, -50%) rotate(360deg); }
   }
 
   @keyframes twinkle {
-    0%, 100% { opacity: 0.15; }
-    50% { opacity: 0.35; }
+    0% { opacity: 0.2; }
+    100% { opacity: 0.4; }
+  }
+
+  @keyframes drift {
+    from { background-position: 0 0; }
+    to { background-position: 200px 150px; }
   }
 
   @keyframes bounce {
