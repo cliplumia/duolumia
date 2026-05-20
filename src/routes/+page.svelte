@@ -64,14 +64,19 @@
     animation: drift 40s linear infinite;
   }
 
-  .logo {
+ .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 7.5rem;
+    font-size: 8rem;
     font-weight: 900;
     color: #f0d090;
-    text-shadow: 0 0 50px #f0c060, 0 0 90px #e8a030;
+    text-shadow: 
+      0 0 40px #f0c060,
+      0 0 80px #f0c060,
+      0 0 120px #ffaa00,
+      0 0 160px #ff8800;
     margin: 0 0 1.5rem 0;
-  }
+    letter-spacing: -2px;
+}
 
   .subtitle {
     font-size: 1.5rem;
