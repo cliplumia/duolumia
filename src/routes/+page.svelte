@@ -1,5 +1,5 @@
 <svelte:head>
-  <title>ClipLumia - Forfait simple. Zéro arnaque.</title>
+  <title>ClipLumia - Forfait simple. Zéro arnaque.💯</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
 </svelte:head>
@@ -9,11 +9,11 @@
   <section class="hero">
     <div class="content">
       <h1 class="logo">ClipLumia</h1>
-      <p class="subtitle">Forfait simple. <span>Zéro arnaque.</span></p>
+      <p class="subtitle">Forfait simple. <span class="gold-chrome">Zéro arnaque.</span></p>
 
       <div class="arguments">
-        <p><strong>✓ STOP LES CRÉDITS :</strong> 80 vidéos/mois. Pas de compteur qui stresse.</p>
-        <p><strong>✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane. Tu kiffes ? Tu valides. Tu kiffes pas ? 0€ décompté.</p>
+        <p><strong class="gold-chrome">✓ STOP LES CRÉDITS💰 :</strong> 80 vidéos/mois. Pas de compteur qui stresse.</p>
+        <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane. Tu kiffes ? Tu valides. Tu kiffes pas ? 0€ décompté.</p>
       </div>
 
       <div class="cta">
@@ -32,12 +32,12 @@
       <!-- STARTER -->
       <div class="carte">
         <h3>Starter</h3>
-        <p class="prix">9€<span>/mois</span></p>
+        <p class="prix"><span class="gold-chrome">9€</span><span class="mois">/mois</span></p>
         <ul>
           <li>15 vidéos/mois</li>
           <li>50 images IA/mois</li>
           <li>MiniMax, Gemini, Luma</li>
-          <li>Paye que si tu valides</li>
+          <li>Paye que si tu valides 🔥</li>
         </ul>
         <a href="/signup?plan=starter" class="btn">Commencer</a>
         <p class="essai">Essai gratuit 24h - CB requise</p>
@@ -46,13 +46,13 @@
       <!-- STANDARD -->
       <div class="carte">
         <h3>Standard</h3>
-        <p class="prix">19€<span>/mois</span></p>
+        <p class="prix"><span class="gold-chrome">19€</span><span class="mois">/mois</span></p>
         <ul>
           <li>40 vidéos/mois</li>
           <li>150 images IA/mois</li>
           <li>MiniMax, Gemini, Luma</li>
           <li>Voix IA Lynk</li>
-          <li>Paye que si tu valides</li>
+          <li>Paye que si tu valides 🔥</li>
         </ul>
         <a href="/signup?plan=standard" class="btn">Commencer</a>
         <p class="essai">Essai gratuit 24h - CB requise</p>
@@ -62,13 +62,13 @@
       <div class="carte highlight">
         <div class="badge">POPULAIRE</div>
         <h3>Pro</h3>
-        <p class="prix">39€<span>/mois</span></p>
+        <p class="prix"><span class="gold-chrome">39€</span><span class="mois">/mois</span></p>
         <ul>
           <li>80 vidéos/mois</li>
           <li>300 images IA/mois</li>
           <li>MiniMax, Gemini, Luma</li>
           <li>Voix IA Lynk</li>
-          <li>Paye que si tu valides</li>
+          <li>Paye que si tu valides 🔥</li>
           <li>Support prioritaire</li>
         </ul>
         <a href="/signup?plan=pro" class="btn">Commencer</a>
@@ -78,13 +78,13 @@
       <!-- STUDIO -->
       <div class="carte">
         <h3>Studio</h3>
-        <p class="prix">79€<span>/mois</span></p>
+        <p class="prix"><span class="gold-chrome">79€</span><span class="mois">/mois</span></p>
         <ul>
           <li>180 vidéos/mois</li>
           <li>800 images IA/mois</li>
           <li>MiniMax, Gemini, Luma</li>
           <li>Voix IA Lynk</li>
-          <li>Paye que si tu valides</li>
+          <li>Paye que si tu valides 🔥</li>
           <li>Support prioritaire</li>
         </ul>
         <a href="/signup?plan=studio" class="btn">Commencer</a>
@@ -93,6 +93,11 @@
 
     </div>
   </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 <span class="gold-chrome">ClipLumia</span> - Créé avec ​💗​ par une créatrice</p>
+  </footer>
 </main>
 
 <style>
@@ -103,6 +108,15 @@
     background-attachment: fixed;
     color: #fff;
     min-height: 100vh;
+  }
+
+  /* GOLD CHROME - LA VRAIE COULEUR */
+  .gold-chrome {
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 15px rgba(191, 149, 63, 0.5));
   }
 
   /* HERO */
@@ -121,23 +135,23 @@
 
   .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 4.5rem; /* GROSSI UN PEU */
+    font-size: 5rem; /* GROSSI */
     font-weight: 900;
-    color: #FFD700; /* OR BRILLANT */
-    margin: 0 0 2.5rem 0; /* DESCENDU UN PEU */
-    text-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 10px rgba(255, 215, 0, 0.5);
+    margin: 0 0 3rem 0; /* DESCENDU */
+    
+    /* GOLD CHROME */
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(191, 149, 63, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.6));
   }
 
   .subtitle {
     font-size: 1.5rem;
     margin: 0 0 3rem 0;
     font-weight: 300;
-    color: #fff; /* BLANC GARDÉ */
-  }
-
-  .subtitle span {
-    color: #FFD700; /* OR BRILLANT */
-    font-weight: 600;
+    color: #fff;
   }
 
   .arguments {
@@ -150,11 +164,7 @@
     font-size: 1.1rem;
     line-height: 1.8;
     margin: 1rem 0;
-    color: #fff; /* BLANC GARDÉ */
-  }
-
-  .arguments strong {
-    color: #FFD700; /* OR BRILLANT */
+    color: #fff;
   }
 
   .cta {
@@ -162,7 +172,7 @@
   }
 
   .btn-principal {
-    background: #FFD700; /* OR BRILLANT */
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     color: #2d1b4e;
     padding: 16px 40px;
     border-radius: 8px;
@@ -171,17 +181,17 @@
     font-size: 1.1rem;
     display: inline-block;
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 4px 30px rgba(191, 149, 63, 0.7), inset 0 1px 0 rgba(255,255,255,0.4);
   }
 
   .btn-principal:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.7);
+    box-shadow: 0 10px 60px rgba(191, 149, 63, 1), inset 0 1px 0 rgba(255,255,255,0.6);
   }
 
   .reassurance {
     font-size: 0.9rem;
-    color: #fff; /* BLANC GARDÉ */
+    color: #fff;
     margin-top: 1rem;
     opacity: 0.9;
   }
@@ -196,7 +206,7 @@
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 3rem;
-    color: #fff; /* BLANC GARDÉ */
+    color: #fff;
   }
 
   .grille-forfaits {
@@ -209,7 +219,7 @@
 
   .carte {
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 215, 0, 0.3); /* BORDURE OR */
+    border: 1px solid rgba(191, 149, 63, 0.5);
     border-radius: 16px;
     padding: 2rem;
     text-align: center;
@@ -220,19 +230,19 @@
 
   .carte:hover {
     transform: translateY(-5px);
-    border-color: #FFD700;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    border-color: #BF953F;
+    box-shadow: 0 0 50px rgba(191, 149, 63, 0.5);
   }
 
   .carte.highlight {
-    border: 2px solid #FFD700; /* OR BRILLANT */
+    border: 2px solid #BF953F;
     transform: scale(1.05);
-    background: rgba(255, 215, 0, 0.08);
-    box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+    background: rgba(191, 149, 63, 0.08);
+    box-shadow: 0 0 60px rgba(191, 149, 63, 0.7);
   }
 
   .badge {
-    background: #FFD700; /* OR BRILLANT */
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     color: #2d1b4e;
     padding: 6px 16px;
     border-radius: 20px;
@@ -242,25 +252,23 @@
     top: -14px;
     left: 50%;
     transform: translateX(-50%);
+    box-shadow: 0 2px 10px rgba(191, 149, 63, 0.6);
   }
 
   .carte h3 {
     font-size: 1.5rem;
     margin: 0 0 1rem 0;
-    color: #fff; /* BLANC GARDÉ */
+    color: #fff;
   }
 
   .prix {
     font-size: 3rem;
     font-weight: 900;
-    color: #FFD700; /* OR BRILLANT */
     margin: 0 0 1.5rem 0;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
   }
 
-  .prix span {
+  .prix .mois {
     font-size: 1rem;
-    color: #FFD700; /* OR BRILLANT */
     font-weight: 400;
     opacity: 0.9;
   }
@@ -274,8 +282,8 @@
 
   .carte ul li {
     padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-    color: #fff; /* BLANC GARDÉ */
+    border-bottom: 1px solid rgba(191, 149, 63, 0.2);
+    color: #fff;
   }
 
   .carte ul li:last-child {
@@ -284,8 +292,8 @@
 
   .btn {
     background: transparent;
-    border: 2px solid #FFD700; /* OR BRILLANT */
-    color: #FFD700; /* OR BRILLANT */
+    border: 2px solid #BF953F;
+    color: #BF953F;
     padding: 12px 30px;
     border-radius: 8px;
     text-decoration: none;
@@ -297,23 +305,39 @@
   }
 
   .btn:hover {
-    background: #FFD700;
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     color: #2d1b4e;
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 30px rgba(191, 149, 63, 0.8);
+    border-color: transparent;
   }
 
   .essai {
     font-size: 0.85rem;
-    color: #FFD700; /* OR BRILLANT */
+    color: #BF953F;
     text-align: center;
     margin-top: 0.75rem;
     opacity: 0.9;
   }
 
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(191, 149, 63, 0.4);
+  }
+
+  .footer p {
+    font-size: 0.95rem;
+    margin: 0;
+    color: #fff;
+    opacity: 0.8;
+  }
+
   /* MOBILE */
   @media (max-width: 768px) {
     .logo {
-      font-size: 3.2rem; /* GROSSI UN PEU AUSSI SUR MOBILE */
+      font-size: 3.5rem;
     }
     
     .hero {
