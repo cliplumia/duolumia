@@ -100,6 +100,7 @@
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: radial-gradient(ellipse at top, #5a3696 0%, #3d2066 50%, #2d1b4e 100%);
+    background-attachment: fixed;
     color: #fff;
     min-height: 100vh;
   }
@@ -120,21 +121,22 @@
 
   .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 4rem;
+    font-size: 4.5rem; /* GROSSI UN PEU */
     font-weight: 900;
-    color: #FFD700;
-    margin: 0 0 1.5rem 0;
-    text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+    color: #FFD700; /* OR BRILLANT */
+    margin: 0 0 2.5rem 0; /* DESCENDU UN PEU */
+    text-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 10px rgba(255, 215, 0, 0.5);
   }
 
   .subtitle {
     font-size: 1.5rem;
     margin: 0 0 3rem 0;
     font-weight: 300;
+    color: #fff; /* BLANC GARDÉ */
   }
 
   .subtitle span {
-    color: #FFD700;
+    color: #FFD700; /* OR BRILLANT */
     font-weight: 600;
   }
 
@@ -148,10 +150,11 @@
     font-size: 1.1rem;
     line-height: 1.8;
     margin: 1rem 0;
+    color: #fff; /* BLANC GARDÉ */
   }
 
   .arguments strong {
-    color: #FFD700;
+    color: #FFD700; /* OR BRILLANT */
   }
 
   .cta {
@@ -159,7 +162,7 @@
   }
 
   .btn-principal {
-    background: #FFD700;
+    background: #FFD700; /* OR BRILLANT */
     color: #2d1b4e;
     padding: 16px 40px;
     border-radius: 8px;
@@ -168,17 +171,19 @@
     font-size: 1.1rem;
     display: inline-block;
     transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
   }
 
   .btn-principal:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.7);
   }
 
   .reassurance {
     font-size: 0.9rem;
-    color: #c9b8e8;
+    color: #fff; /* BLANC GARDÉ */
     margin-top: 1rem;
+    opacity: 0.9;
   }
 
   /* FORFAITS */
@@ -191,6 +196,7 @@
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 3rem;
+    color: #fff; /* BLANC GARDÉ */
   }
 
   .grille-forfaits {
@@ -203,7 +209,7 @@
 
   .carte {
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 215, 0, 0.3); /* BORDURE OR */
     border-radius: 16px;
     padding: 2rem;
     text-align: center;
@@ -214,17 +220,19 @@
 
   .carte:hover {
     transform: translateY(-5px);
-    border-color: rgba(255, 215, 0, 0.5);
+    border-color: #FFD700;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
   }
 
   .carte.highlight {
-    border: 2px solid #FFD700;
+    border: 2px solid #FFD700; /* OR BRILLANT */
     transform: scale(1.05);
     background: rgba(255, 215, 0, 0.08);
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
   }
 
   .badge {
-    background: #FFD700;
+    background: #FFD700; /* OR BRILLANT */
     color: #2d1b4e;
     padding: 6px 16px;
     border-radius: 20px;
@@ -239,19 +247,22 @@
   .carte h3 {
     font-size: 1.5rem;
     margin: 0 0 1rem 0;
+    color: #fff; /* BLANC GARDÉ */
   }
 
   .prix {
     font-size: 3rem;
     font-weight: 900;
-    color: #FFD700;
+    color: #FFD700; /* OR BRILLANT */
     margin: 0 0 1.5rem 0;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
   }
 
   .prix span {
     font-size: 1rem;
-    color: #c9b8e8;
+    color: #FFD700; /* OR BRILLANT */
     font-weight: 400;
+    opacity: 0.9;
   }
 
   .carte ul {
@@ -263,7 +274,8 @@
 
   .carte ul li {
     padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    color: #fff; /* BLANC GARDÉ */
   }
 
   .carte ul li:last-child {
@@ -272,8 +284,8 @@
 
   .btn {
     background: transparent;
-    border: 2px solid #FFD700;
-    color: #FFD700;
+    border: 2px solid #FFD700; /* OR BRILLANT */
+    color: #FFD700; /* OR BRILLANT */
     padding: 12px 30px;
     border-radius: 8px;
     text-decoration: none;
@@ -287,19 +299,21 @@
   .btn:hover {
     background: #FFD700;
     color: #2d1b4e;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
   }
 
   .essai {
     font-size: 0.85rem;
-    color: #c9b8e8;
+    color: #FFD700; /* OR BRILLANT */
     text-align: center;
     margin-top: 0.75rem;
+    opacity: 0.9;
   }
 
   /* MOBILE */
   @media (max-width: 768px) {
     .logo {
-      font-size: 2.8rem;
+      font-size: 3.2rem; /* GROSSI UN PEU AUSSI SUR MOBILE */
     }
     
     .hero {
