@@ -1,5 +1,5 @@
 <svelte:head>
-  <title>ClipLumia - Forfait simple. Zéro arnaque.💯</title>
+  <title>ClipLumia - Forfait simple. Zéro arnaque.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
 </svelte:head>
@@ -12,7 +12,7 @@
       <p class="subtitle">Forfait simple. <span class="gold-chrome">Zéro arnaque.</span></p>
 
       <div class="arguments">
-        <p><strong class="gold-chrome">✓ STOP LES CRÉDITS💰 :</strong> 80 vidéos/mois. Pas de compteur qui stresse.</p>
+        <p><strong class="gold-chrome">✓ STOP LES CRÉDITS 💰 :</strong> 80 vidéos/mois. Pas de compteur qui stresse.</p>
         <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane. Tu kiffes ? Tu valides. Tu kiffes pas ? 0€ décompté.</p>
       </div>
 
