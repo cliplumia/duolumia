@@ -10,304 +10,304 @@
     <div class="content">
       <h1 class="logo">ClipLumia</h1>
       <p class="subtitle">Forfait simple. <span>Zéro arnaque.</span></p>
-      
+
       <div class="arguments">
         <p><strong>✓ STOP LES CRÉDITS :</strong> 80 vidéos/mois. Pas de compteur qui stresse.</p>
         <p><strong>✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane. Tu kiffes ? Tu valides. Tu kiffes pas ? 0€ décompté.</p>
       </div>
 
       <div class="cta">
-        <a href="#tarifs" class="btn-principal">Voir les forfaits dès 9€</a>
-        <a href="#demo" class="btn-secondaire">Tester 3 fois gratuit</a>
+        <a href="#forfaits" class="btn-principal">Voir les forfaits dès 9€</a>
       </div>
-      
-      <p class="small">Sans engagement. Annule en 2 clics.</p>
+      <p class="reassurance">Sans engagement. Annule en 2 clics.</p>
     </div>
   </section>
 
-  <!-- TARIFS -->
-  <section id="tarifs" class="section-tarifs">
-    <h2>Un forfait. Pas de surprise.</h2>
-    <p class="desc">Les vidéos ratées ne comptent jamais. Garantie.</p>
+  <!-- FORFAITS -->
+  <section id="forfaits" class="forfaits">
+    <h2>Choisis ton forfait</h2>
     
-    <div class="grille-tarifs">
+    <div class="grille-forfaits">
+      
+      <!-- STARTER -->
       <div class="carte">
         <h3>Starter</h3>
         <p class="prix">9€<span>/mois</span></p>
         <ul>
-          <li>✓ 15 vidéos/mois</li>
-          <li>✓ MiniMax, Gemini, Luma</li>
-          <li>✓ Voix IA Lynk</li>
-          <li>✓ Paye que si tu valides</li>
+          <li>15 vidéos/mois</li>
+          <li>50 images IA/mois</li>
+          <li>MiniMax, Gemini, Luma</li>
+          <li>Paye que si tu valides</li>
         </ul>
-        <a href="/signup" class="btn-carte">Commencer</a>
+        <a href="/signup?plan=starter" class="btn">Commencer</a>
+        <p class="essai">Essai gratuit 24h - CB requise</p>
       </div>
 
+      <!-- STANDARD -->
       <div class="carte">
         <h3>Standard</h3>
         <p class="prix">19€<span>/mois</span></p>
         <ul>
-          <li>✓ 40 vidéos/mois</li>
-          <li>✓ MiniMax, Gemini, Luma</li>
-          <li>✓ Voix IA Lynk</li>
-          <li>✓ Paye que si tu valides</li>
+          <li>40 vidéos/mois</li>
+          <li>150 images IA/mois</li>
+          <li>MiniMax, Gemini, Luma</li>
+          <li>Voix IA Lynk</li>
+          <li>Paye que si tu valides</li>
         </ul>
-        <a href="/signup" class="btn-carte">Commencer</a>
+        <a href="/signup?plan=standard" class="btn">Commencer</a>
+        <p class="essai">Essai gratuit 24h - CB requise</p>
       </div>
 
-      <div class="carte pro">
-        <div class="badge">LE PLUS PRIS</div>
+      <!-- PRO -->
+      <div class="carte highlight">
+        <div class="badge">POPULAIRE</div>
         <h3>Pro</h3>
         <p class="prix">39€<span>/mois</span></p>
         <ul>
-          <li>✓ 80 vidéos/mois</li>
-          <li>✓ MiniMax, Gemini, Luma</li>
-          <li>✓ Voix IA Lynk</li>
-          <li>✓ Paye que si tu valides</li>
-          <li>✓ Support prioritaire</li>
+          <li>80 vidéos/mois</li>
+          <li>300 images IA/mois</li>
+          <li>MiniMax, Gemini, Luma</li>
+          <li>Voix IA Lynk</li>
+          <li>Paye que si tu valides</li>
+          <li>Support prioritaire</li>
         </ul>
-        <a href="/signup" class="btn-carte-pro">Commencer</a>
+        <a href="/signup?plan=pro" class="btn">Commencer</a>
+        <p class="essai">Essai gratuit 24h - CB requise</p>
       </div>
 
+      <!-- STUDIO -->
       <div class="carte">
         <h3>Studio</h3>
         <p class="prix">79€<span>/mois</span></p>
         <ul>
-          <li>✓ 180 vidéos/mois</li>
-          <li>✓ MiniMax, Gemini, Luma</li>
-          <li>✓ Voix IA Lynk</li>
-          <li>✓ Paye que si tu valides</li>
-          <li>✓ Support prioritaire</li>
+          <li>180 vidéos/mois</li>
+          <li>800 images IA/mois</li>
+          <li>MiniMax, Gemini, Luma</li>
+          <li>Voix IA Lynk</li>
+          <li>Paye que si tu valides</li>
+          <li>Support prioritaire</li>
         </ul>
-        <a href="/signup" class="btn-carte">Commencer</a>
+        <a href="/signup?plan=studio" class="btn">Commencer</a>
+        <p class="essai">Essai gratuit 24h - CB requise</p>
       </div>
+
     </div>
   </section>
-
-<section id="demo">
-  <h2>Test gratuit</h2>
-</section>
-
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 ClipLumia. Tous droits réservés.</p>
-    <a href="mailto:contact.cliplumia@gmail.com">contact.cliplumia@gmail.com</a>
-  </footer>
 </main>
 
 <style>
-  /* RESET SCROLL OK SUR MOBILE */
-  :global(html) {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-  }
   :global(body) {
     margin: 0;
-    padding: 0;
-    background: #1c0a2b;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: radial-gradient(ellipse at top, #5a3696 0%, #3d2066 50%, #2d1b4e 100%);
     color: #fff;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    overflow-x: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  main {
-    width: 100%;
-    min-height: 100%;
+    min-height: 100vh;
   }
 
-  /* HERO - PLUS DE 100VH FIXE */
+  /* HERO */
   .hero {
-    min-height: auto;
-    padding: 80px 20px 60px 20px;
+    min-height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: radial-gradient(ellipse at 50% 40%, #3a1859 0%, #1c0a2b 70%);
+    padding: 140px 20px 60px 20px;
   }
-  .content { max-width: 900px; width: 100%; }
-  
-  /* LOGO OR VÉRITABLE */
+
+  .content {
+    max-width: 800px;
+  }
+
   .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 72px;
+    font-size: 4rem;
     font-weight: 900;
-    margin: 0 0 16px 0;
-    letter-spacing: -2px;
-    background: linear-gradient(135deg, #D4AF37 0%, #C5A028 25%, #B8860B 50%, #CD9B1D 75%, #D4AF37 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.4));
+    color: #FFD700;
+    margin: 0 0 1.5rem 0;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
   }
-  
+
   .subtitle {
-    font-size: 28px;
-    font-weight: 700;
-    margin: 0 0 32px 0;
-    color: #d8b4fe;
+    font-size: 1.5rem;
+    margin: 0 0 3rem 0;
+    font-weight: 300;
   }
-  .subtitle span { color: #D4AF37; }
-  
+
+  .subtitle span {
+    color: #FFD700;
+    font-weight: 600;
+  }
+
   .arguments {
     text-align: left;
     max-width: 600px;
-    margin: 0 auto 32px auto;
+    margin: 0 auto 3rem auto;
   }
-  .arguments p {
-    font-size: 17px;
-    color: #e9d5ff;
-    margin: 14px 0;
-    line-height: 1.5;
-  }
-  .arguments strong { color: #D4AF37; }
-  
-  .cta {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-  }
-  .btn-principal {
-    background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-    color: #1c0a2b;
-    padding: 16px 28px;
-    border-radius: 8px;
-    font-weight: 700;
-    text-decoration: none;
-    font-size: 17px;
-    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
-    border: 1px solid #CD9B1D;
-    display: inline-block;
-  }
-  .btn-secondaire {
-    border: 2px solid #D4AF37;
-    color: #D4AF37;
-    padding: 16px 28px;
-    border-radius: 8px;
-    font-weight: 700;
-    text-decoration: none;
-    font-size: 17px;
-    display: inline-block;
-  }
-  .small { font-size: 14px; color: #a78bfa; }
 
-  /* TARIFS */
-  .section-tarifs {
-    padding: 60px 20px;
-    background: #12061c;
+  .arguments p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin: 1rem 0;
+  }
+
+  .arguments strong {
+    color: #FFD700;
+  }
+
+  .cta {
+    margin: 2rem 0 1rem 0;
+  }
+
+  .btn-principal {
+    background: #FFD700;
+    color: #2d1b4e;
+    padding: 16px 40px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-principal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+  }
+
+  .reassurance {
+    font-size: 0.9rem;
+    color: #c9b8e8;
+    margin-top: 1rem;
+  }
+
+  /* FORFAITS */
+  .forfaits {
+    padding: 80px 20px;
+    background: rgba(0, 0, 0, 0.25);
+  }
+
+  .forfaits h2 {
     text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
   }
-  .section-tarifs h2 {
-    font-size: 36px;
-    font-weight: 800;
-    margin: 0 0 12px 0;
-    color: #D4AF37;
-  }
-  .desc {
-    color: #c4b5fd;
-    margin-bottom: 40px;
-    font-size: 17px;
-  }
-  .grille-tarifs {
+
+  .grille-forfaits {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
   }
+
   .carte {
-    background: #1c0a2b;
-    border: 1px solid #3a1859;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 16px;
-    padding: 28px 20px;
-    text-align: left;
+    padding: 2rem;
+    text-align: center;
     position: relative;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, border 0.3s;
   }
-  .carte.pro {
-    background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-    border: 2px solid #CD9B1D;
-    color: #1c0a2b;
+
+  .carte:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 215, 0, 0.5);
   }
+
+  .carte.highlight {
+    border: 2px solid #FFD700;
+    transform: scale(1.05);
+    background: rgba(255, 215, 0, 0.08);
+  }
+
   .badge {
+    background: #FFD700;
+    color: #2d1b4e;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
     position: absolute;
-    top: -12px;
+    top: -14px;
     left: 50%;
     transform: translateX(-50%);
-    background: #1c0a2b;
-    color: #D4AF37;
-    padding: 4px 12px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 800;
-    border: 1px solid #D4AF37;
-    white-space: nowrap;
   }
-  .carte h3 { font-size: 22px; margin: 0 0 12px 0; }
-  .carte.pro h3 { color: #1c0a2b; }
+
+  .carte h3 {
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+  }
+
   .prix {
-    font-size: 42px;
-    font-weight: 800;
-    margin: 0 0 20px 0;
-    color: #D4AF37;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #FFD700;
+    margin: 0 0 1.5rem 0;
   }
-  .carte.pro .prix { color: #1c0a2b; }
+
   .prix span {
-    font-size: 16px;
-    color: #a78bfa;
+    font-size: 1rem;
+    color: #c9b8e8;
     font-weight: 400;
   }
-  .carte.pro .prix span { color: #3a1859; }
+
   .carte ul {
     list-style: none;
     padding: 0;
-    margin: 0 0 24px 0;
+    margin: 0 0 2rem 0;
+    text-align: left;
   }
-  .carte li { margin: 10px 0; color: #e9d5ff; font-size: 15px; }
-  .carte.pro li { color: #1c0a2b; font-weight: 600; }
-  .btn-carte, .btn-carte-pro {
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 14px;
+
+  .carte ul li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .carte ul li:last-child {
+    border-bottom: none;
+  }
+
+  .btn {
+    background: transparent;
+    border: 2px solid #FFD700;
+    color: #FFD700;
+    padding: 12px 30px;
     border-radius: 8px;
-    font-weight: 700;
     text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: all 0.2s;
+    width: 100%;
     box-sizing: border-box;
   }
-  .btn-carte { 
-    background: #D4AF37; 
-    color: #1c0a2b; 
-  }
-  .btn-carte-pro { 
-    background: #1c0a2b; 
-    color: #D4AF37; 
+
+  .btn:hover {
+    background: #FFD700;
+    color: #2d1b4e;
   }
 
-  /* FOOTER */
-  footer {
-    padding: 40px 20px;
+  .essai {
+    font-size: 0.85rem;
+    color: #c9b8e8;
     text-align: center;
-    color: #a78bfa;
-    background: #1c0a2b;
-    border-top: 1px solid #3a1859;
+    margin-top: 0.75rem;
   }
-  footer a { color: #D4AF37; }
 
-  /* MOBILE OPTIMISÉ */
+  /* MOBILE */
   @media (max-width: 768px) {
-    .logo { font-size: 48px; }
-    .subtitle { font-size: 22px; }
-    .hero { padding: 60px 16px 40px 16px; }
-    .arguments p { font-size: 16px; }
-    .cta { flex-direction: column; }
-    .btn-principal, .btn-secondaire { width: 100%; }
-    .section-tarifs { padding: 40px 16px; }
-    .section-tarifs h2 { font-size: 28px; }
-    .grille-tarifs { grid-template-columns: 1fr; }
+    .logo {
+      font-size: 2.8rem;
+    }
+    
+    .hero {
+      padding-top: 100px;
+    }
+
+    .carte.highlight {
+      transform: scale(1);
+    }
   }
 </style>
-
