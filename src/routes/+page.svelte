@@ -84,6 +84,10 @@
     </div>
   </section>
 
+<section id="demo">
+  <h2>Test gratuit</h2>
+</section>
+
   <!-- FOOTER -->
   <footer>
     <p>© 2026 ClipLumia. Tous droits réservés.</p>
