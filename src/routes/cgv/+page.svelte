@@ -1,33 +1,29 @@
 <svelte:head>
-  <title>CGV - Cliplumia</title>
-  <meta name="description" content="Conditions Générales de Vente de Cliplumia" />
+  <title>CGV - ClipLumia</title>
+  <meta name="description" content="Conditions Générales de Vente de ClipLumia" />
 </svelte:head>
 
 <div class="legal-page">
   <div class="container">
     <h1 class="gold-chrome">Conditions Générales de Vente</h1>
     
-    <div class="card">
+    <div class="content">
       <h2>1. Objet</h2>
-      <p>Les présentes CGV régissent les relations contractuelles entre Cliplumia et ses clients pour la vente de services numériques.</p>
+      <p>Les présentes CGV régissent les relations contractuelles entre ClipLumia et ses clients pour la vente de services numériques.</p>
       
-      <div class="black-highlight">
-        <strong>Important :</strong> En validant votre commande, vous acceptez sans réserve les présentes conditions.
-      </div>
+      <p><strong>Important :</strong> En validant votre commande, vous acceptez sans réserve les présentes conditions.</p>
       
       <hr />
       
       <h2>2. Services proposés</h2>
-      <p>Cliplumia propose des services de création de contenu numérique et d'outils créatifs en ligne.</p>
+      <p>ClipLumia propose des services de création de contenu numérique et d'outils créatifs en ligne.</p>
       
       <hr />
       
       <h2>3. Prix et paiement</h2>
       <p>Les prix sont indiqués en euros TTC. Le paiement s'effectue en ligne par carte bancaire ou autre moyen sécurisé.</p>
       
-      <div class="black-highlight">
-        <strong>Paiement 100% sécurisé :</strong> Vos données bancaires ne sont jamais stockées sur nos serveurs.
-      </div>
+      <p><strong>Paiement 100% sécurisé :</strong> Vos données bancaires ne sont jamais stockées sur nos serveurs.</p>
       
       <hr />
       
@@ -39,9 +35,7 @@
       <h2>5. Droit de rétractation</h2>
       <p>Conformément à l'article L221-28 du Code de la consommation, le droit de rétractation ne s'applique pas aux contenus numériques fournis immédiatement.</p>
       
-      <div class="black-highlight">
-        <strong>Article L221-28 :</strong> Pas de remboursement possible une fois le service numérique délivré et l'exécution commencée.
-      </div>
+      <p><strong>Article L221-28 :</strong> Pas de remboursement possible une fois le service numérique délivré et l'exécution commencée.</p>
       
       <hr />
       
@@ -54,14 +48,16 @@
 <style>
   :global(body) {
     margin: 0;
-    background: linear-gradient(135deg, #2A1B3D 0%, #1E1429 100%);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: radial-gradient(ellipse at top, #5a3696 0%, #3d206b 50%, #2d1b4e 100%);
+    background-attachment: fixed;
+    color: #fff;
     min-height: 100vh;
   }
   
   .legal-page {
     min-height: 100vh;
     padding: 4rem 1rem;
-    font-family: 'Inter', sans-serif;
   }
   
   .container {
@@ -69,86 +65,73 @@
     margin: 0 auto;
   }
   
-  /* GOLD CHROME BRILLANT - LE VRAI */
+  /* GOLD CHROME - LA VRAIE COULEUR */
   .gold-chrome {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 30%, #FFEC8B 50%, #FFA500 70%, #FFD700 100%);
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-size: 3rem;
-    font-weight: 800;
+    font-weight: 900;
     text-align: center;
-    margin-bottom: 3rem;
-    filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.5));
-    letter-spacing: 1px;
+    margin: 0 0 3rem 0;
+    letter-spacing: 1.5px;
+    filter: drop-shadow(0 0 30px rgba(191, 149, 63, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.6));
   }
   
-  .card {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 16px;
-    padding: 3rem;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 215, 0, 0.1);
+  .content {
+    padding: 0 1rem;
   }
   
   h2 {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-size: 1.5rem;
-    margin-top: 0;
+    margin-top: 2rem;
     margin-bottom: 1rem;
     font-weight: 700;
-    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
   }
   
   p {
-    color: rgba(255, 255, 255, 0.9);
+    color: #fff;
     line-height: 1.8;
     margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  strong {
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
   }
   
   hr {
     border: none;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(191, 149, 63, 0.5), transparent);
     margin: 2rem 0;
   }
   
   .gold-link {
-    color: #FFD700;
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     text-decoration: none;
-    transition: all 0.3s;
-    font-weight: 600;
+    font-weight: 700;
   }
   
   .gold-link:hover {
-    color: #FFA500;
-    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-  }
-
-  /* ENCADRÉS AVEC TEXTE NOIR SUR FOND GOLD CHROME */
-  .black-highlight {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFEC8B 100%);
-    color: #000000;
-    padding: 1.2rem 1.5rem;
-    border-radius: 12px;
-    margin: 1.5rem 0;
-    font-weight: 500;
-    box-shadow: 0 4px 25px rgba(255, 215, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-  }
-  
-  .black-highlight strong {
-    color: #000000;
-    font-weight: 800;
+    filter: drop-shadow(0 0 15px rgba(252, 246, 186, 0.8));
   }
   
   @media (max-width: 768px) {
     .gold-chrome { font-size: 2rem; }
-    .card { padding: 2rem 1.5rem; }
-    .black-highlight { padding: 1rem; }
+    .content { padding: 0; }
   }
 </style>
+
