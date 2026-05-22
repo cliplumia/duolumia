@@ -4,10 +4,10 @@ import { json } from '@sveltejs/kit';
 const stripe = new Stripe(import.meta.env.STRIPE_SECRET_KEY);
 
 const PRICES = {
-  starter: 'price_xxx9euro', // Remplace par tes Price ID Stripe
-  standard: 'price_xxx19euro', 
-  pro: 'price_xxx39euro',
-  studio: 'price_xxx79euro'
+  starter: 'price_1TZyOcEWOUWbzB3CqJOBxhFw',
+  standard: 'price_1TZybSEWOUWbzB3Cpkihq08y',
+  pro: 'price_1TZyi9EWOUWbzB3CyN7bfOY1',
+  studio: 'price_1TZymdEWOUWbzB3CClmjHBJg'
 };
 
 export async function POST({ request }) {
