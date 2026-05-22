@@ -60,7 +60,7 @@
 .footer-mail a {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C) !important;
     -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
+    color: #FCF6BA !important;
     background-clip: text !important;
     text-decoration: underline !important;
     text-decoration-color: #BF953F !important;
