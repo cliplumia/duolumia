@@ -9,9 +9,9 @@
 <footer class="footer">
   <div class="footer-content">
     <p class="footer-mail">
-      📧 <a href="mailto:Contact.cliplumia@gmail.com" class="gold-chrome">
-        Contact.cliplumia@gmail.com
-      </a>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contact.cliplumia@gmail.com" target="_blank">
+  📧 contact.cliplumia@gmail.com
+</a>
     </p>
     
     <div class="footer-links">
@@ -58,14 +58,31 @@
   }
 
 .footer-mail a {
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C) !important;
-    -webkit-background-clip: text !important;
-    color: #FCF6BA !important;
-    background-clip: text !important;
-    text-decoration: underline !important;
-    text-decoration-color: #BF953F !important;
-    text-underline-offset: 4px !important;
-  }
+  background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+  display: inline-block !important;
+  position: relative !important;
+}
+
+.footer-mail a::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  bottom: -3px !important;
+  width: 100% !important;
+  height: 2px !important;
+  background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728) !important;
+}
+
+.footer-mail a:hover {
+  filter: drop-shadow(0 0 15px rgba(252, 246, 186, 0.8)) !important;
+}
  
 .footer-links {
     display: flex;
