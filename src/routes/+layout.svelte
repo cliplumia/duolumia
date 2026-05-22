@@ -56,8 +56,18 @@
     margin-bottom: 1.5rem;
     font-family: 'Playfair Display', serif;
   }
-  
-  .footer-links {
+
+.footer-mail a {
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-decoration: underline !important;
+    text-decoration-color: #BF953F !important;
+    text-underline-offset: 4px !important;
+  }
+ 
+.footer-links {
     display: flex;
     gap: 1.2rem;
     justify-content: center;
