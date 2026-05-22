@@ -6,66 +6,83 @@
   <slot />
 </main>
 
-<footer>
-  <p>© 2026 <span class="gold-shine">ClipLumia</span>. Tous droits réservés.</p>
-  <a href="malto:contact.cliplumia@gmail.com">Contact</a>
+<footer class="footer">
+  <div class="footer-content">
+    <p class="footer-mail">
+      📧 <a href="mailto:Contact.cliplumia@gmail.com" class="gold-chrome">
+        Contact.cliplumia@gmail.com
+      </a>
+    </p>
+    
+    <div class="footer-links">
+      <a href="/mentions-legales">Mentions légales</a>
+      <span>•</span>
+      <a href="/cgv">CGV</a>
+      <span>•</span>
+      <a href="/contact">Contact</a>
+    </div>
+    
+    <p class="footer-copy">
+      © 2026 <span class="gold-chrome">Cliplumia</span> - Créé avec ❤️ par une créatrice
+    </p>
+  </div>
 </footer>
 
 <style>
   main {
     max-width: 1024px;
     margin: 0 auto;
-    box-sizing: border-box;
     min-height: 90vh;
+    padding: 1rem;
   }
 
-  footer {
+  .footer {
+    background: #2d1b4e; 
+    padding: 3rem 1rem 2rem 1rem;
+    margin-top: 5rem;
+    text-align: center;
+    border-top: 3px solid #BF953F;
+    color: #fff;
+  }
+  
+  .footer-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .footer-mail {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    font-family: 'Playfair Display', serif;
+  }
+  
+  .footer-links {
     display: flex;
-    flex-direction: column;
+    gap: 1.2rem;
     justify-content: center;
     align-items: center;
-    gap: 8px;
-    padding: 40px;
-    border-top: 1px solid #2a2a2a;
-    margin-top: 60px;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
   }
-
-  footer a {
-    font-weight: bold;
-    color: #b0b0b0;
+  
+  .footer-links a {
+    color: #fff;
     text-decoration: none;
   }
-
-  footer a:hover {
-    color: white;
+  
+  .footer-links a:hover {
+    color: #BF953F;
+    text-decoration: underline;
   }
-
-  footer p {
-    color: #808080;
-    margin: 0;
+  
+  .footer-links span {
+    color: #BF953F;
+    opacity: 0.6;
   }
-
-  @media (min-width: 480px) {
-    footer {
-      flex-direction: row;
-      padding: 40px 0;
-      gap: 24px;
-    }
-  }
-
- .gold-shine {
-    background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700);
-    background-size: 200% auto;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 3s linear infinite;
-    font-weight: bold;
-  }
-
-  @keyframes shine {
-    to {
-      background-position: 200% center;
-    }
+  
+  .footer-copy {
+    color: #ccc;
+    font-size: 0.85rem;
   }
 </style>
