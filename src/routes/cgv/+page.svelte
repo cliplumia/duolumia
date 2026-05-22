@@ -69,8 +69,9 @@
     margin: 0 auto;
   }
   
+  /* GOLD CHROME BRILLANT - LE VRAI */
   .gold-chrome {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 30%, #FFEC8B 50%, #FFA500 70%, #FFD700 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -78,23 +79,29 @@
     font-weight: 800;
     text-align: center;
     margin-bottom: 3rem;
-    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+    filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.5));
+    letter-spacing: 1px;
   }
   
   .card {
     background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 215, 0, 0.2);
+    border: 1px solid rgba(255, 215, 0, 0.3);
     border-radius: 16px;
     padding: 3rem;
     backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 215, 0, 0.1);
   }
   
   h2 {
-    color: #FFD700;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     font-size: 1.5rem;
     margin-top: 0;
     margin-bottom: 1rem;
+    font-weight: 700;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));
   }
   
   p {
@@ -106,7 +113,7 @@
   hr {
     border: none;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
     margin: 2rem 0;
   }
   
@@ -114,28 +121,29 @@
     color: #FFD700;
     text-decoration: none;
     transition: all 0.3s;
+    font-weight: 600;
   }
   
   .gold-link:hover {
     color: #FFA500;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
   }
 
-  /* NOUVEAU : Encadrés avec texte noir */
+  /* ENCADRÉS AVEC TEXTE NOIR SUR FOND GOLD CHROME */
   .black-highlight {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFEC8B 100%);
     color: #000000;
     padding: 1.2rem 1.5rem;
     border-radius: 12px;
     margin: 1.5rem 0;
     font-weight: 500;
-    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 4px 25px rgba(255, 215, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     border: 1px solid rgba(0, 0, 0, 0.2);
   }
   
   .black-highlight strong {
     color: #000000;
-    font-weight: 700;
+    font-weight: 800;
   }
   
   @media (max-width: 768px) {
