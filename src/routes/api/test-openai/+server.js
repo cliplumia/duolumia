@@ -19,7 +19,7 @@ export async function POST({ request }) {
       },
       body: JSON.stringify({
         model: 'gpt-5.5',
-        input: 'Generate an image of: logo moderne cliplumia, fond violet, dimanche matin, style minimaliste',
+        input: 'Generate en image of: logo moderne cliplumia gold chrome , fond violet, dimanche matin, style minimaliste',
         tools: [{ type: 'image_generation', action: 'generate' }]
       })
     });
