@@ -2,6 +2,7 @@ import { env } from '$env/dynamic/private';
 const OPENAI_API_KEY = env.OPENAI_API_KEY;
 
 import { json } from '@sveltejs/kit';
+
 export async function GET() {
     try {
         const response = await fetch('https://api.openai.com/v1/images/generations', {
