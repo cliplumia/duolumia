@@ -11,7 +11,7 @@ export async function GET() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'dall-e-3',
+                model: 'dall-e-2',
                 prompt: 'Logo moderne Cliplumia, fond violet, dimanche matin',
                 n: 1,
                 size: '1024x1024'
