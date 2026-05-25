@@ -1,10 +1,9 @@
-import adapter from '@sveltejs/adapter-netlify';
-const config = {
-	kit: {
-		adapter: adapter(),
-		prerender: {
-			handleHttpError: 'warn'
-		}
-	}
+import adapter from '@sveltejs/adapter-cloudflare';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+
+export default {
+  kit: {
+    adapter: adapter()
+  },
+  preprocess: vitePreprocess()
 };
-export default config;
