@@ -13,7 +13,7 @@
       <hr />
       
       <h2>Email</h2>
-      <p><a href="mailto:contact.cliplumia@gmail.com" class="gold-link">contact.cliplumia@gmail.com</a></p>
+      <p><a href="mailto:contact@cliplumia.com" class="gold-link">contact@cliplumia.com</a></p>
     </div>
   </div>
 </div>
