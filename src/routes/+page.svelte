@@ -12,8 +12,9 @@
       <p class="subtitle">Forfait simple. <span class="gold-chrome">Zéro arnaque.</span></p>
 
       <div class="arguments">
-        <p><strong class="gold-chrome">✓ STOP LES CRÉDITS 💰 :</strong> 80 vidéos/mois. Pas de compteur qui stresse.</p>
-        <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane. Tu kiffes ? Tu valides. Tu kiffes pas ? 0€ décompté.</p>
+        <p><strong class="gold-chrome">✓ STOP LES CRÉDITS 💰 :</strong>  Pas de compteur qui stresse.</p>
+        <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane AVANT VALADATION 
+                                         Tu kiffes ? Tu valides. Tu kiffes pas ? NON DECOMPTER SUR TON FORFAIT .</p>
       </div>
 
       <div class="cta">
