@@ -11,7 +11,7 @@
     <p>
       <strong class="gold-chrome">Cliplumia</strong><br>
       Site édité à titre non professionnel par un particulier.<br>
-      Email : <a href="mailto:Contact.cliplumia@gmail.com" class="gold-chrome">Contact.cliplumia@gmail.com</a>
+      Email : <a href="mailto:Contact@cliplumia.com" class="gold-chrome">Contact@cliplumia.com</a>
     </p>
     <p class="note">
       Conformément à l'article 6 III-2 de la loi n°2004-575 du 21 juin 2004, 
@@ -41,7 +41,7 @@
     <h2>4. Données personnelles</h2>
     <p>
       Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant. 
-      Pour exercer ce droit : <a href="mailto:Contact.cliplumia@gmail.com" class="gold-chrome">Contact.cliplumia@gmail.com</a>
+      Pour exercer ce droit : <a href="mailto:Contact@cliplumia.com" class="gold-chrome">Contact@cliplumia.com</a>
     </p>
   </section>
 
