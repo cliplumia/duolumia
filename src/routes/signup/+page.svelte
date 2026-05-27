@@ -1,39 +1,43 @@
 <script>
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
-  
+  import { goto } from '$app/navigation'; // ← nouveau
+
   let plan = $page.url.searchParams.get('plan') || 'starter';
-  
+
   onMount(() => {
     const script = document.createElement('script');
     script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
     document.head.appendChild(script);
-    
+
     script.onload = () => {
       google.accounts.id.initialize({
         client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
         callback: (response) => {
           console.log('Plan:', plan);
           console.log('Token Google:', response.credential);
-          alert('Connexion réussie ! Plan: ' + plan.toUpperCase());
+          
+          // Tu reçois le token Google ici. Normalement faut l'envoyer 
+          // à ton backend pour créer une session, mais pour tester :
+          goto('/dashboard'); // ← REDIRECTION
         }
       });
-      
-      google.accounts.id.renderButton(
+
+     google.accounts.id.renderButton(
         document.getElementById("googleBtn"),
-        { 
-          theme: "outline", 
-          size: "large", 
+        {
+          theme: "outline",
+          size: "large",
           text: "continue_with",
           shape: "pill",
           width: "320"
-        } 
+        }
       );
     };
   });
-</script>
 
+</script>
 <div class="container">
   <div class="card">
     <h1 class="logo">ClipLumia</h1>
