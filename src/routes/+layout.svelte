@@ -10,7 +10,7 @@
   <div class="footer-content">
     <p class="footer-mail">
       <a href="https://mail.google.com/mail/?view=cm&fs=1&to=contact.cliplumia@gmail.com" target="_blank">
-  📧 contact.cliplumia@gmail.com
+  📧 contact@cliplumia.com
 </a>
     </p>
     
