@@ -12,9 +12,9 @@
       <p class="subtitle">Forfait simple. <span class="gold-chrome">Zéro arnaque.</span></p>
 
       <div class="arguments">
-        <p><strong class="gold-chrome">✓ STOP LES CRÉDITS 💰 :</strong>  Pas de compteur qui stresse.</p>
-        <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane AVANT VALADATION 
-                                         Tu kiffes ? Tu valides. Tu kiffes pas ? NON DECOMPTER SUR TON FORFAIT .</p>
+        <p><strong class="gold-chrome">✓ STOP LES CRÉDITS  :</strong>  Pas de compteur qui stresse.</p>
+       <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane avant vaLidation </p>
+                             Tu kiffes ? Tu valides.= 1 sur forfait  Tu kiffes pas ? rejeter = 0 sur forfait  .</p>
       </div>
 
       <div class="cta">
