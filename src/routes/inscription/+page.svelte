@@ -255,7 +255,4 @@
     color: rgba(255, 255, 255, 0.5);
     font-size: 0.9rem;
     margin-top: 20px;
-     }
-</style>
-  }
-</style>
+    }
