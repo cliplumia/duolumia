@@ -348,13 +348,10 @@
   transform: scale(1);
 }
 
-<style>
-
 .content {
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 20px;
 }
 
 .logo {
