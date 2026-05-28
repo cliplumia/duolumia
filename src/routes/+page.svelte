@@ -12,9 +12,9 @@
       <p class="subtitle">Forfait simple. <span class="gold-chrome">Zéro arnaque.</span></p>
 
       <div class="arguments">
-        <p><strong class="gold-chrome">✓ STOP LES CRÉDITS  :</strong>  Pas de compteur qui stresse.</p>
-       <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane avant vaLidation </p>
-                             Tu kiffes ? Tu valides.= 1 sur forfait  Tu kiffes pas ? rejeter = 0 sur forfait  .</p>
+      <p><strong class="gold-chrome">✓ STOP LES CRÉDITS  :</strong>  Pas de compteur qui stresse.</p>
+     <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane avant vaLidation </p>
+                    <p>Tu kiffes ? Tu valides.= 1 sur forfait  Tu kiffes pas ? rejeter = 0 sur forfait  .</p>
       </div>
 
       <div class="cta">
@@ -350,3 +350,78 @@
     }
   }
 </style>
+
+/* CENTRAGE SECTION ARGUMENTS */
+.content {
+  text-align: center; /* Centre tout le bloc */
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 15px;
+  text-shadow: 0 0 30px rgba(201, 168, 106, 0.5); /* Halo gold */
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: #fff;
+  margin-bottom: 50px;
+}
+
+.gold-chrome {
+  color: #C9A86A; /* Gold Chrome */
+  font-weight: 700;
+}
+
+.arguments {
+  text-align: center; /* Centre les arguments */
+  margin: 40px auto;
+  max-width: 650px; /* Largeur max pour pas que ça fasse trop large */
+}
+
+.arguments p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8; /* Espacement lignes = plus aéré */
+  margin-bottom: 20px; /* Espace entre chaque argument */
+}
+
+.arguments strong.gold-chrome {
+  display: block; /* Le titre gold passe à la ligne */
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+
+.cta {
+  margin: 50px 0 20px 0;
+}
+
+.btn-principal {
+  background: linear-gradient(135deg, #C9A86A 0%, #B69852 100%);
+  color: #1A0B2E;
+  padding: 18px 45px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: inline-block;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(201, 168, 106, 0.3);
+}
+
+.btn-principal:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 40px rgba(201, 168, 106, 0.5);
+}
+
+.reassurance {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  margin-top: 15px;
+}
+
