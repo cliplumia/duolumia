@@ -14,7 +14,7 @@
       <div class="arguments">
       <p><strong class="gold-chrome">✓ STOP LES CRÉDITS  :</strong>  Pas de compteur qui stresse.</p>
      <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane avant vaLidation </p>
-                    <p>Tu kiffes ? Tu valides.= 1 sur forfait  Tu kiffes pas ? rejeter = 0 sur forfait  .</p>
+                           <p>Tu kiffes ? Tu valides.= 1 sur forfait  Tu kiffes pas ? rejeter = 0 sur forfait  .</p>
       </div>
 
       <div class="cta">
@@ -344,16 +344,12 @@
     .hero {
       padding-top: 100px;
     }
+ .carte.highlight {
+  transform: scale(1);
+}
 
-    .carte.highlight {
-      transform: scale(1);
-    }
-  }
-</style>
-
-/* CENTRAGE SECTION ARGUMENTS */
 .content {
-  text-align: center; /* Centre tout le bloc */
+  text-align: center;
   max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
@@ -364,7 +360,7 @@
   font-weight: 800;
   color: #fff;
   margin-bottom: 15px;
-  text-shadow: 0 0 30px rgba(201, 168, 106, 0.5); /* Halo gold */
+  text-shadow: 0 0 30px rgba(201, 168, 106, 0.5);
 }
 
 .subtitle {
@@ -373,26 +369,21 @@
   margin-bottom: 50px;
 }
 
-.gold-chrome {
-  color: #C9A86A; /* Gold Chrome */
-  font-weight: 700;
-}
-
 .arguments {
-  text-align: center; /* Centre les arguments */
+  text-align: center;
   margin: 40px auto;
-  max-width: 650px; /* Largeur max pour pas que ça fasse trop large */
+  max-width: 650px;
 }
 
 .arguments p {
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.9);
-  line-height: 1.8; /* Espacement lignes = plus aéré */
-  margin-bottom: 20px; /* Espace entre chaque argument */
+  line-height: 1.8;
+  margin-bottom: 20px;
 }
 
 .arguments strong.gold-chrome {
-  display: block; /* Le titre gold passe à la ligne */
+  display: block;
   margin-bottom: 8px;
   font-size: 1.2rem;
 }
@@ -425,3 +416,4 @@
   margin-top: 15px;
 }
 
+</style>
