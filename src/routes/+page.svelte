@@ -348,6 +348,8 @@
   transform: scale(1);
 }
 
+<style>
+
 .content {
   text-align: center;
   max-width: 800px;
