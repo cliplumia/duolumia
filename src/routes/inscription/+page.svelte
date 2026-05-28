@@ -256,3 +256,4 @@
     font-size: 0.9rem;
     margin-top: 20px;
     }
+ </style>
