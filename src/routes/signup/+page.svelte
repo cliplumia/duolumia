@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
   import { goto } from '$app/navigation'; // ← nouveau
-
+  import { PUBLIC_GOOGLE_CLIENT_ID } from '$env/static/public';
   let plan = $page.url.searchParams.get('plan') || 'starter';
 
   onMount(() => {
@@ -13,7 +13,7 @@
 
     script.onload = () => {
       google.accounts.id.initialize({
-        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        client_id: PUBLIC_GOOGLE_CLIENT_ID,
         callback: (response) => {
           console.log('Plan:', plan);
           console.log('Token Google:', response.credential);
