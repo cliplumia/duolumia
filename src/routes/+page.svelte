@@ -12,9 +12,9 @@
       <p class="subtitle">Forfait simple. <span class="gold-chrome">Zéro arnaque.</span></p>
 
       <div class="arguments">
-      <p><strong class="gold-chrome">✓ STOP LES CRÉDITS  :</strong>  Pas de compteur qui stresse.</p>
-     <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane avant vaLidation </p>
-                           <p>Tu kiffes ? Tu valides.= 1 sur forfait  Tu kiffes pas ? rejeter = 0 sur forfait  .</p>
+        <p><strong class="gold-chrome">✓ STOP LES CRÉDITS :</strong> Pas de compteur qui stresse.</p>
+  <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane avant validation</p>
+        <p>Tu kiffes ? Tu valides = 1 sur forfait. Tu kiffes pas ? Rejeter = 0 sur forfait.</p>
       </div>
 
       <div class="cta">
@@ -132,15 +132,14 @@
 
   .content {
     max-width: 800px;
+    text-align: center;
   }
 
   .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 5rem; /* GROSSI */
+    font-size: 5rem;
     font-weight: 900;
-    margin: 0 0 3rem 0; /* DESCENDU */
-    
-    /* GOLD CHROME */
+    margin: 0 0 3rem 0;
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -156,8 +155,8 @@
   }
 
   .arguments {
-    text-align: left;
-    max-width: 600px;
+    text-align: center;
+    max-width: 650px;
     margin: 0 auto 3rem auto;
   }
 
@@ -166,6 +165,12 @@
     line-height: 1.8;
     margin: 1rem 0;
     color: #fff;
+  }
+
+  .arguments strong.gold-chrome {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
   }
 
   .cta {
@@ -344,75 +349,9 @@
     .hero {
       padding-top: 100px;
     }
- .carte.highlight {
-  transform: scale(1);
-}
-
-.content {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.logo {
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 15px;
-  text-shadow: 0 0 30px rgba(201, 168, 106, 0.5);
-}
-
-.subtitle {
-  font-size: 1.3rem;
-  color: #fff;
-  margin-bottom: 50px;
-}
-
-.arguments {
-  text-align: center;
-  margin: 40px auto;
-  max-width: 650px;
-}
-
-.arguments p {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.8;
-  margin-bottom: 20px;
-}
-
-.arguments strong.gold-chrome {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 1.2rem;
-}
-
-.cta {
-  margin: 50px 0 20px 0;
-}
-
-.btn-principal {
-  background: linear-gradient(135deg, #C9A86A 0%, #B69852 100%);
-  color: #1A0B2E;
-  padding: 18px 45px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 1.1rem;
-  display: inline-block;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 30px rgba(201, 168, 106, 0.3);
-}
-
-.btn-principal:hover {
-  transform: scale(1.05);
-  box-shadow: 0 15px 40px rgba(201, 168, 106, 0.5);
-}
-
-.reassurance {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.9rem;
-  margin-top: 15px;
-}
-
+    
+    .carte.highlight {
+      transform: scale(1);
+    }
+  }
 </style>
