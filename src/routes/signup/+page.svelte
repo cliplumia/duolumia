@@ -13,7 +13,7 @@
 
     script.onload = () => {
       google.accounts.id.initialize({
-       client_id: import.meta.env.PUBLIC_GOOGLE_CLIENT_ID,
+       client_id: "1018792613471-q5jbulkeeg0dp5b5d4vvrhdcgl5sjn6e.apps.googleusercontent.com",
         callback: (response) => {
           console.log('Plan:', plan);
           console.log('Token Google:', response.credential);
