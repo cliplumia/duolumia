@@ -5,7 +5,7 @@ export async function POST({ request, platform }) {
   try {
     const { token, plan } = await request.json();
 
-    if (!token ||!plan) {
+    if (!token || !plan) {
       return json({ error: 'Token ou plan manquant' }, { status: 400 });
     }
 
@@ -13,7 +13,7 @@ export async function POST({ request, platform }) {
     const GOOGLE_CLIENT_SECRET = platform?.env?.GOOGLE_CLIENT_SECRET;
     const DB = platform?.env?.BD;
 
-    if (!GOOGLE_CLIENT_ID ||!GOOGLE_CLIENT_SECRET) {
+    if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
       console.error('❌ Variables d\'environnement manquantes');
       return json({ error: 'Configuration serveur incomplète' }, { status: 500 });
     }
@@ -36,12 +36,12 @@ export async function POST({ request, platform }) {
 
       try {
         const existing = await DB.prepare(
-          'SELECT id FROM utilisateurs WHERE google_id =?'
+          'SELECT id FROM utilisateurs WHERE google_id = ?'
         ).bind(googleId).first();
 
         if (existing) {
           await DB.prepare(
-            'UPDATE utilisateurs SET email =?, nom =?, plan =?, mis_a_jour_a =? WHERE google_id =?'
+            'UPDATE utilisateurs SET email = ?, nom = ?, plan = ?, mis_a_jour_a = ? WHERE google_id = ?'
           ).bind(userEmail, userName, plan, now, googleId).run();
 
           console.log('✅ Utilisateur mis à jour:', userEmail);
@@ -57,7 +57,7 @@ export async function POST({ request, platform }) {
           }, { status: 200 });
         } else {
           await DB.prepare(
-            'INSERT INTO utilisateurs (id, google_id, email, nom, plan, cree_a, mis_a_jour_a) VALUES (?,?,?,?,?,?,?)'
+            'INSERT INTO utilisateurs (id, google_id, email, nom, plan, cree_a, mis_a_jour_a) VALUES (?, ?, ?, ?, ?, ?, ?)'
           ).bind(userId, googleId, userEmail, userName, plan, now, now).run();
 
           console.log('✅ Nouvel utilisateur créé:', userEmail);
@@ -94,4 +94,4 @@ export async function POST({ request, platform }) {
       details: error.message
     }, { status: 500 });
   }
-
+}
