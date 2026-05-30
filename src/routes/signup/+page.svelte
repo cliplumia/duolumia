@@ -18,7 +18,6 @@
           console.log('Plan: ', plan);
           console.log('Token Google: ', response.credential);
           
-          // 1. On envoie le token au backend pour créer l'user + session
           const res = await fetch('/api/auth/google', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -28,7 +27,6 @@
             })
           });
 
-          // 2. Si le backend dit OK, on redirige
           if (res.ok) {
             goto('/dashboard');
           } else {
