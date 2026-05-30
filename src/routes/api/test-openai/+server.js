@@ -9,7 +9,6 @@ export async function POST({ request }) {
     return json({ error: 'Accès refusé' }, { status: 401 });
   }
 
-  // 2. TON CODE OPENAI - J'AI GARDÉ TA LOGIQUE
   try {
     const response = await fetch('https://api.openai.com/v1/responses', {
       method: 'POST',
@@ -39,7 +38,3 @@ export async function POST({ request }) {
   } catch (error) {
     return json({ error: 'Erreur serveur' }, { status: 500 });
   }
-}
-
-        
-       
