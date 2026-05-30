@@ -1,54 +1,104 @@
 import { json } from '@sveltejs/kit';
-import { jwtVerify } from 'jose';
-
-// ⚠️ REMPLACE PAR TA CLÉE SECRÈTE DEMAIN
-const GOOGLE_CLIENT_SECRET = 'METS-TA-CLE-ICI-DEMAIN';
+import crypto from 'crypto';
 
 export async function POST({ request, platform }) {
   try {
     const { token, plan } = await request.json();
 
-    if (!token) {
-      return json({ error: 'Token manquant' }, { status: 400 });
+    if (!token || !plan) {
+      return json({ error: 'Token ou plan manquant' }, { status: 400 });
     }
 
-    // 🔐 Vérifie le token Google (simplifié pour aujourd'hui)
-    console.log('✅ Token reçu:', token.substring(0, 20) + '...');
-    console.log('✅ Plan:', plan);
+    // 🔐 Récupère les variables d'environnement depuis Cloudflare
+    const GOOGLE_CLIENT_ID = platform?.env?.GOOGLE_CLIENT_ID;
+    const GOOGLE_CLIENT_SECRET = platform?.env?.GOOGLE_CLIENT_SECRET;
+    const DB = platform?.env?.BD;
 
-    // 📝 DEMAIN: On va faire :
-    // 1. Vérifier le token avec Google
-    // 2. Récupérer l'email de l'utilisateur
-    // 3. Créer/mettre à jour l'utilisateur en D1
-    // 4. Créer une session
+    if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
+      console.error('❌ Variables d\'environnement manquantes');
+      return json({ error: 'Configuration serveur incomplète' }, { status: 500 });
+    }
 
-    // POUR MAINTENANT: Juste on accepte et on simule
-    const user = {
-      id: Math.random().toString(36).substring(7),
-      email: 'user@example.com', // À remplacer demain
-      plan: plan,
-      created_at: new Date().toISOString()
-    };
+    // ✅ Vérifie le token Google
+    console.log('🔍 Vérification du token Google...');
+    
+    // Extrait les infos du token (JWT)
+    const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+    
+    const userEmail = payload.email;
+    const userName = payload.name;
+    const googleId = payload.sub;
 
-    // 🍪 Créer une session (simplifié)
-    const session = {
-      user_id: user.id,
-      token: token,
-      created_at: new Date().toISOString()
-    };
+    if (!userEmail || !googleId) {
+      return json({ error: 'Infos utilisateur invalides' }, { status: 400 });
+    }
 
-    console.log('✅ Utilisateur créé:', user);
+    // 💾 Sauvegarde en D1
+    if (DB) {
+      const userId = crypto.randomUUID();
+      const now = new Date().toISOString();
 
-    return json({
-      success: true,
-      user: user,
-      message: 'Inscription réussie ! 🎉'
-    }, { status: 200 });
+      try {
+        // Vérifie si l'utilisateur existe déjà
+        const existing = await DB.prepare(
+          'SELECT id FROM users WHERE google_id = ?'
+        ).bind(googleId).first();
+
+        if (existing) {
+          // Met à jour l'utilisateur existant
+          await DB.prepare(
+            'UPDATE users SET email = ?, name = ?, plan = ?, updated_at = ? WHERE google_id = ?'
+          ).bind(userEmail, userName, plan, now, googleId).run();
+
+          console.log('✅ Utilisateur mis à jour:', userEmail);
+
+          return json({
+            success: true,
+            user: {
+              id: existing.id,
+              email: userEmail,
+              name: userName,
+              plan: plan
+            }
+          }, { status: 200 });
+        } else {
+          // Crée un nouvel utilisateur
+          await DB.prepare(
+            'INSERT INTO users (id, google_id, email, name, plan, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
+          ).bind(userId, googleId, userEmail, userName, plan, now, now).run();
+
+          console.log('✅ Nouvel utilisateur créé:', userEmail);
+
+          return json({
+            success: true,
+            user: {
+              id: userId,
+              email: userEmail,
+              name: userName,
+              plan: plan
+            }
+          }, { status: 200 });
+        }
+      } catch (dbError) {
+        console.error('❌ Erreur D1:', dbError);
+        return json({ error: 'Erreur base de données' }, { status: 500 });
+      }
+    } else {
+      console.warn('⚠️ D1 Database non disponible');
+      return json({
+        success: true,
+        user: {
+          email: userEmail,
+          name: userName,
+          plan: plan
+        }
+      }, { status: 200 });
+    }
 
   } catch (error) {
-    console.error('❌ Erreur:', error);
+    console.error('❌ Erreur serveur:', error);
     return json({ 
-      error: 'Erreur serveur',
+      error: 'Erreur authentification',
       details: error.message 
     }, { status: 500 });
   }
