@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import crypto from 'crypto';
 
-export async function POST({ request, platform }) {
+export async function POST({ request, platform }) 
   try {
     const { token, plan } = await request.json();
 
@@ -9,7 +9,6 @@ export async function POST({ request, platform }) {
       return json({ error: 'Token ou plan manquant' }, { status: 400 });
     }
 
-    // 🔐 Récupère les variables d'environnement depuis Cloudflare
     const GOOGLE_CLIENT_ID = platform?.env?.GOOGLE_CLIENT_ID;
     const GOOGLE_CLIENT_SECRET = platform?.env?.GOOGLE_CLIENT_SECRET;
     const DB = platform?.env?.BD;
@@ -19,10 +18,9 @@ export async function POST({ request, platform }) {
       return json({ error: 'Configuration serveur incomplète' }, { status: 500 });
     }
 
-    // ✅ Vérifie le token Google
-    console.log('🔍 Vérification du token Google...');
+     console.log('🔍 Vérification du token Google...');
     
-    // Extrait les infos du token (JWT)
+   
     const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
     
     const userEmail = payload.email;
@@ -33,19 +31,19 @@ export async function POST({ request, platform }) {
       return json({ error: 'Infos utilisateur invalides' }, { status: 400 });
     }
 
-    // 💾 Sauvegarde en D1
+   
     if (DB) {
       const userId = crypto.randomUUID();
       const now = new Date().toISOString();
 
       try {
-        // Vérifie si l'utilisateur existe déjà
+       
         const existing = await DB.prepare(
           'SELECT id FROM users WHERE google_id = ?'
         ).bind(googleId).first();
 
         if (existing) {
-          // Met à jour l'utilisateur existant
+         
           await DB.prepare(
             'UPDATE users SET email = ?, name = ?, plan = ?, updated_at = ? WHERE google_id = ?'
           ).bind(userEmail, userName, plan, now, googleId).run();
@@ -61,8 +59,9 @@ export async function POST({ request, platform }) {
               plan: plan
             }
           }, { status: 200 });
-        } else {
-          // Crée un nouvel utilisateur
+        } else 
+        {
+          
           await DB.prepare(
             'INSERT INTO users (id, google_id, email, name, plan, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
           ).bind(userId, googleId, userEmail, userName, plan, now, now).run();
