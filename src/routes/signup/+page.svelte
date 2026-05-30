@@ -54,8 +54,7 @@
     <h1 class="logo">Cliplumia</h1>
     <h2>Finalise ton inscription</h2>
     <p class="plan">Plan sélectionné : <span class="plan-name">{plan.toUpperCase()}</span></p>
-    
-    <!-- C'EST CA QUI MANQUAIT : Le bouton Google -->
+
     <div id="googleBtn"></div>
     
     <p class="secure">🔒 Connexion 100% sécurisée avec Google</p>
