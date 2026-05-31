@@ -1,23 +1,25 @@
 <script>
-  import { onMount } from 'svelte';
+  export let data;
   
-  // Plus tard on récupèrera le vrai nom du user ici
-  let userName = 'DEV';
-  let userPlan = 'STUDIO'; // Temporaire
+  function logout() {
+    document.cookie = 'user_id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    window.location.href = '/';
+  }
 </script>
 
 <div class="container">
   <div class="card">
     <h1 class="logo">ClipLumia</h1>
-    <h2>Bienvenue {userName} !</h2>
-    <p class="plan">Ton plan actuel : <span class="plan-name">{userPlan}</span></p>
+    <h2>Bienvenue {data.user.nom || 'Utilisateur'} !</h2>
     
-    <div class="content">
-      <p>Ton dashboard arrive très bientôt 🚀</p>
-      <p class="secure">🔒 Espace 100% sécurisé</p>
+    <div class="user-info">
+      <p class="email">📧 {data.user.email}</p>
+      <p class="plan">Ton plan : <span class="plan-name">{data.user.plan?.toUpperCase() || 'STARTER'}</span></p>
     </div>
-
-    <a href="/" class="back">← Retour à l'accueil</a>
+    
+    <div class="actions">
+      <button class="btn-logout" on:click={logout}>← Déconnexion</button>
+    </div>
   </div>
 </div>
 
@@ -65,10 +67,21 @@
     font-weight: 400;
   }
 
+  .user-info {
+    margin: 25px 0;
+  }
+
+  .email {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    margin: 10px 0;
+    word-break: break-all;
+  }
+
   .plan {
     color: #fff;
     font-size: 1.2rem;
-    margin-bottom: 35px;
+    margin: 20px 0 35px 0;
   }
 
   .plan-name {
@@ -79,32 +92,26 @@
     filter: drop-shadow(0 0 15px rgba(191, 149, 63, 0.6));
   }
 
-  .content {
-    margin: 25px 0;
+  .actions {
+    margin-top: 30px;
   }
 
-  .content p {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1rem;
-    margin: 15px 0;
-  }
-
-  .secure {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.95rem;
-    margin: 25px 0 15px 0;
-  }
-
-  .back {
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-decoration: none;
+  .btn-logout {
+    background: transparent;
+    border: 1px solid rgba(191, 149, 63, 0.5);
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 25px;
     font-size: 1rem;
     font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
 
-  .back:hover {
-    filter: drop-shadow(0 0 10px rgba(191, 149, 63, 0.8));
+  .btn-logout:hover {
+    background: rgba(191, 149, 63, 0.2);
+    filter: drop-shadow(0 0 15px rgba(191, 149, 63, 0.8));
+    transform: translateY(-2px);
   }
 </style>
+
