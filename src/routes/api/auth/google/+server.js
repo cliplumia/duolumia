@@ -17,7 +17,7 @@ export async function POST({ request, platform }) {
 
     const GOOGLE_CLIENT_ID = platform?.env?.GOOGLE_CLIENT_ID;
     const GOOGLE_CLIENT_SECRET = platform?.env?.GOOGLE_CLIENT_SECRET;
-    const DB = platform?.env?.BD;
+    const BD = platform?.env?;
 
     if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
       return json({ error: 'Configuration serveur incomplete' }, { status: 500 });
@@ -32,7 +32,7 @@ export async function POST({ request, platform }) {
       return json({ error: 'Infos utilisateur invalides' }, { status: 400 });
     }
 
-    if (DB) {
+    if (BD) {
       const userId = crypto.randomUUID();
       const now = new Date().toISOString();
 
@@ -42,7 +42,7 @@ export async function POST({ request, platform }) {
         ).bind(googleId).first();
 
         if (existing) {
-          await DB.prepare(
+          await BD.prepare(
             'UPDATE utilisateurs SET email = ?, nom = ?, plan = ?, mis_a_jour_a = ? WHERE google_id = ?'
           ).bind(userEmail, userName, plan, now, googleId).run();
 
@@ -51,7 +51,7 @@ export async function POST({ request, platform }) {
             user: { id: existing.id, email: userEmail, name: userName, plan }
           });
         } else {
-          await DB.prepare(
+          await BD.prepare(
             'INSERT INTO utilisateurs (id, google_id, email, nom, plan, cree_a, mis_a_jour_a) VALUES (?, ?, ?, ?, ?, ?, ?)'
           ).bind(userId, googleId, userEmail, userName, plan, now, now).run();
 
@@ -60,8 +60,8 @@ export async function POST({ request, platform }) {
             user: { id: userId, email: userEmail, name: userName, plan }
           });
         }
-      } catch (dbError) {
-        console.error('Erreur D1:', dbError);
+      } catch (Error) {
+        console.error('Erreur D1:', Error);
         return json({ error: 'Erreur base de donnees' }, { status: 500 });
       }
     } else {
