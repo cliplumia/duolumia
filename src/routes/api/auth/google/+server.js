@@ -1,5 +1,11 @@
 import { json } from '@sveltejs/kit';
-import crypto from 'crypto';
+
+function decodeJwtPayload(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const padding = '='.repeat((4 - base64.length % 4) % 4);
+  return JSON.parse(atob(base64 + padding));
+}
 
 export async function POST({ request, platform }) {
   try {
@@ -20,18 +26,17 @@ export async function POST({ request, platform }) {
 
     console.log('🔍 Vérification du token Google...');
 
-    const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-
+    const payload = decodeJwtPayload(token);
     const userEmail = payload.email;
     const userName = payload.name;
     const googleId = payload.sub;
 
-    if (!userEmail ||!googleId) {
+    if (!userEmail || !googleId) {
       return json({ error: 'Infos utilisateur invalides' }, { status: 400 });
     }
 
     if (DB) {
-      const userId = crypto.randomUUID();
+      const userId = crypto.randomUUID(); // API web native, pas besoin d'import
       const now = new Date().toISOString();
 
       try {
@@ -44,54 +49,32 @@ export async function POST({ request, platform }) {
             'UPDATE utilisateurs SET email = ?, nom = ?, plan = ?, mis_a_jour_a = ? WHERE google_id = ?'
           ).bind(userEmail, userName, plan, now, googleId).run();
 
-          console.log('✅ Utilisateur mis à jour:', userEmail);
-
           return json({
             success: true,
-            user: {
-              id: existing.id,
-              email: userEmail,
-              name: userName,
-              plan: plan
-            }
-          }, { status: 200 });
+            user: { id: existing.id, email: userEmail, name: userName, plan }
+          });
         } else {
           await DB.prepare(
             'INSERT INTO utilisateurs (id, google_id, email, nom, plan, cree_a, mis_a_jour_a) VALUES (?, ?, ?, ?, ?, ?, ?)'
           ).bind(userId, googleId, userEmail, userName, plan, now, now).run();
 
-          console.log('✅ Nouvel utilisateur créé:', userEmail);
-
           return json({
             success: true,
-            user: {
-              id: userId,
-              email: userEmail,
-              name: userName,
-              plan: plan
-            }
-          }, { status: 200 });
+            user: { id: userId, email: userEmail, name: userName, plan }
+          });
         }
       } catch (dbError) {
         console.error('❌ Erreur D1:', dbError);
         return json({ error: 'Erreur base de données' }, { status: 500 });
       }
     } else {
-      console.warn('⚠️ D1 Database non disponible');
       return json({
         success: true,
-        user: {
-          email: userEmail,
-          name: userName,
-          plan: plan
-        }
-      }, { status: 200 });
+        user: { email: userEmail, name: userName, plan }
+      });
     }
   } catch (error) {
     console.error('❌ Erreur serveur:', error);
-    return json({
-      error: 'Erreur authentification',
-      details: error.message
-    }, { status: 500 });
+    return json({ error: 'Erreur authentification', details: error.message }, { status: 500 });
   }
 }
