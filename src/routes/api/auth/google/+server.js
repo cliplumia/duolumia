@@ -60,17 +60,20 @@ export async function POST({ request, platform }) {
             user: { id: userId, email: userEmail, name: userName, plan }
           });
         }
-      } catch (Error) {
+      }
+      catch (Error) {
         console.error('Erreur D1:', Error);
         return json({ error: 'Erreur base de donnees' }, { status: 500 });
       }
-    } else {
+    } 
+    else {
       return json({
         success: true,
         user: { email: userEmail, name: userName, plan }
       });
     }
-  } catch (error) {
+  } 
+  catch (error) {
     console.error('Erreur serveur:', error);
     return json({ error: 'Erreur authentification', details: error.message }, { status: 500 });
   }
