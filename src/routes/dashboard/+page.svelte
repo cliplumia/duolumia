@@ -24,7 +24,6 @@
 </div>
 
 <style>
-  /* === FOND VIOLET SATINÉ === */
   .container {
     min-height: 100vh;
     background: radial-gradient(ellipse at top, #5a3696 0%, #3d206b 50%, #2d1b4e 100%);
@@ -36,7 +35,6 @@
     font-family: 'Arial', sans-serif;
   }
 
-  /* === CARTE VITRÉE === */
   .card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(191, 149, 63, 0.5);
@@ -49,7 +47,6 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 
-  /* === GOLD CHROME - 45DEG 5 COULEURS === */
   .logo {
     font-size: 3rem;
     font-weight: bold;
@@ -114,4 +111,5 @@
     transform: translateY(-2px);
   }
 </style>
+
 
