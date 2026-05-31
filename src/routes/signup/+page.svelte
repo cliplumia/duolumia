@@ -18,23 +18,22 @@
           console.log('Plan: ', plan);
           console.log('Token Google: ', response.credential);
           
-          const res = await fetch('/api/auth/google', {
+         const res = await fetch('/api/auth/google', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ token: response.credential, plan: plan })
+  body: JSON.stringify({ 
+    token: response.credential,
+    plan: plan 
+  })
 });
-
-const data = await res.json();
-alert('Status: ' + res.status + '\nReponse:\n' + JSON.stringify(data, null, 2));
 
 if (res.ok) {
   goto('/dashboard');
-          } 
-            else {
-            alert('Erreur connexion. Réessaie.');
-          }
-        }
-      });
+} else {
+  const data = await res.json();
+  alert('Erreur : ' + (data.error || 'Problème de connexion'));
+}
+
 
       google.accounts.id.renderButton(
         document.getElementById("googleBtn"),
