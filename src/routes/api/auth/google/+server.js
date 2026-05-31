@@ -1,6 +1,5 @@
 import { json } from '@sveltejs/kit';
 
-// Décode JWT sans atob, sans Buffer, compatible Cloudflare Pages
 function decodeJwtPayload(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -73,7 +72,6 @@ export async function POST({ request, platform, cookies }) {
       userId = uid;
     }
 
-    // Cookie
     cookies.set('user_id', userId, {
       path: '/',
       httpOnly: true,
@@ -88,6 +86,5 @@ export async function POST({ request, platform, cookies }) {
     return json({ error: err.message }, { status: 500 });
   }
 }
-
 
    
