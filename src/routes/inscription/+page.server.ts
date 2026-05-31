@@ -6,7 +6,7 @@ export const actions: Actions = {
     const email = data.get('email');
     const nom = data.get('nom');
 
-    const bd = platform.env.BD; // BD = le nom que t'as mis dans Cloudflare
+    const bd = platform.env.BD; 
 
     await bd.prepare(
       'INSERT INTO clients (nom, email) VALUES (?, ?)'
