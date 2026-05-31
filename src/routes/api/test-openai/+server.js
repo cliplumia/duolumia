@@ -2,8 +2,8 @@ import { env } from '$env/dynamic/private';
 import { json } from '@sveltejs/kit';
 
 export async function POST({ request }) {
- 
-  const secret = request.headers.get('x-api-secret');
+ const secret = request.headers.get('x-api-secret');
+  }
   
   if (secret !== env.API_SECRET) {
     return json({ error: 'Accès refusé' }, { status: 401 });
