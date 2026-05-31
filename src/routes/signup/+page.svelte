@@ -18,24 +18,28 @@
           console.log('Plan: ', plan);
           console.log('Token Google: ', response.credential);
           
-          const res = await fetch('/api/auth/google', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              token: response.credential,
-              plan: plan 
-            })
-          });
+         const res = await fetch('/api/auth/google', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ token: response.credential, plan: plan })
+});
 
-          if (res.ok) {
-            goto('/dashboard');
-          } else {
-            const data = await res.json();
-            alert('Erreur : ' + (data.error || 'Problème de connexion'));
-          }
-        }
-      });
+const text = await res.text();
+console.log('Reponse brute:', text);
 
+let data;
+try {
+  data = JSON.parse(text);
+} catch (e) {
+  alert('Erreur serveur: ' + text.substring(0, 300));
+  return;
+}
+
+if (res.ok) {
+  goto('/dashboard');
+} else {
+  alert('Erreur: ' + (data.error || 'Inconnue'));
+}
       google.accounts.id.renderButton(
         document.getElementById("googleBtn"),
         { 
