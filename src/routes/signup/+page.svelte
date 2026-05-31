@@ -15,40 +15,29 @@
       google.accounts.id.initialize({
         client_id: "1018792613471-j52k68g5qm7nrerqrpvqj9d5hkdt7vqe.apps.googleusercontent.com",
         callback: async (response) => {
-          console.log('Plan: ', plan);
-          console.log('Token Google: ', response.credential);
-          
-         const res = await fetch('/api/auth/google', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ token: response.credential, plan: plan })
-});
-
-const text = await res.text();
-console.log('Reponse brute:', text);
-
-let data;
-try {
-  data = JSON.parse(text);
-} catch (e) {
-  alert('Erreur serveur: ' + text.substring(0, 300));
-  return;
-}
-
-if (res.ok) {
-  goto('/dashboard');
-} else {
-  alert('Erreur: ' + (data.error || 'Inconnue'));
-}
-      google.accounts.id.renderButton(
-        document.getElementById("googleBtn"),
-        { 
-          theme: "outline", 
-          size: "large", 
-          text: "continue_with",
-          shape: "pill",
-          width: "320" 
+          const res = await fetch('/api/auth/google', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: response.credential, plan: plan })
+          });
+          const text = await res.text();
+          let data;
+          try { 
+            data = JSON.parse(text); 
+          } catch (e) { 
+            alert('Erreur: ' + text.substring(0,200)); 
+            return; 
+          }
+          if (res.ok) { 
+            goto('/dashboard'); 
+          } else { 
+            alert('Erreur: ' + (data.error||'Inconnue')); 
+          }
         }
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("googleBtn"), 
+        { theme: "outline", size: "large", text: "continue_with", shape: "pill", width: "320" }
       );
     };
   });
@@ -59,16 +48,13 @@ if (res.ok) {
     <h1 class="logo">Cliplumia</h1>
     <h2>Finalise ton inscription</h2>
     <p class="plan">Plan sélectionné : <span class="plan-name">{plan.toUpperCase()}</span></p>
-
     <div id="googleBtn"></div>
-    
     <p class="secure">🔒 Connexion 100% sécurisée avec Google</p>
     <a href="/" class="back">← Retour aux forfaits</a>
   </div>
 </div>
 
 <style>
-  /* === FOND VIOLET SATINÉ === */
   .container {
     min-height: 100vh;
     background: radial-gradient(ellipse at top, #5a3696 0%, #3d206b 50%, #2d1b4e 100%);
@@ -80,7 +66,6 @@ if (res.ok) {
     font-family: 'Arial', sans-serif;
   }
 
-  /* === CARTE VITRÉE === */
   .card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(191, 149, 63, 0.5);
@@ -93,7 +78,6 @@ if (res.ok) {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 
-  /* === GOLD CHROME - 45DEG 5 COULEURS === */
   .logo {
     font-size: 3rem;
     font-weight: bold;
@@ -150,3 +134,4 @@ if (res.ok) {
     filter: drop-shadow(0 0 10px rgba(191, 149, 63, 0.8));
   }
 </style>
+
