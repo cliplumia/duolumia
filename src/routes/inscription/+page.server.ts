@@ -8,7 +8,7 @@ export const actions: Actions = {
 
     const bd = platform.env.BD; // BD = le nom que t'as mis dans Cloudflare
 
-    await db.prepare(
+    await bd.prepare(
       'INSERT INTO clients (nom, email) VALUES (?, ?)'
     ).bind(nom, email).run();
 
