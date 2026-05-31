@@ -2,7 +2,7 @@ import { env } from '$env/dynamic/private';
 import { json } from '@sveltejs/kit';
 
 export async function POST({ request }) {
-  // 1. LE CADENAS - ON VÉRIFIE LE CODE SECRET
+ 
   const secret = request.headers.get('x-api-secret');
   
   if (secret !== env.API_SECRET) {
