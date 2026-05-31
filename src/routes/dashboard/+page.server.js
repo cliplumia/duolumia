@@ -17,3 +17,4 @@ export async function load({ platform, cookies }) {
 
   return { user };
 }
+
