@@ -1,11 +1,9 @@
-import { env } from '$env/dynamic/private';
 import { json } from '@sveltejs/kit';
 
-export async function POST({ request }) {
- const secret = request.headers.get('x-api-secret');
-  }
+export async function POST({ request, platform }) {
+  const secret = request.headers.get('x-api-secret');
   
-  if (secret !== env.API_SECRET) {
+  if (secret !== platform.env.API_SECRET) {
     return json({ error: 'Accès refusé' }, { status: 401 });
   }
 
@@ -13,7 +11,7 @@ export async function POST({ request }) {
     const response = await fetch('https://api.openai.com/v1/responses', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
+        'Authorization': `Bearer ${platform.env.OPENAI_API_KEY}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -38,3 +36,4 @@ export async function POST({ request }) {
   } catch (error) {
     return json({ error: 'Erreur serveur' }, { status: 500 });
   }
+}
