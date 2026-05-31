@@ -19,17 +19,18 @@
           console.log('Token Google: ', response.credential);
           
           const res = await fetch('/api/auth/google', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              token: response.credential,
-              plan: plan 
-            })
-          });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ token: response.credential, plan: plan })
+});
 
-          if (res.ok) {
-            goto('/dashboard');
-          } else {
+const data = await res.json();
+alert('Status: ' + res.status + '\nReponse:\n' + JSON.stringify(data, null, 2));
+
+if (res.ok) {
+  goto('/dashboard');
+          } 
+            else {
             alert('Erreur connexion. Réessaie.');
           }
         }
