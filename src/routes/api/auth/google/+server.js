@@ -20,15 +20,12 @@ export async function POST({ request, platform }) {
     const DB = platform?.env?.BD;
 
     if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
-      console.error('❌ Variables d\'environnement manquantes');
-      return json({ error: 'Configuration serveur incomplète' }, { status: 500 });
+      return json({ error: 'Configuration serveur incomplete' }, { status: 500 });
     }
-
-    console.log('🔍 Vérification du token Google...');
 
     const payload = decodeJwtPayload(token);
     const userEmail = payload.email;
-    const userName = payload.name;
+    const userName = payload.name || '';
     const googleId = payload.sub;
 
     if (!userEmail || !googleId) {
@@ -36,7 +33,7 @@ export async function POST({ request, platform }) {
     }
 
     if (DB) {
-      const userId = crypto.randomUUID(); // API web native, pas besoin d'import
+      const userId = crypto.randomUUID();
       const now = new Date().toISOString();
 
       try {
@@ -64,8 +61,8 @@ export async function POST({ request, platform }) {
           });
         }
       } catch (dbError) {
-        console.error('❌ Erreur D1:', dbError);
-        return json({ error: 'Erreur base de données' }, { status: 500 });
+        console.error('Erreur D1:', dbError);
+        return json({ error: 'Erreur base de donnees' }, { status: 500 });
       }
     } else {
       return json({
@@ -74,7 +71,7 @@ export async function POST({ request, platform }) {
       });
     }
   } catch (error) {
-    console.error('❌ Erreur serveur:', error);
+    console.error('Erreur serveur:', error);
     return json({ error: 'Erreur authentification', details: error.message }, { status: 500 });
   }
 }
