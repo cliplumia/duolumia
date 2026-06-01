@@ -111,14 +111,16 @@
     {/if}
     
     {#if validatedUrl}
-      <div class="result-box">
-        <p class="result-label">✅ Image validée - Sans filigrane</p>
+      <div class="result-section">
+        <div class="result-header">
+          <span class="result-tag">✅ IMAGE VALIDÉE</span>
+        </div>
         <img class="result-image" src={validatedUrl} alt="Résultat" />
-        <button class="btn-new" on:click={() => { validatedUrl = null; prompt = ''; }}>🎨 Nouvelle génération</button>
+        <button class="btn-new" on:click={() => { validatedUrl = null; prompt = ''; }}>
+          🎨 Créer une nouvelle image
+        </button>
       </div>
     {/if}
-  </div>
-</div>
 
 <style>
   .container {
