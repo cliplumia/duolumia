@@ -6,10 +6,6 @@ export async function POST({ request, platform, cookies }) {
     if (!userId) return json({ error: 'Non connecte' }, { status: 401 });
     
     const BD = platform.env.BD;
-    const OPENAI_KEY = platform.env.OPENAI_API_KEY;
-    
-    if (!OPENAI_KEY) return json({ error: 'OpenAI non configure' }, { status: 500 });
-    
     const user = await BD.prepare('SELECT * FROM utilisateurs WHERE id = ?').bind(userId).first();
     if (!user) return json({ error: 'Utilisateur inconnu' }, { status: 404 });
     
@@ -22,27 +18,10 @@ export async function POST({ request, platform, cookies }) {
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
     
-    const response = await fetch('https://api.openai.com/v1/images/generations', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_KEY}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'dall-e-3',
-        prompt: prompt,
-        size: '1024x1024',
-        quality: 'standard',
-        n: 1
-      })
-    });
+    // Pollinations.ai - Gratuit, pas besoin de clé API
+    const encodedPrompt = encodeURIComponent(prompt);
+    const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true&seed=${Date.now()}`;
     
-    const openaiData = await response.json();
-    if (!response.ok) {
-      return json({ error: openaiData.error?.message || 'Erreur OpenAI' }, { status: 500 });
-    }
-    
-    const imageUrl = openaiData.data[0].url;
     const genId = crypto.randomUUID();
     const now = new Date().toISOString();
     
