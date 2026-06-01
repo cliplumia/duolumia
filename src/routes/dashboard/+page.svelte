@@ -5,6 +5,20 @@
     document.cookie = 'user_id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
     window.location.href = '/';
   }
+  
+  async function payer(plan) {
+    const res = await fetch('/api/create-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan: plan })
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert('Erreur: ' + (data.error || 'Inconnue'));
+    }
+  }
 </script>
 
 <div class="container">
@@ -15,6 +29,14 @@
     <div class="user-info">
       <p class="email">📧 {data.user.email}</p>
       <p class="plan">Ton plan : <span class="plan-name">{data.user.plan?.toUpperCase() || 'STARTER'}</span></p>
+    </div>
+    
+    <div class="payment">
+      <p class="payment-title">💳 Changer de plan</p>
+      <button class="btn-payer" on:click={() => payer('starter')}>Starter 9€</button>
+      <button class="btn-payer" on:click={() => payer('standard')}>Standard 19€</button>
+      <button class="btn-payer" on:click={() => payer('pro')}>Pro 39€</button>
+      <button class="btn-payer" on:click={() => payer('studio')}>Studio 79€</button>
     </div>
     
     <div class="actions">
@@ -89,6 +111,37 @@
     filter: drop-shadow(0 0 15px rgba(191, 149, 63, 0.6));
   }
 
+  .payment {
+    margin: 30px 0;
+    padding: 20px 0;
+    border-top: 1px solid rgba(191, 149, 63, 0.3);
+    border-bottom: 1px solid rgba(191, 149, 63, 0.3);
+  }
+
+  .payment-title {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+  }
+
+  .btn-payer {
+    background: linear-gradient(45deg, #BF953F, #B38728);
+    border: none;
+    color: #fff;
+    padding: 10px 15px;
+    border
+     margin: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+
+  .btn-payer:hover {
+    filter: drop-shadow(0 0 10px rgba(191, 149, 63, 0.8));
+    transform: translateY(-2px);
+  }
+
   .actions {
     margin-top: 30px;
   }
@@ -111,5 +164,3 @@
     transform: translateY(-2px);
   }
 </style>
-
-
