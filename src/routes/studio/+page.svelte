@@ -277,17 +277,18 @@
     pointer-events: none;
   }
 
-  .watermark-overlay span {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 2.5rem;
-    font-weight: 900;
+ .watermark span {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.2rem;          /* AVANT c'était 3rem */
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 8px;
-    text-shadow: 0 0 20px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.8);
-    border: 4px solid rgba(255,255,255,0.8);
-    padding: 10px 30px;
+    letter-spacing: 4px;        /* AVANT c'était 10px */
+    text-shadow: 0 0 10px rgba(0,0,0,0.9);
+    border: 2px solid rgba(255,255,255,0.8);  /* AVANT 5px */
+    padding: 5px 15px;          /* AVANT 15px 40px */
     background: rgba(0,0,0,0.4);
     transform: rotate(-15deg);
+    opacity: 0.8;
   }
 
   .preview-info {
