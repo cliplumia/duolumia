@@ -40,32 +40,29 @@
     loading = false;
   }
   
-  async function valider() {
+   async function valider() {
     if (!generationId) return;
-    const res = await fetch('/api/validate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: generationId, action: 'validate' })
-    });
-    const result = await res.json();
-    if (result.success) {
-      validatedUrl = previewUrl;
-      previewUrl = null;
-      generationId = null;
+    try {
+      const res = await fetch('/api/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: generationId, action: 'validate' })
+      });
+      const result = await res.json();
+      
+      if (result.success) {
+        validatedUrl = previewUrl;
+        previewUrl = null;
+        generationId = null;
+        alert('✅ Image validée ! Tu peux faire clic droit → Enregistrer l\'image.');
+      } else {
+        alert('Erreur serveur: ' + (result.error || 'Inconnue'));
+      }
+    } catch (e) {
+      alert('Erreur: ' + e.message);
     }
   }
-  
-  async function rejeter() {
-    if (!generationId) return;
-    await fetch('/api/validate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: generationId, action: 'reject' })
-    });
-    previewUrl = null;
-    generationId = null;
-    validatedUrl = null;
-  }
+
 </script>
 
 <div class="container">
