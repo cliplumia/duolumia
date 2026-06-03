@@ -100,7 +100,7 @@
         <p class="preview-label">👁️ PREVIEW - FILIGRANE</p>
         
         <div class="preview-image">
-          <img src={previewUrl} alt="Preview" />
+          <img src="https://picsum.photos/400/400" alt="Test" />
           <div class="watermark-overlay">
             <span>CLIPLUMIA</span>
             <span>PREVIEW</span>
