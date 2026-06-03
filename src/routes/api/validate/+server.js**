@@ -11,6 +11,10 @@ export async function POST({ request, platform, cookies }) {
     if (!id || !action) return json({ error: 'Parametres manquants' }, { status: 400 });
     
     const user = await BD.prepare('SELECT * FROM utilisateurs WHERE id = ?').bind(userId).first();
+    
+    // ✅ AJOUT IMPORTANT : vérifier que l'utilisateur existe
+    if (!user) return json({ error: 'Utilisateur inconnu' }, { status: 404 });
+    
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
     
     if (action === 'validate') {
@@ -34,3 +38,4 @@ export async function POST({ request, platform, cookies }) {
     return json({ error: err.message }, { status: 500 });
   }
 }
+
