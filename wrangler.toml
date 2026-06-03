@@ -1,22 +1,12 @@
 name = "duolumia"
-main = "src/index.ts"
 compatibility_date = "2024-01-01"
-
-# Configuration Adapter SvelteKit + Cloudflare
-[env.production]
-routes = [
-  { pattern = "cliplumia.com" }
-]
 
 # D1 Database Binding
 [[d1_databases]]
 binding = "BD"
 database_name = "bd-clients"
-database_id = "bd-clients"
+database_id = "TON-UUID-REEL-ICI"  # Remplace par l'ID UUID de ta base D1
 
 # Variables d'environnement
-[env.production.vars]
+[vars]
 GOOGLE_CLIENT_ID = "1018792613471-j52k68g5qm7nrerqrpvqj9d5hkdt7vqe.apps.googleusercontent.com"
-
-[env.production.secrets]
-GOOGLE_CLIENT_SECRET = "METS-TA-CLE-SECRETE-ICI"
