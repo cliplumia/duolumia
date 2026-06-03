@@ -100,7 +100,7 @@
         <p class="preview-label">👁️ PREVIEW - FILIGRANE</p>
         
         <div class="preview-image">
-          <img src={previewUrl} alt="Preview" referrerpolicy="no-referrer" />
+         <img src={previewUrl} alt="Preview" />
           <div class="watermark-overlay">
             <span>CLIPLUMIA</span>
             <span>PREVIEW</span>
