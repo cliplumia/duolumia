@@ -4,11 +4,7 @@ compatibility_date = "2024-01-01"
 [[d1_databases]]
 binding = "BD"
 database_name = "bd-clients"
-database_id = "METS-ICI-TON-UUID"
-
-# AI Workers Binding (Images gratuites)
-[[ai]]
-binding = "AI"
+database_id = "6947fa57-e1be-4678-a31b-6cbcbac23ac4"
 
 [vars]
 GOOGLE_CLIENT_ID = "1018792613471-j52k68g5qm7nrerqrpvqj9d5hkdt7vqe.apps.googleusercontent.com"
