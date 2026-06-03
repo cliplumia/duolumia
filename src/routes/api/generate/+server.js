@@ -1,5 +1,14 @@
 import { json } from '@sveltejs/kit';
 
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
 export async function POST({ request, platform, cookies }) {
   try {
     const userId = cookies.get('user_id');
@@ -18,20 +27,25 @@ export async function POST({ request, platform, cookies }) {
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
     
-    // Pollinations.ai - Gratuit, pas besoin de clé API
-    const cleanPrompt = prompt.trim().replace(/\s+/g, ' ');
-    const encodedPrompt = encodeURIComponent(cleanPrompt);
-    const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true`;
-
+    // 🔥 CLOUDFLARE WORKERS AI - GRATUIT
+    const imageResponse = await platform.env.AI.run(
+      '@cf/stabilityai/stable-diffusion-xl-base-1.0',
+      { prompt }
+    );
     
+    // Convertit en base64 pour affichage direct
+    const base64 = arrayBufferToBase64(imageResponse);
+    const dataUrl = `data:image/png;base64,${base64}`;
+    
+    // Sauvegarde en base
     const genId = crypto.randomUUID();
     const now = new Date().toISOString();
     
     await BD.prepare(
       'INSERT INTO generations (id, user_id, type, prompt, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    ).bind(genId, userId, 'image', prompt, imageUrl, 'preview', now).run();
+    ).bind(genId, userId, 'image', prompt, dataUrl, 'preview', now).run();
     
-    return json({ success: true, url: imageUrl, id: genId });
+    return json({ success: true, url: dataUrl, id: genId });
     
   } catch (err) {
     return json({ error: err.message }, { status: 500 });
