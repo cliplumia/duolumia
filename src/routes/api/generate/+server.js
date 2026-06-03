@@ -1,14 +1,5 @@
 import { json } from '@sveltejs/kit';
 
-function arrayBufferToBase64(buffer) {
-  let binary = '';
-  const bytes = new Uint8Array(buffer);
-  for (let i = 0; i < bytes.byteLength; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
-}
-
 export async function POST({ request, platform, cookies }) {
   try {
     const userId = cookies.get('user_id');
@@ -33,8 +24,33 @@ export async function POST({ request, platform, cookies }) {
       { prompt }
     );
     
-    // Convertit en base64 pour affichage direct
-    const base64 = arrayBufferToBase64(imageResponse);
+    // Convertit la réponse en base64 (gère plusieurs formats)
+    let buffer;
+    if (imageResponse instanceof ReadableStream) {
+      const reader = imageResponse.getReader();
+      const chunks = [];
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+      }
+      const blob = new Blob(chunks);
+      buffer = await blob.arrayBuffer();
+    } else if (imageResponse instanceof ArrayBuffer) {
+      buffer = imageResponse;
+    } else if (imageResponse instanceof Uint8Array) {
+      buffer = imageResponse.buffer;
+    } else {
+      // Fallback
+      buffer = imageResponse;
+    }
+    
+    const bytes = new Uint8Array(buffer);
+    let binary = '';
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    const base64 = btoa(binary);
     const dataUrl = `data:image/png;base64,${base64}`;
     
     // Sauvegarde en base
@@ -48,6 +64,8 @@ export async function POST({ request, platform, cookies }) {
     return json({ success: true, url: dataUrl, id: genId });
     
   } catch (err) {
+    console.error('Generate error:', err);
     return json({ error: err.message }, { status: 500 });
   }
 }
+
