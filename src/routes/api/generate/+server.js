@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 
 export async function POST({ request, platform, cookies }) {
   try {
-    const userId = cookies.get('user_id');
+    const userId = cookies.get('user_id') || cookies.get('userid');
     if (!userId) return json({ error: 'Non connecte' }, { status: 401 });
     
     const BD = platform.env.BD;
@@ -18,34 +18,14 @@ export async function POST({ request, platform, cookies }) {
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
     
-    // 🔥 CLOUDFLARE WORKERS AI - GRATUIT
+    // Cloudflare Workers AI - Gratuit
     const imageResponse = await platform.env.AI.run(
       '@cf/stabilityai/stable-diffusion-xl-base-1.0',
       { prompt }
     );
     
-    // Convertit la réponse en base64 (gère plusieurs formats)
-    let buffer;
-    if (imageResponse instanceof ReadableStream) {
-      const reader = imageResponse.getReader();
-      const chunks = [];
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        chunks.push(value);
-      }
-      const blob = new Blob(chunks);
-      buffer = await blob.arrayBuffer();
-    } else if (imageResponse instanceof ArrayBuffer) {
-      buffer = imageResponse;
-    } else if (imageResponse instanceof Uint8Array) {
-      buffer = imageResponse.buffer;
-    } else {
-      // Fallback
-      buffer = imageResponse;
-    }
-    
-    const bytes = new Uint8Array(buffer);
+    // Convertit en base64 pour affichage
+    const bytes = new Uint8Array(imageResponse);
     let binary = '';
     for (let i = 0; i < bytes.byteLength; i++) {
       binary += String.fromCharCode(bytes[i]);
@@ -53,13 +33,13 @@ export async function POST({ request, platform, cookies }) {
     const base64 = btoa(binary);
     const dataUrl = `data:image/png;base64,${base64}`;
     
-    // Sauvegarde en base
+    // Sauvegarde en base SANS le base64 (trop gros pour D1)
     const genId = crypto.randomUUID();
     const now = new Date().toISOString();
     
     await BD.prepare(
       'INSERT INTO generations (id, user_id, type, prompt, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    ).bind(genId, userId, 'image', prompt, dataUrl, 'preview', now).run();
+    ).bind(genId, userId, 'image', prompt, 'cloudflare-ai', 'preview', now).run();
     
     return json({ success: true, url: dataUrl, id: genId });
     
@@ -68,4 +48,3 @@ export async function POST({ request, platform, cookies }) {
     return json({ error: err.message }, { status: 500 });
   }
 }
-
