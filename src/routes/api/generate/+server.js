@@ -19,10 +19,7 @@ export async function POST({ request, platform, cookies }) {
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
     
     // Pollinations.ai - Gratuit, pas besoin de clé API
-   const cleanPrompt = prompt.trim().replace(/\s+/g, ' ');
-   const encodedPrompt = encodeURIComponent(cleanPrompt);
-   const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true&seed=${Date.now()}`;
-
+    const imageUrl = 'https://image.pollinations.ai/prompt/cat?width=1024&height=1024&nologo=true';
     
     const genId = crypto.randomUUID();
     const now = new Date().toISOString();
