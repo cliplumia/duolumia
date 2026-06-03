@@ -40,7 +40,7 @@
     loading = false;
   }
   
-   async function valider() {
+  async function valider() {
     if (!generationId) return;
     try {
       const res = await fetch('/api/validate', {
@@ -63,6 +63,12 @@
     }
   }
 
+  function rejeter() {
+    previewUrl = null;
+    generationId = null;
+    validatedUrl = null;
+    prompt = '';
+  }
 </script>
 
 <div class="container">
@@ -121,6 +127,8 @@
         </button>
       </div>
     {/if}
+  </div>
+</div>
 
 <style>
   .container {
@@ -276,15 +284,15 @@
     pointer-events: none;
   }
 
- .watermark span {
+  .watermark-overlay span {
     color: rgba(255, 255, 255, 0.85);
-    font-size: 1.2rem;          /* AVANT c'était 3rem */
+    font-size: 1.2rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 4px;        /* AVANT c'était 10px */
+    letter-spacing: 4px;
     text-shadow: 0 0 10px rgba(0,0,0,0.9);
-    border: 2px solid rgba(255,255,255,0.8);  /* AVANT 5px */
-    padding: 5px 15px;          /* AVANT 15px 40px */
+    border: 2px solid rgba(255,255,255,0.8);
+    padding: 5px 15px;
     background: rgba(0,0,0,0.4);
     transform: rotate(-15deg);
     opacity: 0.8;
@@ -339,7 +347,7 @@
     color: #ff6b6b;
   }
 
-  .result-box {
+  .result-section {
     margin-top: 30px;
     padding: 20px;
     border: 2px solid rgba(40, 167, 69, 0.5);
@@ -347,10 +355,13 @@
     background: rgba(40, 167, 69, 0.1);
   }
 
-  .result-label {
+  .result-header {
+    margin-bottom: 15px;
+  }
+
+  .result-tag {
     color: #34ce57;
     font-weight: bold;
-    margin: 0 0 15px 0;
     font-size: 1.1rem;
   }
 
