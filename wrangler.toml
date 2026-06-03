@@ -1,12 +1,10 @@
 name = "duolumia"
 compatibility_date = "2024-01-01"
 
-# D1 Database Binding
 [[d1_databases]]
 binding = "BD"
 database_name = "bd-clients"
-database_id = "TON-UUID-REEL-ICI"  # Remplace par l'ID UUID de ta base D1
+database_id = "METS-ICI-TON-UUID"
 
-# Variables d'environnement
 [vars]
 GOOGLE_CLIENT_ID = "1018792613471-j52k68g5qm7nrerqrpvqj9d5hkdt7vqe.apps.googleusercontent.com"
