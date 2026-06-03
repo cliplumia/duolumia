@@ -43,7 +43,7 @@
   async function valider() {
     if (!generationId) return;
     try {
-      const res = await fetch('/api/validate', {
+     const res = await fetch('/api/action', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: generationId, action: 'validate' })
