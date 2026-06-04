@@ -18,14 +18,27 @@ export async function POST({ request, platform, cookies }) {
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
     
-    // Cloudflare Workers AI - Gratuit
-    const imageResponse = await platform.env.AI.run(
-      '@cf/stabilityai/stable-diffusion-xl-base-1.0',
-      { prompt }
+    // Hugging Face - Gratuit
+    const hfRes = await fetch(
+      'https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0',
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${platform.env.HUGGINGFACE_TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ inputs: prompt })
+      }
     );
     
-    // Convertit en base64 pour affichage
-    const bytes = new Uint8Array(imageResponse);
+    if (!hfRes.ok) {
+      const errText = await hfRes.text();
+      throw new Error('Erreur generation image: ' + errText);
+    }
+    
+    // Convertit l'image en base64 pour affichage
+    const buffer = await hfRes.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
     let binary = '';
     for (let i = 0; i < bytes.byteLength; i++) {
       binary += String.fromCharCode(bytes[i]);
@@ -33,13 +46,13 @@ export async function POST({ request, platform, cookies }) {
     const base64 = btoa(binary);
     const dataUrl = `data:image/png;base64,${base64}`;
     
-    // Sauvegarde en base SANS le base64 (trop gros pour D1)
+    // Sauvegarde en base (sans le base64)
     const genId = crypto.randomUUID();
     const now = new Date().toISOString();
     
     await BD.prepare(
       'INSERT INTO generations (id, user_id, type, prompt, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    ).bind(genId, userId, 'image', prompt, 'cloudflare-ai', 'preview', now).run();
+    ).bind(genId, userId, 'image', prompt, 'huggingface', 'preview', now).run();
     
     return json({ success: true, url: dataUrl, id: genId });
     
