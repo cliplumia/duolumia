@@ -18,30 +18,43 @@ export async function POST({ request, platform, cookies }) {
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
     
-    // Cloudflare Workers AI - Gratuit et chez toi
-    const imageResponse = await platform.env.AI.run(
-      '@cf/stabilityai/stable-diffusion-xl-base-1.0',
-      { prompt }
-    );
+    const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'wait'
+      },
+      body: JSON.stringify({
+        version: "black-forest-labs/flux-schnell",
+        input: { 
+          prompt: prompt,
+          aspect_ratio: "1:1"
+        }
+      })
+    });
     
-    // Convertit en base64 pour affichage
-    const bytes = new Uint8Array(imageResponse);
-    let binary = '';
-    for (let i = 0; i < bytes.byteLength; i++) {
-      binary += String.fromCharCode(bytes[i]);
+    if (!replicateRes.ok) {
+      const err = await replicateRes.json();
+      throw new Error(err.detail || 'Erreur Replicate');
     }
-    const base64 = btoa(binary);
-    const dataUrl = `data:image/png;base64,${base64}`;
     
-    // Sauvegarde SEULEMENT les infos texte (pas l'image)
+    const data = await replicateRes.json();
+    
+    if (data.status !== 'succeeded' || !data.output) {
+      throw new Error('Generation echoue');
+    }
+    
+    const imageUrl = Array.isArray(data.output) ? data.output[0] : data.output;
+    
     const genId = crypto.randomUUID();
     const now = new Date().toISOString();
     
     await BD.prepare(
       'INSERT INTO generations (id, user_id, type, prompt, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    ).bind(genId, userId, 'image', prompt, 'cf-ai', 'preview', now).run();
+    ).bind(genId, userId, 'image', prompt, imageUrl, 'preview', now).run();
     
-    return json({ success: true, url: dataUrl, id: genId });
+    return json({ success: true, url: imageUrl, id: genId });
     
   } catch (err) {
     console.error('Generate error:', err);
