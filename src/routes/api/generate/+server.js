@@ -18,27 +18,14 @@ export async function POST({ request, platform, cookies }) {
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
     
-    // Hugging Face - Gratuit
-    const hfRes = await fetch(
-      'https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0',
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${platform.env.HUGGINGFACE_TOKEN}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ inputs: prompt })
-      }
+    // Cloudflare Workers AI - Gratuit et chez toi
+    const imageResponse = await platform.env.AI.run(
+      '@cf/stabilityai/stable-diffusion-xl-base-1.0',
+      { prompt }
     );
     
-    if (!hfRes.ok) {
-      const errText = await hfRes.text();
-      throw new Error('Erreur generation image: ' + errText);
-    }
-    
-    // Convertit l'image en base64 pour affichage
-    const buffer = await hfRes.arrayBuffer();
-    const bytes = new Uint8Array(buffer);
+    // Convertit en base64 pour affichage
+    const bytes = new Uint8Array(imageResponse);
     let binary = '';
     for (let i = 0; i < bytes.byteLength; i++) {
       binary += String.fromCharCode(bytes[i]);
@@ -46,13 +33,13 @@ export async function POST({ request, platform, cookies }) {
     const base64 = btoa(binary);
     const dataUrl = `data:image/png;base64,${base64}`;
     
-    // Sauvegarde en base (sans le base64)
+    // Sauvegarde SEULEMENT les infos texte (pas l'image)
     const genId = crypto.randomUUID();
     const now = new Date().toISOString();
     
     await BD.prepare(
       'INSERT INTO generations (id, user_id, type, prompt, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    ).bind(genId, userId, 'image', prompt, 'huggingface', 'preview', now).run();
+    ).bind(genId, userId, 'image', prompt, 'cf-ai', 'preview', now).run();
     
     return json({ success: true, url: dataUrl, id: genId });
     
