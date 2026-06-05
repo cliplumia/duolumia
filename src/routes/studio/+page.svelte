@@ -168,8 +168,8 @@
             <p class="preview-info">Valide pour recevoir la version HD sans filigrane</p>
             
             <div class="actions-preview">
-              <button class="btn-validate" on:click={validateImage}>❤️ J'aime (1 crédit)</button>
-              <button class="btn-reject" on:click={rejectImage}>🗑️ Rejeter (0 crédit)</button>
+              <button class="btn-validate" on:click={validateImage}>❤️ J'aime (1 sur forfait)</button>
+              <button class="btn-reject" on:click={rejectImage}>🗑️ Rejeter (0 sur forfait)</button>
             </div>
           </div>
         {/if}
