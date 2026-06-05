@@ -1,73 +1,112 @@
 <script>
   export let data;
   
-  let prompt = '';
-  let loading = false;
-  let previewUrl = null;
-  let validatedUrl = null;
-  let generationId = null;
-  let error = null;
+  let activeTab = 'images';
+  
+  // --- IMAGES ---
+  let imgPrompt = '';
+  let imgLoading = false;
+  let imgPreviewUrl = null;
+  let imgValidatedUrl = null;
+  let imgGenerationId = null;
+  let imgError = null;
+  
+  // --- VIDÉO ---
+  let vidPrompt = '';
+  let vidLoading = false;
+  let vidPreviewUrl = null;
+  let vidValidatedUrl = null;
+  let vidGenerationId = null;
+  let vidError = null;
+  
+  // --- VOIX ---
+  let voiceText = '';
+  let voiceLoading = false;
+  
+  // --- CHAT ---
+  let chatMessages = [];
+  let chatInput = '';
+  let chatLoading = false;
   
   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data.user.email);
   const canGenerate = isAdmin || (data.user.images_restantes > 0);
   
-  async function generate() {
-    if (!prompt.trim()) return;
-    loading = true;
-    error = null;
-    previewUrl = null;
-    validatedUrl = null;
+  // ========== IMAGES ==========
+  async function generateImage() {
+    if (!imgPrompt.trim()) return;
+    imgLoading = true;
+    imgError = null;
+    imgPreviewUrl = null;
+    imgValidatedUrl = null;
     
     try {
       const res = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt })
+        body: JSON.stringify({ prompt: imgPrompt })
       });
       const result = await res.json();
       
       if (!res.ok) {
-        error = result.error || 'Erreur';
-        loading = false;
+        imgError = result.error || 'Erreur';
+        imgLoading = false;
         return;
       }
       
-      previewUrl = result.url;
-      generationId = result.id;
+      imgPreviewUrl = result.url;
+      imgGenerationId = result.id;
     } catch (e) {
-      error = e.message;
+      imgError = e.message;
     }
-    loading = false;
+    imgLoading = false;
   }
   
-  async function valider() {
-    if (!generationId) return;
+  async function validateImage() {
+    if (!imgGenerationId) return;
     try {
-     const res = await fetch('/api/action', {
+      const res = await fetch('/api/action', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: generationId, action: 'validate' })
+        body: JSON.stringify({ id: imgGenerationId, action: 'validate' })
       });
       const result = await res.json();
       
       if (result.success) {
-        validatedUrl = previewUrl;
-        previewUrl = null;
-        generationId = null;
+        imgValidatedUrl = imgPreviewUrl;
+        imgPreviewUrl = null;
+        imgGenerationId = null;
         alert('✅ Image validée ! Tu peux faire clic droit → Enregistrer l\'image.');
       } else {
-        alert('Erreur serveur: ' + (result.error || 'Inconnue'));
+        alert('Erreur: ' + (result.error || 'Inconnue'));
       }
     } catch (e) {
       alert('Erreur: ' + e.message);
     }
   }
 
-  function rejeter() {
-    previewUrl = null;
-    generationId = null;
-    validatedUrl = null;
-    prompt = '';
+  function rejectImage() {
+    imgPreviewUrl = null;
+    imgGenerationId = null;
+    imgValidatedUrl = null;
+    imgPrompt = '';
+  }
+  
+  // ========== VIDÉO ==========
+  async function generateVideo() {
+    // À brancher demain avec Replicate vidéo
+    alert('🎬 Vidéo bientôt disponible !');
+  }
+  
+  // ========== VOIX ==========
+  async function generateVoice() {
+    // À brancher demain
+    alert('🎙️ Voix bientôt disponible !');
+  }
+  
+  // ========== CHAT ==========
+  async function sendChat() {
+    // À brancher dimanche
+    alert('💬 Chat bientôt disponible !');
   }
 </script>
 
@@ -80,53 +119,114 @@
       <p>🎬 Vidéos : {data.user.videos_restantes || 0}</p>
     </div>
     
-    {#if !canGenerate}
-      <p class="alert">⚠️ Crédits épuisés. Passe à un forfait supérieur.</p>
-    {:else}
-      <div class="form">
-        <textarea bind:value={prompt} placeholder="Décris ton image..." rows="3"></textarea>
-        <button class="btn-generate" on:click={generate} disabled={loading}>
-          {loading ? 'Génération...' : '✨ Générer'}
-        </button>
-      </div>
-    {/if}
+    <!-- ONGLETS -->
+    <div class="tabs">
+      <button class="tab" class:active={activeTab === 'images'} on:click={() => activeTab = 'images'}>
+        🖼️ Images
+      </button>
+      <button class="tab" class:active={activeTab === 'video'} on:click={() => activeTab = 'video'}>
+        🎬 Vidéos
+      </button>
+      <button class="tab" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>
+        🎙️ Voix
+      </button>
+      <button class="tab" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
+        💬 Chat
+      </button>
+    </div>
     
-    {#if error}
-      <p class="error">❌ {error}</p>
-    {/if}
-    
-    {#if previewUrl && !validatedUrl}
-      <div class="preview-box">
-        <p class="preview-label">👁️ PREVIEW - FILIGRANE</p>
-        
-        <div class="preview-image">
-         <img src={previewUrl} alt="Preview" />
-          <div class="watermark-overlay">
-            <span>CLIPLUMIA</span>
-            <span>PREVIEW</span>
+    <!-- ========== SECTION IMAGES ========== -->
+    {#if activeTab === 'images'}
+      <div class="section">
+        {#if !canGenerate}
+          <p class="alert">⚠️ Crédits épuisés. Passe à un forfait supérieur.</p>
+        {:else}
+          <div class="form">
+            <textarea bind:value={imgPrompt} placeholder="Décris ton image..." rows="3"></textarea>
+            <button class="btn-generate" on:click={generateImage} disabled={imgLoading}>
+              {imgLoading ? 'Génération...' : '✨ Générer l\'image'}
+            </button>
           </div>
-        </div>
+        {/if}
         
-        <p class="preview-info">Valide pour recevoir la version HD sans filigrane</p>
+        {#if imgError}
+          <p class="error">❌ {imgError}</p>
+        {/if}
         
-        <div class="actions-preview">
-          <button class="btn-validate" on:click={valider}>❤️ J'aime (1 crédit)</button>
-          <button class="btn-reject" on:click={rejeter}>🗑️ Rejeter (0 crédit)</button>
+        {#if imgPreviewUrl && !imgValidatedUrl}
+          <div class="preview-box">
+            <p class="preview-label">👁️ PREVIEW</p>
+            
+            <div class="preview-image">
+              <img src={imgPreviewUrl} alt="Preview" />
+              <div class="watermark-overlay">
+                <span>CLIPLUMIA</span>
+                <span>PREVIEW</span>
+              </div>
+            </div>
+            
+            <p class="preview-info">Valide pour recevoir la version HD sans filigrane</p>
+            
+            <div class="actions-preview">
+              <button class="btn-validate" on:click={validateImage}>❤️ J'aime (1 crédit)</button>
+              <button class="btn-reject" on:click={rejectImage}>🗑️ Rejeter (0 crédit)</button>
+            </div>
+          </div>
+        {/if}
+        
+        {#if imgValidatedUrl}
+          <div class="result-section">
+            <div class="result-header">
+              <span class="result-tag">✅ IMAGE VALIDÉE</span>
+            </div>
+            <img class="result-image" src={imgValidatedUrl} alt="Résultat" />
+            <button class="btn-new" on:click={() => { imgValidatedUrl = null; imgPrompt = ''; }}>
+              🎨 Créer une nouvelle image
+            </button>
+          </div>
+        {/if}
+      </div>
+    {/if}
+    
+    <!-- ========== SECTION VIDÉO ========== -->
+    {#if activeTab === 'video'}
+      <div class="section">
+        <div class="coming-soon">
+          <p>🎬 Génération vidéo</p>
+          <p class="sub">Transforme tes images en vidéos animées</p>
+          <button class="btn-generate" on:click={generateVideo}>
+            🚀 Générer une vidéo (bientôt)
+          </button>
         </div>
       </div>
     {/if}
     
-    {#if validatedUrl}
-      <div class="result-section">
-        <div class="result-header">
-          <span class="result-tag">✅ IMAGE VALIDÉE</span>
+    <!-- ========== SECTION VOIX ========== -->
+    {#if activeTab === 'voice'}
+      <div class="section">
+        <div class="coming-soon">
+          <p>🎙️ Voix IA</p>
+          <p class="sub">Clone et génère des voix réalistes</p>
+          <button class="btn-generate" on:click={generateVoice}>
+            🎤 Générer une voix (bientôt)
+          </button>
         </div>
-        <img class="result-image" src={validatedUrl} alt="Résultat" />
-        <button class="btn-new" on:click={() => { validatedUrl = null; prompt = ''; }}>
-          🎨 Créer une nouvelle image
-        </button>
       </div>
     {/if}
+    
+    <!-- ========== SECTION CHAT ========== -->
+    {#if activeTab === 'chat'}
+      <div class="section">
+        <div class="coming-soon">
+          <p>💬 Assistant IA</p>
+          <p class="sub">Pose tes questions, brainstorm, écris tes scripts</p>
+          <button class="btn-generate" on:click={sendChat}>
+            💬 Démarrer le chat (bientôt)
+          </button>
+        </div>
+      </div>
+    {/if}
+    
   </div>
 </div>
 
@@ -136,7 +236,7 @@
     background: radial-gradient(ellipse at top, #5a3696 0%, #3d206b 50%, #2d1b4e 100%);
     background-attachment: fixed;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     padding: 20px;
     font-family: 'Arial', sans-serif;
@@ -149,9 +249,10 @@
     border-radius: 20px;
     padding: 40px 30px;
     text-align: center;
-    max-width: 600px;
+    max-width: 700px;
     width: 100%;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
   }
 
   .logo {
@@ -168,7 +269,7 @@
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     color: #fff;
     font-size: 0.95rem;
   }
@@ -180,12 +281,55 @@
     border: 1px solid rgba(191, 149, 63, 0.3);
   }
 
+  /* ===== ONGLETS ===== */
+  .tabs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(191, 149, 63, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+  }
+
+  .tab:hover {
+    border-color: #BF953F;
+    color: #fff;
+  }
+
+  .tab.active {
+    background: linear-gradient(45deg, #BF953F, #B38728);
+    border-color: #BF953F;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(191, 149, 63, 0.4);
+  }
+
+  .section {
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   .alert {
     color: #FCF6BA;
     background: rgba(191, 149, 63, 0.15);
     padding: 15px;
     border-radius: 10px;
     border: 1px solid rgba(191, 149, 63, 0.5);
+    margin-bottom: 20px;
   }
 
   .form {
@@ -267,7 +411,6 @@
   .preview-image img {
     max-width: 100%;
     display: block;
-    filter: brightness(0.7);
   }
 
   .watermark-overlay {
@@ -387,5 +530,26 @@
   .btn-new:hover {
     filter: drop-shadow(0 0 15px rgba(191, 149, 63, 0.8));
     transform: translateY(-2px);
+  }
+
+  /* ===== SECTIONS VIDÉO/VOIX/CHAT ===== */
+  .coming-soon {
+    padding: 40px 20px;
+    color: #fff;
+  }
+
+  .coming-soon p:first-child {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .coming-soon .sub {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+    margin-bottom: 25px;
   }
 </style>
