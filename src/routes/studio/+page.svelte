@@ -139,7 +139,7 @@
     {#if activeTab === 'images'}
       <div class="section">
         {#if !canGenerate}
-          <p class="alert">⚠️ Crédits épuisés. Passe à un forfait supérieur.</p>
+          <p class="alert">⚠️ forfait épuisés. Passe à un forfait supérieur.</p>
         {:else}
           <div class="form">
             <textarea bind:value={imgPrompt} placeholder="Décris ton image..." rows="3"></textarea>
