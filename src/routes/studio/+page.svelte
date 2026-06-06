@@ -1,6 +1,4 @@
 <script>
-  import { onDestroy } from 'svelte';
-
   export let data;
   
   let activeTab = 'images';
@@ -19,7 +17,7 @@
   let vidGenerationId = null;
   let vidError = null;
   let vidReplicateId = null;
-  let vidCheckInterval = null;
+  let vidInterval = null;
   
   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data.user.email);
   const canGenerate = isAdmin || (data.user.images_restantes > 0);
@@ -84,14 +82,13 @@
     imgPrompt = '';
   }
   
-   async function generateVideo() {
+  async function generateVideo() {
     if (!vidPrompt.trim()) return;
     vidLoading = true;
     vidError = null;
     vidPreviewUrl = null;
     vidValidatedUrl = null;
-    vidReplicateId = null;
-    if (vidCheckInterval) clearInterval(vidCheckInterval);
+    if (vidInterval) clearInterval(vidInterval);
     
     try {
       const res = await fetch('/api/generate-video', {
@@ -110,8 +107,7 @@
       vidReplicateId = result.replicateId;
       vidGenerationId = result.id;
       
-      // Polling toutes les 4 secondes
-      vidCheckInterval = setInterval(async () => {
+      vidInterval = setInterval(async () => {
         try {
           const checkRes = await fetch('/api/check-video', {
             method: 'POST',
@@ -121,20 +117,17 @@
           const check = await checkRes.json();
           
           if (check.status === 'succeeded') {
-            clearInterval(vidCheckInterval);
-            vidCheckInterval = null;
+            clearInterval(vidInterval);
+            vidInterval = null;
             vidPreviewUrl = check.url;
             vidLoading = false;
           } else if (check.status === 'failed') {
-            clearInterval(vidCheckInterval);
-            vidCheckInterval = null;
+            clearInterval(vidInterval);
+            vidInterval = null;
             vidError = check.error || 'Generation echoue';
             vidLoading = false;
           }
-          // sinon pending, on continue d'attendre
-        } catch (e) {
-          // ignore les erreurs réseau temporaires
-        }
+        } catch (e) {}
       }, 4000);
       
     } catch (e) {
@@ -142,7 +135,39 @@
       vidLoading = false;
     }
   }
+  
+  async function validateVideo() {
+    if (!vidGenerationId) return;
+    try {
+      const res = await fetch('/api/action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: vidGenerationId, action: 'validate', type: 'video' })
+      });
+      const result = await res.json();
+      
+      if (result.success) {
+        vidValidatedUrl = vidPreviewUrl;
+        vidPreviewUrl = null;
+        vidGenerationId = null;
+        alert('✅ Vidéo validée ! Tu peux faire clic droit → Enregistrer la vidéo.');
+      } else {
+        alert('Erreur: ' + (result.error || 'Inconnue'));
+      }
+    } catch (e) {
+      alert('Erreur: ' + e.message);
+    }
+  }
 
+  function rejectVideo() {
+    if (vidInterval) clearInterval(vidInterval);
+    vidInterval = null;
+    vidPreviewUrl = null;
+    vidGenerationId = null;
+    vidValidatedUrl = null;
+    vidPrompt = '';
+    vidReplicateId = null;
+  }
   
   async function generateVoice() {
     alert('🎙️ Voix bientôt disponible !');
@@ -163,46 +188,29 @@
     </div>
     
     <div class="tabs">
-      <button class="tab" class:active={activeTab === 'images'} on:click={() => activeTab = 'images'}>
-        🖼️ Images
-      </button>
-      <button class="tab" class:active={activeTab === 'video'} on:click={() => activeTab = 'video'}>
-        🎬 Vidéos
-      </button>
-      <button class="tab" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>
-        🎙️ Voix
-      </button>
-      <button class="tab" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
-        💬 Chat
-      </button>
+      <button class="tab" class:active={activeTab === 'images'} on:click={() => activeTab = 'images'}>🖼️ Images</button>
+      <button class="tab" class:active={activeTab === 'video'} on:click={() => activeTab = 'video'}>🎬 Vidéos</button>
+      <button class="tab" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>🎙️ Voix</button>
+      <button class="tab" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>💬 Chat</button>
     </div>
     
     {#if activeTab === 'images'}
       <div class="section">
         {#if !canGenerate}
-          <p class="alert">⚠️ Forfait images épuisé. Passe à un forfait supérieur.</p>
+          <p class="alert">⚠️ Forfait images épuisé.</p>
         {:else}
           <div class="form">
             <textarea bind:value={imgPrompt} placeholder="Décris ton image..." rows="3"></textarea>
-            <button class="btn-generate" on:click={generateImage} disabled={imgLoading}>
-              {imgLoading ? 'Génération...' : '✨ Générer l\'image'}
-            </button>
+            <button class="btn-generate" on:click={generateImage} disabled={imgLoading}>{imgLoading ? 'Génération...' : '✨ Générer l\'image'}</button>
           </div>
         {/if}
-        
-        {#if imgError}
-          <p class="error">❌ {imgError}</p>
-        {/if}
-        
+        {#if imgError}<p class="error">❌ {imgError}</p>{/if}
         {#if imgPreviewUrl && !imgValidatedUrl}
           <div class="preview-box">
             <p class="preview-label">👁️ PREVIEW</p>
             <div class="preview-image">
               <img src={imgPreviewUrl} alt="Preview" />
-              <div class="watermark-overlay">
-                <span>CLIPLUMIA</span>
-                <span>PREVIEW</span>
-              </div>
+              <div class="watermark-overlay"><span>CLIPLUMIA</span><span>PREVIEW</span></div>
             </div>
             <p class="preview-info">Valide pour recevoir la version HD sans filigrane</p>
             <div class="actions-preview">
@@ -211,16 +219,11 @@
             </div>
           </div>
         {/if}
-        
         {#if imgValidatedUrl}
           <div class="result-section">
-            <div class="result-header">
-              <span class="result-tag">✅ IMAGE VALIDÉE</span>
-            </div>
+            <div class="result-header"><span class="result-tag">✅ IMAGE VALIDÉE</span></div>
             <img class="result-image" src={imgValidatedUrl} alt="Résultat" />
-            <button class="btn-new" on:click={() => { imgValidatedUrl = null; imgPrompt = ''; }}>
-              🎨 Créer une nouvelle image
-            </button>
+            <button class="btn-new" on:click={() => { imgValidatedUrl = null; imgPrompt = ''; }}>🎨 Créer une nouvelle image</button>
           </div>
         {/if}
       </div>
@@ -229,30 +232,22 @@
     {#if activeTab === 'video'}
       <div class="section">
         {#if !canGenerateVideo}
-          <p class="alert">⚠️ Forfait vidéos épuisé. Passe à un forfait supérieur.</p>
+          <p class="alert">⚠️ Forfait vidéos épuisé.</p>
         {:else}
           <div class="form">
-            <p class="info-text">🎬 Durée : environ <strong>5-6 secondes</strong> par vidéo</p>
+            <p class="info-text">🎬 Durée : environ <strong>5-6 secondes</strong></p>
             <textarea bind:value={vidPrompt} placeholder="Décris ta vidéo en mouvement..." rows="3"></textarea>
-            <button class="btn-generate" on:click={generateVideo} disabled={vidLoading}>
-              {vidLoading ? 'Génération vidéo...' : '🎬 Générer la vidéo'}
-            </button>
+            <button class="btn-generate" on:click={generateVideo} disabled={vidLoading}>{vidLoading ? '⏳ Génération en cours...' : '🎬 Générer la vidéo'}</button>
+            {#if vidLoading}<p class="info-text">⏳ Cela prend environ 30 à 60 secondes...</p>{/if}
           </div>
         {/if}
-        
-        {#if vidError}
-          <p class="error">❌ {vidError}</p>
-        {/if}
-        
+        {#if vidError}<p class="error">❌ {vidError}</p>{/if}
         {#if vidPreviewUrl && !vidValidatedUrl}
           <div class="preview-box">
             <p class="preview-label">👁️ PREVIEW VIDÉO</p>
             <div class="preview-image">
               <video src={vidPreviewUrl} controls loop muted playsinline />
-              <div class="watermark-overlay">
-                <span>CLIPLUMIA</span>
-                <span>PREVIEW</span>
-              </div>
+              <div class="watermark-overlay"><span>CLIPLUMIA</span><span>PREVIEW</span></div>
             </div>
             <p class="preview-info">Valide pour recevoir la version HD sans filigrane</p>
             <div class="actions-preview">
@@ -261,47 +256,25 @@
             </div>
           </div>
         {/if}
-        
         {#if vidValidatedUrl}
           <div class="result-section">
-            <div class="result-header">
-              <span class="result-tag">✅ VIDÉO VALIDÉE</span>
-            </div>
+            <div class="result-header"><span class="result-tag">✅ VIDÉO VALIDÉE</span></div>
             <video class="result-image" src={vidValidatedUrl} controls loop playsinline />
-            <button class="btn-new" on:click={() => { vidValidatedUrl = null; vidPrompt = ''; }}>
-              🎬 Créer une nouvelle vidéo
-            </button>
+            <button class="btn-new" on:click={() => { vidValidatedUrl = null; vidPrompt = ''; }}>🎬 Créer une nouvelle vidéo</button>
           </div>
         {/if}
       </div>
     {/if}
-    
-    {#if activeTab === 'voice'}
+     {#if activeTab === 'voice'}
       <div class="section">
         <div class="coming-soon">
           <p>🎙️ Voix IA</p>
           <p class="sub">Clone et génère des voix réalistes</p>
-          <button class="btn-generate" on:click={generateVoice}>
-            🎤 Générer une voix (bientôt)
-          </button>
+          <button class="btn-generate" on:click={generateVoice}>🎤 Générer une voix (bientôt)</button>
         </div>
       </div>
     {/if}
-    
-    {#if activeTab === 'chat'}
-      <div class="section">
-        <div class="coming-soon">
-          <p>💬 Assistant IA</p>
-          <p class="sub">Pose tes questions, brainstorm, écris tes scripts</p>
-          <button class="btn-generate" on:click={sendChat}>
-            💬 Démarrer le chat (bientôt)
-          </button>
-        </div>
-      </div>
-    {/if}
-  </div>
-</div>
-
+   
 <style>
   .container {
     min-height: 100vh;
@@ -632,4 +605,3 @@
   }
 </style>
 
- 
