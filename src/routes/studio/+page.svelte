@@ -30,6 +30,7 @@
   
   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data.user.email);
   const canGenerate = isAdmin || (data.user.images_restantes > 0);
+  const canGenerateVideo = isAdmin || (data.user.videos_restantes > 0);
   
   // ========== IMAGES ==========
   async function generateImage() {
@@ -93,19 +94,74 @@
   
   // ========== VIDÉO ==========
   async function generateVideo() {
-    // À brancher demain avec Replicate vidéo
-    alert('🎬 Vidéo bientôt disponible !');
+    if (!vidPrompt.trim()) return;
+    vidLoading = true;
+    vidError = null;
+    vidPreviewUrl = null;
+    vidValidatedUrl = null;
+    
+    try {
+      const res = await fetch('/api/generate-video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          prompt: vidPrompt,
+          duration: 5 // Durée fixe : 5 secondes pour tout le monde
+        })
+      });
+      const result = await res.json();
+      
+      if (!res.ok) {
+        vidError = result.error || 'Erreur';
+        vidLoading = false;
+        return;
+      }
+      
+      vidPreviewUrl = result.url;
+      vidGenerationId = result.id;
+    } catch (e) {
+      vidError = e.message;
+    }
+    vidLoading = false;
+  }
+  
+  async function validateVideo() {
+    if (!vidGenerationId) return;
+    try {
+      const res = await fetch('/api/action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: vidGenerationId, action: 'validate', type: 'video' })
+      });
+      const result = await res.json();
+      
+      if (result.success) {
+        vidValidatedUrl = vidPreviewUrl;
+        vidPreviewUrl = null;
+        vidGenerationId = null;
+        alert('✅ Vidéo validée ! Tu peux faire clic droit → Enregistrer la vidéo.');
+      } else {
+        alert('Erreur: ' + (result.error || 'Inconnue'));
+      }
+    } catch (e) {
+      alert('Erreur: ' + e.message);
+    }
+  }
+
+  function rejectVideo() {
+    vidPreviewUrl = null;
+    vidGenerationId = null;
+    vidValidatedUrl = null;
+    vidPrompt = '';
   }
   
   // ========== VOIX ==========
   async function generateVoice() {
-    // À brancher demain
     alert('🎙️ Voix bientôt disponible !');
   }
   
   // ========== CHAT ==========
   async function sendChat() {
-    // À brancher dimanche
     alert('💬 Chat bientôt disponible !');
   }
 </script>
@@ -139,7 +195,7 @@
     {#if activeTab === 'images'}
       <div class="section">
         {#if !canGenerate}
-          <p class="alert">⚠️ forfait épuisés. Passe à un forfait supérieur.</p>
+          <p class="alert">⚠️ Forfait images épuisé. Passe à un forfait supérieur.</p>
         {:else}
           <div class="form">
             <textarea bind:value={imgPrompt} placeholder="Décris ton image..." rows="3"></textarea>
@@ -191,13 +247,54 @@
     <!-- ========== SECTION VIDÉO ========== -->
     {#if activeTab === 'video'}
       <div class="section">
-        <div class="coming-soon">
-          <p>🎬 Génération vidéo</p>
-          <p class="sub">Transforme tes images en vidéos animées</p>
-          <button class="btn-generate" on:click={generateVideo}>
-            🚀 Générer une vidéo (bientôt)
-          </button>
-        </div>
+        {#if !canGenerateVideo}
+          <p class="alert">⚠️ Forfait vidéos épuisé. Passe à un forfait supérieur.</p>
+        {:else}
+          <div class="form">
+            <p class="info-text">🎬 Durée fixe : <strong>5 secondes</strong> par vidéo</p>
+            <textarea bind:value={vidPrompt} placeholder="Décris ta vidéo en mouvement..." rows="3"></textarea>
+            <button class="btn-generate" on:click={generateVideo} disabled={vidLoading}>
+              {vidLoading ? 'Génération vidéo...' : '🎬 Générer la vidéo'}
+            </button>
+          </div>
+        {/if}
+        
+        {#if vidError}
+          <p class="error">❌ {vidError}</p>
+        {/if}
+        
+        {#if vidPreviewUrl && !vidValidatedUrl}
+          <div class="preview-box">
+            <p class="preview-label">👁️ PREVIEW VIDÉO</p>
+            
+            <div class="preview-image">
+              <video src={vidPreviewUrl} controls loop muted playsinline />
+              <div class="watermark-overlay">
+                <span>CLIPLUMIA</span>
+                <span>PREVIEW</span>
+              </div>
+            </div>
+            
+            <p class="preview-info">Valide pour recevoir la version HD sans filigrane</p>
+            
+            <div class="actions-preview">
+              <button class="btn-validate" on:click={validateVideo}>❤️ J'aime (1 sur forfait)</button>
+              <button class="btn-reject" on:click={rejectVideo}>🗑️ Rejeter (0 sur forfait)</button>
+            </div>
+          </div>
+        {/if}
+        
+        {#if vidValidatedUrl}
+          <div class="result-section">
+            <div class="result-header">
+              <span class="result-tag">✅ VIDÉO VALIDÉE</span>
+            </div>
+            <video class="result-image" src={vidValidatedUrl} controls loop playsinline />
+            <button class="btn-new" on:click={() => { vidValidatedUrl = null; vidPrompt = ''; }}>
+              🎬 Créer une nouvelle vidéo
+            </button>
+          </div>
+        {/if}
       </div>
     {/if}
     
@@ -336,6 +433,12 @@
     margin: 20px 0;
   }
 
+  .info-text {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+  }
+
   textarea {
     width: 100%;
     background: rgba(255, 255, 255, 0.1);
@@ -408,9 +511,11 @@
     border: 3px solid rgba(191, 149, 63, 0.5);
   }
 
-  .preview-image img {
+  .preview-image img,
+  .preview-image video {
     max-width: 100%;
     display: block;
+    border-radius: 10px;
   }
 
   .watermark-overlay {
