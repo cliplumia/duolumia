@@ -1,7 +1,4 @@
 <script>
-	let vidReplicateId = null;
-  let vidInterval = null;
-
   export let data;
   
   let activeTab = 'images';
@@ -84,16 +81,15 @@
     imgValidatedUrl = null;
     imgPrompt = '';
   }
-   
-
-   async function generateVideo() {
+  
+  async function generateVideo() {
     if (!vidPrompt.trim()) return;
     vidLoading = true;
     vidError = null;
     vidPreviewUrl = null;
     vidValidatedUrl = null;
-
-   
+    if (vidInterval) clearInterval(vidInterval);
+    
     try {
       const res = await fetch('/api/generate-video', {
         method: 'POST',
@@ -154,7 +150,7 @@
         vidValidatedUrl = vidPreviewUrl;
         vidPreviewUrl = null;
         vidGenerationId = null;
-        alert('✅ Vidéo validée ! Tu peux faire clic droit → Enregistrer la vidéo.');
+        alert('✅ Vidéo validée !');
       } else {
         alert('Erreur: ' + (result.error || 'Inconnue'));
       }
@@ -181,16 +177,13 @@
     alert('💬 Chat bientôt disponible !');
   }
 </script>
-
 <div class="container">
   <div class="card">
     <h1 class="logo">ClipLumia Studio</h1>
-    
     <div class="credits">
       <p>🖼️ Images : {data.user.images_restantes || 0}</p>
       <p>🎬 Vidéos : {data.user.videos_restantes || 0}</p>
     </div>
-    
     <div class="tabs">
       <button class="tab" class:active={activeTab === 'images'} on:click={() => activeTab = 'images'}>🖼️ Images</button>
       <button class="tab" class:active={activeTab === 'video'} on:click={() => activeTab = 'video'}>🎬 Vidéos</button>
@@ -242,7 +235,7 @@
             <p class="info-text">🎬 Durée : environ <strong>5-6 secondes</strong></p>
             <textarea bind:value={vidPrompt} placeholder="Décris ta vidéo en mouvement..." rows="3"></textarea>
             <button class="btn-generate" on:click={generateVideo} disabled={vidLoading}>{vidLoading ? '⏳ Génération en cours...' : '🎬 Générer la vidéo'}</button>
-            {#if vidLoading}<p class="info-text">⏳ Cela prend environ 30 à 60 secondes...</p>{/if}
+            {#if vidLoading}<p class="info-text">⏳ Cela prend environ 30 à 60 secondes, ne quittez pas...</p>{/if}
           </div>
         {/if}
         {#if vidError}<p class="error">❌ {vidError}</p>{/if}
@@ -269,7 +262,8 @@
         {/if}
       </div>
     {/if}
-     {#if activeTab === 'voice'}
+    
+    {#if activeTab === 'voice'}
       <div class="section">
         <div class="coming-soon">
           <p>🎙️ Voix IA</p>
@@ -278,6 +272,19 @@
         </div>
       </div>
     {/if}
+    
+    {#if activeTab === 'chat'}
+      <div class="section">
+        <div class="coming-soon">
+          <p>💬 Assistant IA</p>
+          <p class="sub">Pose tes questions, brainstorm, écris tes scripts</p>
+          <button class="btn-generate" on:click={sendChat}>💬 Démarrer le chat (bientôt)</button>
+        </div>
+      </div>
+    {/if}
+  </div>
+</div>
+
    
 <style>
   .container {
@@ -364,6 +371,8 @@
 
   .section {
     animation: fadeIn 0.3s ease;
+  }
+
   }
 
   @keyframes fadeIn {
