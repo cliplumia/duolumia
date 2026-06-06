@@ -1,4 +1,6 @@
 <script>
+  import { onDestroy } from 'svelte';
+
   export let data;
   
   let activeTab = 'images';
@@ -16,6 +18,8 @@
   let vidValidatedUrl = null;
   let vidGenerationId = null;
   let vidError = null;
+  let vidReplicateId = null;
+  let vidCheckInterval = null;
   
   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data.user.email);
   const canGenerate = isAdmin || (data.user.images_restantes > 0);
@@ -80,12 +84,14 @@
     imgPrompt = '';
   }
   
-  async function generateVideo() {
+   async function generateVideo() {
     if (!vidPrompt.trim()) return;
     vidLoading = true;
     vidError = null;
     vidPreviewUrl = null;
     vidValidatedUrl = null;
+    vidReplicateId = null;
+    if (vidCheckInterval) clearInterval(vidCheckInterval);
     
     try {
       const res = await fetch('/api/generate-video', {
@@ -101,43 +107,42 @@
         return;
       }
       
-      vidPreviewUrl = result.url;
+      vidReplicateId = result.replicateId;
       vidGenerationId = result.id;
+      
+      // Polling toutes les 4 secondes
+      vidCheckInterval = setInterval(async () => {
+        try {
+          const checkRes = await fetch('/api/check-video', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ replicateId: vidReplicateId, genId: vidGenerationId })
+          });
+          const check = await checkRes.json();
+          
+          if (check.status === 'succeeded') {
+            clearInterval(vidCheckInterval);
+            vidCheckInterval = null;
+            vidPreviewUrl = check.url;
+            vidLoading = false;
+          } else if (check.status === 'failed') {
+            clearInterval(vidCheckInterval);
+            vidCheckInterval = null;
+            vidError = check.error || 'Generation echoue';
+            vidLoading = false;
+          }
+          // sinon pending, on continue d'attendre
+        } catch (e) {
+          // ignore les erreurs réseau temporaires
+        }
+      }, 4000);
+      
     } catch (e) {
       vidError = e.message;
-    }
-    vidLoading = false;
-  }
-  
-  async function validateVideo() {
-    if (!vidGenerationId) return;
-    try {
-      const res = await fetch('/api/action', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: vidGenerationId, action: 'validate', type: 'video' })
-      });
-      const result = await res.json();
-      
-      if (result.success) {
-        vidValidatedUrl = vidPreviewUrl;
-        vidPreviewUrl = null;
-        vidGenerationId = null;
-        alert('✅ Vidéo validée ! Tu peux faire clic droit → Enregistrer la vidéo.');
-      } else {
-        alert('Erreur: ' + (result.error || 'Inconnue'));
-      }
-    } catch (e) {
-      alert('Erreur: ' + e.message);
+      vidLoading = false;
     }
   }
 
-  function rejectVideo() {
-    vidPreviewUrl = null;
-    vidGenerationId = null;
-    vidValidatedUrl = null;
-    vidPrompt = '';
-  }
   
   async function generateVoice() {
     alert('🎙️ Voix bientôt disponible !');
