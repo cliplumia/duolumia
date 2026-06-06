@@ -18,12 +18,12 @@ export async function POST({ request, platform, cookies }) {
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
     
+    // ENVOI SANS ATTENDRE (pas de Prefer: wait)
     const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
       headers: {
         'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'wait'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         version: "minimax/video-01",
@@ -33,24 +33,21 @@ export async function POST({ request, platform, cookies }) {
     
     if (!replicateRes.ok) {
       const err = await replicateRes.json();
-      throw new Error(err.detail || 'Erreur Replicate video');
+      throw new Error(err.detail || 'Erreur Replicate');
     }
     
-    const data = await replicateRes.json();
+    const prediction = await replicateRes.json();
     
-    if (data.status !== 'succeeded' || !data.output) {
-      throw new Error('Generation video echoue');
-    }
-    
-    const videoUrl = Array.isArray(data.output) ? data.output[0] : data.output;
+    // Stocker en DB avec url vide et status pending
     const genId = crypto.randomUUID();
     const now = new Date().toISOString();
     
     await BD.prepare(
       'INSERT INTO generations (id, user_id, type, prompt, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    ).bind(genId, userId, 'video', prompt, videoUrl, 'preview', now).run();
+    ).bind(genId, userId, 'video', prompt, '', 'pending', now).run();
     
-    return json({ success: true, url: videoUrl, id: genId });
+    // Retourner immédiatement l'ID pour le polling
+    return json({ success: true, id: genId, replicateId: prediction.id, status: 'pending' });
     
   } catch (err) {
     console.error('Generate video error:', err);
