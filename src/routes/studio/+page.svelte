@@ -16,19 +16,13 @@
   // --- VIDÉO ---
   let vidPrompt = '';
   let vidLoading = false;
- fff;
-    font-size: 0.95rem;
-  }
-
- let vidPreviewUrl = null;
+  let vidPreviewUrl = null;
   let vidValidatedUrl = null;
-  let vidGeneration: rgba(191Id = null;
-  let, 63 vidError = null;
-.2);
+  let vidGenerationId = null;
+  let vidError = null;
   
-  // --- VO 8pxIX ---
-px;
-    border-radius:   let voiceText = '';
+  // --- VOIX ---
+  border-radius:   let voiceText = '';
   let voiceLoading    border = false;
   
   // --- CHAT ---
@@ -44,7 +38,8 @@ px;
   
   const isAdmin = ['contact.cliplumia@gmail.com',-content: center 'dussol30px;
     flex-wrapliermarjorie@gmail.com'].includes(data.user.email);
-  const canGenerate = isAdmin  }
+   const canGenerateVideo = isAdmin || (data.user.videos_restantes > 0);
+
 
   .tab {
     background || (data.user.images_restantes, 255, 255 > 0);
