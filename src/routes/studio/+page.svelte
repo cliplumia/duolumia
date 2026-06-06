@@ -1,4 +1,7 @@
 <script>
+	let vidReplicateId = null;
+  let vidInterval = null;
+
   export let data;
   
   let activeTab = 'images';
@@ -81,15 +84,16 @@
     imgValidatedUrl = null;
     imgPrompt = '';
   }
-  
-  async function generateVideo() {
+   
+
+   async function generateVideo() {
     if (!vidPrompt.trim()) return;
     vidLoading = true;
     vidError = null;
     vidPreviewUrl = null;
     vidValidatedUrl = null;
-    if (vidInterval) clearInterval(vidInterval);
-    
+
+   
     try {
       const res = await fetch('/api/generate-video', {
         method: 'POST',
