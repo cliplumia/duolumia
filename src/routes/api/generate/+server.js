@@ -11,26 +11,23 @@ export async function POST({ request, platform, cookies }) {
     
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
     
-    if (!isAdmin && (user.images_restantes || 0) <= 0) {
-      return json({ error: 'Credits images epuises' }, { status: 403 });
+    if (!isAdmin && (user.videos_restantes || 0) <= 0) {
+      return json({ error: 'Credits videos epuises' }, { status: 403 });
     }
     
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
     
+    // 1. Créer la prédiction chez Replicate SANS attendre
     const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
       headers: {
         'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'wait'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        version: "black-forest-labs/flux-schnell",
-        input: { 
-          prompt: prompt,
-          aspect_ratio: "1:1"
-        }
+        version: "minimax/video-01",
+        input: { prompt: prompt }
       })
     });
     
@@ -39,25 +36,21 @@ export async function POST({ request, platform, cookies }) {
       throw new Error(err.detail || 'Erreur Replicate');
     }
     
-    const data = await replicateRes.json();
+    const prediction = await replicateRes.json();
     
-    if (data.status !== 'succeeded' || !data.output) {
-      throw new Error('Generation echoue');
-    }
-    
-    const imageUrl = Array.isArray(data.output) ? data.output[0] : data.output;
-    
+    // 2. Stocker en DB avec status pending
     const genId = crypto.randomUUID();
     const now = new Date().toISOString();
     
     await BD.prepare(
       'INSERT INTO generations (id, user_id, type, prompt, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    ).bind(genId, userId, 'image', prompt, imageUrl, 'preview', now).run();
+    ).bind(genId, userId, 'video', prompt, null, 'pending', now).run();
     
-    return json({ success: true, url: imageUrl, id: genId });
+    // 3. Retourner immédiatement l'ID Replicate pour le polling
+    return json({ success: true, id: genId, replicateId: prediction.id, status: 'pending' });
     
   } catch (err) {
-    console.error('Generate error:', err);
+    console.error('Generate video error:', err);
     return json({ error: err.message }, { status: 500 });
   }
 }
