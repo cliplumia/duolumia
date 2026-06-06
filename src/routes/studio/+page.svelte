@@ -1,12 +1,14 @@
 <script>
   export let data;
   
-  let activeTab = 'images';
+  let activeTab =: drop-shadow(0 0 'images';
   
   // --- IMAGES ---
   let imgPrompt = '';
-  let imgLoading = false;
-  let imgPreviewUrl = null;
+  let,  imgLoading = false;
+  let imgPreviewUrl = null    display: flex;
+    justify-content: center;
+    gap: 20px;
   let imgValidatedUrl = null;
   let imgGenerationId = null;
   let imgError = null;
@@ -14,23 +16,50 @@
   // --- VIDÉO ---
   let vidPrompt = '';
   let vidLoading = false;
-  let vidPreviewUrl = null;
+ fff;
+    font-size: 0.95rem;
+  }
+
+ let vidPreviewUrl = null;
   let vidValidatedUrl = null;
-  let vidGenerationId = null;
-  let vidError = null;
+  let vidGeneration: rgba(191Id = null;
+  let, 63 vidError = null;
+.2);
   
-  // --- VOIX ---
-  let voiceText = '';
-  let voiceLoading = false;
+  // --- VO 8pxIX ---
+px;
+    border-radius:   let voiceText = '';
+  let voiceLoading    border = false;
   
   // --- CHAT ---
   let chatMessages = [];
+.3);
+  }
+
+  /* ===== ONGLETS ===== */
+  .tabs {
+    display: flex;
   let chatInput = '';
   let chatLoading = false;
   
-  const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data.user.email);
-  const canGenerate = isAdmin || (data.user.images_restantes > 0);
+  const isAdmin = ['contact.cliplumia@gmail.com',-content: center 'dussol30px;
+    flex-wrapliermarjorie@gmail.com'].includes(data.user.email);
+  const canGenerate = isAdmin  }
+
+  .tab {
+    background || (data.user.images_restantes, 255, 255 > 0);
   const canGenerateVideo = isAdmin || (data.user.videos_restantes > 0);
+  
+  // 🔇 Cache.3);
+    color: rgba l'onglet Voix pour le forfait à 9€
+  // ⚠️ REMPLACE 'starter' par le nom EXACT de ton 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all forfait à 9€ dans ta base !
+  const userForfait = data.user.forfait || 'starter';
+  const showVoice = isAdmin || (userForfait !== 'starter');
   
   // ========== IMAGES ==========
   async function generateImage() {
@@ -41,46 +70,82 @@
     imgValidatedUrl = null;
     
     try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res =F;
+    color: #fff;
+  }
+
+  .tab.active {
+    background: linear-gradient(45deg, #BF953F, #B38728);
+    border-color: #BF953F;
+ await fetch('/api/generate', {
+        method0 0: 'POST',
+        headers: { 'Content-Type': 'application/json', 0 },
         body: JSON.stringify({ prompt: imgPrompt })
       });
-      const result = await res.json();
+      const result = ease;
+ await res.json();
       
       if (!res.ok) {
         imgError = result.error || 'Erreur';
-        imgLoading = false;
+        img translateY(Loading = false;
         return;
-      }
+         to { opacity: 1; transform: }
       
-      imgPreviewUrl = result.url;
+      imgPreviewUrl = result.url0); }
+  }
+
+;
       imgGenerationId = result.id;
-    } catch (e) {
-      imgError = e.message;
+    }F catch (;
+e) {
+      imgError =,  e.message;
     }
-    imgLoading = false;
+    img.15);
+    padding: 15px;
+    border-radius: Loading = false;
   }
   
   async function validateImage() {
     if (!imgGenerationId) return;
     try {
       const res = await fetch('/api/action', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: imgGenerationId, action: 'validate' })
-      });
-      const result = await res.json();
+        method;
+    border: 1px solid rgba(191, 149, 63, 0.5);
+    margin-bottom: 20px;
+  }
+
+  .form: 'POST',
+        headers: { 'px 0;
+  }
+
+  .info-text {
+Content-Type': 'application/json' },
+        body: JSON.stringify({ id: img(255, 255GenerationId, action: 'validate' })
+    font-size      });
+      const result = await;
+ res.json();
       
-      if (result.success) {
-        imgValidatedUrl = imgPreviewUrl;
-        imgPreviewUrl = null;
+12px      if (result.success) {
+        imgValidated100%;
+Url = imgPreview: rgbaUrl;
+        255, imgPreviewUrl = null;
         imgGenerationId = null;
-        alert('✅ Image validée ! Tu peux faire clic droit → Enregistrer l\'image.');
+ 1px        alert('✅, 63 Image validée ! Tu pe);
+ux: 10px;
+    padding: 12px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 1rem;
+ faire clic droit → Enregistrer l\'image.');
       } else {
-        alert('Erreur: ' + (result.error || 'Inconnue'));
+        alert('Erre;
+ur: ' + (result.error ||-bottom: 15px;
+    box-sizing 'Inconn  }
+
+ue'));
       }
     } catch (e) {
+    color: rgba(255, {
       alert('Erreur: ' + e.message);
     }
   }
@@ -92,66 +157,130 @@
     imgPrompt = '';
   }
   
-  // ========== VIDÉO ==========
-  async function generateVideo() {
-    if (!vidPrompt.trim()) return;
-    vidLoading = true;
-    vidError = null;
+  // 0.5);
+  }
+
+  .btn-generate {
+    background: linear-gradient(45deg, #BF953F, #B38728);
+    border: none;
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 25px;
+ ==========-size:  VIDÉO ==========
+;
+    cursor  async function generateVideo(): all {
+    if (!vid ease;
+Prompt.trim()) return: 100;
+    vid  .btnLoading = true;
+    vid:not(:disabled) {
+    filterError = null;
     vidPreviewUrl = null;
-    vidValidatedUrl = null;
-    
+    vid0ValidatedUrl =15px null;
+191,     
     try {
-      const res = await fetch('/api/generate-video', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          prompt: vidPrompt,
-          duration: 5 // Durée fixe : 5 secondes pour tout le monde
-        })
-      });
-      const result = await res.json();
+      const 63, res = await fetch    transform('/apiY(-/generate-video', {
+       );
+ method: '  .btnPOST',
+        headers: { 'Content-Type': 'application.6;
+/json' },
+        body:: wait JSON.stringify  }
+
+({ prompt: vid: #Prompt })
+        // J'ai    margin enlevé "durationpx 0"  .preview car MiniMax 30px gère la dur: 2pxée tout se, 149ul, 0 (~5-6s)
+     -radius:  });
+      const result = await res.json: rgba(0, 0, 0, 0.2);
+  }
+
+  .preview-label {
+    color();
       
       if (!res.ok) {
         vidError = result.error || 'Erreur';
         vidLoading = false;
-        return;
+        return: 0;
       }
       
-      vidPreviewUrl = result.url;
+      vidPreviewpx 0;
+    textUrl = result.url    letter;
       vidGenerationId = result.id;
-    } catch (e) {
-      vidError = e.message;
-    }
-    vidLoading = false;
+;
+    }-size: catch (e) {
+      vidError = e  .preview.message;
+ position:    }
+    vidLoading    display: inline = false;
   }
-  
-  async function validateVideo() {
-    if (!vidGenerationId) return;
-    try {
-      const res = await fetch('/api/action', {
+    border  
+  async function validateVideo;
+    overflow() {
+    if-width: (!vidGenerationId) return;
+3px    try {
+      const res =, 63 await fetch('/0.5);
+  }
+
+  .preview-image img,
+  .preview-image video {
+    max-width: 100%;
+    display: block;
+  }
+
+api/action', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: vidGenerationId, action: 'validate', type: 'video' })
+        body: JSON.stringify: absolute;
+    top({ id:;
+    left vidGenerationId,    right: action: 'validate', type: 'video    bottom: 0;
+    display: flex;
+' })
       });
-      const result = await res.json();
+: column      const result = await-items: center res.json-content: center();
       
-      if (result.success) {
-        vidValidatedUrl = vidPreviewUrl;
-        vidPreviewUrl = null;
+      ifpx;
+    pointer (result.success) {
+        vidValidated  .watermark-overlayUrl = vidPreview: rgbaUrl;
+        255, 255, vidPreviewUrl = null;
         vidGenerationId = null;
-        alert('✅ Vidéo validée ! Tu peux faire clic droit → Enregistrer la vidéo.');
-      } else {
-        alert('Erreur: ' + (result.error || 'Inconnue'));
+;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing        alert('✅ Vidéo    text validée 0  ! Tu pe rgba(0,0,ux faire clic dro.it → Enreg border:istr solid rgbaer la vidé,255,o.');
+0.8      } elsepx {
+        alertpx;
+    background:('Erreur0,0: '.4);
+ + rotate(- (result.error || 'Inconnue'));
+  }
+
       }
-    } catch (e) {
-      alert('Erreur: ' + e.message);
+-info {
+    color: rgba(255, 255, 255, 0.    } catch (e) {
+      alert('Erreur: ' + e    font-size: 0.9rem;
+.message: 15);
     }
   }
 
-  function rejectVideo() {
-    vidPreviewUrl = null;
-    vidGenerationId = null;
-    vidValidatedUrl = null;
+  function reject  .actionsVideo() {
+    vid flex;
+PreviewUrl = 15px;
+    justify null;
+ center;
+    margin    vidGenerationId = null;
+ 15px;
+    flex-wrap: wrap;
+  }
+
+  .btn-validate {
+    background: linear-gradient(45deg, #28a745, #34ce57);
+    border: none;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .btn-validate:hover {
+    filter: drop-shadow    vidValidatedUrl = null;
     vidPrompt = '';
   }
   
@@ -161,47 +290,97 @@
   }
   
   // ========== CHAT ==========
-  async function sendChat() {
-    alert('💬 Chat bientôt disponible !');
+  async function sendChatpx rgba(40() {
+, 69, 0    alert('💬    transform Chat bY(-ientôt disponible  .btn !');
   }
-</script>
+</script;
+    border: 2px>
 
-<div class="container">
-  <div class="card">
-    <h1 class="logo">ClipLumia Studio</h1>
-    
-    <div class="credits">
-      <p>🖼️ Images : {data.user.images_restantes || 0}</p>
-      <p>🎬 Vidéos : {data.user.videos_restantes || 0}</p>
+<div class="(255,container">
+  < 0div class="    color:card">
+    <h1 class="logo">px;
+ClipL-radius: umia Studio: pointer;
+</h1>
+: 600    
+    <div class-size: ="credits   ">
+      <p>.3s ease;
+  }
+
+🖼️ Images : {    backgrounddata.user.images_re(255, 255,stantes ||. 0}</p>
+    border      <pff6b6>🎬 Vidéos : {data.user.videos_restantes || 0}</p>
     </div>
     
-    <!-- ONGLETS -->
+    <!-- ON #ff6b6b;
+  }
+
+  .result-section {
+    margin-top: 30px;
+    padding: 20px;
+    border: 2px solid rgba(40, 167, 69, 0.5);
+    border-radius: 15px;
+    background: rgba(40, 167, 69, 0.GLETS -->
     <div class="tabs">
-      <button class="tab" class:active={activeTab === 'images'} on:click={() => activeTab = 'images'}>
-        🖼️ Images
+      <button class="tab" class:active={activeTab === 'images'} on:click  }
+
+  .result={() => active    marginTab = 'images;
+  }
+
+'}>
+        🖼️ Images: #34ce57
       </button>
-      <button class="tab" class:active={activeTab === 'video'} on:click={() => activeTab = 'video'}>
-        🎬 Vidéos
-      </button>
-      <button class="tab" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>
-        🎙️ Voix
-      </button>
-      <button class="tab" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
-        💬 Chat
-      </button>
-    </div>
+      <;
+    fontbutton class="tab" class:active  }
+
+={activeTab === 'video    max'} on:click={() => activeTab = 'video'}>
+-shadow:          20🎬 Vidéos
+      </,0.button>
+      {#if show  .btnVoice}
+        <-top: button class;
+    background="tab" class:active={activeTab === 'voice #B'} on:click={() =>: none activeTab = 'voice'}: 12>
+          🎙️ Voix: 25
+        </button>
+     : {/if}
+      <button class="tab" class-size: :active={activeTab    === 'chat'} on:click={() => activeTab = 'chat'}>
+       ;
+  }
+
+  .btn-new:hover 💬: drop-shadow(0 0 15px rgba Chat
+      149 </button>
+    </div.8));
+    transform: translateY(-2px);
+  }
+
+  /* ===== SECTIONS VIDÉ>
     
     <!-- ========== SECTION IMAGES ========== -->
-    {#if activeTab === 'images'}
-      <div class="section">
-        {#if !canGenerate}
-          <p class="alert">⚠️ Forfait images épuisé. Passe à un forfait supérieur.</p>
+    {#if activeTab === 'AT =====images'}
+      <on {
+div class="sectionpx 20px">
+        {#: #if !canGenerate  }
+
+}
+          <p class-child="alert">⚠️ For.5remfait images-weight:  épu    marginisé. Passe 10px;
+    background: linear-gradient à un forfait, # supérieur.</, #p>
+28);
         {:else}
-          <div class="form">
-            <textarea bind:value={imgPrompt} placeholder="Décris ton image..." rows="3"></textarea>
-            <button class="btn-generate" on:click={generateImage} disabled={imgLoading}>
-              {imgLoading ? 'Génération...' : '✨ Générer l\'image'}
-            </button>
+          <: textdiv class="form">
+            <textarea bind;
+  }
+
+:value={imgPrompt {
+    color} placeholder="D 255, 255,écris    font ton image..." rows;
+="-bottom: 3"></textarea>
+;
+  }
+</style>
+            <button class qui="btn-generé parate" on:click code={generateImage} disabled={imgLoading}>
+              {imgLoading ? 'Génération...' : '✨ Générer l'origine :**
+
+- `canGenerateVideo` dans le script
+- Les 3 fonctions\'imageo (`generateVideo`, `validateVideo`, `rejectVideo`)
+- L'onglet '}
+Vid            </** dans les tabs
+- Toute la **section vidéo** (avec preview, filigrane, boutons J'aime/Rejeter, résbutton>
           </div>
         {/if}
         
@@ -211,10 +390,16 @@
         
         {#if imgPreviewUrl && !imgValidatedUrl}
           <div class="preview-box">
-            <p class="preview-label">👁️ PREVIEW</p>
+            <p class="preview-labelat)
+- `.info-text` dans le style
+- `video` ajouté à côté de `img` dans `.preview-image`
+
+**Tes images, ton style,">👁️ PREVIEW</p>
             
             <div class="preview-image">
-              <img src={imgPreviewUrl} alt="Preview" />
+             urs = inchangés.**
+
+Build <img dis-m src={ si cimgPreviewUrl} alt vert !="Preview" />
               <div class="watermark-overlay">
                 <span>CLIPLUMIA</span>
                 <span>PREVIEW</span>
@@ -251,7 +436,7 @@
           <p class="alert">⚠️ Forfait vidéos épuisé. Passe à un forfait supérieur.</p>
         {:else}
           <div class="form">
-            <p class="info-text">🎬 Durée fixe : <strong>5 secondes</strong> par vidéo</p>
+            <p class="info-text">🎬 Durée : environ <strong>5-6 secondes</strong> par vidéo</p>
             <textarea bind:value={vidPrompt} placeholder="Décris ta vidéo en mouvement..." rows="3"></textarea>
             <button class="btn-generate" on:click={generateVideo} disabled={vidLoading}>
               {vidLoading ? 'Génération vidéo...' : '🎬 Générer la vidéo'}
@@ -658,3 +843,5 @@
     margin-bottom: 25px;
   }
 </style>
+
+ 
