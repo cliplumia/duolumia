@@ -2,8 +2,7 @@
   export let data;
   
   let activeTab = 'images';
-  
-  let imgPrompt = '';
+   let imgPrompt = '';
   let imgLoading = false;
   let imgPreviewUrl = null;
   let imgValidatedUrl = null;
