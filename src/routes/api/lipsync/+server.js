@@ -2,12 +2,12 @@ import { json } from '@sveltejs/kit';
 
 export async function POST({ request, platform, cookies }) {
   try {
-    const userId = cookies.get('user_id') || cookies.get('userid');
-    const user = await platform.env.DB.prepare("SELECT * FROM utilisateurs WHERE id =?").bind(userId).first();
-    const userEmail = user.email;
-    if (!userId) return json({ error: 'Non connecte' }, { status: 401 });
+   const userId = cookies.get('user_id') || cookies.get('userId');
+ if (!userId) return json({ error: 'Non connecte' }, { status: 401 });
 
-    const { image, audio } = await request.json();
+ const user = await platform.env.BD.prepare("SELECT * FROM utilisateurs WHERE id =?").bind(userId).first();
+ if (!user) return json({ error: 'Utilisateur introuvable' }, { status: 401 });
+ const userEmail = user.email;
     if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 400 });
 
     const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
@@ -36,16 +36,16 @@ export async function POST({ request, platform, cookies }) {
     if (data.status !== 'succeeded' || !data.output) {
       throw new Error('Lipsync echoue');
     }
+ const videoUrl = Array.isArray(data.output)? data.output[0] : data.output;
 
-   const videoUrl = Array.isArray(data.output) ? data.output[0] : data.output;
+ // ✅ DÉCOMPTE -1 SEULEMENT SI LA VIDÉO A RÉUSSI
+  const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(userEmail);
 
-    // Après avoir reçu la vidéo de Replicate
-   if (!isAdmin) {
-    await DB.prepare("UPDATE utilisateurs SET voices_restantes = voices_restantes - 1 WHERE id = ?")
-    const isAdmin = ['contact.cliplumia@gmail.com' , ' dussollimarjorie@gmail.com']. includes(userEmail);
-      .bind(userId).run();
-}
-    return json({ success: true, url: videoUrl });
+  if (!isAdmin) {
+  await platform.env.BD.prepare("UPDATE utilisateurs SET voices_restantes = voices_restantes - 1 WHERE id =?")
+.bind(userId).run();
+ }
+return json({ success: true, url: videoUrl });
 
   } catch (err) {
     console.error('Lipsync error:', err);
