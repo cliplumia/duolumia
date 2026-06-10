@@ -173,13 +173,12 @@
     alert('🎙️ Voix bientôt disponible !');
   }
   
-  async function sendChat() {
+    async function sendChat() {
     if (!chatInput.trim()) return;
     chatLoading = true;
     const userMsg = chatInput;
     chatMessages = [...chatMessages, { role: 'user', text: userMsg }];
     chatInput = '';
-    
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
@@ -187,19 +186,18 @@
         body: JSON.stringify({ message: userMsg })
       });
       const result = await res.json();
-      
       if (result.success) {
         chatMessages = [...chatMessages, { role: 'bot', text: result.reply }];
       } else {
-        chatMessages = [...chatMessages, { role: 'bot', text: '❌ Erreur: ' + (result.error || 'Inconnue') }];
+        chatMessages = [...chatMessages, { role: 'bot', text: 'Erreur' }];
       }
     } catch (e) {
-      chatMessages = [...chatMessages, { role: 'bot', text: '❌ Erreur réseau' }];
+      chatMessages = [...chatMessages, { role: 'bot', text: 'Erreur reseau' }];
     }
     chatLoading = false;
   }
- 
 </script>
+
 <div class="container">
   <div class="card">
    <h1 class="logo">ClipLumia Studio</h1>
