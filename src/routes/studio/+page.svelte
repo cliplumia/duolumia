@@ -198,7 +198,7 @@
     }
     chatLoading = false;
   }
- }
+ 
 </script>
 <div class="container">
   <div class="card">
