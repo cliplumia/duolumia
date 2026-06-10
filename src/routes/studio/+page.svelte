@@ -169,7 +169,7 @@
     vidReplicateId = null;
   }
   
-  async function generateVoice() {
+   async function generateVoice() {
     alert('🎙️ Voix bientôt disponible !');
   }
   
@@ -198,8 +198,9 @@
     }
     chatLoading = false;
   }
-  
 </script>
+
+
 <div class="container">
   <div class="card">
     <h1 class="logo">ClipLumia Studio</h1>
