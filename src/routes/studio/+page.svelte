@@ -9,7 +9,6 @@
   let imgValidatedUrl = null;
   let imgGenerationId = null;
   let imgError = null;
-  
   let vidPrompt = '';
   let vidLoading = false;
   let vidPreviewUrl = null;
@@ -23,9 +22,8 @@
   let chatMessages = [];
   let imageBase64 = ''; // Stocke la photo uploadée
   let audioUrl = '';    // Stockée quand tu appelles generateVoice()
-  let vidLoading = false;
   let vidError = null;
-  let vidPreviewUrl = null;
+  
   
   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data.user.email);
   const canGenerate = isAdmin || (data.user.images_restantes > 0);
