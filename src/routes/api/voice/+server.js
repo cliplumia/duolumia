@@ -10,10 +10,6 @@ export async function POST({ request, platform, cookies }) {
     if (!user) return json({ error: 'Utilisateur inconnu' }, { status: 404 });
 
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
-    
-    if (!isAdmin && (user.voices_restantes || 0) <= 0) {
-      return json({ error: 'Credits voix epuises' }, { status: 403 });
-    }
 
     const { text, voice } = await request.json();
     if (!text) return json({ error: 'Texte manquant' }, { status: 400 });
