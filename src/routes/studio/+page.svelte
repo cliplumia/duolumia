@@ -200,7 +200,6 @@
   }
   
 </script>
-
 <div class="container">
   <div class="card">
     <h1 class="logo">ClipLumia Studio</h1>
@@ -214,8 +213,7 @@
       <button class="tab" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>🎙️ Voix</button>
       <button class="tab" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>💬 Chat</button>
     </div>
-    
-    {#if activeTab === 'images'}
+     {#if activeTab === 'images'}
       <div class="section">
         {#if !canGenerate}
           <p class="alert">⚠️ Forfait images épuisé.</p>
@@ -249,7 +247,6 @@
         {/if}
       </div>
     {/if}
-    
     {#if activeTab === 'video'}
       <div class="section">
         {#if !canGenerateVideo}
@@ -286,7 +283,6 @@
         {/if}
       </div>
     {/if}
-    
     {#if activeTab === 'voice'}
       <div class="section">
         <div class="coming-soon">
@@ -296,8 +292,7 @@
         </div>
       </div>
     {/if}
-    
-       {#if activeTab === 'chat'}
+    {#if activeTab === 'chat'}
       <div class="section">
         <div class="chat-box">
           {#each chatMessages as msg}
