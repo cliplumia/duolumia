@@ -356,8 +356,7 @@ async function generateVoice() {
             <button class="btn-new" on:click={() => { vidValidatedUrl = null; vidPrompt = ''; }}>🎬 Créer une nouvelle vidéo</button>
           </div>
         {/if}
-      </div>
-    {/if}
+       {/if}
    {#if activeTab === 'voice'}
   <div class="section">
     <div class="coming-soon">
