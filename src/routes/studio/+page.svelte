@@ -198,12 +198,11 @@
     }
     chatLoading = false;
   }
+ }
 </script>
-
-
 <div class="container">
   <div class="card">
-    <h1 class="logo">ClipLumia Studio</h1>
+   <h1 class="logo">ClipLumia Studio</h1>
     <div class="credits">
       <p>🖼️ Images : {data.user.images_restantes || 0}</p>
       <p>🎬 Vidéos : {data.user.videos_restantes || 0}</p>
@@ -284,38 +283,27 @@
         {/if}
       </div>
     {/if}
-    {#if activeTab === 'voice'}
-      <div class="section">
-        <div class="coming-soon">
-          <p>🎙️ Voix IA</p>
-          <p class="sub">Clone et génère des voix réalistes</p>
-          <button class="btn-generate" on:click={generateVoice}>🎤 Générer une voix (bientôt)</button>
-        </div>
-      </div>
-    {/if}
-    {#if activeTab === 'chat'}
-      <div class="section">
-        <div class="chat-box">
-          {#each chatMessages as msg}
-            <div class="chat-msg {msg.role}">
-              <span class="chat-avatar">{msg.role === 'user' ? '🧑' : '🤖'}</span>
-              <div class="chat-bubble">{msg.text}</div>
-            </div>
-          {/each}
-          {#if chatLoading}
-            <div class="chat-msg bot">
-              <span class="chat-avatar">🤖</span>
-              <div class="chat-bubble loading">Réflexion en cours...</div>
-            </div>
-          {/if}
-        </div>
-        <div class="chat-form">
-          <textarea bind:value={chatInput} placeholder="Pose ta question, demande des idées de script..." rows="2" on:keydown={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), sendChat())}></textarea>
-          <button class="btn-generate" on:click={sendChat} disabled={chatLoading}>{chatLoading ? '...' : '💬 Envoyer'}</button>
-        </div>
-      </div>
-    {/if}
+   {#if activeTab === 'voice'}
+  <div class="section">
+    <div class="coming-soon">
+      <p>🎙️ Voix IA</p>
+      <p class="sub">Clone et génère des voix réalistes</p>
+      <button class="btn-generate" on:click={generateVoice}>🎤 Générer une voix (bientôt)</button>
+    </div>
+  </div>
+{/if}
 
+{#if activeTab === 'chat'}
+  <div class="section">
+    <div class="form">
+      <textarea bind:value={chatInput} placeholder="Pose ta question..." rows="2"></textarea>
+      <button class="btn-generate" on:click={sendChat} disabled={chatLoading}>{chatLoading ? '...' : '💬 Envoyer'}</button>
+    </div>
+    {#each chatMessages as msg}
+      <p class="chat-line">{msg.role === 'user' ? '🧑' : '🤖'} {msg.text}</p>
+    {/each}
+  </div>
+{/if}
 <style>
   .container {
     min-height: 100vh;
