@@ -290,9 +290,9 @@
       <p class="sub">Clone et génère des voix réalistes</p>
       <button class="btn-generate" on:click={generateVoice}>🎤 Générer une voix (bientôt)</button>
     </div>
-  </div>
+   {/if}
+ </div>
 {/if}
-
 {#if activeTab === 'chat'}
   <div class="section">
     <div class="form">
