@@ -18,6 +18,9 @@
   let vidError = null;
   let vidReplicateId = null;
   let vidInterval = null;
+  let chatInput = '';
+  let chatLoading = false;
+  let chatMessages = [];
   
   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data.user.email);
   const canGenerate = isAdmin || (data.user.images_restantes > 0);
