@@ -3,6 +3,8 @@ import { json } from '@sveltejs/kit';
 export async function POST({ request, platform, cookies }) {
   try {
     const userId = cookies.get('user_id') || cookies.get('userid');
+    const user = await platform.env.DB.prepare("SELECT * FROM utilisateurs WHERE id =?").bind(userId).first();
+    const userEmail = user.email;
     if (!userId) return json({ error: 'Non connecte' }, { status: 401 });
 
     const { image, audio } = await request.json();
@@ -35,8 +37,14 @@ export async function POST({ request, platform, cookies }) {
       throw new Error('Lipsync echoue');
     }
 
-    const videoUrl = Array.isArray(data.output) ? data.output[0] : data.output;
+   const videoUrl = Array.isArray(data.output) ? data.output[0] : data.output;
 
+    // Après avoir reçu la vidéo de Replicate
+   if (!isAdmin) {
+    await DB.prepare("UPDATE utilisateurs SET voices_restantes = voices_restantes - 1 WHERE id = ?")
+    const isAdmin = ['contact.cliplumia@gmail.com' , ' dussollimarjorie@gmail.com']. includes(userEmail);
+      .bind(userId).run();
+}
     return json({ success: true, url: videoUrl });
 
   } catch (err) {
