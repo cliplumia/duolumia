@@ -301,6 +301,9 @@
     {/each}
   </div>
 {/if}
+  </div>
+ </div>
+
 <style>
   .container {
     min-height: 100vh;
