@@ -21,6 +21,11 @@
   let chatInput = '';
   let chatLoading = false;
   let chatMessages = [];
+  let imageBase64 = ''; // Stocke la photo uploadée
+  let audioUrl = '';    // Stockée quand tu appelles generateVoice()
+  let vidLoading = false;
+  let vidError = null;
+  let vidPreviewUrl = null;
   
   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data.user.email);
   const canGenerate = isAdmin || (data.user.images_restantes > 0);
@@ -138,7 +143,40 @@
       vidLoading = false;
     }
   }
+  async function generateLipsync() {
+  if (!imageBase64) return alert('Upload une photo d\'abord');
+  if (!audioUrl) return alert('Teste une voix d\'abord pour générer l\'audio');
   
+  vidLoading = true;
+  vidError = null;
+  vidPreviewUrl = null;
+  
+  try {
+    const res = await fetch('/api/lipsync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        image: imageBase64,  // Ta photo
+        audio: audioUrl      // L’audio de /api/voice
+      })
+    });
+    
+    const data = await res.json();
+    
+    if (res.ok && data.success) {
+      vidPreviewUrl = data.url;
+      alert('✅ Vidéo lipsync prête !');
+    } else {
+      vidError = data.error || 'Erreur génération';
+      alert('❌ ' + vidError); // Ici ça dira "Crédits épuisés" si 0 crédit
+    }
+  } catch (e) {
+    vidError = e.message;
+    alert('❌ Erreur réseau: ' + e.message);
+  }
+  
+  vidLoading = false;
+}
   async function validateVideo() {
     if (!vidGenerationId) return;
     try {
@@ -172,9 +210,14 @@
     vidReplicateId = null;
   }
   
-   async function generateVoice() {
-    alert('🎙️ Voix bientôt disponible !');
-  }
+  async function testerVoix() {
+  const res = await fetch('/api/voice', {
+    method: 'POST',
+    body: JSON.stringify({ text: monTexte, voice: voixChoisie })
+  });
+  const data = await res.json();
+  audioPlayer.src = data.url; // Joue l’audio
+}
   
     async function sendChat() {
     if (!chatInput.trim()) return;
@@ -259,6 +302,7 @@
             <button class="btn-generate" on:click={generateVideo} disabled={vidLoading}>{vidLoading ? '⏳ Génération en cours...' : '🎬 Générer la vidéo'}</button>
             {#if vidLoading}<p class="info-text">⏳ Cela prend environ 30 à 60 secondes, ne quittez pas...</p>{/if}
           </div>
+       <button on:click={generateLipsync}>Faire parler ma photo</button><!-- Bouton 2 : Lipsync photo + voix -->
         {/if}
         {#if vidError}<p class="error">❌ {vidError}</p>{/if}
         {#if vidPreviewUrl && !vidValidatedUrl}
@@ -289,7 +333,8 @@
     <div class="coming-soon">
       <p>🎙️ Voix IA</p>
       <p class="sub">Clone et génère des voix réalistes</p>
-      <button class="btn-generate" on:click={generateVoice}>🎤 Générer une voix (bientôt)</button>
+      <!-- Bouton 1 : Vidéo IA classique -->
+      <button on:click={generateVideo}>Générer une vidéo IA</button>
     </div>
  </div>
 {/if}
