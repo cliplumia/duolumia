@@ -174,7 +174,30 @@
   }
   
   async function sendChat() {
-    alert('💬 Chat bientôt disponible !');
+    if (!chatInput.trim()) return;
+    chatLoading = true;
+    const userMsg = chatInput;
+    chatMessages = [...chatMessages, { role: 'user', text: userMsg }];
+    chatInput = '';
+    
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMsg })
+      });
+      const result = await res.json();
+      
+      if (result.success) {
+        chatMessages = [...chatMessages, { role: 'bot', text: result.reply }];
+      } else {
+        chatMessages = [...chatMessages, { role: 'bot', text: '❌ Erreur: ' + (result.error || 'Inconnue') }];
+      }
+    } catch (e) {
+      chatMessages = [...chatMessages, { role: 'bot', text: '❌ Erreur réseau' }];
+    }
+    chatLoading = false;
+  }
   }
 </script>
 <div class="container">
@@ -273,19 +296,29 @@
       </div>
     {/if}
     
-    {#if activeTab === 'chat'}
+       {#if activeTab === 'chat'}
       <div class="section">
-        <div class="coming-soon">
-          <p>💬 Assistant IA</p>
-          <p class="sub">Pose tes questions, brainstorm, écris tes scripts</p>
-          <button class="btn-generate" on:click={sendChat}>💬 Démarrer le chat (bientôt)</button>
+        <div class="chat-box">
+          {#each chatMessages as msg}
+            <div class="chat-msg {msg.role}">
+              <span class="chat-avatar">{msg.role === 'user' ? '🧑' : '🤖'}</span>
+              <div class="chat-bubble">{msg.text}</div>
+            </div>
+          {/each}
+          {#if chatLoading}
+            <div class="chat-msg bot">
+              <span class="chat-avatar">🤖</span>
+              <div class="chat-bubble loading">Réflexion en cours...</div>
+            </div>
+          {/if}
+        </div>
+        <div class="chat-form">
+          <textarea bind:value={chatInput} placeholder="Pose ta question, demande des idées de script..." rows="2" on:keydown={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), sendChat())}></textarea>
+          <button class="btn-generate" on:click={sendChat} disabled={chatLoading}>{chatLoading ? '...' : '💬 Envoyer'}</button>
         </div>
       </div>
     {/if}
-  </div>
-</div>
 
-   
 <style>
   .container {
     min-height: 100vh;
@@ -613,6 +646,58 @@
     color: rgba(255, 255, 255, 0.6);
     font-size: 1rem;
     margin-bottom: 25px;
+  }
+ .chat-box {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 16px;
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  .chat-msg {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 15px;
+    align-items: flex-start;
+  }
+  .chat-msg.user {
+    flex-direction: row-reverse;
+  }
+  .chat-avatar {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .chat-bubble {
+    background: rgba(191,149,63,0.15);
+    border: 1px solid rgba(191,149,63,0.3);
+    padding: 12px 16px;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 80%;
+  }
+  .chat-msg.user .chat-bubble {
+    background: rgba(90,54,150,0.4);
+    border-color: rgba(90,54,150,0.5);
+  }
+  .chat-bubble.loading {
+    opacity: 0.7;
+    font-style: italic;
+  }
+  .chat-form {
+    display: flex;
+    gap: 10px;
+  }
+  .chat-form textarea {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  .chat-form .btn-generate {
+    width: auto;
+    padding: 12px 24px;
   }
 </style>
 
