@@ -21,9 +21,29 @@
   let chatMessages = [];
   let imageBase64 = ''; // Stocke la photo uploadée
   let audioUrl = '';    // Stockée quand tu appelles generateVoice()
+
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => imageBase64 = e.target.result;
+    reader.readAsDataURL(file);
+  }
+}
+
+async function generateVoice() {
+  if (!text) return alert('Tape un texte d\'abord');
+  const res = await fetch('/api/voice', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text: text })
+  });
+  const data = await res.json();
+  if (data.url) audioUrl = data.url;
+  else alert('Erreur voix');
+}
  
-  
-  const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data.user.email);
+   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data.user.email);
   const canGenerate = isAdmin || (data.user.images_restantes > 0);
   const canGenerateVideo = isAdmin || (data.user.videos_restantes > 0);
   
@@ -298,8 +318,22 @@
             <button class="btn-generate" on:click={generateVideo} disabled={vidLoading}>{vidLoading ? '⏳ Génération en cours...' : '🎬 Générer la vidéo'}</button>
             {#if vidLoading}<p class="info-text">⏳ Cela prend environ 30 à 60 secondes, ne quittez pas...</p>{/if}
           </div>
-       <button on:click={generateLipsync}>Faire parler ma photo</button><!-- Bouton 2 : Lipsync photo + voix -->
-        {/if}
+       <input
+  type="file"
+  accept="image/*"
+  on:change={handleImageUpload}
+  class="input"
+/>
+
+<button
+  class="btn-generate"
+  on:click={generateLipsync}
+  disabled={vidLoading || !imageBase64 || !audioUrl}>
+  {vidLoading ? '⏳ Génération...' : '🎭 Faire parler ma photo'}
+</button>
+
+{#if vidPreviewUrl}
+  <video src={vidPreviewUrl} controls></video>{/if}
         {#if vidError}<p class="error">❌ {vidError}</p>{/if}
         {#if vidPreviewUrl && !vidValidatedUrl}
           <div class="preview-box">
