@@ -354,4 +354,45 @@
       transform: scale(1);
     }
   }
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    /* Or Chrome amélioré */
+    .gold-chrome {
+        background: linear-gradient(135deg, #f0d090, #d4af37, #f0d090) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Glass effect sur les cartes */
+    .glass-card, section, .hero, .forfaits {
+        background: rgba(255, 255, 255, 0.07) !important;
+        backdrop-filter: blur(25px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    /* Boutons plus attractifs */
+    .btn-principal, button {
+        background: linear-gradient(145deg, #6b21a8, #a855f7) !important;
+        transition: all 0.3s !important;
+    }
+    .btn-principal:hover, button:hover {
+        transform: scale(1.05) !important;
+        box-shadow: 0 0 30px rgba(168, 85, 247, 0.6) !important;
+    }
+
+    /* Amélioration Hero */
+    .hero {
+        min-height: 85vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    h1.logo {
+        font-size: 4.5rem !important;
+        margin-bottom: 1rem !important;
+    }
+
 </style>
