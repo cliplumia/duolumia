@@ -31,12 +31,12 @@
     <div class="hero-text">
       <span class="badge">Studio IA Professionnel</span>
       <h1>Créez sans risque.<br><span class="gold-chrome">Payez si vous validez.</span></h1>
-      <p>Images, vidéos, voix et lipsync par IA. Générez un aperçu gratuitement. 1 sur forfait débité uniquement si vous aimez le résultat.</p>
+      <p>Images, vidéos, voix et lipsync par IA. Générez un aperçu gratuitement. Un crédit débité uniquement si vous aimez le résultat.</p>
       <a href="/studio" class="btn-primary">Tester gratuitement</a>
       <span class="note">Sans engagement · Annulez en 2 clics</span>
     </div>
     <div class="hero-media glass">
-      <video src="URL_VIDEO" controls muted loop playsinline></video>
+      <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" controls muted loop playsinline></video>
       <p class="caption">Exemple généré avec ClipLumia</p>
     </div>
   </section>
@@ -59,7 +59,7 @@
       <div class="demo-card glass">
         <div class="demo-top"><span>🖼️ Images IA</span><span class="tag">Preview</span></div>
         <div class="screen">
-          <img src="URL_IMAGE" alt="Demo" />
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=400&fit=crop&auto=format" alt="Demo" />
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
@@ -72,7 +72,7 @@
       <div class="demo-card glass">
         <div class="demo-top"><span>▶️ Vidéos IA</span><span class="tag">Preview</span></div>
         <div class="screen">
-          <video src="URL_VIDEO_DEMO" muted loop playsinline></video>
+          <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" muted loop playsinline></video>
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
@@ -186,6 +186,7 @@
     <p class="copy">© 2026 ClipLumia. Tous droits réservés.</p>
   </footer>
 </main>
+
 <style>
   :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;background:#0c0618;color:#fff}
   
@@ -293,3 +294,4 @@
     .ls-arrow{transform:rotate(90deg)}
   }
 </style>
+
