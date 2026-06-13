@@ -1,357 +1,533 @@
 <svelte:head>
-  <title>ClipLumia - Forfait simple. Zéro arnaque.</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+  <title>ClipLumia Studio — Création visuelle par IA</title>
+  <meta name="description" content="Générez des images, vidéos et animations lipsync d'exception grâce à l'intelligence artificielle.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </svelte:head>
 
-<main>
-  <!-- HERO -->
+<main class="page">
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">ClipLumia</a>
+      <a href="/studio" class="nav-link">Studio</a>
+    </div>
+  </nav>
+
   <section class="hero">
-    <div class="content">
-      <h1 class="logo">ClipLumia</h1>
-      <p class="subtitle">Forfait simple. <span class="gold-chrome">Zéro arnaque.</span></p>
-
-      <div class="arguments">
-        <p><strong class="gold-chrome">✓ STOP LES CRÉDITS :</strong> Pas de compteur qui stresse.</p>
-  <p><strong class="gold-chrome">✓ STOP LES VIDÉOS RATÉES :</strong> Tu génères avec filigrane avant validation</p>
-        <p>Tu kiffes ? Tu valides = 1 sur forfait. Tu kiffes pas ? Rejeter = 0 sur forfait.</p>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h1 class="hero-title">
+          Donnez vie à vos<br>
+          <span class="gold-chrome">idées créatives</span>
+        </h1>
+        <p class="hero-desc">
+          Images, vidéos et animations lipsync générées par IA 
+          avec une qualité professionnelle. Décrivez, prévisualisez, 
+          validez.
+        </p>
+        <div class="hero-actions">
+          <a href="/studio" class="btn-primary">Accéder au Studio</a>
+          <span class="hero-note">Sans engagement · Annulation instantanée</span>
+        </div>
       </div>
 
-      <div class="cta">
-        <a href="#forfaits" class="btn-principal">Voir les forfaits dès 9€</a>
+      <div class="hero-media glass-3d">
+        <div class="video-wrapper">
+          <video 
+            src="URL_DE_TA_VIDEO_ICI" 
+            controls 
+            muted 
+            loop 
+            playsinline
+          ></video>
+        </div>
+        <p class="media-caption">Exemple généré avec ClipLumia Studio</p>
       </div>
-      <p class="reassurance">Sans engagement. Annule en 2 clics.</p>
     </div>
   </section>
 
-  <!-- FORFAITS -->
-  <section id="forfaits" class="forfaits">
-    <h2>Choisis ton forfait</h2>
+  <section class="showcase">
+    <h2 class="section-title">Ce que vous pouvez <span class="gold-chrome">créer</span></h2>
     
-    <div class="grille-forfaits">
-      
-      <!-- STARTER -->
-      <div class="carte">
-        <h3>Starter</h3>
-        <p class="prix"><span class="gold-chrome">9€</span><span class="mois">/mois</span></p>
-        <ul>
-          <li>15 vidéos/mois</li>
-          <li>50 images IA/mois</li>
-          <li>MiniMax, Gemini, Luma</li>
-          <li>Paye que si tu valides 🔥</li>
-        </ul>
-        <a href="/signup?plan=starter" class="btn">Commencer</a>
-        <p class="essai">Essai gratuit 24h - CB requise</p>
-      </div>
+    <div class="showcase-grid">
+      <article class="showcase-card glass-3d">
+        <div class="card-glow"></div>
+        <div class="card-icon">🖼️</div>
+        <h3>Images IA</h3>
+        <p>Des visuels uniques et détaillés à partir d'une simple description textuelle.</p>
+      </article>
 
-      <!-- STANDARD -->
-      <div class="carte">
-        <h3>Standard</h3>
-        <p class="prix"><span class="gold-chrome">19€</span><span class="mois">/mois</span></p>
-        <ul>
-          <li>40 vidéos/mois</li>
-          <li>150 images IA/mois</li>
-          <li>MiniMax, Gemini, Luma</li>
-          <li>Voix IA Lynk</li>
-          <li>Paye que si tu valides 🔥</li>
-        </ul>
-        <a href="/signup?plan=standard" class="btn">Commencer</a>
-        <p class="essai">Essai gratuit 24h - CB requise</p>
-      </div>
+      <article class="showcase-card glass-3d featured">
+        <div class="card-glow"></div>
+        <div class="card-icon">▶️</div>
+        <h3>Vidéos IA</h3>
+        <p>Des séquences en mouvement de 5 à 6 secondes, parfaites pour les réseaux sociaux.</p>
+      </article>
 
-      <!-- PRO -->
-      <div class="carte highlight">
-        <div class="badge">POPULAIRE</div>
-        <h3>Pro</h3>
-        <p class="prix"><span class="gold-chrome">39€</span><span class="mois">/mois</span></p>
-        <ul>
-          <li>80 vidéos/mois</li>
-          <li>300 images IA/mois</li>
-          <li>MiniMax, Gemini, Luma</li>
-          <li>Voix IA Lynk</li>
-          <li>Paye que si tu valides 🔥</li>
-          <li>Support prioritaire</li>
-        </ul>
-        <a href="/signup?plan=pro" class="btn">Commencer</a>
-        <p class="essai">Essai gratuit 24h - CB requise</p>
-      </div>
-
-      <!-- STUDIO -->
-      <div class="carte">
-        <h3>Studio</h3>
-        <p class="prix"><span class="gold-chrome">79€</span><span class="mois">/mois</span></p>
-        <ul>
-          <li>180 vidéos/mois</li>
-          <li>800 images IA/mois</li>
-          <li>MiniMax, Gemini, Luma</li>
-          <li>Voix IA Lynk</li>
-          <li>Paye que si tu valides 🔥</li>
-          <li>Support prioritaire</li>
-        </ul>
-        <a href="/signup?plan=studio" class="btn">Commencer</a>
-        <p class="essai">Essai gratuit 24h - CB requise</p>
-      </div>
-
+      <article class="showcase-card glass-3d">
+        <div class="card-glow"></div>
+        <div class="card-icon">🎭</div>
+        <h3>Lipsync</h3>
+        <p>Animez vos portraits avec une voix générée. Vos photos prennent vie.</p>
+      </article>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <section class="process">
+    <h2 class="section-title">Une création <span class="gold-chrome">simple</span></h2>
+    <div class="process-grid">
+      <div class="process-step">
+        <span class="step-num">01</span>
+        <h4>Décrivez</h4>
+        <p>Rédigez votre prompt en langage naturel. Soyez aussi précis que vous le souhaitez.</p>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <span class="step-num">02</span>
+        <h4>Prévisualisez</h4>
+        <p>Visualisez le résultat avec filigrane avant validation. Zéro surprise.</p>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <span class="step-num">03</span>
+        <h4>Validez</h4>
+        <p>Satisfait ? Un clic et la version HD sans filigrane est à vous.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="cta-glass glass-3d">
+      <h2>Prêt à créer ?</h2>
+      <p>Rejoignez ClipLumia et produisez du contenu visuel professionnel en minutes.</p>
+      <a href="/studio" class="btn-primary btn-large">Démarrer maintenant</a>
+    </div>
+  </section>
+
   <footer class="footer">
-    <p>© 2026 <span class="gold-chrome">ClipLumia</span> - Créé avec ​💗​ par une créatrice</p>
+    <div class="footer-top">
+      <span class="footer-brand gold-chrome">ClipLumia</span>
+      <div class="footer-links">
+        <a href="/cgv">CGV</a>
+        <a href="/mentions-legales">Mentions légales</a>
+        <a href="/confidentialite">Confidentialité</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="creator">Créé avec passion par une créatrice</p>
+      <p>© 2026 ClipLumia. Tous droits réservés.</p>
+    </div>
   </footer>
 </main>
 
 <style>
   :global(body) {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: radial-gradient(ellipse at top, #5a3696 0%, #3d2066 50%, #2d1b4e 100%);
-    background-attachment: fixed;
-    color: #fff;
-    min-height: 100vh;
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #05030a;
+    color: #f0f0f5;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* GOLD CHROME - LA VRAIE COULEUR */
   .gold-chrome {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 15px rgba(191, 149, 63, 0.5));
+    filter: drop-shadow(0 0 15px rgba(191, 149, 63, 0.4));
   }
 
-  /* HERO */
-  .hero {
-    min-height: 85vh;
+  .page {
+    background: 
+      radial-gradient(ellipse at 20% 0%, rgba(90, 54, 150, 0.25) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(60, 30, 100, 0.2) 0%, transparent 50%),
+      #05030a;
+    min-height: 100vh;
+  }
+
+  .glass-3d {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 24px;
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 0 0 1px rgba(191, 149, 63, 0.08);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-3d:hover {
+    transform: translateY(-6px) perspective(1000px) rotateX(2deg);
+    box-shadow: 
+      0 35px 70px -12px rgba(0, 0, 0, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 40px rgba(191, 149, 63, 0.12);
+    border-color: rgba(191, 149, 63, 0.25);
+  }
+
+  .card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(191, 149, 63, 0.08) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .glass-3d:hover .card-glow {
+    opacity: 1;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(5, 3, 10, 0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 140px 20px 60px 20px;
   }
 
-  .content {
-    max-width: 800px;
-    text-align: center;
-  }
-
-  .logo {
+  .nav-logo {
     font-family: 'Playfair Display', serif;
-    font-size: 5rem;
-    font-weight: 900;
-    margin: 0 0 3rem 0;
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 30px rgba(191, 149, 63, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.6));
-  }
-
-  .subtitle {
-    font-size: 1.5rem;
-    margin: 0 0 3rem 0;
-    font-weight: 300;
-    color: #fff;
-  }
-
-  .arguments {
-    text-align: center;
-    max-width: 650px;
-    margin: 0 auto 3rem auto;
-  }
-
-  .arguments p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin: 1rem 0;
-    color: #fff;
-  }
-
-  .arguments strong.gold-chrome {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 1.2rem;
-  }
-
-  .cta {
-    margin: 2rem 0 1rem 0;
-  }
-
-  .btn-principal {
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-    color: #2d1b4e;
-    padding: 16px 40px;
-    border-radius: 8px;
     text-decoration: none;
-    font-weight: 700;
-    font-size: 1.1rem;
-    display: inline-block;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 30px rgba(191, 149, 63, 0.7), inset 0 1px 0 rgba(255,255,255,0.4);
   }
 
-  .btn-principal:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 60px rgba(191, 149, 63, 1), inset 0 1px 0 rgba(255,255,255,0.6);
-  }
-
-  .reassurance {
+  .nav-link {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
     font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    transition: all 0.3s ease;
+  }
+
+  .nav-link:hover {
+    border-color: rgba(191, 149, 63, 0.5);
     color: #fff;
-    margin-top: 1rem;
-    opacity: 0.9;
+    background: rgba(191, 149, 63, 0.08);
   }
 
-  /* FORFAITS */
-  .forfaits {
-    padding: 80px 20px;
-    background: rgba(0, 0, 0, 0.25);
-  }
-
-  .forfaits h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: #fff;
-  }
-
-  .grille-forfaits {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 2rem;
+  .hero {
+    padding: 140px 24px 80px;
     max-width: 1200px;
     margin: 0 auto;
   }
 
-  .carte {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(191, 149, 63, 0.5);
-    border-radius: 16px;
-    padding: 2rem;
-    text-align: center;
-    position: relative;
-    backdrop-filter: blur(10px);
-    transition: transform 0.3s, border 0.3s;
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
   }
 
-  .carte:hover {
-    transform: translateY(-5px);
-    border-color: #BF953F;
-    box-shadow: 0 0 50px rgba(191, 149, 63, 0.5);
-  }
-
-  .carte.highlight {
-    border: 2px solid #BF953F;
-    transform: scale(1.05);
-    background: rgba(191, 149, 63, 0.08);
-    box-shadow: 0 0 60px rgba(191, 149, 63, 0.7);
-  }
-
-  .badge {
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-    color: #2d1b4e;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    position: absolute;
-    top: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 2px 10px rgba(191, 149, 63, 0.6);
-  }
-
-  .carte h3 {
-    font-size: 1.5rem;
-    margin: 0 0 1rem 0;
-    color: #fff;
-  }
-
-  .prix {
-    font-size: 3rem;
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
     font-weight: 900;
-    margin: 0 0 1.5rem 0;
-  }
-
-  .prix .mois {
-    font-size: 1rem;
-    font-weight: 400;
-    opacity: 0.9;
-  }
-
-  .carte ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 2rem 0;
-    text-align: left;
-  }
-
-  .carte ul li {
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(191, 149, 63, 0.2);
+    line-height: 1.1;
+    margin: 0 0 24px 0;
     color: #fff;
+    letter-spacing: -1px;
   }
 
-  .carte ul li:last-child {
-    border-bottom: none;
+  .hero-desc {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0 0 32px 0;
+    font-weight: 300;
+    max-width: 480px;
   }
 
-  .btn {
-    background: transparent;
-    border: 2px solid #BF953F;
-    color: #BF953F;
-    padding: 12px 30px;
-    border-radius: 8px;
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #BF953F 0%, #B38728 50%, #AA771C 100%);
+    color: #0a0514;
+    padding: 16px 36px;
+    border-radius: 12px;
     text-decoration: none;
     font-weight: 600;
-    display: inline-block;
-    transition: all 0.2s;
-    width: 100%;
-    box-sizing: border-box;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(191, 149, 63, 0.3), inset 0 1px 0 rgba(255,255,255,0.3);
   }
 
-  .btn:hover {
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-    color: #2d1b4e;
-    box-shadow: 0 0 30px rgba(191, 149, 63, 0.8);
-    border-color: transparent;
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(191, 149, 63, 0.5), inset 0 1px 0 rgba(255,255,255,0.4);
   }
 
-  .essai {
+  .btn-large {
+    padding: 18px 48px;
+    font-size: 1.1rem;
+  }
+
+  .hero-note {
     font-size: 0.85rem;
-    color: #BF953F;
-    text-align: center;
-    margin-top: 0.75rem;
-    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.4);
   }
 
-  /* FOOTER */
-  .footer {
-    text-align: center;
-    padding: 40px 20px;
+  .hero-media {
+    padding: 12px;
+  }
+
+  .video-wrapper {
+    border-radius: 16px;
+    overflow: hidden;
     background: rgba(0, 0, 0, 0.3);
-    border-top: 1px solid rgba(191, 149, 63, 0.4);
+    aspect-ratio: 16/9;
   }
 
-  .footer p {
-    font-size: 0.95rem;
-    margin: 0;
+  .video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .media-caption {
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.35);
+    margin: 12px 0 0 0;
+    font-style: italic;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 48px 0;
     color: #fff;
-    opacity: 0.8;
   }
 
-  /* MOBILE */
-  @media (max-width: 768px) {
-    .logo {
-      font-size: 3.5rem;
-    }
-    
-    .hero {
-      padding-top: 100px;
-    }
-    
-    .carte.highlight {
-      transform: scale(1);
-    }
+  .showcase {
+    padding: 80px 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .showcase-card {
+    padding: 40px 32px;
+    text-align: center;
+  }
+
+  .showcase-card.featured {
+    transform: scale(1.05);
+    border-color: rgba(191, 149, 63, 0.2);
+  }
+
+  .showcase-card.featured:hover {
+    transform: scale(1.05) translateY(-6px) perspective(1000px) rotateX(2deg);
+  }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+
+  .showcase-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    color: #fff;
+  }
+
+  .showcase-card p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+
+  .process {
+    padding: 80px 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .process-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .process-step {
+    flex: 1;
+    text-align: center;
+    padding: 32px 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+  }
+
+  .step-num {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 12px;
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.6;
+  }
+
+  .process-step h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #fff;
+  }
+
+  .process-step p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.45);
+    margin: 0;
+  }
+
+  .process-arrow {
+    font-size: 1.5rem;
+    color: rgba(191, 149, 63, 0.4);
+  }
+
+  .cta-section {
+    padding: 60px 24px 100px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .cta-glass {
+    padding: 60px 40px;
+  }
+
+  .cta-glass h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin: 0 0 12px 0;
+    color: #fff;
+  }
+
+  .cta-glass p {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 32px 0;
+    font-size: 1rem;
+  }
+
+  .footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 48px 24px 32px;
+  }
+
+  .footer-top {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover {
+    color: #BF953F;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 24px;
+  }
+
+  .creator {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 8px 0;
+    font-style: italic;
+  }
+
+  .footer-bottom p:last-child {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.25);
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-title { font-size: 2.5rem; }
+    .showcase-grid { grid-template-columns: 1fr; }
+    .showcase-card.featured { transform: none; }
+    .showcase-card.featured:hover { transform: translateY(-6px) perspective(1000px) rotateX(2deg); }
+    .process-grid { flex-direction: column; }
+    .process-arrow { transform: rotate(90deg); }
+    .footer-top { flex-direction: column; text-align: center; }
   }
 </style>
