@@ -31,7 +31,7 @@
     <div class="hero-text">
       <span class="badge">Studio IA Professionnel</span>
       <h1>Créez sans risque.<br><span class="gold-chrome">Payez si vous validez.</span></h1>
-      <p>Images, vidéos, voix et lipsync par IA. Générez un aperçu gratuitement. Un crédit débité uniquement si vous aimez le résultat.</p>
+      <p>Images, vidéos, voix et lipsync par IA. Générez un aperçu gratuitement. Un forfait débité uniquement si vous aimez le résultat.</p>
       <a href="/studio" class="btn-primary">Tester gratuitement</a>
       <span class="note">Sans engagement · Annulez en 2 clics</span>
     </div>
@@ -46,7 +46,7 @@
     <div class="steps">
       <div class="step glass"><span>1</span><h4>Générez</h4><p>Aperçu avec filigrane en quelques secondes.</p></div>
       <div class="arrow">→</div>
-      <div class="step glass"><span>2</span><h4>Validez</h4><p>❤️ = 1 crédit. 🗑️ = 0 crédit.</p></div>
+      <div class="step glass"><span>2</span><h4>Validez</h4><p>❤️ = 1 forfait. 🗑️ = 0 forfait.</p></div>
       <div class="arrow">→</div>
       <div class="step glass"><span>3</span><h4>Téléchargez</h4><p>Version HD sans filigrane immédiatement.</p></div>
     </div>
@@ -63,8 +63,8 @@
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
-          <button class="btn-like" class:active={demoLiked.img} on:click={()=>toggleLike('img')}>❤️ J'aime (1 crédit)</button>
-          <button class="btn-reject" on:click={()=>demoLiked.img=false}>🗑️ Rejeter (0 crédit)</button>
+          <button class="btn-like" class:active={demoLiked.img} on:click={()=>toggleLike('img')}>❤️ J'aime (1 forfait)</button>
+          <button class="btn-reject" on:click={()=>demoLiked.img=false}>🗑️ Rejeter (0 forfait)</button>
         </div>
         <p class="demo-desc">50 à 800 images/mois selon votre forfait.</p>
       </div>
@@ -76,8 +76,8 @@
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
-          <button class="btn-like" class:active={demoLiked.vid} on:click={()=>toggleLike('vid')}>❤️ J'aime (1 crédit)</button>
-          <button class="btn-reject" on:click={()=>demoLiked.vid=false}>🗑️ Rejeter (0 crédit)</button>
+          <button class="btn-like" class:active={demoLiked.vid} on:click={()=>toggleLike('vid')}>❤️ J'aime (1 forfait)</button>
+          <button class="btn-reject" on:click={()=>demoLiked.vid=false}>🗑️ Rejeter (0 forfait)</button>
         </div>
         <p class="demo-desc">15 à 180 vidéos/mois. Durée 5-6 secondes.</p>
       </div>
@@ -113,15 +113,16 @@
       </div>
 
       <div class="demo-card glass wide">
-        <div class="demo-top"><span>🎭 Lipsync IA</span></div>
-        <div class="lipsync-row">
-          <div class="ls-step"><span>1</span><p>Upload photo</p></div>
-          <div class="ls-arrow">→</div>
-          <div class="ls-step"><span>2</span><p>Ajoutez voix</p></div>
-          <div class="ls-arrow">→</div>
-          <div class="ls-step"><span>3</span><p>Photo animée</p></div>
+        <div class="demo-top"><span>🎭 Lipsync IA</span><span class="tag">Preview</span></div>
+        <div class="screen">
+          <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" muted loop playsinline></video>
+          <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
-        <p class="demo-desc">Synchronisation labiale automatique.</p>
+        <div class="demo-actions">
+          <button class="btn-like" class:active={demoLiked.lip} on:click={()=>toggleLike('lip')}>❤️ J'aime (1 forfait)</button>
+          <button class="btn-reject" on:click={()=>demoLiked.lip=false}>🗑️ Rejeter (0 forfait)</button>
+        </div>
+        <p class="demo-desc">Photo animée avec synchronisation labiale automatique.</p>
       </div>
 
     </div>
@@ -294,4 +295,3 @@
     .ls-arrow{transform:rotate(90deg)}
   }
 </style>
-
