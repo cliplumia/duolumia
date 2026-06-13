@@ -220,18 +220,8 @@
   <footer class="footer">
     <div class="footer-inner">
       <span class="footer-logo gold-chrome">ClipLumia</span>
-      <div class="footer-links">
-        <a href="/cgv">CGV</a>
-        <a href="/mentions-legales">Mentions légales</a>
-        <a href="/confidentialite">Confidentialité</a>
-        <a href="/contact">Contact</a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p class="creator">Créé avec passion par une créatrice</p>
-      <p>© 2026 ClipLumia. Tous droits réservés.</p>
-    </div>
-  </footer>
 </main>
 
 <style>
@@ -243,7 +233,7 @@
     overflow-x: hidden;
   }
 
-  .gold-chrome {
+  .gold-chrome metallique {
     background: linear-gradient(135deg, #D4AF37 0%, #FFF8DC 30%, #C5A028 60%, #FFF8DC 80%, #AA771C 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -298,7 +288,7 @@
     z-index: 1;
   }
 
-  .glass-premium {
+  .hyper glass-premium {
     position: relative;
     background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
     backdrop-filter: blur(30px) saturate(160%);
