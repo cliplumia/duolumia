@@ -1,885 +1,295 @@
+<script>
+  let demoLiked = {img: false, vid: false};
+  let chatInput = '';
+  let chatMsgs = [{who:'bot', text:'Bonjour ! Décrivez votre vision...'}];
+  
+  function sendChat() {
+    if(!chatInput.trim()) return;
+    chatMsgs = [...chatMsgs, {who:'user', text: chatInput}];
+    const prev = chatInput;
+    chatInput = '';
+    setTimeout(() => {
+      chatMsgs = [...chatMsgs, {who:'bot', text:`"${prev}" — Voici votre aperçu !`}];
+    }, 800);
+  }
+  function toggleLike(t) { demoLiked[t] = !demoLiked[t]; }
+</script>
+
 <svelte:head>
-  <title>ClipLumia — Générez. Prévisualisez. Validez.</title>
+  <title>ClipLumia — Payez si vous validez</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </svelte:head>
 
 <main class="page">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="grid-overlay"></div>
-
   <nav class="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">ClipLumia</a>
-      <div class="nav-links">
-        <a href="#outils">Outils</a>
-        <a href="#forfaits">Forfaits</a>
-        <a href="/studio" class="nav-cta">Studio</a>
-      </div>
-    </div>
+    <a href="/" class="logo">ClipLumia</a>
+    <a href="/studio" class="nav-link">Studio</a>
   </nav>
 
   <section class="hero">
-    <div class="hero-content">
-      <span class="hero-badge">Nouveau Studio IA</span>
-      <h1 class="hero-title">
-        Générez en IA.<br>
-        <span class="gold-chrome">Payez uniquement<br>ce que vous validez.</span>
-      </h1>
+    <div class="hero-text">
+      <span class="badge">Studio IA Professionnel</span>
+      <h1>Créez sans risque.<br><span class="gold-chrome">Payez si vous validez.</span></h1>
+      <p>Images, vidéos, voix et lipsync par IA. Générez un aperçu gratuitement. Un crédit débité uniquement si vous aimez le résultat.</p>
+      <a href="/studio" class="btn-primary">Tester gratuitement</a>
+      <span class="note">Sans engagement · Annulez en 2 clics</span>
+    </div>
+    <div class="hero-media glass">
+      <video src="URL_VIDEO" controls muted loop playsinline></video>
+      <p class="caption">Exemple généré avec ClipLumia</p>
+    </div>
+  </section>
+
+  <section class="concept">
+    <h2 class="section-title">Zéro gaspillage. <span class="gold-chrome">100% contrôle.</span></h2>
+    <div class="steps">
+      <div class="step glass"><span>1</span><h4>Générez</h4><p>Aperçu avec filigrane en quelques secondes.</p></div>
+      <div class="arrow">→</div>
+      <div class="step glass"><span>2</span><h4>Validez</h4><p>❤️ = 1 crédit. 🗑️ = 0 crédit.</p></div>
+      <div class="arrow">→</div>
+      <div class="step glass"><span>3</span><h4>Téléchargez</h4><p>Version HD sans filigrane immédiatement.</p></div>
+    </div>
+  </section>
+
+  <section class="demos">
+    <h2 class="section-title">5 outils. <span class="gold-chrome">1 studio.</span></h2>
+    <div class="demos-grid">
       
-      <div class="hero-args">
-        <div class="arg-item">
-          <span class="arg-icon">✓</span>
-          <div>
-            <strong>Pas de crédits qui disparaissent</strong>
-            <p>Vous ne payez que si vous validez la création. Rejeter = 0 crédit débité.</p>
-          </div>
+      <div class="demo-card glass">
+        <div class="demo-top"><span>🖼️ Images IA</span><span class="tag">Preview</span></div>
+        <div class="screen">
+          <img src="URL_IMAGE" alt="Demo" />
+          <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
-        <div class="arg-item">
-          <span class="arg-icon">✓</span>
-          <div>
-            <strong>Prévisualisation avant achat</strong>
-            <p>Chaque génération arrive avec filigrane. Vous voyez avant de décider.</p>
-          </div>
+        <div class="demo-actions">
+          <button class="btn-like" class:active={demoLiked.img} on:click={()=>toggleLike('img')}>❤️ J'aime (1 crédit)</button>
+          <button class="btn-reject" on:click={()=>demoLiked.img=false}>🗑️ Rejeter (0 crédit)</button>
         </div>
-        <div class="arg-item">
-          <span class="arg-icon">✓</span>
-          <div>
-            <strong>Forfaits clairs, pas de surprises</strong>
-            <p>Un nombre fixe de validations par mois. Pas de compteur caché.</p>
-          </div>
-        </div>
+        <p class="demo-desc">50 à 800 images/mois selon votre forfait.</p>
       </div>
 
-      <div class="hero-actions">
-        <a href="/studio" class="btn-primary">Tester le Studio</a>
-        <a href="#forfaits" class="btn-secondary">Voir les forfaits</a>
-      </div>
-    </div>
-
-    <div class="hero-media glass-premium">
-      <div class="video-wrapper">
-        <video src="URL_DE_TA_VIDEO_ICI" muted loop playsinline autoplay></video>
-      </div>
-      <div class="video-badge">Exemple généré sur ClipLumia</div>
-    </div>
-  </section>
-
-  <section id="outils" class="outils">
-    <h2 class="section-title">5 outils. <span class="gold-chrome">Une seule règle :</span><br>vous ne validez que ce qui vous plaît.</h2>
-    
-    <div class="outils-grid">
-      <!-- IMAGE -->
-      <div class="outil-card glass-premium">
-        <div class="outil-header">
-          <span class="outil-icon">🖼️</span>
-          <span class="outil-tag">Images IA</span>
+      <div class="demo-card glass">
+        <div class="demo-top"><span>▶️ Vidéos IA</span><span class="tag">Preview</span></div>
+        <div class="screen">
+          <video src="URL_VIDEO_DEMO" muted loop playsinline></video>
+          <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
-        <div class="outil-demo">
-          <div class="demo-box">
-            <div class="demo-img"></div>
-            <div class="demo-watermark">PREVIEW</div>
-          </div>
-          <div class="demo-actions">
-            <span class="demo-btn ok">❤️ J'aime</span>
-            <span class="demo-btn ko">🗑️ Rejeter</span>
-          </div>
-          <p class="demo-caption">1 crédit si validé · 0 si rejeté</p>
+        <div class="demo-actions">
+          <button class="btn-like" class:active={demoLiked.vid} on:click={()=>toggleLike('vid')}>❤️ J'aime (1 crédit)</button>
+          <button class="btn-reject" on:click={()=>demoLiked.vid=false}>🗑️ Rejeter (0 crédit)</button>
         </div>
+        <p class="demo-desc">15 à 180 vidéos/mois. Durée 5-6 secondes.</p>
       </div>
 
-      <!-- VIDEO -->
-      <div class="outil-card glass-premium">
-        <div class="outil-header">
-          <span class="outil-icon">▶️</span>
-          <span class="outil-tag">Vidéos IA</span>
-        </div>
-        <div class="outil-demo">
-          <div class="demo-box">
-            <div class="demo-vid"></div>
-            <div class="demo-watermark">PREVIEW</div>
-          </div>
-          <div class="demo-actions">
-            <span class="demo-btn ok">❤️ J'aime</span>
-            <span class="demo-btn ko">🗑️ Rejeter</span>
-          </div>
-          <p class="demo-caption">1 crédit si validé · 0 si rejeté</p>
-        </div>
-      </div>
-
-      <!-- CHAT -->
-      <div class="outil-card glass-premium">
-        <div class="outil-header">
-          <span class="outil-icon">💬</span>
-          <span class="outil-tag">Chat IA</span>
-        </div>
-        <div class="outil-demo">
-          <div class="demo-chat">
-            <div class="chat-bubble user">Rédige-moi un script...</div>
-            <div class="chat-bubble bot">Voici un script professionnel...</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- VOIX -->
-      <div class="outil-card glass-premium">
-        <div class="outil-header">
-          <span class="outil-icon">🎙️</span>
-          <span class="outil-tag">Voix IA</span>
-        </div>
-        <div class="outil-demo">
-          <div class="demo-audio">
-            <div class="audio-wave">
-              <span></span><span></span><span></span><span></span><span></span>
+      <div class="demo-card glass">
+        <div class="demo-top"><span>💬 Chat IA</span></div>
+        <div class="chat-box">
+          {#each chatMsgs as m}
+            <div class="msg" class:user={m.who==='user'}>
+              <span>{m.who==='user'?'🧑':'🤖'}</span>
+              <div class="bubble">{m.text}</div>
             </div>
-            <p>Clone et génère des voix réalistes</p>
-          </div>
+          {/each}
         </div>
+        <div class="chat-input">
+          <input type="text" bind:value={chatInput} on:keypress={(e)=>e.key==='Enter'&&sendChat()} placeholder="Décrivez votre idée..." />
+          <button on:click={sendChat}>Envoyer</button>
+        </div>
+        <p class="demo-desc">Assistant créatif intégré.</p>
       </div>
 
-      <!-- LIPSYNC -->
-      <div class="outil-card glass-premium featured">
-        <div class="outil-header">
-          <span class="outil-icon">🎭</span>
-          <span class="outil-tag">Lipsync IA</span>
-        </div>
-        <div class="outil-demo">
-          <div class="demo-box">
-            <div class="demo-lip"></div>
-            <div class="demo-watermark">PREVIEW</div>
+      <div class="demo-card glass">
+        <div class="demo-top"><span>🎙️ Voix IA</span></div>
+        <div class="voice-box">
+          <div class="wave">
+            <div class="bar" style="height:40%"></div><div class="bar" style="height:70%"></div>
+            <div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div>
+            <div class="bar" style="height:60%"></div><div class="bar" style="height:80%"></div>
           </div>
-          <div class="demo-actions">
-            <span class="demo-btn ok">❤️ J'aime</span>
-            <span class="demo-btn ko">🗑️ Rejeter</span>
-          </div>
-          <p class="demo-caption">1 crédit si validé · 0 si rejeté</p>
+          <button class="btn-play">▶ Écouter la démo</button>
         </div>
+        <p class="demo-desc">Clone et génération vocale réaliste.</p>
       </div>
+
+      <div class="demo-card glass wide">
+        <div class="demo-top"><span>🎭 Lipsync IA</span></div>
+        <div class="lipsync-row">
+          <div class="ls-step"><span>1</span><p>Upload photo</p></div>
+          <div class="ls-arrow">→</div>
+          <div class="ls-step"><span>2</span><p>Ajoutez voix</p></div>
+          <div class="ls-arrow">→</div>
+          <div class="ls-step"><span>3</span><p>Photo animée</p></div>
+        </div>
+        <p class="demo-desc">Synchronisation labiale automatique.</p>
+      </div>
+
     </div>
   </section>
 
-  <section id="forfaits" class="forfaits">
-    <h2 class="section-title">Des forfaits <span class="gold-chrome">sans surprises</span></h2>
-    <p class="forfaits-sub">Chaque validation décompte 1 crédit. Les rejets sont gratuits.</p>
-    
-    <div class="forfaits-grid">
-      <div class="forfait-card glass-premium">
+  <section class="pricing">
+    <h2 class="section-title">Forfaits <span class="gold-chrome">flexibles</span></h2>
+    <p class="sub">Essai gratuit 24h. CB requise. Annulation instantanée.</p>
+    <div class="pricing-grid">
+      <div class="price-card glass">
         <h3>Starter</h3>
-        <div class="forfait-prix"><span class="gold-chrome">9€</span><span class="mois">/mois</span></div>
+        <div class="price"><span class="gold-chrome">9€</span><small>/mois</small></div>
         <ul>
-          <li>15 vidéos/mois</li>
-          <li>50 images IA/mois</li>
-          <li>Chat, Voix, Lipsync inclus</li>
-          <li>Payez que si vous validez</li>
+          <li><strong>15</strong> vidéos/mois</li>
+          <li><strong>50</strong> images/mois</li>
+          <li>Paye que si tu valides 🔥</li>
         </ul>
-        <a href="/signup?plan=starter" class="btn-outline">Choisir Starter</a>
+        <a href="/signup?plan=starter" class="btn-outline">Commencer</a>
       </div>
-
-      <div class="forfait-card glass-premium">
+      <div class="price-card glass">
         <h3>Standard</h3>
-        <div class="forfait-prix"><span class="gold-chrome">19€</span><span class="mois">/mois</span></div>
+        <div class="price"><span class="gold-chrome">19€</span><small>/mois</small></div>
         <ul>
-          <li>40 vidéos/mois</li>
-          <li>150 images IA/mois</li>
-          <li>Chat, Voix, Lipsync inclus</li>
-          <li>Payez que si vous validez</li>
+          <li><strong>40</strong> vidéos/mois</li>
+          <li><strong>150</strong> images/mois</li>
+          <li>Voix IA Lynk</li>
+          <li>Paye que si tu valides 🔥</li>
         </ul>
-        <a href="/signup?plan=standard" class="btn-outline">Choisir Standard</a>
+        <a href="/signup?plan=standard" class="btn-outline">Commencer</a>
       </div>
-
-      <div class="forfait-card glass-premium popular">
-        <div class="popular-badge">POPULAIRE</div>
+      <div class="price-card glass popular">
+        <div class="pop-badge">POPULAIRE</div>
         <h3>Pro</h3>
-        <div class="forfait-prix"><span class="gold-chrome">39€</span><span class="mois">/mois</span></div>
+        <div class="price"><span class="gold-chrome">39€</span><small>/mois</small></div>
         <ul>
-          <li>80 vidéos/mois</li>
-          <li>300 images IA/mois</li>
-          <li>Chat, Voix, Lipsync inclus</li>
+          <li><strong>80</strong> vidéos/mois</li>
+          <li><strong>300</strong> images/mois</li>
+          <li>Voix IA Lynk</li>
           <li>Support prioritaire</li>
-          <li>Payez que si vous validez</li>
+          <li>Paye que si tu valides 🔥</li>
         </ul>
-        <a href="/signup?plan=pro" class="btn-primary">Choisir Pro</a>
+        <a href="/signup?plan=pro" class="btn-primary">Commencer</a>
       </div>
-
-      <div class="forfait-card glass-premium">
+      <div class="price-card glass">
         <h3>Studio</h3>
-        <div class="forfait-prix"><span class="gold-chrome">79€</span><span class="mois">/mois</span></div>
+        <div class="price"><span class="gold-chrome">79€</span><small>/mois</small></div>
         <ul>
-          <li>180 vidéos/mois</li>
-          <li>800 images IA/mois</li>
-          <li>Chat, Voix, Lipsync inclus</li>
+          <li><strong>180</strong> vidéos/mois</li>
+          <li><strong>800</strong> images/mois</li>
+          <li>Voix IA Lynk</li>
           <li>Support prioritaire</li>
-          <li>Payez que si vous validez</li>
+          <li>Paye que si tu valides 🔥</li>
         </ul>
-        <a href="/signup?plan=studio" class="btn-outline">Choisir Studio</a>
+        <a href="/signup?plan=studio" class="btn-outline">Commencer</a>
       </div>
     </div>
   </section>
 
   <footer class="footer">
-    <div class="footer-inner">
-      <span class="footer-logo gold-chrome">ClipLumia</span>
-      </div>
-    </div>
+    <div class="footer-brand gold-chrome">ClipLumia</div>
+    <p class="creator">Créé avec passion par une créatrice</p>
+    <p class="copy">© 2026 ClipLumia. Tous droits réservés.</p>
+  </footer>
 </main>
-
 <style>
-  :global(body) {
-    margin: 0;
-    font-family: 'Inter', system-ui, sans-serif;
-    background: #0c0618;
-    color: #ffffff;
-    overflow-x: hidden;
-  }
-
-  .gold-chrome metallique {
-    background: linear-gradient(135deg, #D4AF37 0%, #FFF8DC 30%, #C5A028 60%, #FFF8DC 80%, #AA771C 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
-  }
-
-  .page {
-    position: relative;
-    min-height: 100vh;
-    background: #0c0618;
-  }
-
-  .orb {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.4;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .orb-1 {
-    width: 700px;
-    height: 700px;
-    background: radial-gradient(circle, rgba(138, 43, 226, 0.5), transparent 70%);
-    top: -15%;
-    left: -15%;
-    animation: float 18s infinite ease-in-out;
-  }
-
-  .orb-2 {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.3), transparent 70%);
-    bottom: 5%;
-    right: -10%;
-    animation: float 22s infinite ease-in-out reverse;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(40px, -30px) scale(1.1); }
-  }
-
-  .grid-overlay {
-    position: fixed;
-    inset: 0;
-    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .hyper glass-premium {
-    position: relative;
-    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-    backdrop-filter: blur(30px) saturate(160%);
-    -webkit-backdrop-filter: blur(30px) saturate(160%);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 24px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
-    z-index: 2;
-    transition: all 0.4s ease;
-  }
-
-  .hyper glass-premium:hover {
-    border-color: rgba(212, 175, 55, 0.4);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 30px rgba(212, 175, 55, 0.15), inset 0 1px 0 rgba(255,255,255,0.2);
-  }
-
-  .nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background: rgba(12, 6, 24, 0.8);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-
-  .nav-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 16px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #D4AF37, #FFF8DC, #C5A028);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-
-  .nav-links a {
-    color: rgba(255,255,255,0.7);
-    text-decoration: none;
-    font-size: 0.9rem;
-    padding: 8px 16px;
-    border-radius: 100px;
-    transition: all 0.3s;
-  }
-
-  .nav-links a:hover {
-    color: #fff;
-    background: rgba(255,255,255,0.05);
-  }
-
-  .nav-cta {
-    background: linear-gradient(135deg, #D4AF37, #C5A028);
-    color: #0c0618 !important;
-    font-weight: 600;
-    padding: 8px 20px !important;
-  }
-
-  .hero {
-    position: relative;
-    z-index: 2;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 140px 24px 80px;
-    display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 60px;
-    align-items: center;
-  }
-
-  .hero-badge {
-    display: inline-block;
-    padding: 8px 18px;
-    background: rgba(212, 175, 55, 0.15);
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #FFF8DC;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-  }
-
-  .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 3.2rem;
-    font-weight: 900;
-    line-height: 1.15;
-    margin: 0 0 32px 0;
-    color: #fff;
-  }
-
-  .hero-args {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-
-  .arg-item {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .arg-icon {
-    width: 28px;
-    height: 28px;
-    background: rgba(212, 175, 55, 0.2);
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #D4AF37;
-    font-weight: 700;
-    font-size: 0.9rem;
-    flex-shrink: 0;
-  }
-
-  .arg-item div strong {
-    color: #fff;
-    font-size: 1rem;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .arg-item div p {
-    color: rgba(255,255,255,0.6);
-    font-size: 0.9rem;
-    margin: 0;
-    line-height: 1.5;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    background: linear-gradient(135deg, #D4AF37, #C5A028);
-    color: #0c0618;
-    padding: 16px 32px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1rem;
-    border: none;
-    display: inline-block;
-    transition: all 0.3s;
-    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
-    cursor: pointer;
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
-  }
-
-  .btn-secondary {
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-    padding: 16px 32px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-    border: 1px solid rgba(255,255,255,0.15);
-    display: inline-block;
-    transition: all 0.3s;
-  }
-
-  .btn-secondary:hover {
-    background: rgba(255,255,255,0.1);
-    border-color: rgba(212, 175, 55, 0.4);
-  }
-
-  .btn-outline {
-    background: transparent;
-    color: #D4AF37;
-    padding: 14px 28px;
-    border-radius: 12px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    border: 1px solid rgba(212, 175, 55, 0.4);
-    display: inline-block;
-    text-align: center;
-    transition: all 0.3s;
-  }
-
-  .btn-outline:hover {
-    background: rgba(212, 175, 55, 0.1);
-    border-color: #D4AF37;
-  }
-
-  .hero-media {
-    padding: 16px;
-  }
-
-  .video-wrapper {
-    border-radius: 16px;
-    overflow: hidden;
-    aspect-ratio: 16/9;
-    background: rgba(0,0,0,0.3);
-  }
-
-  .video-wrapper video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .video-badge {
-    text-align: center;
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.4);
-    margin-top: 12px;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.4rem;
-    font-weight: 700;
-    text-align: center;
-    margin: 0 0 16px 0;
-    color: #fff;
-    line-height: 1.3;
-  }
-
-  .outils {
-    position: relative;
-    z-index: 2;
-    padding: 80px 24px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .outils-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 24px;
-    margin-top: 48px;
-  }
-
-  .outil-card {
-    padding: 28px;
-    text-align: center;
-  }
-
-  .outil-card.featured {
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15), 0 0 25px rgba(212, 175, 55, 0.15);
-  }
-
-  .outil-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    justify-content: center;
-  }
-
-  .outil-icon {
-    font-size: 1.5rem;
-  }
-
-  .outil-tag {
-    font-weight: 700;
-    color: #fff;
-    font-size: 1.1rem;
-  }
-
-  .outil-demo {
-    background: rgba(0,0,0,0.25);
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .demo-box {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    height: 140px;
-    margin-bottom: 12px;
-    background: linear-gradient(135deg, #1a0f2e, #0f0818);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .demo-img, .demo-vid, .demo-lip {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(138, 43, 226, 0.4), transparent);
-    border: 2px solid rgba(255,255,255,0.1);
-  }
-
-  .demo-vid {
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.3), transparent);
-  }
-
-  .demo-lip {
-    background: radial-gradient(circle, rgba(90, 54, 150, 0.5), transparent);
-  }
-
-  .demo-watermark {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-12deg);
-    color: rgba(255,255,255,0.7);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    border: 1px solid rgba(255,255,255,0.5);
-    padding: 4px 10px;
-    background: rgba(0,0,0,0.4);
-  }
-
-  .demo-actions {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    margin-bottom: 8px;
-  }
-
-  .demo-btn {
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
-  .demo-btn.ok {
-    background: rgba(45, 138, 78, 0.2);
-    border: 1px solid rgba(60, 179, 113, 0.4);
-    color: #3cb371;
-  }
-
-  .demo-btn.ko {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.6);
-  }
-
-  .demo-caption {
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.4);
-    margin: 0;
-  }
-
-  .demo-chat {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    text-align: left;
-  }
-
-  .chat-bubble {
-    padding: 10px 14px;
-    border-radius: 14px;
-    font-size: 0.85rem;
-    max-width: 85%;
-  }
-
-  .chat-bubble.user {
-    background: rgba(90, 54, 150, 0.3);
-    border: 1px solid rgba(90, 54, 150, 0.4);
-    color: #fff;
-    align-self: flex-end;
-    border-bottom-right-radius: 4px;
-  }
-
-  .chat-bubble.bot {
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    color: rgba(255,255,255,0.8);
-    align-self: flex-start;
-    border-bottom-left-radius: 4px;
-  }
-
-  .demo-audio {
-    text-align: center;
-    padding: 20px;
-  }
-
-  .audio-wave {
-    display: flex;
-    gap: 4px;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    margin-bottom: 12px;
-  }
-
-  .audio-wave span {
-    width: 4px;
-    background: linear-gradient(to top, #D4AF37, #FFF8DC);
-    border-radius: 2px;
-    animation: wave 1.2s infinite ease-in-out;
-  }
-
-  .audio-wave span:nth-child(1) { height: 20%; animation-delay: 0s; }
-  .audio-wave span:nth-child(2) { height: 60%; animation-delay: 0.1s; }
-  .audio-wave span:nth-child(3) { height: 100%; animation-delay: 0.2s; }
-  .audio-wave span:nth-child(4) { height: 60%; animation-delay: 0.3s; }
-  .audio-wave span:nth-child(5) { height: 20%; animation-delay: 0.4s; }
-
-  @keyframes wave {
-    0%, 100% { transform: scaleY(0.5); opacity: 0.5; }
-    50% { transform: scaleY(1); opacity: 1; }
-  }
-
-  .demo-audio p {
-    color: rgba(255,255,255,0.5);
-    font-size: 0.85rem;
-    margin: 0;
-  }
-
-  .forfaits {
-    position: relative;
-    z-index: 2;
-    padding: 80px 24px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .forfaits-sub {
-    text-align: center;
-    color: rgba(255,255,255,0.5);
-    margin: 0 0 48px 0;
-    font-size: 1.05rem;
-  }
-
-  .forfaits-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
-
-  .forfait-card {
-    padding: 32px 24px;
-    text-align: center;
-    position: relative;
-  }
-
-  .forfait-card h3 {
-    font-size: 1.3rem;
-    color: #fff;
-    margin: 0 0 12px 0;
-  }
-
-  .forfait-prix {
-    font-size: 2.8rem;
-    font-weight: 900;
-    margin: 0 0 20px 0;
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .mois {
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.5);
-    font-weight: 400;
-  }
-
-  .forfait-card ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 24px 0;
-    text-align: left;
-  }
-
-  .forfait-card ul li {
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.75);
-    font-size: 0.9rem;
-  }
-
-  .forfait-card ul li:last-child {
-    border-bottom: none;
-  }
-
-  .popular-badge {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(135deg, #D4AF37, #C5A028);
-    color: #0c0618;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
-
-  .footer {
-    position: relative;
-    z-index: 2;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    background: rgba(0,0,0,0.3);
-    backdrop-filter: blur(10px);
-    padding: 48px 24px 32px;
-  }
-
-  .footer-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 24px;
-    margin-bottom: 32px;
-  }
-
-  .footer-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-
-  .footer-links a {
-    color: rgba(255,255,255,0.5);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s;
-  }
-
-  .footer-links a:hover {
-    color: #D4AF37;
-  }
-
-  .footer-bottom {
-    text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding-top: 24px;
-  }
-
-  .creator {
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.6);
-    margin: 0 0 8px 0
-    font-style: italic;
-  }
-
-  .footer-bottom p:last-child {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.3);
-    margin: 0;
-  }
-
+  :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;background:#0c0618;color:#fff}
+  
+  .gold-chrome{background:linear-gradient(135deg,#D4AF37,#FFF8DC,#C5A028,#FFF8DC,#AA771C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 15px rgba(212,175,55,.4))}
+  
+  .page{position:relative;min-height:100vh;background:#0c0618;overflow-x:hidden}
+  
+  .glass{background:rgba(255,255,255,.04);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.12);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);transition:all .3s}
+  .glass:hover{border-color:rgba(212,175,55,.25);box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 30px rgba(212,175,55,.1)}
+  
+  .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(12,6,24,.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;padding:16px 24px;max-width:1200px;margin:0 auto;left:50%;transform:translateX(-50%)}
+  .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,#D4AF37,#FFF8DC,#C5A028);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+  .nav-link{color:rgba(255,255,255,.6);text-decoration:none;padding:8px 20px;border:1px solid rgba(255,255,255,.1);border-radius:100px;font-size:.9rem;transition:all .3s}
+  .nav-link:hover{border-color:rgba(212,175,55,.5);color:#FFF8DC}
+  
+  .hero{max-width:1200px;margin:0 auto;padding:140px 24px 80px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .badge{display:inline-block;padding:6px 16px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.3);border-radius:50px;font-size:.8rem;font-weight:600;color:#FFF8DC;margin-bottom:20px;text-transform:uppercase;letter-spacing:1px}
+  .hero h1{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;line-height:1.1;margin:0 0 20px}
+  .hero p{font-size:1.1rem;line-height:1.7;color:rgba(255,255,255,.7);margin:0 0 28px;font-weight:300}
+  
+  .btn-primary{display:inline-block;background:linear-gradient(135deg,rgba(212,175,55,.15),rgba(212,175,55,.05));color:#FFF8DC;border:1.5px solid rgba(212,175,55,.5);padding:14px 32px;border-radius:12px;text-decoration:none;font-weight:700;transition:all .3s;backdrop-filter:blur(10px);box-shadow:0 4px 15px rgba(212,175,55,.1)}
+  .btn-primary:hover{background:rgba(212,175,55,.2);border-color:rgba(212,175,55,.8);box-shadow:0 8px 25px rgba(212,175,55,.25);transform:translateY(-2px)}
+  
+  .note{font-size:.85rem;color:rgba(255,255,255,.5);display:block;margin-top:12px}
+  .hero-media{padding:12px}
+  .hero-media video{width:100%;border-radius:12px;display:block}
+  .caption{text-align:center;font-size:.8rem;color:rgba(255,255,255,.4);margin-top:12px}
+  
+  .concept{padding:60px 24px;max-width:1000px;margin:0 auto}
+  .section-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;text-align:center;margin:0 0 48px}
+  .steps{display:flex;align-items:center;gap:20px}
+  .step{flex:1;text-align:center;padding:28px 20px}
+  .step span{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;display:block;margin-bottom:10px;background:linear-gradient(45deg,#D4AF37,#FFF8DC,#C5A028);-webkit-background-clip:text;-webkit-text-fill-color:transparent;opacity:.7}
+  .step h4{margin:0 0 6px;font-size:1rem}
+  .step p{margin:0;font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.5}
+  .arrow{color:rgba(212,175,55,.5);font-size:1.5rem}
+  
+  .demos{padding:60px 24px;max-width:1200px;margin:0 auto}
+  .demos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .demo-card{padding:24px}
+  .demo-card.wide{grid-column:1/-1}
+  .demo-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-weight:600;font-size:.95rem}
+  .tag{font-size:.7rem;padding:4px 10px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.25);border-radius:100px;color:#FFF8DC}
+  .screen{position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1);margin-bottom:14px;background:rgba(0,0,0,.2)}
+  .screen img,.screen video{width:100%;display:block;height:160px;object-fit:cover}
+  .watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);color:rgba(255,255,255,.8);font-size:1.1rem;font-weight:900;letter-spacing:2px;text-shadow:0 0 15px rgba(0,0,0,.9);border:2px solid rgba(255,255,255,.6);padding:6px 14px;background:rgba(0,0,0,.4);pointer-events:none}
+  .demo-actions{display:flex;gap:8px;margin-bottom:10px}
+  .btn-like{flex:1;background:rgba(60,179,113,.1);color:#3cb371;border:1.5px solid rgba(60,179,113,.35);padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.8rem;transition:all .3s}
+  .btn-like.active{background:rgba(60,179,113,.2);border-color:#3cb371;box-shadow:0 0 10px rgba(60,179,113,.15)}
+  .btn-reject{flex:1;background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.8rem;transition:all .3s}
+  .btn-reject:hover{border-color:#ff6b6b;color:#ff6b6b}
+  .demo-desc{font-size:.8rem;color:rgba(255,255,255,.4);margin:0;text-align:center}
+  
+  .chat-box{height:120px;overflow-y:auto;padding:12px;background:rgba(0,0,0,.2);border-radius:12px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+  .msg{display:flex;align-items:flex-start;gap:6px}
+  .msg.user{flex-direction:row-reverse}
+  .bubble{background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.2);padding:8px 12px;border-radius:12px;color:#fff;font-size:.85rem;max-width:85%}
+  .msg.user .bubble{background:rgba(90,54,150,.25);border-color:rgba(90,54,150,.35)}
+  .chat-input{display:flex;gap:6px}
+  .chat-input input{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px;color:#fff;outline:none;font-size:.9rem}
+  .chat-input input:focus{border-color:rgba(212,175,55,.3)}
+  .chat-input button{background:linear-gradient(135deg,#D4AF37,#C5A028);color:#0c0618;border:none;padding:10px 16px;border-radius:10px;font-weight:600;cursor:pointer;font-size:.9rem}
+  
+  .voice-box{padding:20px;text-align:center}
+  .wave{display:flex;align-items:center;justify-content:center;gap:5px;height:50px;margin-bottom:14px}
+  .bar{width:5px;background:linear-gradient(to top,#D4AF37,#FFF8DC);border-radius:8px;animation:sound 1.2s infinite ease-in-out}
+  .bar:nth-child(2){animation-delay:.1s}.bar:nth-child(3){animation-delay:.2s}.bar:nth-child(4){animation-delay:.3s}.bar:nth-child(5){animation-delay:.4s}.bar:nth-child(6){animation-delay:.5s}
+  @keyframes sound{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+  .btn-play{background:rgba(255,255,255,.03);border:1.5px solid rgba(212,175,55,.4);color:#D4AF37;padding:10px 20px;border-radius:100px;cursor:pointer;font-weight:600;font-size:.9rem}
+  
+  .lipsync-row{display:flex;align-items:center;justify-content:center;gap:20px;padding:20px}
+  .ls-step{text-align:center}
+  .ls-step span{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(212,175,55,.1);border:1.5px solid rgba(212,175,55,.3);border-radius:50%;color:#FFF8DC;font-weight:700;margin:0 auto 6px;font-size:.9rem}
+  .ls-step p{font-size:.85rem;color:rgba(255,255,255,.6);margin:0}
+  .ls-arrow{color:rgba(212,175,55,.5);font-size:1.3rem}
+  
+  .pricing{padding:60px 24px;max-width:1200px;margin:0 auto}
+  .sub{text-align:center;color:rgba(255,255,255,.5);margin:-36px 0 40px;font-size:.95rem}
+  .pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .price-card{padding:28px 20px;text-align:center;position:relative}
+  .price-card h3{margin:0 0 14px;font-size:1.2rem}
+  .price{font-size:2.8rem;font-weight:900;margin-bottom:16px}
+  .price small{font-size:.9rem;color:rgba(255,255,255,.5);font-weight:400;margin-left:4px}
+  .price-card ul{list-style:none;padding:0;margin:0 0 20px;text-align:left}
+  .price-card ul li{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.7);font-size:.85rem}
+  .price-card ul li:last-child{border:none}
+  .btn-outline{display:block;background:rgba(255,255,255,.03);border:1.5px solid rgba(212,175,55,.4);color:#FFF8DC;padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:600;transition:all .3s;text-align:center}
+  .btn-outline:hover{background:rgba(212,175,55,.1);border-color:rgba(212,175,55,.7);box-shadow:0 0 15px rgba(212,175,55,.1)}
+  .popular{border:1.5px solid rgba(212,175,55,.3);box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 20px rgba(212,175,55,.1)}
+  .pop-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#D4AF37,#C5A028);color:#0c0618;padding:4px 14px;border-radius:100px;font-size:.7rem;font-weight:700}
+  
+  .footer{text-align:center;padding:40px 24px;border-top:1px solid rgba(255,255,255,.06)}
+  .footer-brand{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;display:block;margin-bottom:10px}
+  .creator{font-size:.9rem;color:rgba(255,255,255,.6);margin:0 0 6px;font-style:italic}
+  .copy{font-size:.8rem;color:rgba(255,255,255,.3);margin:0}
+  
   @media(max-width:900px){
     .hero{grid-template-columns:1fr;padding-top:120px}
-    .hero h1{font-size:2.8rem}
+    .hero h1{font-size:2.6rem}
     .steps{flex-direction:column}
-    .step-arrow{transform:rotate(90deg)}
+    .arrow{transform:rotate(90deg)}
     .demos-grid{grid-template-columns:1fr}
     .pricing-grid{grid-template-columns:1fr}
-    .lipsync-box{flex-direction:column}
-    .lipsync-arrow{transform:rotate(90deg)}
-    .footer-inner{flex-direction:column;text-align:center}
+    .lipsync-row{flex-direction:column}
+    .ls-arrow{transform:rotate(90deg)}
   }
 </style>
