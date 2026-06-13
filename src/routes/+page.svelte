@@ -1,112 +1,225 @@
 <svelte:head>
-  <title>ClipLumia Studio — Création visuelle par IA</title>
-  <meta name="description" content="Générez des images, vidéos et animations lipsync d'exception grâce à l'intelligence artificielle.">
+  <title>ClipLumia — Générez. Prévisualisez. Validez.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </svelte:head>
 
 <main class="page">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="grid-overlay"></div>
+
   <nav class="nav">
     <div class="nav-inner">
       <a href="/" class="nav-logo">ClipLumia</a>
-      <a href="/studio" class="nav-link">Studio</a>
+      <div class="nav-links">
+        <a href="#outils">Outils</a>
+        <a href="#forfaits">Forfaits</a>
+        <a href="/studio" class="nav-cta">Studio</a>
+      </div>
     </div>
   </nav>
 
   <section class="hero">
-    <div class="hero-grid">
-      <div class="hero-text">
-        <h1 class="hero-title">
-          Donnez vie à vos<br>
-          <span class="gold-chrome">idées créatives</span>
-        </h1>
-        <p class="hero-desc">
-          Images, vidéos et animations lipsync générées par IA 
-          avec une qualité professionnelle. Décrivez, prévisualisez, 
-          validez.
-        </p>
-        <div class="hero-actions">
-          <a href="/studio" class="btn-primary">Accéder au Studio</a>
-          <span class="hero-note">Sans engagement · Annulation instantanée</span>
+    <div class="hero-content">
+      <span class="hero-badge">Nouveau Studio IA</span>
+      <h1 class="hero-title">
+        Générez en IA.<br>
+        <span class="gold-chrome">Payez uniquement<br>ce que vous validez.</span>
+      </h1>
+      
+      <div class="hero-args">
+        <div class="arg-item">
+          <span class="arg-icon">✓</span>
+          <div>
+            <strong>Pas de crédits qui disparaissent</strong>
+            <p>Vous ne payez que si vous validez la création. Rejeter = 0 crédit débité.</p>
+          </div>
+        </div>
+        <div class="arg-item">
+          <span class="arg-icon">✓</span>
+          <div>
+            <strong>Prévisualisation avant achat</strong>
+            <p>Chaque génération arrive avec filigrane. Vous voyez avant de décider.</p>
+          </div>
+        </div>
+        <div class="arg-item">
+          <span class="arg-icon">✓</span>
+          <div>
+            <strong>Forfaits clairs, pas de surprises</strong>
+            <p>Un nombre fixe de validations par mois. Pas de compteur caché.</p>
+          </div>
         </div>
       </div>
 
-      <div class="hero-media glass-3d">
-        <div class="video-wrapper">
-          <video 
-            src="URL_DE_TA_VIDEO_ICI" 
-            controls 
-            muted 
-            loop 
-            playsinline
-          ></video>
-        </div>
-        <p class="media-caption">Exemple généré avec ClipLumia Studio</p>
+      <div class="hero-actions">
+        <a href="/studio" class="btn-primary">Tester le Studio</a>
+        <a href="#forfaits" class="btn-secondary">Voir les forfaits</a>
       </div>
+    </div>
+
+    <div class="hero-media glass-premium">
+      <div class="video-wrapper">
+        <video src="URL_DE_TA_VIDEO_ICI" muted loop playsinline autoplay></video>
+      </div>
+      <div class="video-badge">Exemple généré sur ClipLumia</div>
     </div>
   </section>
 
-  <section class="showcase">
-    <h2 class="section-title">Ce que vous pouvez <span class="gold-chrome">créer</span></h2>
+  <section id="outils" class="outils">
+    <h2 class="section-title">5 outils. <span class="gold-chrome">Une seule règle :</span><br>vous ne validez que ce qui vous plaît.</h2>
     
-    <div class="showcase-grid">
-      <article class="showcase-card glass-3d">
-        <div class="card-glow"></div>
-        <div class="card-icon">🖼️</div>
-        <h3>Images IA</h3>
-        <p>Des visuels uniques et détaillés à partir d'une simple description textuelle.</p>
-      </article>
+    <div class="outils-grid">
+      <!-- IMAGE -->
+      <div class="outil-card glass-premium">
+        <div class="outil-header">
+          <span class="outil-icon">🖼️</span>
+          <span class="outil-tag">Images IA</span>
+        </div>
+        <div class="outil-demo">
+          <div class="demo-box">
+            <div class="demo-img"></div>
+            <div class="demo-watermark">PREVIEW</div>
+          </div>
+          <div class="demo-actions">
+            <span class="demo-btn ok">❤️ J'aime</span>
+            <span class="demo-btn ko">🗑️ Rejeter</span>
+          </div>
+          <p class="demo-caption">1 crédit si validé · 0 si rejeté</p>
+        </div>
+      </div>
 
-      <article class="showcase-card glass-3d featured">
-        <div class="card-glow"></div>
-        <div class="card-icon">▶️</div>
-        <h3>Vidéos IA</h3>
-        <p>Des séquences en mouvement de 5 à 6 secondes, parfaites pour les réseaux sociaux.</p>
-      </article>
+      <!-- VIDEO -->
+      <div class="outil-card glass-premium">
+        <div class="outil-header">
+          <span class="outil-icon">▶️</span>
+          <span class="outil-tag">Vidéos IA</span>
+        </div>
+        <div class="outil-demo">
+          <div class="demo-box">
+            <div class="demo-vid"></div>
+            <div class="demo-watermark">PREVIEW</div>
+          </div>
+          <div class="demo-actions">
+            <span class="demo-btn ok">❤️ J'aime</span>
+            <span class="demo-btn ko">🗑️ Rejeter</span>
+          </div>
+          <p class="demo-caption">1 crédit si validé · 0 si rejeté</p>
+        </div>
+      </div>
 
-      <article class="showcase-card glass-3d">
-        <div class="card-glow"></div>
-        <div class="card-icon">🎭</div>
-        <h3>Lipsync</h3>
-        <p>Animez vos portraits avec une voix générée. Vos photos prennent vie.</p>
-      </article>
+      <!-- CHAT -->
+      <div class="outil-card glass-premium">
+        <div class="outil-header">
+          <span class="outil-icon">💬</span>
+          <span class="outil-tag">Chat IA</span>
+        </div>
+        <div class="outil-demo">
+          <div class="demo-chat">
+            <div class="chat-bubble user">Rédige-moi un script...</div>
+            <div class="chat-bubble bot">Voici un script professionnel...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOIX -->
+      <div class="outil-card glass-premium">
+        <div class="outil-header">
+          <span class="outil-icon">🎙️</span>
+          <span class="outil-tag">Voix IA</span>
+        </div>
+        <div class="outil-demo">
+          <div class="demo-audio">
+            <div class="audio-wave">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p>Clone et génère des voix réalistes</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIPSYNC -->
+      <div class="outil-card glass-premium featured">
+        <div class="outil-header">
+          <span class="outil-icon">🎭</span>
+          <span class="outil-tag">Lipsync IA</span>
+        </div>
+        <div class="outil-demo">
+          <div class="demo-box">
+            <div class="demo-lip"></div>
+            <div class="demo-watermark">PREVIEW</div>
+          </div>
+          <div class="demo-actions">
+            <span class="demo-btn ok">❤️ J'aime</span>
+            <span class="demo-btn ko">🗑️ Rejeter</span>
+          </div>
+          <p class="demo-caption">1 crédit si validé · 0 si rejeté</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="process">
-    <h2 class="section-title">Une création <span class="gold-chrome">simple</span></h2>
-    <div class="process-grid">
-      <div class="process-step">
-        <span class="step-num">01</span>
-        <h4>Décrivez</h4>
-        <p>Rédigez votre prompt en langage naturel. Soyez aussi précis que vous le souhaitez.</p>
+  <section id="forfaits" class="forfaits">
+    <h2 class="section-title">Des forfaits <span class="gold-chrome">sans surprises</span></h2>
+    <p class="forfaits-sub">Chaque validation décompte 1 crédit. Les rejets sont gratuits.</p>
+    
+    <div class="forfaits-grid">
+      <div class="forfait-card glass-premium">
+        <h3>Starter</h3>
+        <div class="forfait-prix"><span class="gold-chrome">9€</span><span class="mois">/mois</span></div>
+        <ul>
+          <li>15 vidéos/mois</li>
+          <li>50 images IA/mois</li>
+          <li>Chat, Voix, Lipsync inclus</li>
+          <li>Payez que si vous validez</li>
+        </ul>
+        <a href="/signup?plan=starter" class="btn-outline">Choisir Starter</a>
       </div>
-      <div class="process-arrow">→</div>
-      <div class="process-step">
-        <span class="step-num">02</span>
-        <h4>Prévisualisez</h4>
-        <p>Visualisez le résultat avec filigrane avant validation. Zéro surprise.</p>
-      </div>
-      <div class="process-arrow">→</div>
-      <div class="process-step">
-        <span class="step-num">03</span>
-        <h4>Validez</h4>
-        <p>Satisfait ? Un clic et la version HD sans filigrane est à vous.</p>
-      </div>
-    </div>
-  </section>
 
-  <section class="cta-section">
-    <div class="cta-glass glass-3d">
-      <h2>Prêt à créer ?</h2>
-      <p>Rejoignez ClipLumia et produisez du contenu visuel professionnel en minutes.</p>
-      <a href="/studio" class="btn-primary btn-large">Démarrer maintenant</a>
+      <div class="forfait-card glass-premium">
+        <h3>Standard</h3>
+        <div class="forfait-prix"><span class="gold-chrome">19€</span><span class="mois">/mois</span></div>
+        <ul>
+          <li>40 vidéos/mois</li>
+          <li>150 images IA/mois</li>
+          <li>Chat, Voix, Lipsync inclus</li>
+          <li>Payez que si vous validez</li>
+        </ul>
+        <a href="/signup?plan=standard" class="btn-outline">Choisir Standard</a>
+      </div>
+
+      <div class="forfait-card glass-premium popular">
+        <div class="popular-badge">POPULAIRE</div>
+        <h3>Pro</h3>
+        <div class="forfait-prix"><span class="gold-chrome">39€</span><span class="mois">/mois</span></div>
+        <ul>
+          <li>80 vidéos/mois</li>
+          <li>300 images IA/mois</li>
+          <li>Chat, Voix, Lipsync inclus</li>
+          <li>Support prioritaire</li>
+          <li>Payez que si vous validez</li>
+        </ul>
+        <a href="/signup?plan=pro" class="btn-primary">Choisir Pro</a>
+      </div>
+
+      <div class="forfait-card glass-premium">
+        <h3>Studio</h3>
+        <div class="forfait-prix"><span class="gold-chrome">79€</span><span class="mois">/mois</span></div>
+        <ul>
+          <li>180 vidéos/mois</li>
+          <li>800 images IA/mois</li>
+          <li>Chat, Voix, Lipsync inclus</li>
+          <li>Support prioritaire</li>
+          <li>Payez que si vous validez</li>
+        </ul>
+        <a href="/signup?plan=studio" class="btn-outline">Choisir Studio</a>
+      </div>
     </div>
   </section>
 
   <footer class="footer">
-    <div class="footer-top">
-      <span class="footer-brand gold-chrome">ClipLumia</span>
+    <div class="footer-inner">
+      <span class="footer-logo gold-chrome">ClipLumia</span>
       <div class="footer-links">
         <a href="/cgv">CGV</a>
         <a href="/mentions-legales">Mentions légales</a>
@@ -125,65 +238,81 @@
   :global(body) {
     margin: 0;
     font-family: 'Inter', system-ui, sans-serif;
-    background: #05030a;
-    color: #f0f0f5;
-    -webkit-font-smoothing: antialiased;
+    background: #0c0618;
+    color: #ffffff;
+    overflow-x: hidden;
   }
 
   .gold-chrome {
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    background: linear-gradient(135deg, #D4AF37 0%, #FFF8DC 30%, #C5A028 60%, #FFF8DC 80%, #AA771C 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 15px rgba(191, 149, 63, 0.4));
+    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
   }
 
   .page {
-    background: 
-      radial-gradient(ellipse at 20% 0%, rgba(90, 54, 150, 0.25) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 100%, rgba(60, 30, 100, 0.2) 0%, transparent 50%),
-      #05030a;
-    min-height: 100vh;
-  }
-
-  .glass-3d {
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 24px;
-    box-shadow: 
-      0 25px 50px -12px rgba(0, 0, 0, 0.6),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04),
-      0 0 0 1px rgba(191, 149, 63, 0.08);
     position: relative;
-    overflow: hidden;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 100vh;
+    background: #0c0618;
   }
 
-  .glass-3d:hover {
-    transform: translateY(-6px) perspective(1000px) rotateX(2deg);
-    box-shadow: 
-      0 35px 70px -12px rgba(0, 0, 0, 0.7),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 0 40px rgba(191, 149, 63, 0.12);
-    border-color: rgba(191, 149, 63, 0.25);
-  }
-
-  .card-glow {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(191, 149, 63, 0.08) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.4;
     pointer-events: none;
+    z-index: 0;
   }
 
-  .glass-3d:hover .card-glow {
-    opacity: 1;
+  .orb-1 {
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.5), transparent 70%);
+    top: -15%;
+    left: -15%;
+    animation: float 18s infinite ease-in-out;
+  }
+
+  .orb-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.3), transparent 70%);
+    bottom: 5%;
+    right: -10%;
+    animation: float 22s infinite ease-in-out reverse;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, -30px) scale(1.1); }
+  }
+
+  .grid-overlay {
+    position: fixed;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .glass-premium {
+    position: relative;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+    backdrop-filter: blur(30px) saturate(160%);
+    -webkit-backdrop-filter: blur(30px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+    z-index: 2;
+    transition: all 0.4s ease;
+  }
+
+  .glass-premium:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 30px rgba(212, 175, 55, 0.15), inset 0 1px 0 rgba(255,255,255,0.2);
   }
 
   .nav {
@@ -192,9 +321,9 @@
     left: 0;
     right: 0;
     z-index: 100;
-    background: rgba(5, 3, 10, 0.7);
+    background: rgba(12, 6, 24, 0.8);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 
   .nav-inner {
@@ -210,109 +339,187 @@
     font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
     font-weight: 700;
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728);
+    background: linear-gradient(135deg, #D4AF37, #FFF8DC, #C5A028);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-decoration: none;
   }
 
-  .nav-link {
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    padding: 8px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 100px;
-    transition: all 0.3s ease;
+  .nav-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
   }
 
-  .nav-link:hover {
-    border-color: rgba(191, 149, 63, 0.5);
+  .nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: 100px;
+    transition: all 0.3s;
+  }
+
+  .nav-links a:hover {
     color: #fff;
-    background: rgba(191, 149, 63, 0.08);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .nav-cta {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    color: #0c0618 !important;
+    font-weight: 600;
+    padding: 8px 20px !important;
   }
 
   .hero {
-    padding: 140px 24px 80px;
+    position: relative;
+    z-index: 2;
     max-width: 1200px;
     margin: 0 auto;
-  }
-
-  .hero-grid {
+    padding: 140px 24px 80px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.1fr 1fr;
     gap: 60px;
     align-items: center;
   }
 
+  .hero-badge {
+    display: inline-block;
+    padding: 8px 18px;
+    background: rgba(212, 175, 55, 0.15);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #FFF8DC;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
   .hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     font-weight: 900;
-    line-height: 1.1;
-    margin: 0 0 24px 0;
-    color: #fff;
-    letter-spacing: -1px;
-  }
-
-  .hero-desc {
-    font-size: 1.15rem;
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.15;
     margin: 0 0 32px 0;
-    font-weight: 300;
-    max-width: 480px;
+    color: #fff;
   }
 
-  .hero-actions {
+  .hero-args {
     display: flex;
     flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .arg-item {
+    display: flex;
     gap: 12px;
     align-items: flex-start;
   }
 
-  .btn-primary {
-    display: inline-flex;
+  .arg-icon {
+    width: 28px;
+    height: 28px;
+    background: rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 50%;
+    display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #BF953F 0%, #B38728 50%, #AA771C 100%);
-    color: #0a0514;
-    padding: 16px 36px;
+    color: #D4AF37;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .arg-item div strong {
+    color: #fff;
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .arg-item div p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    color: #0c0618;
+    padding: 16px 32px;
     border-radius: 12px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 1rem;
     border: none;
+    display: inline-block;
+    transition: all 0.3s;
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.35);
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(191, 149, 63, 0.3), inset 0 1px 0 rgba(255,255,255,0.3);
   }
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(191, 149, 63, 0.5), inset 0 1px 0 rgba(255,255,255,0.4);
+    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
   }
 
-  .btn-large {
-    padding: 18px 48px;
-    font-size: 1.1rem;
+  .btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: inline-block;
+    transition: all 0.3s;
   }
 
-  .hero-note {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.4);
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(212, 175, 55, 0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: #D4AF37;
+    padding: 14px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .btn-outline:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: #D4AF37;
   }
 
   .hero-media {
-    padding: 12px;
+    padding: 16px;
   }
 
   .video-wrapper {
     border-radius: 16px;
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.3);
     aspect-ratio: 16/9;
+    background: rgba(0,0,0,0.3);
   }
 
   .video-wrapper video {
@@ -322,152 +529,306 @@
     display: block;
   }
 
-  .media-caption {
+  .video-badge {
     text-align: center;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.35);
-    margin: 12px 0 0 0;
-    font-style: italic;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 12px;
   }
 
   .section-title {
     font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     font-weight: 700;
     text-align: center;
-    margin: 0 0 48px 0;
+    margin: 0 0 16px 0;
     color: #fff;
+    line-height: 1.3;
   }
 
-  .showcase {
+  .outils {
+    position: relative;
+    z-index: 2;
     padding: 80px 24px;
     max-width: 1200px;
     margin: 0 auto;
   }
 
-  .showcase-grid {
+  .outils-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 24px;
+    margin-top: 48px;
   }
 
-  .showcase-card {
-    padding: 40px 32px;
+  .outil-card {
+    padding: 28px;
     text-align: center;
   }
 
-  .showcase-card.featured {
-    transform: scale(1.05);
-    border-color: rgba(191, 149, 63, 0.2);
+  .outil-card.featured {
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15), 0 0 25px rgba(212, 175, 55, 0.15);
   }
 
-  .showcase-card.featured:hover {
-    transform: scale(1.05) translateY(-6px) perspective(1000px) rotateX(2deg);
+  .outil-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
   }
 
-  .card-icon {
-    font-size: 2rem;
-    margin-bottom: 16px;
+  .outil-icon {
+    font-size: 1.5rem;
   }
 
-  .showcase-card h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin: 0 0 12px 0;
+  .outil-tag {
+    font-weight: 700;
     color: #fff;
+    font-size: 1.1rem;
   }
 
-  .showcase-card p {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.5);
-    margin: 0;
+  .outil-demo {
+    background: rgba(0,0,0,0.25);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.06);
   }
 
-  .process {
-    padding: 80px 24px;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  .process-grid {
+  .demo-box {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 140px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #1a0f2e, #0f0818);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
   }
 
-  .process-step {
-    flex: 1;
-    text-align: center;
-    padding: 32px 24px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+  .demo-img, .demo-vid, .demo-lip {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.4), transparent);
+    border: 2px solid rgba(255,255,255,0.1);
+  }
+
+  .demo-vid {
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.3), transparent);
+  }
+
+  .demo-lip {
+    background: radial-gradient(circle, rgba(90, 54, 150, 0.5), transparent);
+  }
+
+  .demo-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    color: rgba(255,255,255,0.7);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border: 1px solid rgba(255,255,255,0.5);
+    padding: 4px 10px;
+    background: rgba(0,0,0,0.4);
+  }
+
+  .demo-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  .demo-btn {
+    padding: 6px 12px;
     border-radius: 20px;
-  }
-
-  .step-num {
-    display: block;
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    font-weight: 900;
-    margin-bottom: 12px;
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    opacity: 0.6;
-  }
-
-  .process-step h4 {
-    font-size: 1.1rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    margin: 0 0 8px 0;
-    color: #fff;
   }
 
-  .process-step p {
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.45);
+  .demo-btn.ok {
+    background: rgba(45, 138, 78, 0.2);
+    border: 1px solid rgba(60, 179, 113, 0.4);
+    color: #3cb371;
+  }
+
+  .demo-btn.ko {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.6);
+  }
+
+  .demo-caption {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
     margin: 0;
   }
 
-  .process-arrow {
-    font-size: 1.5rem;
-    color: rgba(191, 149, 63, 0.4);
+  .demo-chat {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
   }
 
-  .cta-section {
-    padding: 60px 24px 100px;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
+  .chat-bubble {
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    max-width: 85%;
   }
 
-  .cta-glass {
-    padding: 60px 40px;
-  }
-
-  .cta-glass h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    margin: 0 0 12px 0;
+  .chat-bubble.user {
+    background: rgba(90, 54, 150, 0.3);
+    border: 1px solid rgba(90, 54, 150, 0.4);
     color: #fff;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
   }
 
-  .cta-glass p {
-    color: rgba(255, 255, 255, 0.5);
-    margin: 0 0 32px 0;
-    font-size: 1rem;
+  .chat-bubble.bot {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    color: rgba(255,255,255,0.8);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+
+  .demo-audio {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .audio-wave {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    margin-bottom: 12px;
+  }
+
+  .audio-wave span {
+    width: 4px;
+    background: linear-gradient(to top, #D4AF37, #FFF8DC);
+    border-radius: 2px;
+    animation: wave 1.2s infinite ease-in-out;
+  }
+
+  .audio-wave span:nth-child(1) { height: 20%; animation-delay: 0s; }
+  .audio-wave span:nth-child(2) { height: 60%; animation-delay: 0.1s; }
+  .audio-wave span:nth-child(3) { height: 100%; animation-delay: 0.2s; }
+  .audio-wave span:nth-child(4) { height: 60%; animation-delay: 0.3s; }
+  .audio-wave span:nth-child(5) { height: 20%; animation-delay: 0.4s; }
+
+  @keyframes wave {
+    0%, 100% { transform: scaleY(0.5); opacity: 0.5; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+
+  .demo-audio p {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+  .forfaits {
+    position: relative;
+    z-index: 2;
+    padding: 80px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .forfaits-sub {
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    margin: 0 0 48px 0;
+    font-size: 1.05rem;
+  }
+
+  .forfaits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .forfait-card {
+    padding: 32px 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .forfait-card h3 {
+    font-size: 1.3rem;
+    color: #fff;
+    margin: 0 0 12px 0;
+  }
+
+  .forfait-prix {
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin: 0 0 20px 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .mois {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+  }
+
+  .forfait-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+    text-align: left;
+  }
+
+  .forfait-card ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.75);
+    font-size: 0.9rem;
+  }
+
+  .forfait-card ul li:last-child {
+    border-bottom: none;
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    color: #0c0618;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
   }
 
   .footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
     padding: 48px 24px 32px;
   }
 
-  .footer-top {
+  .footer-inner {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -478,56 +839,57 @@
     margin-bottom: 32px;
   }
 
-  .footer-brand {
+  .footer-logo {
     font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 700;
   }
 
   .footer-links {
     display: flex;
-    gap: 24px;
+    gap: 32px;
     flex-wrap: wrap;
   }
 
   .footer-links a {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255,255,255,0.5);
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     transition: color 0.3s;
   }
 
   .footer-links a:hover {
-    color: #BF953F;
+    color: #D4AF37;
   }
 
   .footer-bottom {
     text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255,255,255,0.06);
     padding-top: 24px;
   }
 
   .creator {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.5);
-    margin: 0 0 8px 0;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.6);
+    margin: 0 0 8px 0
     font-style: italic;
   }
 
   .footer-bottom p:last-child {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.25);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.3);
     margin: 0;
   }
 
-  @media (max-width: 900px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
-    .hero-title { font-size: 2.5rem; }
-    .showcase-grid { grid-template-columns: 1fr; }
-    .showcase-card.featured { transform: none; }
-    .showcase-card.featured:hover { transform: translateY(-6px) perspective(1000px) rotateX(2deg); }
-    .process-grid { flex-direction: column; }
-    .process-arrow { transform: rotate(90deg); }
-    .footer-top { flex-direction: column; text-align: center; }
+  @media(max-width:900px){
+    .hero{grid-template-columns:1fr;padding-top:120px}
+    .hero h1{font-size:2.8rem}
+    .steps{flex-direction:column}
+    .step-arrow{transform:rotate(90deg)}
+    .demos-grid{grid-template-columns:1fr}
+    .pricing-grid{grid-template-columns:1fr}
+    .lipsync-box{flex-direction:column}
+    .lipsync-arrow{transform:rotate(90deg)}
+    .footer-inner{flex-direction:column;text-align:center}
   }
 </style>
