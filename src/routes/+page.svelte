@@ -31,7 +31,7 @@
     <div class="hero-text">
       <span class="badge">Studio IA Professionnel</span>
       <h1>Créez sans risque.<br><span class="gold-chrome">Payez si vous validez.</span></h1>
-      <p>Images, vidéos, voix et lipsync par IA. Générez un aperçu gratuitement. Un crédit débité uniquement si vous aimez le résultat.</p>
+      <p>Images, vidéos, voix et lipsync par IA. Générez un aperçu gratuitement. 1 sur forfait débité uniquement si vous aimez le résultat.</p>
       <a href="/studio" class="btn-primary">Tester gratuitement</a>
       <span class="note">Sans engagement · Annulez en 2 clics</span>
     </div>
