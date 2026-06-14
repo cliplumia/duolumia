@@ -91,9 +91,7 @@
   </div>
 </section>
 
-</section>
-
-<style>           ← AJOUTE ÇA
+<style>          
 .hero-concept{
   margin:28px 0;
   display:flex;
