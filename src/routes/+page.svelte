@@ -1,11 +1,21 @@
-<script>  
+<script>
   let demoLiked = $state({img: false, vid: false, lip: false});
   let chatInput = $state('');
   let chatMsgs = $state([{who:'bot', text:'Bonjour ! Décrivez votre vision...'}]);
   
   function sendChat() {
-    if(!chatInput
-
+    if(!chatInput.trim()) return;
+    chatMsgs = [...chatMsgs, {who:'user', text: chatInput}];
+    const prev = chatInput;
+    chatInput = '';
+    setTimeout(() => {
+      chatMsgs = [...chatMsgs, {who:'bot', text:`"${prev}" — Voici votre aperçu !`}];
+    }, 800);
+  }
+  
+  function toggleLike(t) { 
+    demoLiked[t] = !demoLiked[t]; 
+  }
 </script>
 
 <svelte:head>
