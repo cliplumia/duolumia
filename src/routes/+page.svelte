@@ -38,19 +38,90 @@
     <a href="/studio" class="nav-link">Studio</a>
   </nav>
 
-  <section class="hero">
-    <div class="hero-text">
-      <span class="badge">Studio IA Professionnel</span>
-      <h1>Créez sans risque.<br><span class="gold-chrome">Payez si vous validez.</span></h1>
-      <p>Images, vidéos, voix et lipsync par IA. Générez un aperçu gratuitement. Un forfait débité uniquement si vous aimez le résultat.</p>
-      <a href="/studio" class="btn-primary">Tester gratuitement</a>
-      <span class="note">Sans engagement · Annulez en 2 clics</span>
+ <section class="hero">
+
+  <div class="hero-text">
+
+    <span class="badge">Studio IA Professionnel</span>
+
+    <h1>
+      Créez sans risque.
+      <br>
+      <span class="gold-chrome">Aucun gaspillage.</span>
+    </h1>
+
+    <div class="hero-concept">
+
+      <div class="concept-line">
+        ✓ <strong>STOP LES CRÉDITS 👆</strong><br>
+        80 vidéos/mois. Pas de compteur qui stresse.
+      </div>
+
+      <div class="concept-line">
+        ✓ <strong>STOP LES VIDÉOS RATÉES</strong><br>
+        Tu génères avec filigrane.<br>
+        Tu aimes ? Validation.<br>
+        Tu n'aimes pas ? <strong>0€ décompté.</strong>
+      </div>
+
     </div>
-    <div class="hero-media glass">
-      <video src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/videocliplumia.%201.mp4" controls muted loop playsinline></video>
-      <p class="caption">Exemple généré avec ClipLumia</p>
-    </div>
-  </section>
+
+    <a href="/studio" class="btn-primary">
+      Tester gratuitement
+    </a>
+
+    <span class="note">
+      Sans engagement · Annulez en 2 clics
+    </span>
+
+  </div>
+
+  <div class="hero-media glass">
+    <video
+      src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/videocliplumia.%201.mp4"
+      controls
+      muted
+      loop
+      playsinline>
+    </video>
+
+    <p class="caption">
+      Exemple généré avec ClipLumia
+    </p>
+  </div>
+</section>
+
+.hero-concept{
+  margin:28px 0;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.concept-line{
+  padding:18px;
+  border-radius:16px;
+
+  background:rgba(255,255,255,.05);
+
+  border:1px solid rgba(212,175,55,.15);
+
+  backdrop-filter:blur(6px);
+
+  color:#ffffff;
+
+  font-size:1rem;
+
+  line-height:1.7;
+
+  box-shadow:
+    0 0 20px rgba(212,175,55,.05);
+}
+
+.concept-line strong{
+  color:#f6d76b;
+  font-weight:700;
+}
 
   <section class="concept">
     <h2 class="section-title">Zéro gaspillage. <span class="gold-chrome">100% contrôle.</span></h2>
@@ -207,12 +278,25 @@
   :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   
   .gold-chrome{
-    background:linear-gradient(135deg,#1a1208 0%,#4a3720 25%,#7a6238 45%,#9e8a60 55%,#7a6238 65%,#4a3720 85%,#1a1208 100%);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    background-clip:text;
-    filter:drop-shadow(0 0 15px rgba(122,98,56,.6))
-  }
+  background:linear-gradient(
+    135deg,
+    #fff7d6 0%,
+    #f6d76b 15%,
+    #d4af37 35%,
+    #fff8dc 50%,
+    #d4af37 65%,
+    #b8860b 85%,
+    #fff7d6 100%
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+
+  filter:
+    drop-shadow(0 0 8px rgba(255,215,0,.4))
+    drop-shadow(0 0 20px rgba(255,215,0,.15));
+}
   
   .page{
     position:relative;
@@ -226,28 +310,24 @@
     background-repeat:no-repeat
   }
   .page::before{
-    content:'';
-    position:fixed;
-    inset:0;
-    background:rgba(12,6,24,.82);
-    z-index:0;
-    pointer-events:none
-  }
-  
-  .glass{
-    position:relative;
-    background:rgba(255,255,255,.04);
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:20px;
-    box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);
-    transition:all .3s;
-    z-index:2
-  }
+  background:rgba(12,6,24,.42);
+}
+ 
+.glass{
+  position:relative;
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  transition:all .3s;
+  z-index:2;
+}
+ 
   .glass:hover{border-color:rgba(158,138,96,.3);box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 25px rgba(122,98,56,.15)}
   
-  .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(12,6,24,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;padding:16px 24px;max-width:1200px;margin:0 auto;left:50%;transform:translateX(-50%)}
+  .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(12,6,24,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;padding:16px 24px;max-width:1200px;margin:0 auto;left:50%;transform:translateX(-50%)}
   .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,#9e8a60,#7a6238,#4a3720);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
   .nav-link{color:rgba(255,255,255,.6);text-decoration:none;padding:8px 20px;border:1px solid rgba(255,255,255,.1);border-radius:100px;font-size:.9rem;transition:all .3s}
   .nav-link:hover{border-color:rgba(158,138,96,.5);color:#e8dcc8}
