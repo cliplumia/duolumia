@@ -91,6 +91,9 @@
   </div>
 </section>
 
+</section>
+
+<style>           ← AJOUTE ÇA
 .hero-concept{
   margin:28px 0;
   display:flex;
@@ -101,27 +104,20 @@
 .concept-line{
   padding:18px;
   border-radius:16px;
-
   background:rgba(255,255,255,.05);
-
   border:1px solid rgba(212,175,55,.15);
-
   backdrop-filter:blur(6px);
-
   color:#ffffff;
-
   font-size:1rem;
-
   line-height:1.7;
-
-  box-shadow:
-    0 0 20px rgba(212,175,55,.05);
+  box-shadow:0 0 20px rgba(212,175,55,.05);
 }
 
 .concept-line strong{
   color:#f6d76b;
   font-weight:700;
 }
+</style>          ← ET ÇA À LA FIN
 
   <section class="concept">
     <h2 class="section-title">Zéro gaspillage. <span class="gold-chrome">100% contrôle.</span></h2>
@@ -273,7 +269,9 @@
     <p class="copy">© 2026 ClipLumia. Tous droits réservés.</p>
   </footer>
 </main>
+
 <style>
+
   :global(*){box-sizing:border-box}
   :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   
