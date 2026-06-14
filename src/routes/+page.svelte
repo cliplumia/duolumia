@@ -1,7 +1,11 @@
-<script>
-  // (Le script Svelte reste inchangé)
-  let demoLiked = {img: false, vid: false, lip: false};
-  // ...
+<script>  
+  let demoLiked = $state({img: false, vid: false, lip: false});
+  let chatInput = $state('');
+  let chatMsgs = $state([{who:'bot', text:'Bonjour ! Décrivez votre vision...'}]);
+  
+  function sendChat() {
+    if(!chatInput
+
 </script>
 
 <svelte:head>
