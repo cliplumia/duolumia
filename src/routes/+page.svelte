@@ -21,8 +21,6 @@
       u.rate = 0.9;
       u.pitch = 1;
       window.speechSynthesis.speak(u);
-    } else {
-      alert('Lecteur vocal non supporté sur ce navigateur');
     }
   }
 </script>
@@ -49,7 +47,7 @@
       <span class="note">Sans engagement · Annulez en 2 clics</span>
     </div>
     <div class="hero-media glass">
-      <video src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/NOM_DE_TA_VIDEO.mp4" controls muted loop playsinline></video>
+      <video src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/videocliplumia.%201.mp4" controls muted loop playsinline></video>
       <p class="caption">Exemple généré avec ClipLumia</p>
     </div>
   </section>
@@ -72,7 +70,7 @@
       <div class="demo-card glass">
         <div class="demo-top"><span>🖼️ Images IA</span><span class="tag">Preview</span></div>
         <div class="screen">
-          <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=600&h=400&fit=crop&auto=format" alt="Maine Coon silver shaded" style="width:100%;height:160px;object-fit:cover;display:block;" />
+          <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=600&h=400&fit=crop&auto=format" alt="Demo IA" style="width:100%;height:160px;object-fit:cover;display:block;" />
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
@@ -85,7 +83,7 @@
       <div class="demo-card glass">
         <div class="demo-top"><span>▶️ Vidéos IA</span><span class="tag">Preview</span></div>
         <div class="screen">
-          <video src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/NOM_DE_TA_VIDEO.mp4" muted loop playsinline style="width:100%;height:160px;object-fit:cover;display:block;"></video>
+          <video src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/videocliplumia.%201.mp4" muted loop playsinline style="width:100%;height:160px;object-fit:cover;display:block;"></video>
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
@@ -204,10 +202,9 @@
     <p class="copy">© 2026 ClipLumia. Tous droits réservés.</p>
   </footer>
 </main>
-
 <style>
   :global(*){box-sizing:border-box}
-  :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;background:#0c0618;color:#fff;-webkit-font-smoothing:antialiased}
+  :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   
   .gold-chrome{
     background:linear-gradient(135deg,#1a1208 0%,#4a3720 25%,#7a6238 45%,#9e8a60 55%,#7a6238 65%,#4a3720 85%,#1a1208 100%);
@@ -217,17 +214,45 @@
     filter:drop-shadow(0 0 15px rgba(122,98,56,.6))
   }
   
-  .page{position:relative;min-height:100vh;background:#0c0618;overflow-x:hidden;max-width:100vw}
+  .page{
+    position:relative;
+    min-height:100vh;
+    overflow-x:hidden;
+    max-width:100vw;
+    background-image:url('https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/image%20fond%20page%20svelte.png');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    background-repeat:no-repeat
+  }
+  .page::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:rgba(12,6,24,.82);
+    z-index:0;
+    pointer-events:none
+  }
   
-  .glass{background:rgba(255,255,255,.04);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.12);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);transition:all .3s}
+  .glass{
+    position:relative;
+    background:rgba(255,255,255,.04);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:20px;
+    box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);
+    transition:all .3s;
+    z-index:2
+  }
   .glass:hover{border-color:rgba(158,138,96,.3);box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 25px rgba(122,98,56,.15)}
   
-  .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(12,6,24,.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;padding:16px 24px;max-width:1200px;margin:0 auto;left:50%;transform:translateX(-50%)}
+  .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(12,6,24,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;padding:16px 24px;max-width:1200px;margin:0 auto;left:50%;transform:translateX(-50%)}
   .logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,#9e8a60,#7a6238,#4a3720);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
   .nav-link{color:rgba(255,255,255,.6);text-decoration:none;padding:8px 20px;border:1px solid rgba(255,255,255,.1);border-radius:100px;font-size:.9rem;transition:all .3s}
   .nav-link:hover{border-color:rgba(158,138,96,.5);color:#e8dcc8}
   
-  .hero{max-width:1200px;margin:0 auto;padding:140px 24px 80px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .hero{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:140px 24px 80px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
   .badge{display:inline-block;padding:6px 16px;background:rgba(122,98,56,.12);border:1px solid rgba(158,138,96,.35);border-radius:50px;font-size:.8rem;font-weight:600;color:#e8dcc8;margin-bottom:20px;text-transform:uppercase;letter-spacing:1px}
   .hero h1{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;line-height:1.1;margin:0 0 20px}
   .hero p{font-size:1.1rem;line-height:1.7;color:rgba(255,255,255,.7);margin:0 0 28px;font-weight:300}
@@ -236,7 +261,7 @@
   .btn-primary:hover{background:rgba(122,98,56,.25);border-color:rgba(158,138,96,.8);box-shadow:0 8px 25px rgba(122,98,56,.3);transform:translateY(-2px)}
   
   .note{font-size:.85rem;color:rgba(255,255,255,.5);display:block;margin-top:12px}
-  .hero-media{padding:12px;width:100%}
+  .hero-media{padding:12px;width:100%;position:relative;z-index:2}
   .hero-media video{width:100%;border-radius:12px;display:block;max-width:100%}
   .caption{text-align:center;font-size:.8rem;color:rgba(255,255,255,.4);margin-top:12px}
   
@@ -246,7 +271,7 @@
   .ph-icon{font-size:2rem;z-index:2;opacity:.8}
   .ph-label{color:rgba(255,255,255,.5);font-size:.9rem;font-weight:500;z-index:2;letter-spacing:1px}
   
-  .concept{padding:60px 24px;max-width:1000px;margin:0 auto}
+  .concept{position:relative;z-index:2;padding:60px 24px;max-width:1000px;margin:0 auto}
   .section-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;text-align:center;margin:0 0 48px}
   .steps{display:flex;align-items:center;gap:20px}
   .step{flex:1;text-align:center;padding:28px 20px}
@@ -255,7 +280,7 @@
   .step p{margin:0;font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.5}
   .arrow{color:rgba(158,138,96,.5);font-size:1.5rem}
   
-  .demos{padding:60px 24px;max-width:1200px;margin:0 auto}
+  .demos{position:relative;z-index:2;padding:60px 24px;max-width:1200px;margin:0 auto}
   .demos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
   .demo-card{padding:24px;width:100%}
   .demo-card.wide{grid-column:1/-1}
@@ -288,7 +313,7 @@
   .btn-play{background:rgba(255,255,255,.03);border:1.5px solid rgba(158,138,96,.4);color:#c4b598;padding:10px 20px;border-radius:100px;cursor:pointer;font-weight:600;font-size:.9rem;transition:all .3s}
   .btn-play:hover{background:rgba(122,98,56,.1);box-shadow:0 0 15px rgba(122,98,56,.15)}
   
-  .pricing{padding:60px 24px;max-width:1200px;margin:0 auto}
+  .pricing{position:relative;z-index:2;padding:60px 24px;max-width:1200px;margin:0 auto}
   .sub{text-align:center;color:rgba(255,255,255,.5);margin:-36px 0 40px;font-size:.95rem}
   .pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
   .price-card{padding:28px 20px;text-align:center;position:relative}
@@ -303,7 +328,7 @@
   .popular{border:1.5px solid rgba(158,138,96,.3);box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 20px rgba(122,98,56,.1)}
   .pop-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#9e8a60,#7a6238);color:#0c0618;padding:4px 14px;border-radius:100px;font-size:.7rem;font-weight:700}
   
-  .footer{text-align:center;padding:40px 24px;border-top:1px solid rgba(255,255,255,.06)}
+  .footer{position:relative;z-index:2;text-align:center;padding:40px 24px;border-top:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.2)}
   .footer-brand{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;display:block;margin-bottom:10px}
   .creator{font-size:.9rem;color:rgba(255,255,255,.6);margin:0 0 6px;font-style:italic}
   .copy{font-size:.8rem;color:rgba(255,255,255,.3);margin:0}
@@ -319,5 +344,6 @@
     .pricing-grid{grid-template-columns:1fr}
     .concept,.demos,.pricing{padding-left:16px;padding-right:16px}
     .demo-actions{flex-direction:column}
+    .page{background-attachment:scroll}
   }
 </style>
