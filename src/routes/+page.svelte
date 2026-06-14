@@ -204,7 +204,6 @@
         </div>
         <p class="demo-desc">Photo animée avec synchronisation labiale automatique.</p>
       </div>
-
     </div>
   </section>
 
