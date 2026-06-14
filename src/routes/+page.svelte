@@ -1,5 +1,5 @@
 <script>
-  let demoLiked = {img: false, vid: false};
+  let demoLiked = {img: false, vid: false, lip: false};
   let chatInput = '';
   let chatMsgs = [{who:'bot', text:'Bonjour ! Décrivez votre vision...'}];
   
@@ -17,7 +17,7 @@
 
 <svelte:head>
   <title>ClipLumia — Payez si vous validez</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </svelte:head>
 
@@ -36,7 +36,7 @@
       <span class="note">Sans engagement · Annulez en 2 clics</span>
     </div>
     <div class="hero-media glass">
-      <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" controls muted loop playsinline></video>
+      <video src="https://replicate.delivery/xezq/kG9nWAYgue1ye0tFQjPlaTdFexxjkqRoEvU4hmcF1k96pydtA/tmpkb9_apiq.mp4" controls muted loop playsinline></video>
       <p class="caption">Exemple généré avec ClipLumia</p>
     </div>
   </section>
@@ -59,7 +59,11 @@
       <div class="demo-card glass">
         <div class="demo-top"><span>🖼️ Images IA</span><span class="tag">Preview</span></div>
         <div class="screen">
-          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=400&fit=crop&auto=format" alt="Demo" />
+          <div class="img-placeholder">
+            <div class="placeholder-shimmer"></div>
+            <span class="ph-icon">🖼️</span>
+            <span class="ph-label">Votre image IA</span>
+          </div>
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
@@ -72,7 +76,11 @@
       <div class="demo-card glass">
         <div class="demo-top"><span>▶️ Vidéos IA</span><span class="tag">Preview</span></div>
         <div class="screen">
-          <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" muted loop playsinline></video>
+          <div class="img-placeholder video">
+            <div class="placeholder-shimmer"></div>
+            <span class="ph-icon">▶️</span>
+            <span class="ph-label">Votre vidéo IA</span>
+          </div>
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
@@ -115,7 +123,11 @@
       <div class="demo-card glass wide">
         <div class="demo-top"><span>🎭 Lipsync IA</span><span class="tag">Preview</span></div>
         <div class="screen">
-          <video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" muted loop playsinline></video>
+          <div class="img-placeholder video">
+            <div class="placeholder-shimmer"></div>
+            <span class="ph-icon">🎭</span>
+            <span class="ph-label">Votre lipsync IA</span>
+          </div>
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
@@ -189,11 +201,12 @@
 </main>
 
 <style>
-  :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;background:#0c0618;color:#fff}
+  :global(*){box-sizing:border-box}
+  :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;background:#0c0618;color:#fff;-webkit-font-smoothing:antialiased}
   
   .gold-chrome{background:linear-gradient(135deg,#D4AF37,#FFF8DC,#C5A028,#FFF8DC,#AA771C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 15px rgba(212,175,55,.4))}
   
-  .page{position:relative;min-height:100vh;background:#0c0618;overflow-x:hidden}
+  .page{position:relative;min-height:100vh;background:#0c0618;overflow-x:hidden;max-width:100vw}
   
   .glass{background:rgba(255,255,255,.04);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.12);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);transition:all .3s}
   .glass:hover{border-color:rgba(212,175,55,.25);box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 30px rgba(212,175,55,.1)}
@@ -212,9 +225,66 @@
   .btn-primary:hover{background:rgba(212,175,55,.2);border-color:rgba(212,175,55,.8);box-shadow:0 8px 25px rgba(212,175,55,.25);transform:translateY(-2px)}
   
   .note{font-size:.85rem;color:rgba(255,255,255,.5);display:block;margin-top:12px}
-  .hero-media{padding:12px}
-  .hero-media video{width:100%;border-radius:12px;display:block}
+  .hero-media{padding:12px;width:100%}
+  .hero-media video{width:100%;border-radius:12px;display:block;max-width:100%}
   .caption{text-align:center;font-size:.8rem;color:rgba(255,255,255,.4);margin-top:12px}
+  
+  .video-placeholder, .img-placeholder {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #1a0a2e 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .img-placeholder { height: 160px; }
+  .placeholder-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,.08), transparent);
+    animation: shimmer 3s infinite;
+  }
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+  .play-btn {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(212,175,55,.9), rgba(197,160,40,.9));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0c0618;
+    font-size: 1.4rem;
+    box-shadow: 0 0 30px rgba(212,175,55,.4);
+    z-index: 2;
+  }
+  .ph-icon {
+    font-size: 2rem;
+    z-index: 2;
+    opacity: .8;
+  }
+  .ph-label, .placeholder-text {
+    color: rgba(255,255,255,.5);
+    font-size: .9rem;
+    font-weight: 500;
+    z-index: 2;
+    letter-spacing: 1px;
+  }
+  .placeholder-text {
+    font-size: 1.1rem;
+    color: rgba(212,175,55,.8);
+  }
   
   .concept{padding:60px 24px;max-width:1000px;margin:0 auto}
   .section-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;text-align:center;margin:0 0 48px}
@@ -227,12 +297,11 @@
   
   .demos{padding:60px 24px;max-width:1200px;margin:0 auto}
   .demos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-  .demo-card{padding:24px}
+  .demo-card{padding:24px;width:100%}
   .demo-card.wide{grid-column:1/-1}
   .demo-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-weight:600;font-size:.95rem}
   .tag{font-size:.7rem;padding:4px 10px;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.25);border-radius:100px;color:#FFF8DC}
   .screen{position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1);margin-bottom:14px;background:rgba(0,0,0,.2)}
-  .screen img,.screen video{width:100%;display:block;height:160px;object-fit:cover}
   .watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);color:rgba(255,255,255,.8);font-size:1.1rem;font-weight:900;letter-spacing:2px;text-shadow:0 0 15px rgba(0,0,0,.9);border:2px solid rgba(255,255,255,.6);padding:6px 14px;background:rgba(0,0,0,.4);pointer-events:none}
   .demo-actions{display:flex;gap:8px;margin-bottom:10px}
   .btn-like{flex:1;background:rgba(60,179,113,.1);color:#3cb371;border:1.5px solid rgba(60,179,113,.35);padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.8rem;transition:all .3s}
@@ -258,12 +327,6 @@
   @keyframes sound{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
   .btn-play{background:rgba(255,255,255,.03);border:1.5px solid rgba(212,175,55,.4);color:#D4AF37;padding:10px 20px;border-radius:100px;cursor:pointer;font-weight:600;font-size:.9rem}
   
-  .lipsync-row{display:flex;align-items:center;justify-content:center;gap:20px;padding:20px}
-  .ls-step{text-align:center}
-  .ls-step span{width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(212,175,55,.1);border:1.5px solid rgba(212,175,55,.3);border-radius:50%;color:#FFF8DC;font-weight:700;margin:0 auto 6px;font-size:.9rem}
-  .ls-step p{font-size:.85rem;color:rgba(255,255,255,.6);margin:0}
-  .ls-arrow{color:rgba(212,175,55,.5);font-size:1.3rem}
-  
   .pricing{padding:60px 24px;max-width:1200px;margin:0 auto}
   .sub{text-align:center;color:rgba(255,255,255,.5);margin:-36px 0 40px;font-size:.95rem}
   .pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
@@ -285,13 +348,15 @@
   .copy{font-size:.8rem;color:rgba(255,255,255,.3);margin:0}
   
   @media(max-width:900px){
-    .hero{grid-template-columns:1fr;padding-top:120px}
-    .hero h1{font-size:2.6rem}
-    .steps{flex-direction:column}
+    .nav{padding:16px;width:100%;left:0;transform:none;border-radius:0}
+    .hero{grid-template-columns:1fr;padding:120px 16px 60px;gap:30px}
+    .hero h1{font-size:2.4rem}
+    .hero p{font-size:1rem}
+    .steps{flex-direction:column;padding:0 8px}
     .arrow{transform:rotate(90deg)}
     .demos-grid{grid-template-columns:1fr}
     .pricing-grid{grid-template-columns:1fr}
-    .lipsync-row{flex-direction:column}
-    .ls-arrow{transform:rotate(90deg)}
+    .concept,.demos,.pricing{padding-left:16px;padding-right:16px}
+    .demo-actions{flex-direction:column}
   }
 </style>
