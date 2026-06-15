@@ -210,22 +210,24 @@
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="footer-brand gold-chrome">ClipLumia</div>
-    <p class="creator">Créé avec passion par une créatrice</p>
-    <p class="copy">© 2026 ClipLumia. Tous droits réservés.</p>
-  </footer>
-</main>
+ 
 <style>
   :global(*){box-sizing:border-box}
   :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;background:#0c0618;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-  .gold-chrome{
-    background:linear-gradient(135deg,#4a3720 0%,#7a6238 30%,#c4b598 50%,#7a6238 70%,#4a3720 100%);
+ .gold-chrome{
+    background:linear-gradient(
+      135deg,
+      #BF953F 0%,
+      #FCF6BA 25%,
+      #B38728 50%,
+      #FBF5B7 75%,
+      #AA771C 100%
+    );
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     background-clip:text;
-    filter:drop-shadow(0 0 12px rgba(122,98,56,.5))
+    filter:drop-shadow(0 0 10px rgba(191,149,63,.5))
   }
 
   .page{
@@ -277,15 +279,27 @@
     left:50%;
     transform:translateX(-50%)
   }
-  .logo{
+
+ .logo{
     font-family:'Playfair Display',serif;
-    font-size:1.5rem;
+    font-size:2.2rem;
     font-weight:900;
-    background:linear-gradient(135deg,#c4b598,#7a6238,#4a3720);
+    letter-spacing:-1px;
+    background:linear-gradient(
+      135deg,
+      #BF953F 0%,
+      #FCF6BA 25%,
+      #B38728 50%,
+      #FBF5B7 75%,
+      #AA771C 100%
+    );
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
+    background-clip:text;
+    filter:drop-shadow(0 0 8px rgba(191,149,63,.6));
     text-decoration:none
   }
+  
   .nav-link{
     color:rgba(255,255,255,.6);
     text-decoration:none;
