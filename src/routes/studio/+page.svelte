@@ -56,7 +56,6 @@
   const canGenerateVid = isAdmin || (data?.user?.videos_restantes > 0);
   const forfaitName = data?.user?.forfait || 'STARTER';
 
-  // --- FONCTIONS EXISTANTES INCHANGÉES ---
   async function generateImage() {
     if (!imgPrompt.trim()) return;
     imgLoading = true; imgError = null; imgPreviewUrl = null; imgValidatedUrl = null;
@@ -131,7 +130,6 @@
 
   function resetLipsync() { imageBase64 = ''; audioUrl = ''; lipPreviewUrl = null; lipError = null; }
 
-  // --- NOUVELLES FONCTIONS ---
   async function generateTTS() {
     if (!ttsText.trim()) return;
     ttsLoading = true; ttsError = null; ttsUrl = null;
