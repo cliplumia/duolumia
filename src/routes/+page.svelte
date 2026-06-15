@@ -44,7 +44,7 @@
   <section class="hero">
     <div class="hero-text">
       <span class="badge">Studio IA Professionnel</span>
-      <h1>Créez sans risque.<br><span class="gold-chrome">Aucun gaspillage.</span></h1>
+      <h1>Respire. Tu génères.<br><span class="gold-chrome">Enfin une IA honnête.</span></h1>
       <div class="hero-concept">
         <div class="concept-line">
           ✓ <strong>STOP LES CRÉDITS</strong><br>
@@ -219,12 +219,12 @@
   :global(*){box-sizing:border-box}
   :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-  .gold-chrome{
-    background:linear-gradient(135deg,#BF953F 0%,#FCF6BA 25%,#B38728 50%,#FBF5B7 75%,#AA771C 100%);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    background-clip:text;
-    filter:drop-shadow(0 0 10px rgba(191,149,63,.5))
+ .gold-chrome {
+  background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 15px rgba(191, 149, 63, 0.4));
   }
 
   .page{
