@@ -136,7 +136,7 @@
         <p class="demo-desc">Voix française IA</p>
       </div>
 
-      <div class="demo-card glass wide">
+      <div class="demo-card glass">
         <div class="demo-top"><span>🎭 Lipsync IA</span><span class="tag">Preview</span></div>
         <div class="screen">
           <div class="img-placeholder video">
@@ -219,8 +219,8 @@
   :global(*){box-sizing:border-box}
   :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
-  /* OR-CHROME IDENTIQUE AU LOGO */
- .OR-CHROME {
+  /* GOLD-CHROME METALLIQUE IDENTIQUE AU LOGO */
+    .OR-CHROME {
     background:linear-gradient(135deg,#BF953F,#FCF6BA,#B38728,#FBF5B7,#AA771C);
     -webkit-background-clip:text;
     background-clip:text;
@@ -863,5 +863,20 @@
     .demo-actions{flex-direction:column}
     .page{background-attachment:scroll}
   }
+  .demos-grid{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:24px !important;
+  width:100% !important;
+  max-width:520px !important;
+  margin:0 auto !important;
+}
+
+.demo-card{
+  width:100% !important;
+  max-width:520px !important;
+  margin:0 auto !important;
+}
+
 </style>
 
