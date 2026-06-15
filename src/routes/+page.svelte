@@ -1,7 +1,7 @@
 <script>
-  let demoLiked = $state({img: false, vid: false, lip: false});
-  let chatInput = $state('');
-  let chatMsgs = $state([{who:'bot', text:'Bonjour ! Décrivez votre vision...'}]);
+  let demoLiked = {img: false, vid: false, lip: false};
+  let chatInput = '';
+  let chatMsgs = [{who:'bot', text:'Bonjour ! Décrivez votre vision...'}];
   
   function sendChat() {
     if(!chatInput.trim()) return;
@@ -15,6 +15,18 @@
   
   function toggleLike(t) { 
     demoLiked[t] = !demoLiked[t]; 
+  }
+  
+  function playVoiceDemo() {
+    if ('speechSynthesis' in window) {
+      const u = new SpeechSynthesisUtterance("Bonjour, bienvenue sur mon site ClipLumia");
+      u.lang = 'fr-FR';
+      u.rate = 0.9;
+      u.pitch = 1;
+      window.speechSynthesis.speak(u);
+    } else {
+      alert('Lecteur vocal non supporté sur ce navigateur');
+    }
   }
 </script>
 
@@ -31,15 +43,10 @@
     <a href="/studio" class="nav-link">Studio</a>
   </nav>
 
-  <!-- SECTION HERO -->
   <section class="hero">
-    <!-- Texte -->
     <div class="hero-text">
       <span class="badge">Studio IA Professionnel</span>
-      <h1>
-        Créez sans risque.<br>
-        <span class="gold-chrome">Aucun gaspillage.</span>
-      </h1>
+      <h1>Créez sans risque.<br><span class="gold-chrome">Aucun gaspillage.</span></h1>
       <div class="hero-concept">
         <div class="concept-line">
           ✓ <strong>STOP LES CRÉDITS 👆</strong><br>
@@ -55,17 +62,12 @@
       <a href="/studio" class="btn-primary">Tester gratuitement</a>
       <span class="note">Sans engagement · Annulez en 2 clics</span>
     </div>
-    <!-- Vidéo -->
     <div class="hero-media glass">
-      <video src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/videocliplumia.%201.mp4"
-             controls muted loop playsinline preload="metadata"
-             style="width:100%;height:auto;object-fit:cover;display:block;">
-      </video>
+      <video src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/videocliplumia.%201.mp4" controls muted loop playsinline preload="metadata"></video>
       <p class="caption">Exemple généré avec ClipLumia</p>
     </div>
   </section>
 
-  <!-- SECTION CONCEPT -->
   <section class="concept">
     <h2 class="section-title">Zéro gaspillage. <span class="gold-chrome">100% contrôle.</span></h2>
     <div class="steps">
@@ -77,18 +79,13 @@
     </div>
   </section>
 
-  <!-- SECTION DEMOS -->
   <section class="demos">
     <h2 class="section-title">5 outils. <span class="gold-chrome">1 studio.</span></h2>
     <div class="demos-grid">
-      <!-- Images IA -->
       <div class="demo-card glass">
         <div class="demo-top"><span>🖼️ Images IA</span><span class="tag">Preview</span></div>
         <div class="screen">
-          <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=600&h=400&fit=crop&auto=format"
-               alt="Exemple d'image générée par IA"
-               loading="lazy"
-               style="width:100%;height:160px;object-fit:cover;display:block;">
+          <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=600&h=400&fit=crop&auto=format" alt="Demo IA" loading="lazy" style="width:100%;height:160px;object-fit:cover;display:block;">
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
@@ -97,14 +94,11 @@
         </div>
         <p class="demo-desc">50 à 800 images/mois selon votre forfait.</p>
       </div>
-      <!-- Vidéos IA -->
+
       <div class="demo-card glass">
         <div class="demo-top"><span>▶️ Vidéos IA</span><span class="tag">Preview</span></div>
         <div class="screen">
-          <video src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/videocliplumia.%201.mp4"
-                 muted loop playsinline preload="metadata" loading="lazy"
-                 style="width:100%;height:160px;object-fit:cover;display:block;">
-          </video>
+          <video src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/videocliplumia.%201.mp4" muted loop playsinline preload="metadata" style="width:100%;height:160px;object-fit:cover;display:block;"></video>
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
@@ -113,11 +107,10 @@
         </div>
         <p class="demo-desc">15 à 180 vidéos/mois. Durée 5-6 secondes.</p>
       </div>
-      <!-- Chat IA -->
+
       <div class="demo-card glass">
         <div class="demo-top"><span>💬 Chat IA</span></div>
         <div class="chat-box">
-          <!-- Messages -->
           {#each chatMsgs as m}
             <div class="msg" class:user={m.who==='user'}>
               <span>{m.who==='user'?'🧑':'🤖'}</span>
@@ -131,7 +124,7 @@
         </div>
         <p class="demo-desc">Assistant créatif intégré.</p>
       </div>
-      <!-- Voix IA -->
+
       <div class="demo-card glass">
         <div class="demo-top"><span>🎙️ Voix IA</span></div>
         <div class="voice-box">
@@ -144,7 +137,7 @@
         </div>
         <p class="demo-desc">Voix IA : "Bonjour, bienvenue sur mon site ClipLumia"</p>
       </div>
-      <!-- Lipsync IA -->
+
       <div class="demo-card glass wide">
         <div class="demo-top"><span>🎭 Lipsync IA</span><span class="tag">Preview</span></div>
         <div class="screen">
@@ -164,12 +157,10 @@
     </div>
   </section>
 
-  <!-- SECTION PRICING -->
   <section class="pricing">
     <h2 class="section-title">Forfaits <span class="gold-chrome">flexibles</span></h2>
     <p class="sub">Essai gratuit 24h. CB requise. Annulation instantanée.</p>
     <div class="pricing-grid">
-      <!-- Starter -->
       <div class="price-card glass">
         <h3>Starter</h3>
         <div class="price"><span class="gold-chrome">9€</span><small>/mois</small></div>
@@ -180,7 +171,6 @@
         </ul>
         <a href="/signup?plan=starter" class="btn-outline">Commencer</a>
       </div>
-      <!-- Standard -->
       <div class="price-card glass">
         <h3>Standard</h3>
         <div class="price"><span class="gold-chrome">19€</span><small>/mois</small></div>
@@ -188,11 +178,10 @@
           <li><strong>40</strong> vidéos/mois</li>
           <li><strong>150</strong> images/mois</li>
           <li>Voix IA Lynk</li>
-          <li>Paye que si tu validez 🔥</li>
+          <li>Paye que si tu valides 🔥</li>
         </ul>
         <a href="/signup?plan=standard" class="btn-outline">Commencer</a>
       </div>
-      <!-- Pro (Popular) -->
       <div class="price-card glass popular">
         <div class="pop-badge">POPULAIRE</div>
         <h3>Pro</h3>
@@ -202,11 +191,10 @@
           <li><strong>300</strong> images/mois</li>
           <li>Voix IA Lynk</li>
           <li>Support prioritaire</li>
-          <li>Paye que si tu validez 🔥</li>
+          <li>Paye que si tu valides 🔥</li>
         </ul>
         <a href="/signup?plan=pro" class="btn-primary">Commencer</a>
       </div>
-      <!-- Studio -->
       <div class="price-card glass">
         <h3>Studio</h3>
         <div class="price"><span class="gold-chrome">79€</span><small>/mois</small></div>
@@ -215,102 +203,638 @@
           <li><strong>800</strong> images/mois</li>
           <li>Voix IA Lynk</li>
           <li>Support prioritaire</li>
-          <li>Paye que si tu validez 🔥</li>
+          <li>Paye que si tu valides 🔥</li>
         </ul>
         <a href="/signup?plan=studio" class="btn-outline">Commencer</a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-brand gold-chrome">ClipLumia</div>
     <p class="creator">Créé avec passion par une créatrice</p>
     <p class="copy">© 2026 ClipLumia. Tous droits réservés.</p>
   </footer>
 </main>
-
 <style>
-  /* Global resets */
-  :global(*) { box-sizing: border-box; }
-  :global(html), :global(body) {
-    margin: 0; padding: 0;
-    width: 100%; height: 100%;
-    overflow-x: hidden;
-    background: #0c0618;
+  :global(*){box-sizing:border-box}
+  :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;background:#0c0618;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+  .gold-chrome{
+    background:linear-gradient(135deg,#4a3720 0%,#7a6238 30%,#c4b598 50%,#7a6238 70%,#4a3720 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    filter:drop-shadow(0 0 12px rgba(122,98,56,.5))
   }
 
-  /* Nav */
-  .nav {
-    position: fixed;
-    top: 0;
-    left: 0; right: 0; margin: 0 auto;
-    z-index: 100;
-    background: rgba(12,6,24,.85);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255,255,255,.06);
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 16px 24px; max-width: 1200px;
+  .page{
+    position:relative;
+    min-height:100vh;
+    overflow-x:hidden;
+    max-width:100vw;
+    background-image:url('https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/image%20fond%20page%20svelte.png');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    background-repeat:no-repeat
   }
-  .logo { /* ... inchangé ... */ }
-  .nav-link { /* ... inchangé ... */ }
-  
-  /* Hero */
-  .hero {
-    position: relative; z-index: 2;
-    max-width: 1200px; margin: 0 auto;
-    padding: 140px 24px 80px;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;
-  }
-  /* ... (autres styles .hero et .btn-primary inchangés) ... */
-
-  .page {
-    position: relative; min-height: 100vh;
-    max-width: 100vw; /* largeur du viewport */
-    background-image: url('https://.../image fond.png');
-    background-size: cover; background-position: center;
-    background-attachment: fixed; background-repeat: no-repeat;
-  }
-  .page::before {
-    content: "";
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(12,6,24,.42);
-    z-index: 1;
+  .page::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:rgba(12,6,24,.55);
+    z-index:0;
+    pointer-events:none
   }
 
-  /* Autres sections (concept, demos, pricing) avec .glass etc. */
-  .demos { position:relative; z-index:2; padding:60px 24px; max-width:1200px; margin:0 auto; }
-  .concept { position:relative; z-index:2; padding:60px 24px; max-width:1000px; margin:0 auto; }
-  .pricing { position:relative; z-index:2; padding:60px 24px; max-width:1200px; margin:0 auto; }
-
-  /* Demos grid */
-  .demos-grid { display: grid; grid-template-columns: repeat(2,1fr); gap:20px; }
-  .demo-card { padding:24px; width:100%; }
-  .demo-card.wide { grid-column:1/-1; } 
-  .screen { position: relative; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.1); margin-bottom:14px; background:rgba(0,0,0,.2); }
-  .screen img, .screen video {
-    max-width: 100%; height: auto;
+  .glass{
+    position:relative;
+    background:rgba(255,255,255,.04);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:20px;
+    box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);
+    z-index:2
   }
-  .watermark { /* ... inchangé ... */ }
-  /* ... autres classes (btn-like, chat-box, etc.) ... */
 
-  /* Pricing grid */
-  .pricing-grid { display: grid; grid-template-columns: repeat(4,1fr); gap:16px; }
-  /* ... carte de prix ... */
+  .nav{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:100;
+    background:rgba(12,6,24,.85);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 24px;
+    max-width:1200px;
+    margin:0 auto;
+    left:50%;
+    transform:translateX(-50%)
+  }
+  .logo{
+    font-family:'Playfair Display',serif;
+    font-size:1.5rem;
+    font-weight:900;
+    background:linear-gradient(135deg,#c4b598,#7a6238,#4a3720);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-decoration:none
+  }
+  .nav-link{
+    color:rgba(255,255,255,.6);
+    text-decoration:none;
+    padding:8px 20px;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:100px;
+    font-size:.9rem;
+    transition:all .3s
+  }
+  .nav-link:hover{
+    border-color:rgba(196,181,152,.5);
+    color:#e8dcc8
+  }
 
-  .footer { position: relative; z-index:2; text-align:center; padding:40px 24px; border-top:1px solid rgba(255,255,255,.06); background: rgba(0,0,0,.2); }
-  /* ... */
+  .hero{
+    position:relative;
+    z-index:2;
+    max-width:1200px;
+    margin:0 auto;
+    padding:140px 24px 80px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center
+  }
+  .badge{
+    display:inline-block;
+    padding:6px 16px;
+    background:rgba(122,98,56,.12);
+    border:1px solid rgba(196,181,152,.3);
+    border-radius:50px;
+    font-size:.8rem;
+    font-weight:600;
+    color:#e8dcc8;
+    margin-bottom:20px;
+    text-transform:uppercase;
+    letter-spacing:1px
+  }
+  .hero h1{
+    font-family:'Playfair Display',serif;
+    font-size:3.5rem;
+    font-weight:900;
+    line-height:1.1;
+    margin:0 0 20px;
+    text-shadow:0 2px 10px rgba(0,0,0,.9)
+  }
+  .hero p{
+    font-size:1.1rem;
+    line-height:1.7;
+    color:rgba(255,255,255,.85);
+    margin:0 0 28px;
+    font-weight:300;
+    text-shadow:0 2px 8px rgba(0,0,0,.9)
+  }
 
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; padding: 120px 16px 60px; gap:30px; }
-    .hero h1 { font-size: 2.4rem; }
-    .hero p { font-size: 1rem; }
-    .steps { flex-direction: column; padding:0 8px; }
-    .arrow { transform: rotate(90deg); }
-    .demos-grid { grid-template-columns: 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; }
-    .concept, .demos, .pricing { padding-left:16px; padding-right:16px; }
-    .demo-actions { flex-direction: column; }
-    .page { background-attachment: scroll; } /* corrige bug iOS */
+  .hero-concept{
+    margin:28px 0;
+    display:flex;
+    flex-direction:column;
+    gap:16px
+  }
+  .concept-line{
+    padding:18px;
+    border-radius:16px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(196,181,152,.15);
+    backdrop-filter:blur(6px);
+    color:#ffffff;
+    font-size:1rem;
+    line-height:1.7;
+    box-shadow:0 0 20px rgba(196,181,152,.05);
+    text-shadow:0 1px 4px rgba(0,0,0,.8)
+  }
+  .concept-line strong{
+    color:#c4b598;
+    font-weight:700
+  }
+
+  .btn-primary{
+    display:inline-block;
+    background:linear-gradient(135deg,rgba(122,98,56,.2),rgba(74,55,32,.1));
+    color:#e8dcc8;
+    border:1.5px solid rgba(196,181,152,.5);
+    padding:14px 32px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:700;
+    transition:all .3s;
+    backdrop-filter:blur(10px);
+    box-shadow:0 4px 15px rgba(122,98,56,.15)
+  }
+  .btn-primary:hover{
+    background:rgba(122,98,56,.25);
+    border-color:rgba(196,181,152,.8);
+    box-shadow:0 8px 25px rgba(122,98,56,.3);
+    transform:translateY(-2px)
+  }
+
+  .note{
+    font-size:.85rem;
+    color:rgba(255,255,255,.6);
+    display:block;
+    margin-top:12px;
+    text-shadow:0 1px 4px rgba(0,0,0,.8)
+  }
+  .hero-media{
+    padding:12px;
+    width:100%;
+    position:relative;
+    z-index:2
+  }
+  .hero-media video{
+    width:100%;
+    border-radius:12px;
+    display:block;
+    max-width:100%
+  }
+  .caption{
+    text-align:center;
+    font-size:.8rem;
+    color:rgba(255,255,255,.5);
+    margin-top:12px;
+    text-shadow:0 1px 4px rgba(0,0,0,.8)
+  }
+
+  .concept{
+    position:relative;
+    z-index:2;
+    padding:60px 24px;
+    max-width:1000px;
+    margin:0 auto
+  }
+  .section-title{
+    font-family:'Playfair Display',serif;
+    font-size:2.2rem;
+    font-weight:700;
+    text-align:center;
+    margin:0 0 48px;
+    text-shadow:0 2px 10px rgba(0,0,0,.9)
+  }
+  .steps{
+    display:flex;
+    align-items:center;
+    gap:20px
+  }
+  .step{
+    flex:1;
+    text-align:center;
+    padding:28px 20px
+  }
+  .step span{
+    font-family:'Playfair Display',serif;
+    font-size:2.2rem;
+    font-weight:900;
+    display:block;
+    margin-bottom:10px;
+    background:linear-gradient(45deg,#c4b598,#e8dcc8,#7a6238);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    opacity:.8
+  }
+  .step h4{
+    margin:0 0 6px;
+    font-size:1rem;
+    text-shadow:0 1px 4px rgba(0,0,0,.8)
+  }
+  .step p{
+    margin:0;
+    font-size:.85rem;
+    color:rgba(255,255,255,.7);
+    line-height:1.5;
+    text-shadow:0 1px 4px rgba(0,0,0,.8)
+  }
+  .arrow{
+    color:rgba(196,181,152,.5);
+    font-size:1.5rem
+  }
+
+  .demos{
+    position:relative;
+    z-index:2;
+    padding:60px 24px;
+    max-width:1200px;
+    margin:0 auto
+  }
+  .demos-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px
+  }
+  .demo-card{
+    padding:24px;
+    width:100%
+  }
+  .demo-card.wide{
+    grid-column:1/-1
+  }
+  .demo-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+    font-weight:600;
+    font-size:.95rem
+  }
+  .tag{
+    font-size:.7rem;
+    padding:4px 10px;
+    background:rgba(122,98,56,.1);
+    border:1px solid rgba(196,181,152,.25);
+    border-radius:100px;
+    color:#e8dcc8
+  }
+  .screen{
+    position:relative;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.1);
+    margin-bottom:14px;
+    background:rgba(0,0,0,.2)
+  }
+  .screen img,.screen video{
+    width:100%;
+    display:block
+  }
+  .watermark{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) rotate(-15deg);
+    color:rgba(255,255,255,.85);
+    font-size:1.1rem;
+    font-weight:900;
+    letter-spacing:2px;
+    text-shadow:0 0 15px rgba(0,0,0,.9);
+    border:2px solid rgba(255,255,255,.6);
+    padding:6px 14px;
+    background:rgba(0,0,0,.4);
+    pointer-events:none
+  }
+  .demo-actions{
+    display:flex;
+    gap:8px;
+    margin-bottom:10px
+  }
+  .btn-like{
+    flex:1;
+    background:rgba(60,179,113,.1);
+    color:#3cb371;
+    border:1.5px solid rgba(60,179,113,.35);
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:.8rem;
+    transition:all .3s
+  }
+  .btn-reject{
+    flex:1;
+    background:rgba(255,255,255,.03);
+    border:1.5px solid rgba(255,255,255,.1);
+    color:rgba(255,255,255,.5);
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:.8rem;
+    transition:all .3s
+  }
+  .btn-reject:hover{
+    border-color:#ff6b6b;
+    color:#ff6b6b
+  }
+  .demo-desc{
+    font-size:.8rem;
+    color:rgba(255,255,255,.5);
+    margin:0;
+    text-align:center;
+    text-shadow:0 1px 4px rgba(0,0,0,.8)
+  }
+
+  .chat-box{
+    height:120px;
+    overflow-y:auto;
+    padding:12px;
+    background:rgba(0,0,0,.2);
+    border-radius:12px;
+    margin-bottom:10px;
+    display:flex;
+    flex-direction:column;
+    gap:8px
+  }
+  .msg{
+    display:flex;
+    align-items:flex-start;
+    gap:6px
+  }
+  .msg.user{
+    flex-direction:row-reverse
+  }
+  .bubble{
+    background:rgba(122,98,56,.12);
+    border:1px solid rgba(196,181,152,.2);
+    padding:8px 12px;
+    border-radius:12px;
+    color:#fff;
+    font-size:.85rem;
+    max-width:85%
+  }
+  .msg.user .bubble{
+    background:rgba(90,54,150,.25);
+    border-color:rgba(90,54,150,.35)
+  }
+  .chat-input{
+    display:flex;
+    gap:6px
+  }
+  .chat-input input{
+    flex:1;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:10px;
+    padding:10px;
+    color:#fff;
+    outline:none;
+    font-size:.9rem
+  }
+  .chat-input input:focus{
+    border-color:rgba(196,181,152,.3)
+  }
+  .chat-input button{
+    background:linear-gradient(135deg,#7a6238,#c4b598);
+    color:#0c0618;
+    border:none;
+    padding:10px 16px;
+    border-radius:10px;
+    font-weight:600;
+    cursor:pointer;
+    font-size:.9rem
+  }
+
+  .voice-box{
+    padding:20px;
+    text-align:center
+  }
+  .wave{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    height:50px;
+    margin-bottom:14px
+  }
+  .bar{
+    width:5px;
+    background:linear-gradient(to top,#7a6238,#c4b598);
+    border-radius:8px;
+    animation:sound 1.2s infinite ease-in-out
+  }
+  .bar:nth-child(2){animation-delay:.1s}
+  .bar:nth-child(3){animation-delay:.2s}
+  .bar:nth-child(4){animation-delay:.3s}
+  .bar:nth-child(5){animation-delay:.4s}
+  .bar:nth-child(6){animation-delay:.5s}
+  @keyframes sound{
+    0%,100%{transform:scaleY(.3)}
+    50%{transform:scaleY(1)}
+  }
+  .btn-play{
+    background:rgba(255,255,255,.03);
+    border:1.5px solid rgba(196,181,152,.4);
+    color:#c4b598;
+    padding:10px 20px;
+    border-radius:100px;
+    cursor:pointer;
+    font-weight:600;
+    font-size:.9rem;
+    transition:all .3s
+  }
+  .btn-play:hover{
+    background:rgba(122,98,56,.1);
+    box-shadow:0 0 15px rgba(122,98,56,.15)
+  }
+
+  .img-placeholder{
+    position:relative;
+    width:100%;
+    height:160px;
+    background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 50%,#1a0a2e 100%);
+    border-radius:12px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:12px
+  }
+  .placeholder-shimmer{
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(90deg,transparent,rgba(196,181,152,.08),transparent);
+    animation:shimmer 3s infinite
+  }
+  @keyframes shimmer{
+    0%{left:-100%}
+    100%{left:100%}
+  }
+  .ph-icon{
+    font-size:2rem;
+    z-index:2;
+    opacity:.8
+  }
+  .ph-label{
+    color:rgba(255,255,255,.5);
+    font-size:.9rem;
+    font-weight:500;
+    z-index:2;
+    letter-spacing:1px
+  }
+
+  .pricing{
+    position:relative;
+    z-index:2;
+    padding:60px 24px;
+    max-width:1200px;
+    margin:0 auto
+  }
+  .sub{
+    text-align:center;
+    color:rgba(255,255,255,.6);
+    margin:-36px 0 40px;
+    font-size:.95rem;
+    text-shadow:0 1px 4px rgba(0,0,0,.8)
+  }
+  .pricing-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px
+  }
+  .price-card{
+    padding:28px 20px;
+    text-align:center;
+    position:relative
+  }
+  .price-card h3{
+    margin:0 0 14px;
+    font-size:1.2rem
+  }
+  .price{
+    font-size:2.8rem;
+    font-weight:900;
+    margin-bottom:16px
+  }
+  .price small{
+    font-size:.9rem;
+    color:rgba(255,255,255,.5);
+    font-weight:400;
+    margin-left:4px
+  }
+  .price-card ul{
+    list-style:none;
+    padding:0;
+    margin:0 0 20px;
+    text-align:left
+  }
+  .price-card ul li{
+    padding:6px 0;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    color:rgba(255,255,255,.7);
+    font-size:.85rem
+  }
+  .price-card ul li:last-child{
+    border:none
+  }
+  .btn-outline{
+    display:block;
+    background:rgba(255,255,255,.03);
+    border:1.5px solid rgba(196,181,152,.4);
+    color:#e8dcc8;
+    padding:10px 20px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:600;
+    transition:all .3s;
+    text-align:center
+  }
+  .btn-outline:hover{
+    background:rgba(122,98,56,.1);
+    border-color:rgba(196,181,152,.7);
+    box-shadow:0 0 15px rgba(122,98,56,.1)
+  }
+  .popular{
+    border:1.5px solid rgba(196,181,152,.3);
+    box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 20px rgba(122,98,56,.1)
+  }
+  .pop-badge{
+    position:absolute;
+    top:-10px;
+    left:50%;
+    transform:translateX(-50%);
+    background:linear-gradient(135deg,#c4b598,#7a6238);
+    color:#0c0618;
+    padding:4px 14px;
+    border-radius:100px;
+    font-size:.7rem;
+    font-weight:700
+  }
+
+  .footer{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    padding:40px 24px;
+    border-top:1px solid rgba(255,255,255,.06);
+    background:rgba(0,0,0,.2)
+  }
+  .footer-brand{
+    font-family:'Playfair Display',serif;
+    font-size:1.4rem;
+    font-weight:700;
+    display:block;
+    margin-bottom:10px
+  }
+  .creator{
+    font-size:.9rem;
+    color:rgba(255,255,255,.6);
+    margin:0 0 6px;
+    font-style:italic
+  }
+  .copy{
+    font-size:.8rem;
+    color:rgba(255,255,255,.3);
+    margin:0
+  }
+
+  @media(max-width:900px){
+    .nav{padding:16px;width:100%;left:0;transform:none;border-radius:0}
+    .hero{grid-template-columns:1fr;padding:120px 16px 60px;gap:30px}
+    .hero h1{font-size:2.4rem}
+    .hero p{font-size:1rem}
+    .steps{flex-direction:column;padding:0 8px}
+    .arrow{transform:rotate(90deg)}
+    .demos-grid{grid-template-columns:1fr}
+    .pricing-grid{grid-template-columns:1fr}
+    .concept,.demos,.pricing{padding-left:16px;padding-right:16px}
+    .demo-actions{flex-direction:column}
+    .page{background-attachment:scroll}
   }
 </style>
