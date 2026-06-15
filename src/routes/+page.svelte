@@ -220,11 +220,12 @@
   :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
  .gold-chrome {
-  background: linear-gradient(180deg, #FFF6D5 0%, #F9E4A6 15%, #E8C45C 30%, #D4A017 50%, #B58116 65%, #E1B84A 85%, #FFF1BF 100%);
+  background: linear-gradient(180deg, #FFF8E1 0%, #F5D78E 18%, #E6C06B 35%, #C49A3A 50%, #E6C06B 65%, #F5D78E 82%, #FFF8E1 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.35));
 }
 
   .page{
@@ -840,4 +841,7 @@
     .demo-actions{flex-direction:column}
     .page{background-attachment:scroll}
   }
+/* PATCH CARRÉ */
+.screen{ width:100% !important; aspect-ratio:1/1 !important; height:auto !important; overflow:hidden; border-radius:14px; }
+.screen img,.screen video{ width:100% !important; height:100% !important; object-fit:cover !important; display:block; }
 </style>
