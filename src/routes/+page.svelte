@@ -24,8 +24,6 @@
       u.rate = 0.9;
       u.pitch = 1;
       window.speechSynthesis.speak(u);
-    } else {
-      alert('Lecteur vocal non supporté sur ce navigateur');
     }
   }
 </script>
@@ -49,7 +47,7 @@
       <h1>Créez sans risque.<br><span class="gold-chrome">Aucun gaspillage.</span></h1>
       <div class="hero-concept">
         <div class="concept-line">
-          ✓ <strong>STOP LES CRÉDITS 👆</strong><br>
+          ✓ <strong>STOP LES CRÉDITS</strong><br>
           80 vidéos/mois. Pas de compteur qui stresse.
         </div>
         <div class="concept-line">
@@ -71,11 +69,11 @@
   <section class="concept">
     <h2 class="section-title">Zéro gaspillage. <span class="gold-chrome">100% contrôle.</span></h2>
     <div class="steps">
-      <div class="step glass"><span>1</span><h4>Générez</h4><p>Aperçu avec filigrane en quelques secondes.</p></div>
+      <div class="step glass"><span>1</span><h4>Générez</h4><p>Aperçu avec filigrane</p></div>
       <div class="arrow">→</div>
-      <div class="step glass"><span>2</span><h4>Validez</h4><p>❤️ = 1 forfait. 🗑️ = 0 forfait.</p></div>
+      <div class="step glass"><span>2</span><h4>Validez</h4><p>❤️ = 1 forfait. 🗑️ = 0.</p></div>
       <div class="arrow">→</div>
-      <div class="step glass"><span>3</span><h4>Téléchargez</h4><p>Version HD sans filigrane immédiatement.</p></div>
+      <div class="step glass"><span>3</span><h4>Téléchargez</h4><p>Version HD immédiate</p></div>
     </div>
   </section>
 
@@ -92,7 +90,7 @@
           <button class="btn-like" on:click={()=>toggleLike('img')}>❤️ J'aime (1 forfait)</button>
           <button class="btn-reject" on:click={()=>demoLiked.img=false}>🗑️ Rejeter (0 forfait)</button>
         </div>
-        <p class="demo-desc">50 à 800 images/mois selon votre forfait.</p>
+        <p class="demo-desc">50 à 800 images/mois</p>
       </div>
 
       <div class="demo-card glass">
@@ -105,7 +103,7 @@
           <button class="btn-like" on:click={()=>toggleLike('vid')}>❤️ J'aime (1 forfait)</button>
           <button class="btn-reject" on:click={()=>demoLiked.vid=false}>🗑️ Rejeter (0 forfait)</button>
         </div>
-        <p class="demo-desc">15 à 180 vidéos/mois. Durée 5-6 secondes.</p>
+        <p class="demo-desc">15 à 180 vidéos/mois</p>
       </div>
 
       <div class="demo-card glass">
@@ -122,7 +120,7 @@
           <input type="text" bind:value={chatInput} on:keypress={(e)=>e.key==='Enter'&&sendChat()} placeholder="Décrivez votre idée..." />
           <button type="button" on:click={sendChat}>Envoyer</button>
         </div>
-        <p class="demo-desc">Assistant créatif intégré.</p>
+        <p class="demo-desc">Assistant créatif</p>
       </div>
 
       <div class="demo-card glass">
@@ -133,9 +131,9 @@
             <div class="bar" style="height:50%"></div><div class="bar" style="height:90%"></div>
             <div class="bar" style="height:60%"></div><div class="bar" style="height:80%"></div>
           </div>
-          <button class="btn-play" on:click={playVoiceDemo}>▶ Écouter la voix française</button>
+          <button class="btn-play" on:click={playVoiceDemo}>▶ Écouter la voix</button>
         </div>
-        <p class="demo-desc">Voix IA : "Bonjour, bienvenue sur mon site ClipLumia"</p>
+        <p class="demo-desc">Voix française IA</p>
       </div>
 
       <div class="demo-card glass wide">
@@ -152,14 +150,14 @@
           <button class="btn-like" on:click={()=>toggleLike('lip')}>❤️ J'aime (1 forfait)</button>
           <button class="btn-reject" on:click={()=>demoLiked.lip=false}>🗑️ Rejeter (0 forfait)</button>
         </div>
-        <p class="demo-desc">Photo animée avec synchronisation labiale automatique.</p>
+        <p class="demo-desc">Photo animée avec voix</p>
       </div>
     </div>
   </section>
 
   <section class="pricing">
     <h2 class="section-title">Forfaits <span class="gold-chrome">flexibles</span></h2>
-    <p class="sub">Essai gratuit 24h. CB requise. Annulation instantanée.</p>
+    <p class="sub">Essai gratuit 24h. CB requise.</p>
     <div class="pricing-grid">
       <div class="price-card glass">
         <h3>Starter</h3>
@@ -210,20 +208,19 @@
     </div>
   </section>
 
- 
+  <footer class="footer">
+    <div class="footer-brand gold-chrome">ClipLumia</div>
+    <p class="creator">Créé avec passion par une créatrice</p>
+    <p class="copy">© 2026 ClipLumia. Tous droits réservés.</p>
+  </footer>
+</main>
+
 <style>
   :global(*){box-sizing:border-box}
-  :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;background:#0c0618;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
- .gold-chrome{
-    background:linear-gradient(
-      135deg,
-      #BF953F 0%,
-      #FCF6BA 25%,
-      #B38728 50%,
-      #FBF5B7 75%,
-      #AA771C 100%
-    );
+  .gold-chrome{
+    background:linear-gradient(135deg,#BF953F 0%,#FCF6BA 25%,#B38728 50%,#FBF5B7 75%,#AA771C 100%);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     background-clip:text;
@@ -245,7 +242,7 @@
     content:'';
     position:fixed;
     inset:0;
-    background:rgba(12,6,24,.55);
+    background:rgba(12,6,24,.6);
     z-index:0;
     pointer-events:none
   }
@@ -273,33 +270,24 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:16px 24px;
+    padding:20px 32px;
     max-width:1200px;
     margin:0 auto;
     left:50%;
     transform:translateX(-50%)
   }
-
- .logo{
+  .logo{
     font-family:'Playfair Display',serif;
     font-size:2.2rem;
     font-weight:900;
     letter-spacing:-1px;
-    background:linear-gradient(
-      135deg,
-      #BF953F 0%,
-      #FCF6BA 25%,
-      #B38728 50%,
-      #FBF5B7 75%,
-      #AA771C 100%
-    );
+    background:linear-gradient(135deg,#BF953F,#FCF6BA,#B38728,#FBF5B7,#AA771C);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     background-clip:text;
     filter:drop-shadow(0 0 8px rgba(191,149,63,.6));
     text-decoration:none
   }
-  
   .nav-link{
     color:rgba(255,255,255,.6);
     text-decoration:none;
@@ -310,8 +298,8 @@
     transition:all .3s
   }
   .nav-link:hover{
-    border-color:rgba(196,181,152,.5);
-    color:#e8dcc8
+    border-color:rgba(191,149,63,.5);
+    color:#FCF6BA
   }
 
   .hero{
@@ -328,12 +316,12 @@
   .badge{
     display:inline-block;
     padding:6px 16px;
-    background:rgba(122,98,56,.12);
-    border:1px solid rgba(196,181,152,.3);
+    background:rgba(191,149,63,.12);
+    border:1px solid rgba(191,149,63,.3);
     border-radius:50px;
     font-size:.8rem;
     font-weight:600;
-    color:#e8dcc8;
+    color:#FCF6BA;
     margin-bottom:20px;
     text-transform:uppercase;
     letter-spacing:1px
@@ -365,36 +353,36 @@
     padding:18px;
     border-radius:16px;
     background:rgba(255,255,255,.05);
-    border:1px solid rgba(196,181,152,.15);
+    border:1px solid rgba(191,149,63,.15);
     backdrop-filter:blur(6px);
     color:#ffffff;
     font-size:1rem;
     line-height:1.7;
-    box-shadow:0 0 20px rgba(196,181,152,.05);
+    box-shadow:0 0 20px rgba(191,149,63,.05);
     text-shadow:0 1px 4px rgba(0,0,0,.8)
   }
   .concept-line strong{
-    color:#c4b598;
+    color:#FCF6BA;
     font-weight:700
   }
 
   .btn-primary{
     display:inline-block;
-    background:linear-gradient(135deg,rgba(122,98,56,.2),rgba(74,55,32,.1));
-    color:#e8dcc8;
-    border:1.5px solid rgba(196,181,152,.5);
+    background:linear-gradient(135deg,rgba(191,149,63,.2),rgba(191,149,63,.05));
+    color:#FCF6BA;
+    border:1.5px solid rgba(191,149,63,.5);
     padding:14px 32px;
     border-radius:12px;
     text-decoration:none;
     font-weight:700;
     transition:all .3s;
     backdrop-filter:blur(10px);
-    box-shadow:0 4px 15px rgba(122,98,56,.15)
+    box-shadow:0 4px 15px rgba(191,149,63,.15)
   }
   .btn-primary:hover{
-    background:rgba(122,98,56,.25);
-    border-color:rgba(196,181,152,.8);
-    box-shadow:0 8px 25px rgba(122,98,56,.3);
+    background:rgba(191,149,63,.25);
+    border-color:rgba(191,149,63,.8);
+    box-shadow:0 8px 25px rgba(191,149,63,.3);
     transform:translateY(-2px)
   }
 
@@ -456,7 +444,7 @@
     font-weight:900;
     display:block;
     margin-bottom:10px;
-    background:linear-gradient(45deg,#c4b598,#e8dcc8,#7a6238);
+    background:linear-gradient(45deg,#BF953F,#FCF6BA,#B38728);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     opacity:.8
@@ -474,7 +462,7 @@
     text-shadow:0 1px 4px rgba(0,0,0,.8)
   }
   .arrow{
-    color:rgba(196,181,152,.5);
+    color:rgba(191,149,63,.5);
     font-size:1.5rem
   }
 
@@ -508,10 +496,10 @@
   .tag{
     font-size:.7rem;
     padding:4px 10px;
-    background:rgba(122,98,56,.1);
-    border:1px solid rgba(196,181,152,.25);
+    background:rgba(191,149,63,.1);
+    border:1px solid rgba(191,149,63,.25);
     border-radius:100px;
-    color:#e8dcc8
+    color:#FCF6BA
   }
   .screen{
     position:relative;
@@ -530,7 +518,7 @@
     top:50%;
     left:50%;
     transform:translate(-50%,-50%) rotate(-15deg);
-    color:rgba(255,255,255,.85);
+    color:rgba(255,255,255,.8);
     font-size:1.1rem;
     font-weight:900;
     letter-spacing:2px;
@@ -601,8 +589,8 @@
     flex-direction:row-reverse
   }
   .bubble{
-    background:rgba(122,98,56,.12);
-    border:1px solid rgba(196,181,152,.2);
+    background:rgba(191,149,63,.12);
+    border:1px solid rgba(191,149,63,.2);
     padding:8px 12px;
     border-radius:12px;
     color:#fff;
@@ -628,10 +616,10 @@
     font-size:.9rem
   }
   .chat-input input:focus{
-    border-color:rgba(196,181,152,.3)
+    border-color:rgba(191,149,63,.3)
   }
   .chat-input button{
-    background:linear-gradient(135deg,#7a6238,#c4b598);
+    background:linear-gradient(135deg,#BF953F,#B38728);
     color:#0c0618;
     border:none;
     padding:10px 16px;
@@ -655,7 +643,7 @@
   }
   .bar{
     width:5px;
-    background:linear-gradient(to top,#7a6238,#c4b598);
+    background:linear-gradient(to top,#BF953F,#FCF6BA);
     border-radius:8px;
     animation:sound 1.2s infinite ease-in-out
   }
@@ -670,8 +658,8 @@
   }
   .btn-play{
     background:rgba(255,255,255,.03);
-    border:1.5px solid rgba(196,181,152,.4);
-    color:#c4b598;
+    border:1.5px solid rgba(191,149,63,.4);
+    color:#FCF6BA;
     padding:10px 20px;
     border-radius:100px;
     cursor:pointer;
@@ -680,8 +668,8 @@
     transition:all .3s
   }
   .btn-play:hover{
-    background:rgba(122,98,56,.1);
-    box-shadow:0 0 15px rgba(122,98,56,.15)
+    background:rgba(191,149,63,.1);
+    box-shadow:0 0 15px rgba(191,149,63,.15)
   }
 
   .img-placeholder{
@@ -703,7 +691,7 @@
     left:-100%;
     width:100%;
     height:100%;
-    background:linear-gradient(90deg,transparent,rgba(196,181,152,.08),transparent);
+    background:linear-gradient(90deg,transparent,rgba(191,149,63,.08),transparent);
     animation:shimmer 3s infinite
   }
   @keyframes shimmer{
@@ -780,8 +768,8 @@
   .btn-outline{
     display:block;
     background:rgba(255,255,255,.03);
-    border:1.5px solid rgba(196,181,152,.4);
-    color:#e8dcc8;
+    border:1.5px solid rgba(191,149,63,.4);
+    color:#FCF6BA;
     padding:10px 20px;
     border-radius:10px;
     text-decoration:none;
@@ -790,20 +778,20 @@
     text-align:center
   }
   .btn-outline:hover{
-    background:rgba(122,98,56,.1);
-    border-color:rgba(196,181,152,.7);
-    box-shadow:0 0 15px rgba(122,98,56,.1)
+    background:rgba(191,149,63,.1);
+    border-color:rgba(191,149,63,.7);
+    box-shadow:0 0 15px rgba(191,149,63,.1)
   }
   .popular{
-    border:1.5px solid rgba(196,181,152,.3);
-    box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 20px rgba(122,98,56,.1)
+    border:1.5px solid rgba(191,149,63,.3);
+    box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 20px rgba(191,149,63,.1)
   }
   .pop-badge{
     position:absolute;
     top:-10px;
     left:50%;
     transform:translateX(-50%);
-    background:linear-gradient(135deg,#c4b598,#7a6238);
+    background:linear-gradient(135deg,#BF953F,#B38728);
     color:#0c0618;
     padding:4px 14px;
     border-radius:100px;
