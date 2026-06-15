@@ -829,4 +829,39 @@
     text-align:center;
     padding:40px 24px;
     border-top:1px solid rgba(255,255,255,.06);
-    background
+      background:rgba(0,0,0,.2)
+  }
+  .footer-brand{
+    font-family:'Playfair Display',serif;
+    font-size:1.4rem;
+    font-weight:700;
+    display:block;
+    margin-bottom:10px
+  }
+  .creator{
+    font-size:.9rem;
+    color:rgba(255,255,255,.6);
+    margin:0 0 6px;
+    font-style:italic
+  }
+  .copy{
+    font-size:.8rem;
+    color:rgba(255,255,255,.3);
+    margin:0
+  }
+
+  @media(max-width:900px){
+    .nav{padding:16px;width:100%;left:0;transform:none;border-radius:0}
+    .hero{grid-template-columns:1fr;padding:120px 16px 60px;gap:30px}
+    .hero h1{font-size:2.4rem}
+    .hero p{font-size:1rem}
+    .steps{flex-direction:column;padding:0 8px}
+    .arrow{transform:rotate(90deg)}
+    .demos-grid{grid-template-columns:1fr}
+    .pricing-grid{grid-template-columns:1fr}
+    .concept,.demos,.pricing{padding-left:16px;padding-right:16px}
+    .demo-actions{flex-direction:column}
+    .page{background-attachment:scroll}
+  }
+</style>
+
