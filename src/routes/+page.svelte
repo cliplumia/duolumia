@@ -220,12 +220,12 @@
   :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
  .gold-chrome {
-  background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+  background: linear-gradient(180deg, #FFF6D5 0%, #F9E4A6 15%, #E8C45C 30%, #D4A017 50%, #B58116 65%, #E1B84A 85%, #FFF1BF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 15px rgba(191, 149, 63, 0.4));
-  }
+  color: transparent;
+}
 
   .page{
     position:relative;
@@ -473,11 +473,12 @@
     max-width:1200px;
     margin:0 auto
   }
-  .demos-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:20px
-  }
+ .demos-grid{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
   .demo-card{
     padding:24px;
     width:100%
