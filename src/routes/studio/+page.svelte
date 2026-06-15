@@ -117,7 +117,7 @@
   }
 
   async function generateLipsync() {
-    if (!imageBase64 ||!audioUrl) return;
+    if (!imageBase64 || !audioUrl) return;
     lipLoading = true; lipError = null; lipPreviewUrl = null;
     try {
       const res = await fetch('/api/lipsync', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ image: imageBase64, audio: audioUrl }) });
@@ -206,7 +206,7 @@
               {/each}
             </div>
           </div>
-          {#if!canGenerateImg}
+          {#if !canGenerateImg}
             <div class="alert">Forfait {forfaitName} épuisé. <a href="/#tarifs">Passer au Forfait PRO</a></div>
           {:else}
             <div class="form">
@@ -239,7 +239,7 @@
 
       {#if activeTab === 'video'}
         <div class="section">
-          {#if!canGenerateVid}
+          {#if !canGenerateVid}
             <div class="alert">Forfait {forfaitName} épuisé. <a href="/#tarifs">Passer au Forfait PRO</a></div>
           {:else}
             <div class="form">
