@@ -34,14 +34,30 @@ export async function POST({ request, platform, cookies }) {
       }
     );
 
+    console.log('Replicate a repondu:', JSON.stringify(output));
+
+    let imageUrl;
+    if (Array.isArray(output)) {
+      imageUrl = output[0];
+    } else if (typeof output === 'string') {
+      imageUrl = output;
+    } else if (output && typeof output === 'object') {
+      imageUrl = output.url || output[0];
+    }
+
+    if (!imageUrl) {
+      return json({ error: 'Pas d URL retournee', details: output }, { status: 500 });
+    }
+
     if (!isAdmin) {
       await BD.prepare('UPDATE utilisateurs SET images_restantes = images_restantes - 1 WHERE id =?').bind(userId).run();
     }
 
-    return json({ image: output[0] });
+    return json({ image: imageUrl });
     
   } catch (error) {
-    console.error('Generate image error:', error);
+    console.error('Erreur:', error);
     return json({ error: error.message }, { status: 500 });
   }
 }
+
