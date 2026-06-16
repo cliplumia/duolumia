@@ -1,12 +1,12 @@
 import { json } from '@sveltejs/kit';
 import Replicate from 'replicate';
 
-const replicate = new Replicate({
-  auth: process.env.REPLICATE_API_TOKEN,
-});
-
 export async function POST({ request, platform, cookies }) {
   try {
+    const replicate = new Replicate({
+      auth: platform.env.REPLICATE_API_TOKEN,
+    });
+
     const userId = cookies.get('user_id') || cookies.get('userid');
     if (!userId) return json({ error: 'Non connecte' }, { status: 401 });
 
