@@ -219,6 +219,10 @@
   }
 </script>
 
+
+<div class="studio-deevid"> <!-- CETTE LIGNE EST OBLIGATOIRE -->
+  
+
 <div class="app-layout">
   
 <!-- SIDEBAR GAUCHE -->
@@ -534,7 +538,6 @@
       <div class="example-thumb"></div>
     </div>
   </aside>
-
 </div>
 
 <style>
@@ -745,4 +748,5 @@
     .sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding: 10px; }
     .preview-panel { width: 100%; height: 400px; }
   }
+
 </style>
