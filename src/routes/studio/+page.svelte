@@ -1,9 +1,10 @@
 <script>
   export let data;
   
-  // === LOGIQUE EXISTANTE INTACTE ===
+  // === ÉTAT DES SECTIONS ===
   let activeTab = 'images';
   
+  // === IMAGES ===
   let imgPrompt = '';
   let imgLoading = false;
   let imgPreviewUrl = null;
@@ -13,6 +14,7 @@
   let imgFormat = '1:1';
   let imgStyle = 'realiste';
   
+  // === VIDÉOS ===
   let vidPrompt = '';
   let vidLoading = false;
   let vidPreviewUrl = null;
@@ -24,6 +26,7 @@
   let vidFormat = '16:9';
   let vidStyle = 'cinematique';
   
+  // === LIPSYNC ===
   let imageBase64 = '';
   let audioUrl = '';
   let lipLoading = false;
@@ -33,6 +36,7 @@
   let lipExpression = 'neutre';
   let lipType = 'parole';
   
+  // === VOIX ===
   let voiceText = '';
   let voiceLoading = false;
   let voiceAudioUrl = null;
@@ -42,6 +46,7 @@
   let voiceEmotion = 'neutre';
   let voiceSpeed = 'normal';
   
+  // === CHAT ===
   let chatPrompt = '';
   let chatLoading = false;
   let chatResponse = '';
@@ -50,10 +55,12 @@
   let chatFormat = 'texte';
   let chatLength = 'standard';
   
+  // === PERMISSIONS ===
   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data?.user?.email);
   const canGenerateImg = isAdmin || (data?.user?.images_restantes > 0);
   const canGenerateVid = isAdmin || (data?.user?.videos_restantes > 0);
   
+  // === FONCTION GÉNÉRATION IMAGE ===
   async function generateImage() {
     if (!imgPrompt.trim()) return;
     imgLoading = true;
@@ -87,6 +94,7 @@
     imgLoading = false;
   }
   
+  // === FONCTION VALIDATION IMAGE ===
   async function validateImage() {
     if (!imgGenerationId) return;
     try {
@@ -109,6 +117,7 @@
     }
   }
 
+  // === FONCTION REJET IMAGE ===
   function rejectImage() {
     imgPreviewUrl = null;
     imgGenerationId = null;
@@ -116,6 +125,7 @@
     imgPrompt = '';
   }
   
+  // === FONCTION GÉNÉRATION VIDÉO ===
   async function generateVideo() {
     if (!vidPrompt.trim()) return;
     vidLoading = true;
@@ -174,6 +184,7 @@
     }
   }
   
+  // === FONCTION VALIDATION VIDÉO ===
   async function validateVideo() {
     if (!vidGenerationId) return;
     try {
@@ -196,6 +207,7 @@
     }
   }
 
+  // === FONCTION REJET VIDÉO ===
   function rejectVideo() {
     if (vidInterval) clearInterval(vidInterval);
     vidInterval = null;
@@ -206,6 +218,7 @@
     vidReplicateId = null;
   }
   
+  // === UPLOAD IMAGE LIPSYNC ===
   function handleImageUpload(event) {
     const file = event.target.files[0];
     if (file) {
@@ -215,6 +228,7 @@
     }
   }
   
+  // === FONCTION GÉNÉRATION LIPSYNC ===
   async function generateLipsync() {
     if (!imageBase64 || !audioUrl) return;
     
@@ -248,6 +262,7 @@
     lipLoading = false;
   }
   
+  // === FONCTION RESET LIPSYNC ===
   function resetLipsync() {
     imageBase64 = '';
     audioUrl = '';
@@ -255,6 +270,7 @@
     lipError = null;
   }
 
+  // === FONCTION GÉNÉRATION VOIX ===
   async function generateVoice() {
     if (!voiceText.trim()) return;
     voiceLoading = true;
@@ -286,6 +302,7 @@
     voiceLoading = false;
   }
 
+  // === FONCTION GÉNÉRATION CHAT ===
   async function generateChat() {
     if (!chatPrompt.trim()) return;
     chatLoading = true;
@@ -320,227 +337,293 @@
 <svelte:head>
   <title>Studio — ClipLumia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </svelte:head>
 
-<div class="studio-deevid">
+<div class="studio-container">
   
   <!-- SIDEBAR GAUCHE -->
-  <aside class="sidebar-cl">
-    <div class="logo-cl chrome-text">ClipLumia</div>
+  <aside class="sidebar">
+    <div class="logo chrome-text">ClipLumia</div>
     
-    <div class="nav-item" class:active={activeTab === 'images'} on:click={() => activeTab = 'images'}>🖼️ Images IA</div>
-    <div class="nav-item" class:active={activeTab === 'video'} on:click={() => activeTab = 'video'}>🎬 Vidéos IA</div>
-    <div class="nav-item" class:active={activeTab === 'lipsync'} on:click={() => activeTab = 'lipsync'}>👄 Lipsync</div>
-    <div class="nav-item" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>🎤 Voix IA</div>
-    <div class="nav-item" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>💬 Chat IA</div>
+    <button class="nav-item" class:active={activeTab === 'images'} on:click={() => activeTab = 'images'}>
+      🖼️ Images IA
+    </button>
+    <button class="nav-item" class:active={activeTab === 'video'} on:click={() => activeTab = 'video'}>
+      🎬 Vidéos IA
+    </button>
+    <button class="nav-item" class:active={activeTab === 'lipsync'} on:click={() => activeTab = 'lipsync'}>
+      👄 Lipsync
+    </button>
+    <button class="nav-item" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>
+      🎤 Voix IA
+    </button>
+    <button class="nav-item" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
+      💬 Chat IA
+    </button>
   </aside>
 
-  <!-- CENTRE : STUDIO DYNAMIQUE -->
-  <main class="studio-center">
-    <div class="header-studio">
-      <h2 class="chrome-text">
+  <!-- CENTRE : STUDIO PRINCIPAL -->
+  <main class="studio-main">
+    
+    <!-- HEADER AVEC TITRE ET FORFAIT -->
+    <div class="studio-header">
+      <h1 class="chrome-text studio-title">
         {activeTab === 'images' ? 'Générateur d\'Images IA' : 
          activeTab === 'video' ? 'Générateur de Vidéos IA' :
          activeTab === 'lipsync' ? 'Studio Lipsync' :
-         activeTab === 'voice' ? 'Synthèse Vocale' : 'Chat IA'}
-      </h2>
-      <div class="credits-badge">Forfait : {data?.user?.images_restantes || 0}</div>
+         activeTab === 'voice' ? 'Synthèse Vocale IA' : 'Chat IA Assistant'}
+      </h1>
+      <div class="forfait-badge">Forfait : {data?.user?.images_restantes || 0}</div>
     </div>
 
-    <!-- SECTION IMAGES -->
-    {#if activeTab === 'images'}
-      <div class="input-card">
+    <!-- CARTE DE GÉNÉRATION (Effet Glass) -->
+    <div class="generation-card">
+      
+      <!-- SECTION IMAGES -->
+      {#if activeTab === 'images'}
         <textarea bind:value={imgPrompt} placeholder="Décris ton image en détail... Une femme élégante dans un bureau moderne, éclairage doré..."></textarea>
         
-        <div class="options-row">
-          <select bind:value={imgFormat}>
-            <option value="1:1">Format : 1:1 (Carré)</option>
-            <option value="16:9">Format : 16:9 (Paysage)</option>
-            <option value="9:16">Format : 9:16 (Portrait)</option>
-            <option value="tiktok">Format : TikTok</option>
-            <option value="4:5">Format : 4:5 (Instagram)</option>
-          </select>
-          <select bind:value={imgStyle}>
-            <option value="realiste">Style : Réaliste</option>
-            <option value="cinematique">Style : Cinématique</option>
-            <option value="3d">Style : 3D Render</option>
-            <option value="anime">Style : Anime</option>
-            <option value="illustration">Style : Illustration</option>
-            <option value="photographique">Style : Photographique</option>
-            <option value="noirblanc">Style : Noir & Blanc</option>
-          </select>
+        <div class="options-grid">
+          <div class="option-group">
+            <label>Format</label>
+            <select bind:value={imgFormat}>
+              <option value="1:1">1:1 (Carré)</option>
+              <option value="16:9">16:9 (Paysage)</option>
+              <option value="9:16">9:16 (Portrait)</option>
+              <option value="tiktok">TikTok</option>
+              <option value="4:5">4:5 (Instagram)</option>
+            </select>
+          </div>
+          
+          <div class="option-group">
+            <label>Style</label>
+            <select bind:value={imgStyle}>
+              <option value="realiste">Réaliste</option>
+              <option value="cinematique">Cinématique</option>
+              <option value="3d">3D Render</option>
+              <option value="anime">Anime</option>
+              <option value="illustration">Illustration</option>
+              <option value="photographique">Photographique</option>
+              <option value="noirblanc">Noir & Blanc</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || !canGenerateImg}>
-        {imgLoading ? '⏳ Génération...' : '✨ CRÉER L\'IMAGE'}
-      </button>
-    {/if}
+        
+        <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || !canGenerateImg}>
+          {imgLoading ? '⏳ Génération en cours...' : '✨ CRÉER L\'IMAGE'}
+        </button>
+      {/if}
 
-    <!-- SECTION VIDÉO -->
-    {#if activeTab === 'video'}
-      <div class="input-card">
+      <!-- SECTION VIDÉO -->
+      {#if activeTab === 'video'}
         <textarea bind:value={vidPrompt} placeholder="Décris ta vidéo... Un drone survolant une ville futuriste au crépuscule..."></textarea>
         
-        <div class="options-row">
-          <select bind:value={vidFormat}>
-            <option value="16:9">Format : 16:9</option>
-            <option value="tiktok">Format : TikTok</option>
-            <option value="1:1">Format : 1:1</option>
-          </select>
-          <select bind:value={vidStyle}>
-            <option value="cinematique">Style : Cinématique</option>
-            <option value="dynamique">Style : Dynamique</option>
-            <option value="lent">Style : Lent/Slow</option>
-            <option value="timelapse">Style : Time-lapse</option>
-            <option value="vlog">Style : Vlog</option>
-            <option value="publicitaire">Style : Publicitaire</option>
+        <div class="options-grid">
+          <div class="option-group">
+            <label>Format</label>
+            <select bind:value={vidFormat}>
+              <option value="16:9">16:9</option>
+              <option value="tiktok">TikTok</option>
+              <option value="1:1">1:1</option>
+            </select>
+          </div>
+          
+          <div class="option-group">
+            <label>Style</label>
+            <select bind:value={vidStyle}>
+              <option value="cinematique">Cinématique</option>
+              <option value="dynamique">Dynamique</option>
+              <option value="lent">Lent/Slow</option>
+              <option value="timelapse">Time-lapse</option>
+              <option value="vlog">Vlog</option>
+              <option value="publicitaire">Publicitaire</option>
+            </select>
+          </div>
+        </div>
+        
+        <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || !canGenerateVid}>
+          {vidLoading ? '⏳ Génération en cours...' : '🎬 CRÉER LA VIDÉO'}
+        </button>
+      {/if}
+
+      <!-- SECTION LIPSYNC -->
+      {#if activeTab === 'lipsync'}
+        <div class="input-group">
+          <label>1. Photo du visage</label>
+          <input type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
+        </div>
+        
+        <div class="input-group">
+          <label>2. Source Audio</label>
+          <select bind:value={lipAudioSource}>
+            <option value="upload">Upload fichier audio</option>
+            <option value="tts">Texte à vocaliser</option>
+            <option value="url">URL audio externe</option>
           </select>
         </div>
-      </div>
-      <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || !canGenerateVid}>
-        {vidLoading ? '⏳ Génération...' : '🎬 CRÉER LA VIDÉO'}
-      </button>
-    {/if}
+        
+        <div class="input-group">
+          <label>3. URL Audio ou Texte</label>
+          <input type="text" bind:value={audioUrl} placeholder="https://..." class="text-input" />
+        </div>
+        
+        <div class="options-grid">
+          <div class="option-group">
+            <label>Expression Faciale</label>
+            <select bind:value={lipExpression}>
+              <option value="neutre">Neutre (naturelle)</option>
+              <option value="souriant">Souriant (joyeux)</option>
+              <option value="serieux">Sérieux (professionnel)</option>
+              <option value="intense">Émotion intense</option>
+              <option value="precise">Synchronisation précise</option>
+            </select>
+          </div>
+          
+          <div class="option-group">
+            <label>Type de Performance</label>
+            <select bind:value={lipType}>
+              <option value="parole">Parole seule (discours)</option>
+              <option value="chant">Chant (musique)</option>
+              <option value="performance">Performance artistique</option>
+              <option value="presentation">Présentation pro</option>
+            </select>
+          </div>
+        </div>
+        
+        <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || !imageBase64 || !audioUrl}>
+          {lipLoading ? '⏳ Synchronisation...' : '👄 CRÉER LE LIPSYNC'}
+        </button>
+      {/if}
 
-    <!-- SECTION LIPSYNC -->
-    {#if activeTab === 'lipsync'}
-      <div class="input-card">
-        <label>1. Photo du visage</label>
-        <input type="file" accept="image/*" on:change={handleImageUpload} />
-        
-        <label>2. Source Audio</label>
-        <select bind:value={lipAudioSource}>
-          <option value="upload">Upload fichier audio</option>
-          <option value="tts">Texte à vocaliser</option>
-          <option value="url">URL audio externe</option>
-        </select>
-        
-        <label>3. URL Audio ou Texte</label>
-        <input type="text" bind:value={audioUrl} placeholder="https://..." />
-        
-        <label>4. Expression Faciale</label>
-        <select bind:value={lipExpression}>
-          <option value="neutre">Neutre (naturelle)</option>
-          <option value="souriant">Souriant (joyeux)</option>
-          <option value="serieux">Sérieux (professionnel)</option>
-          <option value="intense">Émotion intense</option>
-          <option value="precise">Synchronisation précise</option>
-        </select>
-        
-        <label>5. Type de Performance</label>
-        <select bind:value={lipType}>
-          <option value="parole">Parole seule (discours)</option>
-          <option value="chant">Chant (musique)</option>
-          <option value="performance">Performance artistique</option>
-          <option value="presentation">Présentation pro</option>
-        </select>
-      </div>
-      <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || !imageBase64 || !audioUrl}>
-        {lipLoading ? '⏳ Synchronisation...' : '👄 CRÉER LE LIPSYNC'}
-      </button>
-    {/if}
-
-    <!-- SECTION VOIX -->
-    {#if activeTab === 'voice'}
-      <div class="input-card">
+      <!-- SECTION VOIX -->
+      {#if activeTab === 'voice'}
         <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
         
-        <div class="options-row">
-          <select bind:value={voiceLang}>
-            <option value="FR">Langue : Français</option>
-            <option value="EN">Langue : Anglais</option>
-          </select>
-          <select bind:value={voiceType}>
-            <option value="femme">Type : Femme</option>
-            <option value="homme">Type : Homme</option>
-            <option value="enfant">Type : Enfant</option>
-            <option value="mature">Type : Voix mature</option>
-          </select>
+        <div class="options-grid">
+          <div class="option-group">
+            <label>Langue</label>
+            <select bind:value={voiceLang}>
+              <option value="FR">Français</option>
+              <option value="EN">Anglais</option>
+            </select>
+          </div>
+          
+          <div class="option-group">
+            <label>Type de Voix</label>
+            <select bind:value={voiceType}>
+              <option value="femme">Femme</option>
+              <option value="homme">Homme</option>
+              <option value="enfant">Enfant</option>
+              <option value="mature">Voix mature</option>
+            </select>
+          </div>
         </div>
         
-        <div class="options-row">
-          <select bind:value={voiceStyle}>
-            <option value="professionnel">Style : Professionnel</option>
-            <option value="chaleureux">Style : Chaleureux</option>
-            <option value="dynamique">Style : Dynamique</option>
-            <option value="calme">Style : Calme</option>
-            <option value="narratif">Style : Narratif</option>
-            <option value="publicitaire">Style : Publicitaire</option>
-          </select>
-          <select bind:value={voiceEmotion}>
-            <option value="neutre">Émotion : Neutre</option>
-            <option value="joyeux">Émotion : Joyeux</option>
-            <option value="serieux">Émotion : Sérieux</option>
-            <option value="dramatique">Émotion : Dramatique</option>
-            <option value="enthousiaste">Émotion : Enthousiaste</option>
-          </select>
+        <div class="options-grid">
+          <div class="option-group">
+            <label>Style</label>
+            <select bind:value={voiceStyle}>
+              <option value="professionnel">Professionnel</option>
+              <option value="chaleureux">Chaleureux</option>
+              <option value="dynamique">Dynamique</option>
+              <option value="calme">Calme</option>
+              <option value="narratif">Narratif</option>
+              <option value="publicitaire">Publicitaire</option>
+            </select>
+          </div>
+          
+          <div class="option-group">
+            <label>Émotion</label>
+            <select bind:value={voiceEmotion}>
+              <option value="neutre">Neutre</option>
+              <option value="joyeux">Joyeux</option>
+              <option value="serieux">Sérieux</option>
+              <option value="dramatique">Dramatique</option>
+              <option value="enthousiaste">Enthousiaste</option>
+            </select>
+          </div>
         </div>
         
-        <div class="options-row">
+        <div class="option-group full-width">
+          <label>Vitesse</label>
           <select bind:value={voiceSpeed}>
-            <option value="lent">Vitesse : Lent</option>
-            <option value="normal">Vitesse : Normal</option>
-            <option value="rapide">Vitesse : Rapide</option>
+            <option value="lent">Lent</option>
+            <option value="normal">Normal</option>
+            <option value="rapide">Rapide</option>
           </select>
         </div>
-      </div>
-      <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
-        {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
-      </button>
-    {/if}
+        
+        <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
+          {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
+        </button>
+      {/if}
 
-    <!-- SECTION CHAT -->
-    {#if activeTab === 'chat'}
-      <div class="input-card">
+      <!-- SECTION CHAT (SANS J'AIME/REJETER) -->
+      {#if activeTab === 'chat'}
         <textarea bind:value={chatPrompt} placeholder="Pose ta question ou donne tes instructions..."></textarea>
         
-        <div class="options-row">
-          <select bind:value={chatRole}>
-            <option value="assistant">Rôle : Assistant Général</option>
-            <option value="copywriter">Rôle : Copywriter</option>
-            <option value="scenariste">Rôle : Scénariste</option>
-            <option value="coach">Rôle : Coach</option>
-            <option value="traducteur">Rôle : Traducteur</option>
-            <option value="expert">Rôle : Expert Tech</option>
-          </select>
-          <select bind:value={chatTone}>
-            <option value="pro">Ton : Professionnel</option>
-            <option value="creatif">Ton : Créatif</option>
-            <option value="direct">Ton : Direct</option>
-            <option value="pedagogique">Ton : Pédagogique</option>
-            <option value="humoristique">Ton : Humoristique</option>
-          </select>
+        <div class="options-grid">
+          <div class="option-group">
+            <label>Rôle de l'IA</label>
+            <select bind:value={chatRole}>
+              <option value="assistant">Assistant Général</option>
+              <option value="copywriter">Copywriter</option>
+              <option value="scenariste">Scénariste</option>
+              <option value="coach">Coach</option>
+              <option value="traducteur">Traducteur</option>
+              <option value="expert">Expert Tech</option>
+            </select>
+          </div>
+          
+          <div class="option-group">
+            <label>Ton</label>
+            <select bind:value={chatTone}>
+              <option value="pro">Professionnel</option>
+              <option value="creatif">Créatif</option>
+              <option value="direct">Direct</option>
+              <option value="pedagogique">Pédagogique</option>
+              <option value="humoristique">Humoristique</option>
+            </select>
+          </div>
         </div>
         
-        <div class="options-row">
-          <select bind:value={chatFormat}>
-            <option value="texte">Format : Texte simple</option>
-            <option value="liste">Format : Liste à puces</option>
-            <option value="etapes">Format : Étapes détaillées</option>
-            <option value="tableau">Format : Tableau</option>
-          </select>
-          <select bind:value={chatLength}>
-            <option value="resume">Longueur : Résumé</option>
-            <option value="standard">Longueur : Standard</option>
-            <option value="detaille">Longueur : Détaillé</option>
-          </select>
+        <div class="options-grid">
+          <div class="option-group">
+            <label>Format de réponse</label>
+            <select bind:value={chatFormat}>
+              <option value="texte">Texte simple</option>
+              <option value="liste">Liste à puces</option>
+              <option value="etapes">Étapes détaillées</option>
+              <option value="tableau">Tableau</option>
+            </select>
+          </div>
+          
+          <div class="option-group">
+            <label>Longueur</label>
+            <select bind:value={chatLength}>
+              <option value="resume">Résumé</option>
+              <option value="standard">Standard</option>
+              <option value="detaille">Très détaillé</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <button class="chrome-btn create-btn" on:click={generateChat} disabled={chatLoading}>
-        {chatLoading ? '⏳ Réflexion...' : '💬 ENVOYER'}
-      </button>
-      
-      {#if chatResponse}
-        <div class="chat-response">
-          <div class="chat-bubble ai">{chatResponse}</div>
-        </div>
+        
+        <button class="chrome-btn create-btn" on:click={generateChat} disabled={chatLoading}>
+          {chatLoading ? '⏳ Réflexion...' : '💬 ENVOYER'}
+        </button>
+        
+        {#if chatResponse}
+          <div class="chat-response">
+            <div class="chat-bubble">{chatResponse}</div>
+          </div>
+        {/if}
       {/if}
-    {/if}
+    </div>
 
-    <!-- ZONE PREVIEW UNIVERSELLE -->
+    <!-- ZONE DE PRÉVISUALISATION -->
     {#if imgPreviewUrl || vidPreviewUrl || lipPreviewUrl || voiceAudioUrl}
-      <div class="preview-universal">
+      <div class="preview-card">
         <div class="preview-label">APERÇU DU RÉSULTAT</div>
         
         {#if imgPreviewUrl}
@@ -553,398 +636,602 @@
           <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
         {/if}
 
-        <div class="watermark-overlay">CLIPLUMIA · PREVIEW</div>
+        <div class="watermark">CLIPLUMIA · PREVIEW</div>
       </div>
     {/if}
 
-    <!-- BOUTONS J'AIME / REJETER TOUJOURS VISIBLES -->
-    <div class="action-buttons">
-      <button class="btn-reject" on:click={activeTab === 'images' ? rejectImage : activeTab === 'video' ? rejectVideo : activeTab === 'lipsync' ? resetLipsync : null}>
-        ❌ Rejeter (0€)
-      </button>
-      <button class="btn-validate" on:click={activeTab === 'images' ? validateImage : activeTab === 'video' ? validateVideo : null}>
-        ✅ J'aime (1 Forfait)
-      </button>
+    <!-- BOUTONS J'AIME / REJETER (SAUF POUR CHAT) -->
+    {#if activeTab !== 'chat'}
+      <div class="action-buttons">
+        <button class="btn-reject" on:click={activeTab === 'images' ? rejectImage : activeTab === 'video' ? rejectVideo : activeTab === 'lipsync' ? resetLipsync : null}>
+          ❌ Rejeter (0€)
+        </button>
+        <button class="btn-validate" on:click={activeTab === 'images' ? validateImage : activeTab === 'video' ? validateVideo : null}>
+          ✅ J'aime (1 Forfait)
+        </button>
+      </div>
+    {/if}
+
+    <!-- GALERIE D'EXEMPLES (En bas, page déroulante) -->
+    <div class="examples-section">
+      <h2 class="chrome-text section-title">Exemples de Réalisations</h2>
+      <div class="examples-grid-full">
+        <div class="example-item">Exemple 1</div>
+        <div class="example-item">Exemple 2</div>
+        <div class="example-item">Exemple 3</div>
+        <div class="example-item">Exemple 4</div>
+      </div>
+    </div>
+
+    <!-- FAQ (En bas, page déroulante) -->
+    <div class="faq-section">
+      <h2 class="chrome-text section-title">Questions Fréquentes</h2>
+      
+      <div class="faq-item">
+        <h3>❓ Comment fonctionnent les forfaits ClipLumia ?</h3>
+        <p>Chaque forfait vous donne accès à une création IA. Vous choisissez votre modèle, décrivez votre projet, et notre studio génère le résultat. Un forfait = une création validée.</p>
+      </div>
+      
+      <div class="faq-item">
+        <h3>❓ Que se passe-t-il si je n'aime pas le résultat ?</h3>
+        <p>C'est la force ClipLumia ! Si le résultat ne vous convient pas, cliquez sur <strong>"Rejeter (0€)"</strong> : vous ne payez rien et pouvez relancer une nouvelle génération. Si vous aimez, cliquez sur <strong>"J'aime (1 Forfait)"</strong> : le forfait est utilisé et la création est à vous.</p>
+      </div>
+      
+      <div class="faq-item">
+        <h3>❓ Puis-je utiliser les créations pour mon business ?</h3>
+        <p>Oui, absolument ! Toutes les images, vidéos et contenus générés via ClipLumia sont libres de droits pour un usage commercial (réseaux sociaux, sites web, publicités, etc.).</p>
+      </div>
+      
+      <div class="faq-item">
+        <h3>❓ Mes créations sont-elles privées ?</h3>
+        <p>Oui, 100% privées. Personne d'autre que vous ne peut voir ou accéder à vos générations. Nous ne les partageons pas et ne les utilisons pas sans votre accord.</p>
+      </div>
+      
+      <div class="faq-item">
+        <h3>❓ Comment contacter le support en cas de problème ?</h3>
+        <p>Notre équipe est disponible via le formulaire de contact ou par email à contact@cliplumia.com. Nous répondons sous 24h maximum.</p>
+      </div>
     </div>
   </main>
-
-  <!-- DROITE : INSPIRATIONS & MODÈLES -->
-  <aside class="preview-side">
-    <div class="preview-label">INSPIRATIONS</div>
-    
-    <div class="examples-grid">
-      <div class="example-thumb">Ex 1</div>
-      <div class="example-thumb">Ex 2</div>
-      <div class="example-thumb">Ex 3</div>
-      <div class="example-thumb">Ex 4</div>
-    </div>
-
-    <div class="model-info">
-      <div class="model-badge">MODÈLE ACTIF</div>
-      <div class="model-name">
-        {activeTab === 'images' ? 'FLUX.1 Schnell' : 
-         activeTab === 'video' ? 'Minimax Video-01' :
-         activeTab === 'lipsync' ? 'SadTalker' :
-         activeTab === 'voice' ? 'XTTS-V2' : 'Llama-3'}
-      </div>
-      <div class="model-desc">Technologie IA haute performance</div>
-    </div>
-  </aside>
-
 </div>
 
 <style>
-  /* === STRUCTURE DEEVID AI === */
-  .studio-deevid {
+  /* === CONTENEUR PRINCIPAL === */
+  .studio-container {
     display: flex;
     gap: 20px;
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     padding: 20px;
     box-sizing: border-box;
+    background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #0f0518 100%);
   }
 
-  /* === SIDEBAR === */
-  .sidebar-cl {
-    width: 260px;
-    background: #2d1b4e;
-    border-radius: 16px;
-    padding: 24px 16px;
+  /* === SIDEBAR GAUCHE (Effet Glass) === */
+  .sidebar {
+    width: 280px;
+    background: rgba(45, 27, 78, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     flex-shrink: 0;
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 
-  .logo-cl {
+  .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
+    font-size: 2rem;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+    padding: 10px;
   }
 
   .nav-item {
-    padding: 16px 18px;
-    border-radius: 10px;
-    color: rgba(255, 255, 255, 0.7);
+    padding: 18px 20px;
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.75);
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: all 0.2s;
+    font-size: 1.05rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background: transparent;
+    border: 1px solid transparent;
+    text-align: left;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
   }
 
-  .nav-item:hover { background: rgba(212, 175, 55, 0.08); color: #fff; }
+  .nav-item:hover { 
+    background: rgba(212, 175, 55, 0.1); 
+    color: #fff;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+  }
   
   .nav-item.active {
-    background: rgba(212, 175, 55, 0.15);
+    background: rgba(212, 175, 55, 0.2);
     color: #f5d76e;
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.4);
     font-weight: 700;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
   }
 
-  /* === CENTRE === */
-  .studio-center {
+  /* === CENTRE : STUDIO === */
+  .studio-main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
     overflow-y: auto;
     padding-right: 10px;
+    max-width: calc(100% - 300px);
   }
 
-  .header-studio {
+  .studio-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 10px;
   }
 
-  .credits-badge {
-    font-size: 0.9rem;
+  .studio-title {
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: 900;
+  }
+
+  .forfait-badge {
+    font-size: 1rem;
     color: #f5d76e;
-    background: rgba(212, 175, 55, 0.1);
-    padding: 10px 18px;
-    border-radius: 20px;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    font-weight: 600;
+    background: rgba(212, 175, 55, 0.15);
+    padding: 12px 22px;
+    border-radius: 25px;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
   }
 
-  .input-card {
-    background: rgba(20, 10, 35, 0.6);
-    border: 1px solid rgba(212, 175, 55, 0.15);
-    border-radius: 16px;
-    padding: 24px;
-  }
-
-  .input-card label {
-    display: block;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    margin-top: 16px;
-  }
-
-  .input-card label:first-child {
-    margin-top: 0;
-  }
-
-  .input-card input[type="text"],
-  .input-card input[type="file"] {
-    width: 100%;
-    background: rgba(10, 5, 20, 0.5);
+  /* === CARTE DE GÉNÉRATION (Effet Glass) === */
+  .generation-card {
+    background: rgba(20, 10, 35, 0.5);
+    backdrop-filter: blur(12px);
     border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: 8px;
-    padding: 12px;
-    color: #fff;
-    font-size: 0.9rem;
-    box-sizing: border-box;
-    margin-bottom: 8px;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
 
   textarea {
     width: 100%;
-    background: rgba(10, 5, 20, 0.5);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: 10px;
-    color: #fff;
-    font-size: 1rem;
-    min-height: 140px;
+    background: rgba(10, 5, 20, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1.05rem;
+    min-height: 150px;
     outline: none;
     resize: vertical;
-    font-family: inherit;
-    line-height: 1.5;
-    padding: 14px;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    padding: 18px;
     box-sizing: border-box;
+    transition: all 0.3s ease;
   }
 
   textarea::placeholder {
     color: rgba(255, 255, 255, 0.5);
   }
 
-  .options-row {
+  textarea:focus {
+    border-color: rgba(212, 175, 55, 0.5);
+    background: rgba(10, 5, 20, 0.8);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+
+  .input-group label {
+    display: block;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .file-input,
+  .text-input {
+    width: 100%;
+    background: rgba(10, 5, 20, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 10px;
+    padding: 14px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+
+  .text-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .option-group {
     display: flex;
-    gap: 12px;
+    flex-direction: column;
+  }
+
+  .option-group.full-width {
+    grid-column: 1 / -1;
     margin-top: 16px;
-    flex-wrap: wrap;
+  }
+
+  .option-group label {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
   }
 
   select {
     background: rgba(10, 5, 20, 0.8);
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.35);
     color: #f0f0f5;
-    padding: 12px 16px;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 0.95rem;
     outline: none;
     cursor: pointer;
-    flex: 1;
-    min-width: 180px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+  }
+
+  select:hover {
+    border-color: rgba(212, 175, 55, 0.5);
+  }
+
+  select:focus {
+    border-color: rgba(212, 175, 55, 0.6);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
   }
 
   .create-btn {
     width: 100%;
-    padding: 18px;
-    font-size: 1.05rem;
-    border-radius: 12px;
+    padding: 20px;
+    font-size: 1.1rem;
+    border-radius: 14px;
     border: none;
     cursor: pointer;
-    letter-spacing: 0.05em;
-    font-weight: 800;
+    letter-spacing: 0.08em;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    margin-top: 25px;
+    transition: all 0.3s ease;
   }
 
-  /* === PREVIEW UNIVERSELLE === */
-  .preview-universal {
-    background: rgba(20, 10, 35, 0.6);
-    border: 1px solid rgba(212, 175, 55, 0.15);
-    border-radius: 16px;
-    padding: 24px;
+  /* === CARTE DE PRÉVISUALISATION (Effet Glass) === */
+  .preview-card {
+    background: rgba(20, 10, 35, 0.5);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 20px;
+    padding: 30px;
     position: relative;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
 
   .preview-label {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 16px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
     font-weight: 700;
   }
 
   .preview-media {
     width: 100%;
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
     background: #000;
-    min-height: 200px;
+    min-height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .preview-media img, .preview-media video {
+  .preview-media img, 
+  .preview-media video {
     max-width: 100%;
-    max-height: 400px;
+    max-height: 450px;
     display: block;
   }
 
-  .watermark-overlay {
+  .watermark {
     position: absolute;
-    top: 50%; left: 50%;
+    top: 50%; 
+    left: 50%;
     transform: translate(-50%, -50%) rotate(-15deg);
     color: rgba(212, 175, 55, 0.4);
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 900;
     pointer-events: none;
     white-space: nowrap;
-    border: 2px solid rgba(212, 175, 55, 0.3);
-    padding: 10px 20px;
+    border: 2px solid rgba(212, 175, 55, 0.35);
+    padding: 12px 25px;
     background: rgba(10, 5, 20, 0.7);
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    border-radius: 10px;
   }
 
+  /* === BOUTONS J'AIME / REJETER === */
   .action-buttons {
     display: flex;
-    gap: 14px;
-    margin-top: 10px;
+    gap: 16px;
   }
 
   .btn-reject {
     flex: 1;
-    padding: 16px;
-    border-radius: 12px;
+    padding: 18px;
+    border-radius: 14px;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 1rem;
     cursor: pointer;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.9);
     border: 2px solid rgba(212, 175, 55, 0.4);
-    color: #f5d76e;
-    transition: all 0.2s;
+    color: #d4af37;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
-  .btn-reject:hover { border-color: #ff4444; color: #ff6b6b; background: rgba(255, 68, 68, 0.08); }
+  
+  .btn-reject:hover { 
+    border-color: #ff4444; 
+    color: #ff6b6b; 
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.2);
+  }
 
   .btn-validate {
     flex: 1;
-    padding: 16px;
-    border-radius: 12px;
-    font-weight: 800;
-    font-size: 0.95rem;
+    padding: 18px;
+    border-radius: 14px;
+    font-weight: 900;
+    font-size: 1rem;
     cursor: pointer;
     background: linear-gradient(180deg, #f5d76e 0%, #d4af37 50%, #aa7c11 100%);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.4);
     border-bottom: 2px solid rgba(0, 0, 0, 0.4);
     color: #1a0b2e;
-    transition: all 0.2s;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 12px rgba(212, 175, 55, 0.3);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 6px 20px rgba(212, 175, 55, 0.35);
   }
-  .btn-validate:hover { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5); }
-
-  /* === DROITE : INSPIRATIONS === */
-  .preview-side {
-    width: 300px;
-    background: #2d1b4e;
-    border-radius: 16px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    flex-shrink: 0;
+  
+  .btn-validate:hover { 
+    filter: brightness(1.15); 
+    transform: translateY(-3px); 
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
   }
 
-  .examples-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .example-thumb {
-    aspect-ratio: 1;
-    background: rgba(10, 5, 20, 0.6);
-    border-radius: 10px;
+  /* === GALERIE D'EXEMPLES === */
+  .examples-section {
+    margin-top: 40px;
+    padding: 30px;
+    background: rgba(20, 10, 35, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
     border: 1px solid rgba(212, 175, 55, 0.15);
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    text-align: center;
+  }
+
+  .examples-grid-full {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .example-item {
+    aspect-ratio: 16/9;
+    background: rgba(10, 5, 20, 0.6);
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255,255,255,0.3);
-    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
   }
-  .example-thumb:hover { border-color: #d4af37; color: #f5d76e; background: rgba(212, 175, 55, 0.1); }
 
-  .model-info {
-    background: rgba(10, 5, 20, 0.5);
-    border-radius: 12px;
-    padding: 18px;
+  .example-item:hover {
+    border-color: #d4af37;
+    color: #f5d76e;
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateY(-3px);
+  }
+
+  /* === FAQ === */
+  .faq-section {
+    margin-top: 40px;
+    padding: 30px;
+    background: rgba(20, 10, 35, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
     border: 1px solid rgba(212, 175, 55, 0.15);
   }
 
-  .model-badge {
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.5);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 10px;
+  .faq-item {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(10, 5, 20, 0.5);
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+  }
+
+  .faq-item h3 {
+    color: #f5d76e;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
     font-weight: 700;
   }
 
-  .model-name {
-    font-size: 1.1rem;
-    color: #f5d76e;
-    font-weight: 800;
-    margin-bottom: 6px;
+  .faq-item p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+    font-size: 0.95rem;
   }
 
-  .model-desc {
-    font-size: 0.8rem;
-    color: rgba(255,255,255,0.5);
-    line-height: 1.4;
+  .faq-item strong {
+    color: #f5d76e;
   }
 
   /* === CHAT RESPONSE === */
   .chat-response {
-    margin-top: 10px;
+    margin-top: 20px;
   }
-  .chat-bubble.ai {
+  
+  .chat-bubble {
     background: rgba(20, 10, 35, 0.8);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: 12px;
-    padding: 18px;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 14px;
+    padding: 20px;
     color: #f0f0f5;
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.7;
   }
 
-  /* === OR CHROME MÉTALLIQUE === */
+  /* === OR CHROME MÉTALLIQUE 3D === */
   .chrome-text {
-    background: linear-gradient(to bottom, #ffffff 0%, #f5d76e 25%, #d4af37 50%, #aa7c11 75%, #8b6508 100%);
+    background: linear-gradient(to bottom, 
+      #ffffff 0%, 
+      #f5d76e 20%, 
+      #d4af37 45%, 
+      #aa7c11 70%, 
+      #8b6508 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0px 1px 0px rgba(255, 255, 255, 0.5)) drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.8));
+    background-clip: text;
+    filter: 
+      drop-shadow(0px 1px 0px rgba(255, 255, 255, 0.6))
+      drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.8))
+      drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.6));
     font-weight: 900;
     letter-spacing: 0.02em;
   }
 
   .chrome-btn {
-    background: linear-gradient(180deg, #ffffff 0%, #f5d76e 30%, #d4af37 55%, #aa7c11 80%, #8b6508 100%);
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+    background: linear-gradient(180deg, 
+      #ffffff 0%, 
+      #f5d76e 25%, 
+      #d4af37 50%, 
+      #aa7c11 75%, 
+      #8b6508 100%
+    );
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.6);
     color: #1a0b2e;
     font-weight: 900;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -1px 0 rgba(0, 0, 0, 0.2), 0 4px 15px rgba(0, 0, 0, 0.4);
-    transition: all 0.2s ease;
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.8), 
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2), 
+      0 6px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
   }
-  .chrome-btn:hover:not(:disabled) { filter: brightness(1.15); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5); }
-  .chrome-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  
+  .chrome-btn:hover:not(:disabled) { 
+    filter: brightness(1.15); 
+    transform: translateY(-3px); 
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5); 
+  }
+  
+  .chrome-btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  
+  .chrome-btn:disabled { 
+    opacity: 0.5; 
+    cursor: not-allowed; 
+  }
 
-  /* === MOBILE === */
+  /* === RESPONSIVE MOBILE === */
   @media (max-width: 1024px) {
-    .studio-deevid { flex-direction: column; height: auto; padding: 10px; }
-    .sidebar-cl { width: 100%; flex-direction: row; overflow-x: auto; padding: 12px; gap: 8px; }
-    .logo-cl { display: none; }
-    .nav-item { white-space: nowrap; padding: 12px 16px; font-size: 0.9rem; }
-    .preview-side { width: 100%; flex-direction: row; overflow-x: auto; }
-    .examples-grid { display: flex; gap: 12px; }
-    .example-thumb { width: 80px; height: 80px; flex-shrink: 0; }
-    .model-info { min-width: 200px; }
-    .action-buttons { flex-direction: column; }
+    .studio-container { 
+      flex-direction: column; 
+      padding: 15px; 
+      gap: 15px;
+    }
+    
+    .sidebar { 
+      width: 100%; 
+      flex-direction: row; 
+      overflow-x: auto; 
+      padding: 15px; 
+      gap: 10px; 
+    }
+    
+    .logo { 
+      display: none; 
+    }
+    
+    .nav-item { 
+      white-space: nowrap; 
+      padding: 14px 18px; 
+      font-size: 0.95rem;
+      min-width: fit-content;
+    }
+    
+    .studio-main {
+      max-width: 100%;
+    }
+    
+    .options-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+      flex-direction: column;
+    }
+    
+    .studio-title {
+      font-size: 1.4rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .generation-card,
+    .preview-card,
+    .examples-section,
+    .faq-section {
+      padding: 20px;
+    }
+    
+    textarea {
+      min-height: 120px;
+      font-size: 0.95rem;
+    }
+    
+    .create-btn {
+      padding: 16px;
+      font-size: 1rem;
+    }
   }
 </style>
