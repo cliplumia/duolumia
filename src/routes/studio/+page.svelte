@@ -1093,27 +1093,27 @@
     box-shadow: 0 6px 20px rgba(255, 68, 68, 0.2);
   }
 
-  .btn-validate {
-    flex: 1;
-    padding: 18px;
-    border-radius: 14px;
-    font-weight: 900;
-    font-size: 1rem;
-    cursor: pointer;
-    background: rgba(191, 149, 63, 0.15);
-    border: 2px solid rgba(191, 149, 63, 0.5);
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
-  }
-  
-  .btn-validate:hover { 
-    background: rgba(191, 149, 63, 0.25);
-    border-color: rgba(191, 149, 63, 0.7);
-    transform: translateY(-3px); 
-    box-shadow: 0 8px 25px rgba(191, 149, 63, 0.3);
-  }
+ .btn-validate {
+  flex: 1;
+  padding: 18px;
+  border-radius: 14px;
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+  border: 2px solid #FCF6BA;
+  border-bottom: 3px solid #8B6508;
+  color: #1a0b2e;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(191, 149, 63, 0.6), inset 0 1px 0 rgba(255,255,255,0.6);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+}
+
+.btn-validate:hover { 
+  filter: brightness(1.1);
+  transform: translateY(-3px); 
+  box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
+}
 
   /* === GALERIE D'EXEMPLES === */
   .examples-section {
