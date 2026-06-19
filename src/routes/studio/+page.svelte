@@ -709,14 +709,14 @@
   }
 
   
-  .gold chrome-text {
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 30px rgba(191, 149, 63, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.6));
-    font-weight: 900;
-    letter-spacing: 0.02em;
-  }
+ .chrome-text {
+  background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 30px rgba(191, 149, 63, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
 
   .chrome-btn {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
@@ -735,7 +735,7 @@
     box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
   }
   
-  .gold chrome {
+  .chrome {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -743,7 +743,7 @@
     color: transparent;
   }
   
-  .gold chrome text {
+  .gold-chrome text {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -773,7 +773,7 @@
     pointer-events: none;
   }
 
-  /* === EFFET GLASS (flou réduit) === */
+  
   .glass {
     position: relative;
     background: rgba(255, 255, 255, 0.04);
