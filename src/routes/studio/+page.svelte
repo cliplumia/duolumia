@@ -340,385 +340,494 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </svelte:head>
 
-<div class="studio-container">
-  
-  <!-- SIDEBAR GAUCHE -->
-  <aside class="sidebar">
-    <div class="logo chrome-text">ClipLumia</div>
+<div class="studio-page">
+  <div class="studio-container">
     
-    <button class="nav-item" class:active={activeTab === 'images'} on:click={() => activeTab = 'images'}>
-      🖼️ Images IA
-    </button>
-    <button class="nav-item" class:active={activeTab === 'video'} on:click={() => activeTab = 'video'}>
-      🎬 Vidéos IA
-    </button>
-    <button class="nav-item" class:active={activeTab === 'lipsync'} on:click={() => activeTab = 'lipsync'}>
-      👄 Lipsync
-    </button>
-    <button class="nav-item" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>
-      🎤 Voix IA
-    </button>
-    <button class="nav-item" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
-      💬 Chat IA
-    </button>
-  </aside>
-
-  <!-- CENTRE : STUDIO PRINCIPAL -->
-  <main class="studio-main">
-    
-    <!-- HEADER AVEC TITRE ET FORFAIT -->
-    <div class="studio-header">
-      <h1 class="chrome-text studio-title">
-        {activeTab === 'images' ? 'Générateur d\'Images IA' : 
-         activeTab === 'video' ? 'Générateur de Vidéos IA' :
-         activeTab === 'lipsync' ? 'Studio Lipsync' :
-         activeTab === 'voice' ? 'Synthèse Vocale IA' : 'Chat IA Assistant'}
-      </h1>
-      <div class="forfait-badge">Forfait : {data?.user?.images_restantes || 0}</div>
-    </div>
-
-    <!-- CARTE DE GÉNÉRATION (Effet Glass) -->
-    <div class="generation-card">
+    <!-- SIDEBAR GAUCHE -->
+    <aside class="sidebar glass">
+      <div class="logo chrome-text">ClipLumia</div>
       
-      <!-- SECTION IMAGES -->
-      {#if activeTab === 'images'}
-        <textarea bind:value={imgPrompt} placeholder="Décris ton image en détail... Une femme élégante dans un bureau moderne, éclairage doré..."></textarea>
-        
-        <div class="options-grid">
-          <div class="option-group">
-            <label>Format</label>
-            <select bind:value={imgFormat}>
-              <option value="1:1">1:1 (Carré)</option>
-              <option value="16:9">16:9 (Paysage)</option>
-              <option value="9:16">9:16 (Portrait)</option>
-              <option value="tiktok">TikTok</option>
-              <option value="4:5">4:5 (Instagram)</option>
-            </select>
-          </div>
-          
-          <div class="option-group">
-            <label>Style</label>
-            <select bind:value={imgStyle}>
-              <option value="realiste">Réaliste</option>
-              <option value="cinematique">Cinématique</option>
-              <option value="3d">3D Render</option>
-              <option value="anime">Anime</option>
-              <option value="illustration">Illustration</option>
-              <option value="photographique">Photographique</option>
-              <option value="noirblanc">Noir & Blanc</option>
-            </select>
-          </div>
-        </div>
-        
-        <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || !canGenerateImg}>
-          {imgLoading ? '⏳ Génération en cours...' : '✨ CRÉER L\'IMAGE'}
-        </button>
-      {/if}
+      <button class="nav-item" class:active={activeTab === 'images'} on:click={() => activeTab = 'images'}>
+        🖼️ Images IA
+      </button>
+      <button class="nav-item" class:active={activeTab === 'video'} on:click={() => activeTab = 'video'}>
+        🎬 Vidéos IA
+      </button>
+      <button class="nav-item" class:active={activeTab === 'lipsync'} on:click={() => activeTab = 'lipsync'}>
+        👄 Lipsync
+      </button>
+      <button class="nav-item" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>
+        🎤 Voix IA
+      </button>
+      <button class="nav-item" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
+        💬 Chat IA
+      </button>
+    </aside>
 
-      <!-- SECTION VIDÉO -->
-      {#if activeTab === 'video'}
-        <textarea bind:value={vidPrompt} placeholder="Décris ta vidéo... Un drone survolant une ville futuriste au crépuscule..."></textarea>
-        
-        <div class="options-grid">
-          <div class="option-group">
-            <label>Format</label>
-            <select bind:value={vidFormat}>
-              <option value="16:9">16:9</option>
-              <option value="tiktok">TikTok</option>
-              <option value="1:1">1:1</option>
-            </select>
-          </div>
-          
-          <div class="option-group">
-            <label>Style</label>
-            <select bind:value={vidStyle}>
-              <option value="cinematique">Cinématique</option>
-              <option value="dynamique">Dynamique</option>
-              <option value="lent">Lent/Slow</option>
-              <option value="timelapse">Time-lapse</option>
-              <option value="vlog">Vlog</option>
-              <option value="publicitaire">Publicitaire</option>
-            </select>
-          </div>
-        </div>
-        
-        <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || !canGenerateVid}>
-          {vidLoading ? '⏳ Génération en cours...' : '🎬 CRÉER LA VIDÉO'}
-        </button>
-      {/if}
+    <!-- CENTRE : STUDIO PRINCIPAL -->
+    <main class="studio-main">
+      
+      <!-- HEADER AVEC TITRE ET FORFAIT -->
+      <div class="studio-header">
+        <h1 class="chrome-text studio-title">
+          {activeTab === 'images' ? 'Générateur d\'Images IA' : 
+           activeTab === 'video' ? 'Générateur de Vidéos IA' :
+           activeTab === 'lipsync' ? 'Studio Lipsync' :
+           activeTab === 'voice' ? 'Synthèse Vocale IA' : 'Chat IA Assistant'}
+        </h1>
+        <div class="forfait-badge">Forfait : {data?.user?.images_restantes || 0}</div>
+      </div>
 
-      <!-- SECTION LIPSYNC -->
-      {#if activeTab === 'lipsync'}
-        <div class="input-group">
-          <label>1. Photo du visage</label>
-          <input type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
-        </div>
+      <!-- CARTE DE GÉNÉRATION (Effet Glass) -->
+      <div class="generation-card glass">
         
-        <div class="input-group">
-          <label>2. Source Audio</label>
-          <select bind:value={lipAudioSource}>
-            <option value="upload">Upload fichier audio</option>
-            <option value="tts">Texte à vocaliser</option>
-            <option value="url">URL audio externe</option>
-          </select>
-        </div>
-        
-        <div class="input-group">
-          <label>3. URL Audio ou Texte</label>
-          <input type="text" bind:value={audioUrl} placeholder="https://..." class="text-input" />
-        </div>
-        
-        <div class="options-grid">
-          <div class="option-group">
-            <label>Expression Faciale</label>
-            <select bind:value={lipExpression}>
-              <option value="neutre">Neutre (naturelle)</option>
-              <option value="souriant">Souriant (joyeux)</option>
-              <option value="serieux">Sérieux (professionnel)</option>
-              <option value="intense">Émotion intense</option>
-              <option value="precise">Synchronisation précise</option>
-            </select>
+        <!-- SECTION IMAGES -->
+        {#if activeTab === 'images'}
+          <textarea bind:value={imgPrompt} placeholder="Décris ton image en détail... Une femme élégante dans un bureau moderne, éclairage doré..."></textarea>
+          
+          <div class="options-grid">
+            <div class="option-group">
+              <label>Format</label>
+              <select bind:value={imgFormat}>
+                <option value="1:1">1:1 (Carré)</option>
+                <option value="16:9">16:9 (Paysage)</option>
+                <option value="9:16">9:16 (Portrait)</option>
+                <option value="tiktok">TikTok</option>
+                <option value="4:5">4:5 (Instagram)</option>
+              </select>
+            </div>
+            
+            <div class="option-group">
+              <label>Style</label>
+              <select bind:value={imgStyle}>
+                <option value="realiste">Réaliste</option>
+                <option value="cinematique">Cinématique</option>
+                <option value="3d">3D Render</option>
+                <option value="anime">Anime</option>
+                <option value="illustration">Illustration</option>
+                <option value="photographique">Photographique</option>
+                <option value="noirblanc">Noir & Blanc</option>
+              </select>
+            </div>
           </div>
           
-          <div class="option-group">
-            <label>Type de Performance</label>
-            <select bind:value={lipType}>
-              <option value="parole">Parole seule (discours)</option>
-              <option value="chant">Chant (musique)</option>
-              <option value="performance">Performance artistique</option>
-              <option value="presentation">Présentation pro</option>
-            </select>
-          </div>
-        </div>
-        
-        <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || !imageBase64 || !audioUrl}>
-          {lipLoading ? '⏳ Synchronisation...' : '👄 CRÉER LE LIPSYNC'}
-        </button>
-      {/if}
-
-      <!-- SECTION VOIX -->
-      {#if activeTab === 'voice'}
-        <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
-        
-        <div class="options-grid">
-          <div class="option-group">
-            <label>Langue</label>
-            <select bind:value={voiceLang}>
-              <option value="FR">Français</option>
-              <option value="EN">Anglais</option>
-            </select>
-          </div>
-          
-          <div class="option-group">
-            <label>Type de Voix</label>
-            <select bind:value={voiceType}>
-              <option value="femme">Femme</option>
-              <option value="homme">Homme</option>
-              <option value="enfant">Enfant</option>
-              <option value="mature">Voix mature</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="options-grid">
-          <div class="option-group">
-            <label>Style</label>
-            <select bind:value={voiceStyle}>
-              <option value="professionnel">Professionnel</option>
-              <option value="chaleureux">Chaleureux</option>
-              <option value="dynamique">Dynamique</option>
-              <option value="calme">Calme</option>
-              <option value="narratif">Narratif</option>
-              <option value="publicitaire">Publicitaire</option>
-            </select>
-          </div>
-          
-          <div class="option-group">
-            <label>Émotion</label>
-            <select bind:value={voiceEmotion}>
-              <option value="neutre">Neutre</option>
-              <option value="joyeux">Joyeux</option>
-              <option value="serieux">Sérieux</option>
-              <option value="dramatique">Dramatique</option>
-              <option value="enthousiaste">Enthousiaste</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="option-group full-width">
-          <label>Vitesse</label>
-          <select bind:value={voiceSpeed}>
-            <option value="lent">Lent</option>
-            <option value="normal">Normal</option>
-            <option value="rapide">Rapide</option>
-          </select>
-        </div>
-        
-        <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
-          {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
-        </button>
-      {/if}
-
-      <!-- SECTION CHAT (SANS J'AIME/REJETER) -->
-      {#if activeTab === 'chat'}
-        <textarea bind:value={chatPrompt} placeholder="Pose ta question ou donne tes instructions..."></textarea>
-        
-        <div class="options-grid">
-          <div class="option-group">
-            <label>Rôle de l'IA</label>
-            <select bind:value={chatRole}>
-              <option value="assistant">Assistant Général</option>
-              <option value="copywriter">Copywriter</option>
-              <option value="scenariste">Scénariste</option>
-              <option value="coach">Coach</option>
-              <option value="traducteur">Traducteur</option>
-              <option value="expert">Expert Tech</option>
-            </select>
-          </div>
-          
-          <div class="option-group">
-            <label>Ton</label>
-            <select bind:value={chatTone}>
-              <option value="pro">Professionnel</option>
-              <option value="creatif">Créatif</option>
-              <option value="direct">Direct</option>
-              <option value="pedagogique">Pédagogique</option>
-              <option value="humoristique">Humoristique</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="options-grid">
-          <div class="option-group">
-            <label>Format de réponse</label>
-            <select bind:value={chatFormat}>
-              <option value="texte">Texte simple</option>
-              <option value="liste">Liste à puces</option>
-              <option value="etapes">Étapes détaillées</option>
-              <option value="tableau">Tableau</option>
-            </select>
-          </div>
-          
-          <div class="option-group">
-            <label>Longueur</label>
-            <select bind:value={chatLength}>
-              <option value="resume">Résumé</option>
-              <option value="standard">Standard</option>
-              <option value="detaille">Très détaillé</option>
-            </select>
-          </div>
-        </div>
-        
-        <button class="chrome-btn create-btn" on:click={generateChat} disabled={chatLoading}>
-          {chatLoading ? '⏳ Réflexion...' : '💬 ENVOYER'}
-        </button>
-        
-        {#if chatResponse}
-          <div class="chat-response">
-            <div class="chat-bubble">{chatResponse}</div>
-          </div>
-        {/if}
-      {/if}
-    </div>
-
-    <!-- ZONE DE PRÉVISUALISATION -->
-    {#if imgPreviewUrl || vidPreviewUrl || lipPreviewUrl || voiceAudioUrl}
-      <div class="preview-card">
-        <div class="preview-label">APERÇU DU RÉSULTAT</div>
-        
-        {#if imgPreviewUrl}
-          <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" /></div>
-        {:else if vidPreviewUrl}
-          <div class="preview-media"><video src={vidPreviewUrl} controls loop muted playsinline></video></div>
-        {:else if lipPreviewUrl}
-          <div class="preview-media"><video src={lipPreviewUrl} controls loop playsinline></video></div>
-        {:else if voiceAudioUrl}
-          <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
+          <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || !canGenerateImg}>
+            {imgLoading ? '⏳ Génération en cours...' : '✨ CRÉER L\'IMAGE'}
+          </button>
         {/if}
 
-        <div class="watermark">CLIPLUMIA · PREVIEW</div>
-      </div>
-    {/if}
+        <!-- SECTION VIDÉO -->
+        {#if activeTab === 'video'}
+          <textarea bind:value={vidPrompt} placeholder="Décris ta vidéo... Un drone survolant une ville futuriste au crépuscule..."></textarea>
+          
+          <div class="options-grid">
+            <div class="option-group">
+              <label>Format</label>
+              <select bind:value={vidFormat}>
+                <option value="16:9">16:9</option>
+                <option value="tiktok">TikTok</option>
+                <option value="1:1">1:1</option>
+              </select>
+            </div>
+            
+            <div class="option-group">
+              <label>Style</label>
+              <select bind:value={vidStyle}>
+                <option value="cinematique">Cinématique</option>
+                <option value="dynamique">Dynamique</option>
+                <option value="lent">Lent/Slow</option>
+                <option value="timelapse">Time-lapse</option>
+                <option value="vlog">Vlog</option>
+                <option value="publicitaire">Publicitaire</option>
+              </select>
+            </div>
+          </div>
+          
+          <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || !canGenerateVid}>
+            {vidLoading ? '⏳ Génération en cours...' : '🎬 CRÉER LA VIDÉO'}
+          </button>
+        {/if}
 
-    <!-- BOUTONS J'AIME / REJETER (SAUF POUR CHAT) -->
-    {#if activeTab !== 'chat'}
-      <div class="action-buttons">
-        <button class="btn-reject" on:click={activeTab === 'images' ? rejectImage : activeTab === 'video' ? rejectVideo : activeTab === 'lipsync' ? resetLipsync : null}>
-          ❌ Rejeter (0€)
-        </button>
-        <button class="btn-validate" on:click={activeTab === 'images' ? validateImage : activeTab === 'video' ? validateVideo : null}>
-          ✅ J'aime (1 Forfait)
-        </button>
-      </div>
-    {/if}
+        <!-- SECTION LIPSYNC -->
+        {#if activeTab === 'lipsync'}
+          <div class="input-group">
+            <label>1. Photo du visage</label>
+            <input type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
+          </div>
+          
+          <div class="input-group">
+            <label>2. Source Audio</label>
+            <select bind:value={lipAudioSource}>
+              <option value="upload">Upload fichier audio</option>
+              <option value="tts">Texte à vocaliser</option>
+              <option value="url">URL audio externe</option>
+            </select>
+          </div>
+          
+          <div class="input-group">
+            <label>3. URL Audio ou Texte</label>
+            <input type="text" bind:value={audioUrl} placeholder="https://..." class="text-input" />
+          </div>
+          
+          <div class="options-grid">
+            <div class="option-group">
+              <label>Expression Faciale</label>
+              <select bind:value={lipExpression}>
+                <option value="neutre">Neutre (naturelle)</option>
+                <option value="souriant">Souriant (joyeux)</option>
+                <option value="serieux">Sérieux (professionnel)</option>
+                <option value="intense">Émotion intense</option>
+                <option value="precise">Synchronisation précise</option>
+              </select>
+            </div>
+            
+            <div class="option-group">
+              <label>Type de Performance</label>
+              <select bind:value={lipType}>
+                <option value="parole">Parole seule (discours)</option>
+                <option value="chant">Chant (musique)</option>
+                <option value="performance">Performance artistique</option>
+                <option value="presentation">Présentation pro</option>
+              </select>
+            </div>
+          </div>
+          
+          <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || !imageBase64 || !audioUrl}>
+            {lipLoading ? '⏳ Synchronisation...' : '👄 CRÉER LE LIPSYNC'}
+          </button>
+        {/if}
 
-    <!-- GALERIE D'EXEMPLES (En bas, page déroulante) -->
-    <div class="examples-section">
-      <h2 class="chrome-text section-title">Exemples de Réalisations</h2>
-      <div class="examples-grid-full">
-        <div class="example-item">Exemple 1</div>
-        <div class="example-item">Exemple 2</div>
-        <div class="example-item">Exemple 3</div>
-        <div class="example-item">Exemple 4</div>
-      </div>
-    </div>
+        <!-- SECTION VOIX -->
+        {#if activeTab === 'voice'}
+          <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
+          
+          <div class="options-grid">
+            <div class="option-group">
+              <label>Langue</label>
+              <select bind:value={voiceLang}>
+                <option value="FR">Français</option>
+                <option value="EN">Anglais</option>
+              </select>
+            </div>
+            
+            <div class="option-group">
+              <label>Type de Voix</label>
+              <select bind:value={voiceType}>
+                <option value="femme">Femme</option>
+                <option value="homme">Homme</option>
+                <option value="enfant">Enfant</option>
+                <option value="mature">Voix mature</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="options-grid">
+            <div class="option-group">
+              <label>Style</label>
+              <select bind:value={voiceStyle}>
+                <option value="professionnel">Professionnel</option>
+                <option value="chaleureux">Chaleureux</option>
+                <option value="dynamique">Dynamique</option>
+                <option value="calme">Calme</option>
+                <option value="narratif">Narratif</option>
+                <option value="publicitaire">Publicitaire</option>
+              </select>
+            </div>
+            
+            <div class="option-group">
+              <label>Émotion</label>
+              <select bind:value={voiceEmotion}>
+                <option value="neutre">Neutre</option>
+                <option value="joyeux">Joyeux</option>
+                <option value="serieux">Sérieux</option>
+                <option value="dramatique">Dramatique</option>
+                <option value="enthousiaste">Enthousiaste</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="option-group full-width">
+            <label>Vitesse</label>
+            <select bind:value={voiceSpeed}>
+              <option value="lent">Lent</option>
+              <option value="normal">Normal</option>
+              <option value="rapide">Rapide</option>
+            </select>
+          </div>
+          
+          <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
+            {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
+          </button>
+        {/if}
 
-    <!-- FAQ (En bas, page déroulante) -->
-    <div class="faq-section">
-      <h2 class="chrome-text section-title">Questions Fréquentes</h2>
-      
-      <div class="faq-item">
-        <h3>❓ Comment fonctionnent les forfaits ClipLumia ?</h3>
-        <p>Chaque forfait vous donne accès à une création IA. Vous choisissez votre modèle, décrivez votre projet, et notre studio génère le résultat. Un forfait = une création validée.</p>
+        <!-- SECTION CHAT (SANS J'AIME/REJETER) -->
+        {#if activeTab === 'chat'}
+          <textarea bind:value={chatPrompt} placeholder="Pose ta question ou donne tes instructions..."></textarea>
+          
+          <div class="options-grid">
+            <div class="option-group">
+              <label>Rôle de l'IA</label>
+              <select bind:value={chatRole}>
+                <option value="assistant">Assistant Général</option>
+                <option value="copywriter">Copywriter</option>
+                <option value="scenariste">Scénariste</option>
+                <option value="coach">Coach</option>
+                <option value="traducteur">Traducteur</option>
+                <option value="expert">Expert Tech</option>
+              </select>
+            </div>
+            
+            <div class="option-group">
+              <label>Ton</label>
+              <select bind:value={chatTone}>
+                <option value="pro">Professionnel</option>
+                <option value="creatif">Créatif</option>
+                <option value="direct">Direct</option>
+                <option value="pedagogique">Pédagogique</option>
+                <option value="humoristique">Humoristique</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="options-grid">
+            <div class="option-group">
+              <label>Format de réponse</label>
+              <select bind:value={chatFormat}>
+                <option value="texte">Texte simple</option>
+                <option value="liste">Liste à puces</option>
+                <option value="etapes">Étapes détaillées</option>
+                <option value="tableau">Tableau</option>
+              </select>
+            </div>
+            
+            <div class="option-group">
+              <label>Longueur</label>
+              <select bind:value={chatLength}>
+                <option value="resume">Résumé</option>
+                <option value="standard">Standard</option>
+                <option value="detaille">Très détaillé</option>
+              </select>
+            </div>
+          </div>
+          
+          <button class="chrome-btn create-btn" on:click={generateChat} disabled={chatLoading}>
+            {chatLoading ? '⏳ Réflexion...' : '💬 ENVOYER'}
+          </button>
+          
+          {#if chatResponse}
+            <div class="chat-response">
+              <div class="chat-bubble">{chatResponse}</div>
+            </div>
+          {/if}
+        {/if}
       </div>
-      
-      <div class="faq-item">
-        <h3>❓ Que se passe-t-il si je n'aime pas le résultat ?</h3>
-        <p>C'est la force ClipLumia ! Si le résultat ne vous convient pas, cliquez sur <strong>"Rejeter (0€)"</strong> : vous ne payez rien et pouvez relancer une nouvelle génération. Si vous aimez, cliquez sur <strong>"J'aime (1 Forfait)"</strong> : le forfait est utilisé et la création est à vous.</p>
+
+      <!-- ZONE DE PRÉVISUALISATION -->
+      {#if imgPreviewUrl || vidPreviewUrl || lipPreviewUrl || voiceAudioUrl}
+        <div class="preview-card glass">
+          <div class="preview-label">APERÇU DU RÉSULTAT</div>
+          
+          {#if imgPreviewUrl}
+            <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" /></div>
+          {:else if vidPreviewUrl}
+            <div class="preview-media"><video src={vidPreviewUrl} controls loop muted playsinline></video></div>
+          {:else if lipPreviewUrl}
+            <div class="preview-media"><video src={lipPreviewUrl} controls loop playsinline></video></div>
+          {:else if voiceAudioUrl}
+            <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
+          {/if}
+
+          <div class="watermark">CLIPLUMIA · PREVIEW</div>
+        </div>
+      {/if}
+
+      <!-- BOUTONS J'AIME / REJETER (SAUF POUR CHAT) -->
+      {#if activeTab !== 'chat'}
+        <div class="action-buttons">
+          <button class="btn-reject" on:click={activeTab === 'images' ? rejectImage : activeTab === 'video' ? rejectVideo : activeTab === 'lipsync' ? resetLipsync : null}>
+            ❌ Rejeter (0€)
+          </button>
+          <button class="btn-validate" on:click={activeTab === 'images' ? validateImage : activeTab === 'video' ? validateVideo : null}>
+            ✅ J'aime (1 Forfait)
+          </button>
+        </div>
+      {/if}
+
+      <!-- GALERIE D'EXEMPLES (En bas, page déroulante) -->
+      <div class="examples-section glass">
+        <h2 class="chrome-text section-title">Exemples de Réalisations</h2>
+        <div class="examples-grid-full">
+          <div class="example-item">Exemple 1</div>
+          <div class="example-item">Exemple 2</div>
+          <div class="example-item">Exemple 3</div>
+          <div class="example-item">Exemple 4</div>
+        </div>
       </div>
-      
-      <div class="faq-item">
-        <h3>❓ Puis-je utiliser les créations pour mon business ?</h3>
-        <p>Oui, absolument ! Toutes les images, vidéos et contenus générés via ClipLumia sont libres de droits pour un usage commercial (réseaux sociaux, sites web, publicités, etc.).</p>
+
+      <!-- FAQ (En bas, page déroulante) -->
+      <div class="faq-section glass">
+        <h2 class="chrome-text section-title">Questions Fréquentes</h2>
+        
+        <div class="faq-item glass">
+          <h3>❓ Comment fonctionnent les forfaits ClipLumia ?</h3>
+          <p>Chaque forfait vous donne accès à une création IA. Vous choisissez votre modèle, décrivez votre projet, et notre studio génère le résultat. Un forfait = une création validée.</p>
+        </div>
+        
+        <div class="faq-item glass">
+          <h3>❓ Que se passe-t-il si je n'aime pas le résultat ?</h3>
+          <p>C'est la force ClipLumia ! Si le résultat ne vous convient pas, cliquez sur <strong>"Rejeter (0€)"</strong> : vous ne payez rien et pouvez relancer une nouvelle génération. Si vous aimez, cliquez sur <strong>"J'aime (1 Forfait)"</strong> : le forfait est utilisé et la création est à vous.</p>
+        </div>
+        
+        <div class="faq-item glass">
+          <h3>❓ Puis-je utiliser les créations pour mon business ?</h3>
+          <p>Oui, absolument ! Toutes les images, vidéos et contenus générés via ClipLumia sont libres de droits pour un usage commercial (réseaux sociaux, sites web, publicités, etc.).</p>
+        </div>
+        
+        <div class="faq-item glass">
+          <h3>❓ Mes créations sont-elles privées ?</h3>
+          <p>Oui, 100% privées. Personne d'autre que vous ne peut voir ou accéder à vos générations. Nous ne les partageons pas et ne les utilisons pas sans votre accord.</p>
+        </div>
+        
+        <div class="faq-item glass">
+          <h3>❓ Comment contacter le support en cas de problème ?</h3>
+          <p>Notre équipe est disponible via le formulaire de contact ou par email à contact@cliplumia.com. Nous répondons sous 24h maximum.</p>
+        </div>
       </div>
-      
-      <div class="faq-item">
-        <h3>❓ Mes créations sont-elles privées ?</h3>
-        <p>Oui, 100% privées. Personne d'autre que vous ne peut voir ou accéder à vos générations. Nous ne les partageons pas et ne les utilisons pas sans votre accord.</p>
-      </div>
-      
-      <div class="faq-item">
-        <h3>❓ Comment contacter le support en cas de problème ?</h3>
-        <p>Notre équipe est disponible via le formulaire de contact ou par email à contact@cliplumia.com. Nous répondons sous 24h maximum.</p>
-      </div>
-    </div>
-  </main>
+    </main>
+  </div>
 </div>
 
 <style>
-  /* === CONTENEUR PRINCIPAL === */
-  .studio-container {
-    display: flex;
-    gap: 20px;
-    min-height: calc(100vh - 80px);
-    padding: 20px;
-    box-sizing: border-box;
-    background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 50%, #0f0518 100%);
+  :global(*) { box-sizing: border-box; }
+  :global(body) { 
+    margin: 0; 
+    font-family: 'Inter', system-ui, sans-serif; 
+    color: #fff; 
+    -webkit-font-smoothing: antialiased; 
+    overflow-x: hidden; 
   }
 
-  /* === SIDEBAR GAUCHE (Effet Glass) === */
+  /* === OR CHROME MÉTALLIQUE AVEC NOIR (PAS DE JAUNE/BLANC/MARRON) === */
+  .chrome-text {
+    background: linear-gradient(135deg, 
+      #0a0a0a 0%, 
+      #2a2a2a 15%, 
+      #5a5a5a 30%, 
+      #8a8a8a 45%, 
+      #c9a961 50%, 
+      #8a8a8a 55%, 
+      #5a5a5a 70%, 
+      #2a2a2a 85%, 
+      #0a0a0a 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    filter: 
+      drop-shadow(0 0 8px rgba(201, 169, 97, 0.4))
+      drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.9))
+      drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.7));
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
+
+  .chrome-btn {
+    background: linear-gradient(180deg, 
+      #0a0a0a 0%, 
+      #2a2a2a 20%, 
+      #5a5a5a 40%, 
+      #8a8a8a 50%, 
+      #c9a961 55%, 
+      #8a8a8a 60%, 
+      #5a5a5a 70%, 
+      #2a2a2a 85%, 
+      #0a0a0a 100%
+    );
+    border: 2px solid rgba(201, 169, 97, 0.4);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-weight: 900;
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.3), 
+      inset 0 -1px 0 rgba(0, 0, 0, 0.5), 
+      0 6px 20px rgba(0, 0, 0, 0.7);
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  }
+  
+  .chrome-btn:hover:not(:disabled) { 
+    filter: brightness(1.2); 
+    transform: translateY(-2px); 
+    box-shadow: 
+      inset 0 1px 0 rgba(255, 255, 255, 0.4), 
+      0 10px 30px rgba(201, 169, 97, 0.3); 
+  }
+  
+  .chrome-btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  
+  .chrome-btn:disabled { 
+    opacity: 0.5; 
+    cursor: not-allowed; 
+  }
+
+  /* === FOND VIOLET FONCÉ AVEC IMAGE === */
+  .studio-page {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    max-width: 100vw;
+    background-image: url('https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/image%20fond%20page%20svelte.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+  .studio-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(12, 6, 24, 0.6);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* === EFFET GLASS (comme la page d'accueil) === */
+  .glass {
+    position: relative;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.4), 
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    z-index: 2;
+  }
+
+  /* === CONTENEUR PRINCIPAL === */
+  .studio-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 20px;
+    min-height: calc(100vh - 40px);
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  /* === SIDEBAR GAUCHE === */
   .sidebar {
     width: 280px;
-    background: rgba(45, 27, 78, 0.6);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
     padding: 30px 20px;
     display: flex;
     flex-direction: column;
     gap: 12px;
     flex-shrink: 0;
-    border: 1px solid rgba(212, 175, 55, 0.15);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   }
 
   .logo {
@@ -742,20 +851,21 @@
     text-align: left;
     width: 100%;
     font-family: 'Inter', sans-serif;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 
   .nav-item:hover { 
-    background: rgba(212, 175, 55, 0.1); 
+    background: rgba(255, 255, 255, 0.06); 
     color: #fff;
-    border: 1px solid rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
   
   .nav-item.active {
-    background: rgba(212, 175, 55, 0.2);
-    color: #f5d76e;
-    border: 1px solid rgba(212, 175, 55, 0.4);
+    background: rgba(201, 169, 97, 0.12);
+    color: #c9a961;
+    border: 1px solid rgba(201, 169, 97, 0.3);
     font-weight: 700;
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   /* === CENTRE : STUDIO === */
@@ -782,34 +892,32 @@
     font-size: 1.8rem;
     margin: 0;
     font-weight: 900;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
   }
 
   .forfait-badge {
     font-size: 1rem;
-    color: #f5d76e;
-    background: rgba(212, 175, 55, 0.15);
+    color: #c9a961;
+    background: rgba(201, 169, 97, 0.1);
     padding: 12px 22px;
     border-radius: 25px;
-    border: 1px solid rgba(212, 175, 55, 0.35);
+    border: 1px solid rgba(201, 169, 97, 0.3);
     font-weight: 700;
     white-space: nowrap;
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 
-  /* === CARTE DE GÉNÉRATION (Effet Glass) === */
+  /* === CARTE DE GÉNÉRATION === */
   .generation-card {
-    background: rgba(20, 10, 35, 0.5);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
 
   textarea {
     width: 100%;
-    background: rgba(10, 5, 20, 0.6);
-    border: 1px solid rgba(212, 175, 55, 0.25);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     color: #ffffff;
     font-size: 1.05rem;
@@ -821,16 +929,17 @@
     padding: 18px;
     box-sizing: border-box;
     transition: all 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
   textarea::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.4);
   }
 
   textarea:focus {
-    border-color: rgba(212, 175, 55, 0.5);
-    background: rgba(10, 5, 20, 0.8);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+    border-color: rgba(201, 169, 97, 0.4);
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 20px rgba(201, 169, 97, 0.1);
   }
 
   .input-group {
@@ -839,17 +948,18 @@
 
   .input-group label {
     display: block;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.95rem;
     font-weight: 600;
     margin-bottom: 10px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 
   .file-input,
   .text-input {
     width: 100%;
-    background: rgba(10, 5, 20, 0.6);
-    border: 1px solid rgba(212, 175, 55, 0.25);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;
     padding: 14px;
     color: #ffffff;
@@ -858,7 +968,7 @@
   }
 
   .text-input::placeholder {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.4);
   }
 
   .options-grid {
@@ -879,15 +989,16 @@
   }
 
   .option-group label {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.9rem;
     font-weight: 600;
     margin-bottom: 8px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 
   select {
-    background: rgba(10, 5, 20, 0.8);
-    border: 1px solid rgba(212, 175, 55, 0.35);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: #f0f0f5;
     padding: 14px 16px;
     border-radius: 10px;
@@ -896,15 +1007,16 @@
     cursor: pointer;
     font-family: 'Inter', sans-serif;
     transition: all 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
   select:hover {
-    border-color: rgba(212, 175, 55, 0.5);
+    border-color: rgba(201, 169, 97, 0.4);
   }
 
   select:focus {
-    border-color: rgba(212, 175, 55, 0.6);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    border-color: rgba(201, 169, 97, 0.5);
+    box-shadow: 0 0 15px rgba(201, 169, 97, 0.15);
   }
 
   .create-btn {
@@ -921,24 +1033,20 @@
     transition: all 0.3s ease;
   }
 
-  /* === CARTE DE PRÉVISUALISATION (Effet Glass) === */
+  /* === CARTE DE PRÉVISUALISATION === */
   .preview-card {
-    background: rgba(20, 10, 35, 0.5);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: 20px;
     padding: 30px;
     position: relative;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
 
   .preview-label {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 20px;
     font-weight: 700;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 
   .preview-media {
@@ -950,6 +1058,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .preview-media img, 
@@ -964,16 +1073,17 @@
     top: 50%; 
     left: 50%;
     transform: translate(-50%, -50%) rotate(-15deg);
-    color: rgba(212, 175, 55, 0.4);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 1.5rem;
     font-weight: 900;
     pointer-events: none;
     white-space: nowrap;
-    border: 2px solid rgba(212, 175, 55, 0.35);
+    border: 2px solid rgba(255, 255, 255, 0.6);
     padding: 12px 25px;
-    background: rgba(10, 5, 20, 0.7);
+    background: rgba(0, 0, 0, 0.5);
     letter-spacing: 3px;
     border-radius: 10px;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
   }
 
   /* === BOUTONS J'AIME / REJETER === */
@@ -989,17 +1099,19 @@
     font-weight: 700;
     font-size: 1rem;
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(212, 175, 55, 0.4);
-    color: #d4af37;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.8);
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
   }
   
   .btn-reject:hover { 
-    border-color: #ff4444; 
+    border-color: #ff6b6b; 
     color: #ff6b6b; 
-    background: rgba(255, 255, 255, 1);
+    background: rgba(255, 68, 68, 0.1);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(255, 68, 68, 0.2);
   }
@@ -1011,34 +1123,33 @@
     font-weight: 900;
     font-size: 1rem;
     cursor: pointer;
-    background: linear-gradient(180deg, #f5d76e 0%, #d4af37 50%, #aa7c11 100%);
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.4);
-    color: #1a0b2e;
+    background: linear-gradient(135deg, rgba(201, 169, 97, 0.2), rgba(201, 169, 97, 0.08));
+    border: 2px solid rgba(201, 169, 97, 0.5);
+    color: #c9a961;
     transition: all 0.3s ease;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 6px 20px rgba(212, 175, 55, 0.35);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
   }
   
   .btn-validate:hover { 
-    filter: brightness(1.15); 
+    background: rgba(201, 169, 97, 0.25);
+    border-color: rgba(201, 169, 97, 0.7);
     transform: translateY(-3px); 
-    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+    box-shadow: 0 8px 25px rgba(201, 169, 97, 0.3);
   }
 
   /* === GALERIE D'EXEMPLES === */
   .examples-section {
     margin-top: 40px;
     padding: 30px;
-    background: rgba(20, 10, 35, 0.4);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid rgba(212, 175, 55, 0.15);
   }
 
   .section-title {
     font-size: 1.6rem;
     margin-bottom: 25px;
     text-align: center;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
   }
 
   .examples-grid-full {
@@ -1049,58 +1160,57 @@
 
   .example-item {
     aspect-ratio: 16/9;
-    background: rgba(10, 5, 20, 0.6);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 12px;
-    border: 1px solid rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.5);
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 
   .example-item:hover {
-    border-color: #d4af37;
-    color: #f5d76e;
-    background: rgba(212, 175, 55, 0.1);
+    border-color: rgba(201, 169, 97, 0.5);
+    color: #c9a961;
+    background: rgba(201, 169, 97, 0.1);
     transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
   }
 
   /* === FAQ === */
   .faq-section {
     margin-top: 40px;
     padding: 30px;
-    background: rgba(20, 10, 35, 0.4);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid rgba(212, 175, 55, 0.15);
   }
 
   .faq-item {
     margin-bottom: 25px;
     padding: 20px;
-    background: rgba(10, 5, 20, 0.5);
     border-radius: 12px;
-    border: 1px solid rgba(212, 175, 55, 0.1);
   }
 
   .faq-item h3 {
-    color: #f5d76e;
+    color: #c9a961;
     font-size: 1.1rem;
     margin-bottom: 12px;
     font-weight: 700;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 
   .faq-item p {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.85);
     line-height: 1.7;
     font-size: 0.95rem;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
   }
 
   .faq-item strong {
-    color: #f5d76e;
+    color: #c9a961;
   }
 
   /* === CHAT RESPONSE === */
@@ -1109,67 +1219,14 @@
   }
   
   .chat-bubble {
-    background: rgba(20, 10, 35, 0.8);
-    border: 1px solid rgba(212, 175, 55, 0.25);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 14px;
     padding: 20px;
     color: #f0f0f5;
     font-size: 1rem;
     line-height: 1.7;
-  }
-
-  /* === OR CHROME MÉTALLIQUE 3D === */
-  .chrome-text {
-    background: linear-gradient(to bottom, 
-      #ffffff 0%, 
-      #f5d76e 20%, 
-      #d4af37 45%, 
-      #aa7c11 70%, 
-      #8b6508 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: 
-      drop-shadow(0px 1px 0px rgba(255, 255, 255, 0.6))
-      drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.8))
-      drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.6));
-    font-weight: 900;
-    letter-spacing: 0.02em;
-  }
-
-  .chrome-btn {
-    background: linear-gradient(180deg, 
-      #ffffff 0%, 
-      #f5d76e 25%, 
-      #d4af37 50%, 
-      #aa7c11 75%, 
-      #8b6508 100%
-    );
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.6);
-    color: #1a0b2e;
-    font-weight: 900;
-    box-shadow: 
-      inset 0 1px 0 rgba(255, 255, 255, 0.8), 
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2), 
-      0 6px 20px rgba(0, 0, 0, 0.5);
-    transition: all 0.3s ease;
-  }
-  
-  .chrome-btn:hover:not(:disabled) { 
-    filter: brightness(1.15); 
-    transform: translateY(-3px); 
-    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5); 
-  }
-  
-  .chrome-btn:active:not(:disabled) {
-    transform: translateY(1px);
-  }
-  
-  .chrome-btn:disabled { 
-    opacity: 0.5; 
-    cursor: not-allowed; 
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
   /* === RESPONSIVE MOBILE === */
@@ -1213,6 +1270,10 @@
     
     .studio-title {
       font-size: 1.4rem;
+    }
+
+    .studio-page {
+      background-attachment: scroll;
     }
   }
 
