@@ -647,7 +647,7 @@
           <button class="btn-reject" on:click={activeTab === 'images' ? rejectImage : activeTab === 'video' ? rejectVideo : activeTab === 'lipsync' ? resetLipsync : null}>
             ❌ Rejeter (0€)
           </button>
-          <button class="btn-validate chrome-gold-text" on:click={activeTab === 'images' ? validateImage : activeTab === 'video' ? validateVideo : null}>
+          <button class="btn-validate" on:click={activeTab === 'images' ? validateImage : activeTab === 'video' ? validateVideo : null}>
             ✅ J'aime (1 Forfait)
           </button>
         </div>
@@ -708,8 +708,8 @@
     background: #0c0618;
   }
 
-  /* === VRAI OR CHROME (Comme ton autre page) === */
-  .chrome-text {
+  
+  .gold chrome-text {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -735,7 +735,7 @@
     box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
   }
   
-  .chrome-gold {
+  .gold chrome {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -743,7 +743,7 @@
     color: transparent;
   }
   
-  .chrome-gold-text {
+  .gold chrome text {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
