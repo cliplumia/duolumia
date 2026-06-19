@@ -708,66 +708,31 @@
     background: #0c0618;
   }
 
-  /* === OR CHROME MÉTALLIQUE TRÈS BRILLANT === */
+   /* === VRAI OR CHROME (Comme ton autre page) === */
   .chrome-text {
-    background: linear-gradient(180deg, 
-      #000 0%, 
-      #1a1a1a 35%, 
-      #FFD700 45%, 
-      #FFD700 55%, 
-      #1a1a1a 65%, 
-      #000 100%
-    );
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
-    background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: transparent;
-    filter: 
-      drop-shadow(0 0 8px rgba(255, 215, 0, 0.6))
-      drop-shadow(0px 1px 0px rgba(255, 255, 255, 0.5))
-      drop-shadow(0px 2px 4px rgba(0, 0, 0, 1));
+    filter: drop-shadow(0 0 30px rgba(191, 149, 63, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.6));
     font-weight: 900;
     letter-spacing: 0.02em;
   }
 
   .chrome-btn {
-    background: linear-gradient(180deg, 
-      #000 0%, 
-      #1a1a1a 35%, 
-      #FFD700 45%, 
-      #FFD700 55%, 
-      #1a1a1a 65%, 
-      #000 100%
-    );
-    border: 2px solid rgba(255, 215, 0, 0.5);
-    border-top-color: rgba(255, 255, 255, 0.4);
-    border-bottom-color: rgba(0, 0, 0, 1);
-    color: #fff;
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    border: 2px solid #FCF6BA;
+    border-bottom: 3px solid #8B6508;
+    color: #1a0b2e;
     font-weight: 900;
-    box-shadow: 
-      inset 0 1px 0 rgba(255, 255, 255, 0.4), 
-      inset 0 -1px 0 rgba(0, 0, 0, 0.8), 
-      0 6px 20px rgba(0, 0, 0, 0.8),
-      0 0 15px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 0 20px rgba(191, 149, 63, 0.6), inset 0 1px 0 rgba(255,255,255,0.6);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
     transition: all 0.3s ease;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 1);
   }
   
   .chrome-btn:hover:not(:disabled) { 
-    filter: brightness(1.3); 
+    filter: brightness(1.1); 
     transform: translateY(-2px); 
-    box-shadow: 
-      inset 0 1px 0 rgba(255, 255, 255, 0.5), 
-      0 8px 25px rgba(255, 215, 0, 0.6);
-  }
-  
-  .chrome-btn:active:not(:disabled) {
-    transform: translateY(1px);
-  }
-  
-  .chrome-btn:disabled { 
-    opacity: 0.5; 
-    cursor: not-allowed; 
+    box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
   }
 
   /* === FOND VIOLET FONCÉ AVEC IMAGE === */
