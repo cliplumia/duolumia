@@ -375,7 +375,7 @@
            activeTab === 'lipsync' ? 'Studio Lipsync' :
            activeTab === 'voice' ? 'Synthèse Vocale IA' : 'Chat IA Assistant'}
         </h1>
-        <div class="forfait-badge">Forfait : {data?.user?.images_restantes || 0}</div>
+        <div class="forfait-badge chrome-gold">Forfait : {data?.user?.images_restantes || 0}</div>
       </div>
 
       <!-- CARTE DE GÉNÉRATION (Effet Glass) -->
@@ -647,7 +647,7 @@
           <button class="btn-reject" on:click={activeTab === 'images' ? rejectImage : activeTab === 'video' ? rejectVideo : activeTab === 'lipsync' ? resetLipsync : null}>
             ❌ Rejeter (0€)
           </button>
-          <button class="btn-validate" on:click={activeTab === 'images' ? validateImage : activeTab === 'video' ? validateVideo : null}>
+          <button class="btn-validate chrome-gold-text" on:click={activeTab === 'images' ? validateImage : activeTab === 'video' ? validateVideo : null}>
             ✅ J'aime (1 Forfait)
           </button>
         </div>
@@ -669,27 +669,27 @@
         <h2 class="chrome-text section-title">Questions Fréquentes</h2>
         
         <div class="faq-item glass">
-          <h3>❓ Comment fonctionnent les forfaits ClipLumia ?</h3>
+          <h3 class="chrome-gold-text">❓ Comment fonctionnent les forfaits ClipLumia ?</h3>
           <p>Chaque forfait vous donne accès à une création IA. Vous choisissez votre modèle, décrivez votre projet, et notre studio génère le résultat. Un forfait = une création validée.</p>
         </div>
         
         <div class="faq-item glass">
-          <h3>❓ Que se passe-t-il si je n'aime pas le résultat ?</h3>
-          <p>C'est la force ClipLumia ! Si le résultat ne vous convient pas, cliquez sur <strong>"Rejeter (0€)"</strong> : vous ne payez rien et pouvez relancer une nouvelle génération. Si vous aimez, cliquez sur <strong>"J'aime (1 Forfait)"</strong> : le forfait est utilisé et la création est à vous.</p>
+          <h3 class="chrome-gold-text">❓ Que se passe-t-il si je n'aime pas le résultat ?</h3>
+          <p>C'est la force ClipLumia ! Si le résultat ne vous convient pas, cliquez sur <strong class="chrome-gold-text">"Rejeter (0€)"</strong> : vous ne payez rien et pouvez relancer une nouvelle génération. Si vous aimez, cliquez sur <strong class="chrome-gold-text">"J'aime (1 Forfait)"</strong> : le forfait est utilisé et la création est à vous.</p>
         </div>
         
         <div class="faq-item glass">
-          <h3>❓ Puis-je utiliser les créations pour mon business ?</h3>
+          <h3 class="chrome-gold-text">❓ Puis-je utiliser les créations pour mon business ?</h3>
           <p>Oui, absolument ! Toutes les images, vidéos et contenus générés via ClipLumia sont libres de droits pour un usage commercial (réseaux sociaux, sites web, publicités, etc.).</p>
         </div>
         
         <div class="faq-item glass">
-          <h3>❓ Mes créations sont-elles privées ?</h3>
+          <h3 class="chrome-gold-text">❓ Mes créations sont-elles privées ?</h3>
           <p>Oui, 100% privées. Personne d'autre que vous ne peut voir ou accéder à vos générations. Nous ne les partageons pas et ne les utilisons pas sans votre accord.</p>
         </div>
         
         <div class="faq-item glass">
-          <h3>❓ Comment contacter le support en cas de problème ?</h3>
+          <h3 class="chrome-gold-text">❓ Comment contacter le support en cas de problème ?</h3>
           <p>Notre équipe est disponible via le formulaire de contact ou par email à contact@cliplumia.com. Nous répondons sous 24h maximum.</p>
         </div>
       </div>
@@ -708,7 +708,7 @@
     background: #0c0618;
   }
 
-   /* === VRAI OR CHROME (Comme ton autre page) === */
+  /* === VRAI OR CHROME (Comme ton autre page) === */
   .chrome-text {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
@@ -733,6 +733,22 @@
     filter: brightness(1.1); 
     transform: translateY(-2px); 
     box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+  
+  .chrome-gold {
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .chrome-gold-text {
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
   }
 
   /* === FOND VIOLET FONCÉ AVEC IMAGE === */
@@ -825,9 +841,8 @@
   }
   
   .nav-item.active {
-    background: rgba(255, 215, 0, 0.12);
-    color: #FFD700;
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    background: rgba(191, 149, 63, 0.12);
+    border: 1px solid rgba(191, 149, 63, 0.3);
     font-weight: 700;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
@@ -861,11 +876,9 @@
 
   .forfait-badge {
     font-size: 1rem;
-    color: #FFD700;
-    background: rgba(255, 215, 0, 0.1);
     padding: 12px 22px;
     border-radius: 25px;
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    border: 1px solid rgba(191, 149, 63, 0.3);
     font-weight: 700;
     white-space: nowrap;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -901,9 +914,9 @@
   }
 
   textarea:focus {
-    border-color: rgba(255, 215, 0, 0.4);
+    border-color: rgba(191, 149, 63, 0.4);
     background: rgba(0, 0, 0, 0.4);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 20px rgba(191, 149, 63, 0.1);
   }
 
   .input-group {
@@ -975,12 +988,12 @@
   }
 
   select:hover {
-    border-color: rgba(255, 215, 0, 0.4);
+    border-color: rgba(191, 149, 63, 0.4);
   }
 
   select:focus {
-    border-color: rgba(255, 215, 0, 0.5);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+    border-color: rgba(191, 149, 63, 0.5);
+    box-shadow: 0 0 15px rgba(191, 149, 63, 0.15);
   }
 
   .create-btn {
@@ -1087,9 +1100,8 @@
     font-weight: 900;
     font-size: 1rem;
     cursor: pointer;
-    background: rgba(255, 215, 0, 0.15);
-    border: 2px solid rgba(255, 215, 0, 0.5);
-    color: #FFD700;
+    background: rgba(191, 149, 63, 0.15);
+    border: 2px solid rgba(191, 149, 63, 0.5);
     transition: all 0.3s ease;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
@@ -1097,10 +1109,10 @@
   }
   
   .btn-validate:hover { 
-    background: rgba(255, 215, 0, 0.25);
-    border-color: rgba(255, 215, 0, 0.7);
+    background: rgba(191, 149, 63, 0.25);
+    border-color: rgba(191, 149, 63, 0.7);
     transform: translateY(-3px); 
-    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(191, 149, 63, 0.3);
   }
 
   /* === GALERIE D'EXEMPLES === */
@@ -1139,9 +1151,8 @@
   }
 
   .example-item:hover {
-    border-color: rgba(255, 215, 0, 0.5);
-    color: #FFD700;
-    background: rgba(255, 215, 0, 0.1);
+    border-color: rgba(191, 149, 63, 0.5);
+    background: rgba(191, 149, 63, 0.1);
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
   }
@@ -1159,8 +1170,6 @@
   }
 
   .faq-item h3 {
-    color: #FFD700;
-    font-size: 1.1rem;
     margin-bottom: 12px;
     font-weight: 700;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
@@ -1174,7 +1183,7 @@
   }
 
   .faq-item strong {
-    color: #FFD700;
+    font-weight: 700;
   }
 
   /* === CHAT RESPONSE === */
