@@ -154,7 +154,7 @@
   }
   
  .plan {
-    background: rgba(255, 255, 255, 0.05); /* Verre dépoli */
+    background: rgba(255, 255, 255, 0.05); 
     backdrop-filter: blur(10px);
     border: 1px solid rgba(201, 168, 106, 0.3); /* Bordure Gold */
     border-radius: 20px;
@@ -223,12 +223,12 @@
     content: "✓";
     position: absolute;
     left: 0;
-    color: #C9A86A; /* Check Gold */
+    color: #C9A86A; /* Check Gold CHROME */
     font-weight: bold;
   }
   
  .btn-select {
-    background: linear-gradient(135deg, #C9A86A 0%, #B69852 100%); /* Dégradé Gold */
+    background: linear-gradient(135deg, #C9A86A 0%, #B69852 100%); 
     color: #1A0B2E; /* Texte Violet foncé */
     border: none;
     padding: 15px 40px;
