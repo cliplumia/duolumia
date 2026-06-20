@@ -8,8 +8,9 @@ export async function POST({ request, platform, cookies }) {
  const user = await platform.env.BD.prepare("SELECT * FROM utilisateurs WHERE id =?").bind(userId).first();
  if (!user) return json({ error: 'Utilisateur introuvable' }, { status: 401 });
  const userEmail = user.email;
-    if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 400 });
-
+const { image, audio } = await request.json();
+if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 400 });
+   
     const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
       headers: {
@@ -18,7 +19,7 @@ export async function POST({ request, platform, cookies }) {
         'Prefer': 'wait'
       },
       body: JSON.stringify({
-        version: "cjwbw/sadtalker:VERSION_A_REMPLACER", // Récupère le hash sur Replicate
+       version: "cjwbw/sadtalker:a519cc0cfebaaeade068b23899165a11ec76aaa1d2b313d40d214f204ec957a3",
         input: {
           source_image: image,
           driven_audio: audio
