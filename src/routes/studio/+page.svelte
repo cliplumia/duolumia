@@ -640,7 +640,10 @@
             <div class="preview-media validated"><video src={vidValidatedUrl} controls loop playsinline></video></div>
             <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
           {:else if lipPreviewUrl}
-            <div class="preview-media"><video src={lipPreviewUrl} controls loop playsinline></video></div>
+          <div class="preview-media">
+          <video src={lipPreviewUrl} controls loop playsinline></video>
+          </div>
+          {/if}
           {:else if voiceAudioUrl}
             <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
           {/if}
