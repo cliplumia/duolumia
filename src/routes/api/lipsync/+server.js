@@ -22,7 +22,8 @@ if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 
       version: "a519cc0cfebaaeade068b23899165a11ec76aaa1d2b313d40d214f204ec957a3",
         input: {
           source_image: image,
-          driven_audio: audio
+          driven_audio: audio,
+          use_enhancer: true
         }
       })
     });
@@ -37,7 +38,13 @@ if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 
     if (data.status !== 'succeeded' || !data.output) {
       throw new Error('Lipsync echoue');
     }
- const videoUrl = Array.isArray(data.output)? data.output[0] : data.output;
+    
+    // ✅ CORRECTION : output est un objet avec une propriété .url
+    const videoUrl = data.output.url || (typeof data.output === 'string' ? data.output : null);
+
+    if (!videoUrl) {
+      throw new Error('URL vidéo introuvable dans la réponse');
+    }
 
  // ✅ DÉCOMPTE -1 SEULEMENT SI LA VIDÉO A RÉUSSI
   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(userEmail);
