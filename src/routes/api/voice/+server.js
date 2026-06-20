@@ -11,7 +11,7 @@ export async function POST({ request, platform, cookies }) {
 
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
 
-    const { text, voice } = await request.json();
+   const { text, type, voice } = await request.json();
     if (!text) return json({ error: 'Texte manquant' }, { status: 400 });
 
     // ✅ Voix de référence (femme française calme)
@@ -21,8 +21,8 @@ export async function POST({ request, platform, cookies }) {
       'thomas': 'https://replicate.delivery/pbxt/JqzxMWScZ4O44XwIwWveDoeAE2Ga7gYdnXKb8l18Fv7D3QEx/female.wav'
     };
     
-    const speakerWav = voiceMap[voice] || voiceMap['ana'];
-
+   // Utilise soit 'voice' (clonage), soit 'type' (femme/homme)
+    const speakerWav = voiceMap[voice || type] || voiceMap['ana'];
     const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
       headers: {
