@@ -19,7 +19,7 @@ if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 
         'Prefer': 'wait'
       },
       body: JSON.stringify({
-      version: "a519cc0cfebaaeade068b23899165a11ec76aaa1d2b313d40d214f204ec957a3"
+      version: "a519cc0cfebaaeade068b23899165a11ec76aaa1d2b313d40d214f204ec957a3",
         input: {
           source_image: image,
           driven_audio: audio
