@@ -86,7 +86,7 @@
         return;
       }
       
-      imgPreviewUrl = result.url;
+      imgPreviewUrl = result.image;  // ← "url" devient "image"
       imgGenerationId = result.id;
     } catch (e) {
       imgError = e.message;
@@ -313,7 +313,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          prompt: chatPrompt,
+          message: chatPrompt,
           role: chatRole,
           tone: chatTone,
           format: chatFormat,
