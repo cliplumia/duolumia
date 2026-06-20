@@ -278,10 +278,9 @@
     
     try {
       const res = await fetch('/api/voice', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          text: voiceText,
+      method: 'POST',
+      body: JSON.stringify({ text: monTexte, voice: maVoix })
+        text: voiceText,
           lang: voiceLang,
           type: voiceType,
           style: voiceStyle,
@@ -515,7 +514,6 @@
               <select bind:value={voiceType}>
                 <option value="femme">Femme</option>
                 <option value="homme">Homme</option>
-                <option value="enfant">Enfant</option>
                 <option value="mature">Voix mature</option>
               </select>
             </div>
