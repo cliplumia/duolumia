@@ -49,15 +49,21 @@ export async function POST({ request, platform, cookies }) {
       return json({ error: 'Pas d URL retournee', details: output }, { status: 500 });
     }
 
+    // === AJOUT : Créer une entrée dans generations ===
+    const generationId = crypto.randomUUID();
+    await BD.prepare('INSERT INTO generations (id, user_id, type, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?)')
+      .bind(generationId, userId, 'image', imageUrl, 'en_attente', new Date().toISOString())
+      .run();
+
     if (!isAdmin) {
       await BD.prepare('UPDATE utilisateurs SET images_restantes = images_restantes - 1 WHERE id =?').bind(userId).run();
     }
 
-    return json({ image: imageUrl });
+    // === MODIFICATION : Renvoyer l'ID en plus de l'image ===
+    return json({ image: imageUrl, id: generationId });
     
   } catch (error) {
     console.error('Erreur:', error);
     return json({ error: error.message }, { status: 500 });
   }
 }
-
