@@ -14,11 +14,11 @@ export async function POST({ request, platform, cookies }) {
     const { text, voice } = await request.json();
     if (!text) return json({ error: 'Texte manquant' }, { status: 400 });
 
-    // ⚠️ REMPLACE CES URLS par tes vrais fichiers audio de référence (2-10 secondes de voix)
+    // ✅ Voix de référence (femme française calme)
     const voiceMap = {
-      'ana': 'https://example.com/ana-reference.wav',
-      'florence': 'https://example.com/florence-reference.wav',
-      'thomas': 'https://example.com/thomas-reference.wav'
+      'ana': 'https://replicate.delivery/pbxt/JqzxMWScZ4O44XwIwWveDoeAE2Ga7gYdnXKb8l18Fv7D3QEx/female.wav',
+      'florence': 'https://replicate.delivery/pbxt/JqzxMWScZ4O44XwIwWveDoeAE2Ga7gYdnXKb8l18Fv7D3QEx/female.wav',
+      'thomas': 'https://replicate.delivery/pbxt/JqzxMWScZ4O44XwIwWveDoeAE2Ga7gYdnXKb8l18Fv7D3QEx/female.wav'
     };
     
     const speakerWav = voiceMap[voice] || voiceMap['ana'];
@@ -31,7 +31,7 @@ export async function POST({ request, platform, cookies }) {
         'Prefer': 'wait'
       },
       body: JSON.stringify({
-        version: "lucataco/xtts-v2:VERSION_A_REMPLACER", // Récupère le hash sur la page Replicate du modèle
+        version: "684bc3855b37866c0c65add2ff39c78f3dea3f4ff103a436465326e0f438d55e",
         input: {
           text: text,
           speaker_wav: speakerWav,
