@@ -644,7 +644,7 @@
         <video src={lipPreviewUrl} controls loop playsinline></video>
       </div>
       <a href={lipPreviewUrl} download="cliplumia-lipsync.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO LIPSYNC</a>
-    {:else if voiceAudioUrl}
+       {:else if voiceAudioUrl}
       <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
     {/if}
   </div>
