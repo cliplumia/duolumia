@@ -271,27 +271,24 @@
   }
 
   // === FONCTION GÉNÉRATION VOIX ===
-  async function generateVoice() {
+   async function generateVoice() {
     if (!voiceText.trim()) return;
     voiceLoading = true;
     voiceAudioUrl = null;
     
     try {
       const res = await fetch('/api/voice', {
-      method: 'POST',
-      body: JSON.stringify({ text: monTexte, voice: maVoix })
-        text: voiceText,
-          lang: voiceLang,
-          type: voiceType,
-          style: voiceStyle,
-          emotion: voiceEmotion,
-          speed: voiceSpeed
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          text: voiceText,
+          voice: voiceType   // ← "femme" ou "homme" (plus besoin des autres champs)
         })
       });
       const result = await res.json();
       
-      if (res.ok) {
-        voiceAudioUrl = result.audioUrl;
+      if (result.success) {           // ← vérifie success, pas res.ok
+        voiceAudioUrl = result.url;   // ← c'est .url, pas .audioUrl
       } else {
         alert('Erreur: ' + (result.error || 'Impossible de générer'));
       }
