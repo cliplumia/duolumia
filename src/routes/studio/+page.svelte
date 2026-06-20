@@ -623,21 +623,27 @@
       </div>
 
       <!-- ZONE DE PRÉVISUALISATION -->
-      {#if imgPreviewUrl || vidPreviewUrl || lipPreviewUrl || voiceAudioUrl}
+           {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || lipPreviewUrl || voiceAudioUrl}
         <div class="preview-card glass">
-          <div class="preview-label">APERÇU DU RÉSULTAT</div>
+          <div class="preview-label">VOTRE CRÉATION</div>
           
           {#if imgPreviewUrl}
             <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" /></div>
+            <div class="watermark">CLIPLUMIA · PREVIEW</div>
+          {:else if imgValidatedUrl}
+            <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
+            <a href={imgValidatedUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
           {:else if vidPreviewUrl}
             <div class="preview-media"><video src={vidPreviewUrl} controls loop muted playsinline></video></div>
+            <div class="watermark">CLIPLUMIA · PREVIEW</div>
+          {:else if vidValidatedUrl}
+            <div class="preview-media validated"><video src={vidValidatedUrl} controls loop playsinline></video></div>
+            <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
           {:else if lipPreviewUrl}
             <div class="preview-media"><video src={lipPreviewUrl} controls loop playsinline></video></div>
           {:else if voiceAudioUrl}
             <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
           {/if}
-
-          <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
       {/if}
 
@@ -1268,4 +1274,31 @@
       font-size: 1rem;
     }
   }
+
+  .download-btn {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 14px;
+    font-weight: 900;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    border: 2px solid #FCF6BA;
+    border-bottom: 3px solid #8B6508;
+    color: #1a0b2e;
+    box-shadow: 0 0 20px rgba(191, 149, 63, 0.6), inset 0 1px 0 rgba(255,255,255,0.6);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+    transition: all 0.3s ease;
+  }
+  
+  .download-btn:hover { 
+    filter: brightness(1.1); 
+    transform: translateY(-3px); 
+    box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+
+
 </style>
