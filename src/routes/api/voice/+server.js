@@ -3,7 +3,7 @@ import { json } from '@sveltejs/kit';
 export async function POST({ request, platform, cookies }) {
   try {
     const userId = cookies.get('user_id') || cookies.get('userid');
-    if (!userId) return json({ error: 'Non connecte' }, { status: 401 });
+    if (!userId) return json({ error: 'Non connecté' }, { status: 401 });
 
     const BD = platform.env.BD;
     const user = await BD.prepare('SELECT * FROM utilisateurs WHERE id = ?').bind(userId).first();
@@ -11,19 +11,21 @@ export async function POST({ request, platform, cookies }) {
 
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
 
-   const { text, type, voice } = await request.json();
+    const { text, voice } = await request.json();
     if (!text) return json({ error: 'Texte manquant' }, { status: 400 });
 
-    // ✅ Voix de référence (femme française calme)
-    const voiceMap = {
-      'ana': 'https://replicate.delivery/pbxt/JqzxMWScZ4O44XwIwWveDoeAE2Ga7gYdnXKb8l18Fv7D3QEx/female.wav',
-      'florence': 'https://replicate.delivery/pbxt/JqzxMWScZ4O44XwIwWveDoeAE2Ga7gYdnXKb8l18Fv7D3QEx/female.wav',
-      'thomas': 'https://replicate.delivery/pbxt/JqzxMWScZ4O44XwIwWveDoeAE2Ga7gYdnXKb8l18Fv7D3QEx/female.wav'
+    // 🗣️ VOIX KOKORO (pas de fichier audio, juste un nom !)
+    const voixMap = {
+      'femme': 'af_bella',      // voix féminine
+      'homme': 'am_adam',       // voix masculine
+      'ana': 'af_bella',
+      'florence': 'af_nicole',  // autre voix féminine
+      'thomas': 'am_michael'    // autre voix masculine
     };
-    
-   // Utilise soit 'voice' (clonage), soit 'type' (femme/homme)
-    const speakerWav = voiceMap[voice || type] || voiceMap['ana'];
-    const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
+
+    const voiceId = voixMap[voice] || 'af_bella';
+
+    const rep = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
       headers: {
         'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}`,
@@ -31,24 +33,25 @@ export async function POST({ request, platform, cookies }) {
         'Prefer': 'wait'
       },
       body: JSON.stringify({
-        version: "684bc3855b37866c0c65add2ff39c78f3dea3f4ff103a436465326e0f438d55e",
+        version: "f559560eb822dc509045f3921a1921234918b91739db4bf3daab2169b71c7a13",
         input: {
           text: text,
-          speaker_wav: speakerWav,
-          language: "fr"
+          voice: voiceId,
+          speed: 1
         }
       })
     });
 
-    if (!replicateRes.ok) {
-      const err = await replicateRes.json();
-      throw new Error(err.detail || 'Erreur Replicate');
+    if (!rep.ok) {
+      const err = await rep.json();
+      console.error('Replicate error:', err);
+      throw new Error(err.detail || JSON.stringify(err));
     }
 
-    const data = await replicateRes.json();
-    
+    const data = await rep.json();
+
     if (data.status !== 'succeeded' || !data.output) {
-      throw new Error('Generation echoue');
+      throw new Error('Génération échouée');
     }
 
     const audioUrl = Array.isArray(data.output) ? data.output[0] : data.output;
@@ -72,3 +75,4 @@ export async function POST({ request, platform, cookies }) {
     return json({ error: err.message }, { status: 500 });
   }
 }
+
