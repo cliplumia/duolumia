@@ -622,33 +622,33 @@
         {/if}
       </div>
 
-      <!-- ZONE DE PRÉVISUALISATION -->
-           {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || lipPreviewUrl || voiceAudioUrl}
-        <div class="preview-card glass">
-          <div class="preview-label">VOTRE CRÉATION</div>
-          
-          {#if imgPreviewUrl}
-            <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" /></div>
-            <div class="watermark">CLIPLUMIA · PREVIEW</div>
-          {:else if imgValidatedUrl}
-            <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
-            <a href={imgValidatedUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
-          {:else if vidPreviewUrl}
-            <div class="preview-media"><video src={vidPreviewUrl} controls loop muted playsinline></video></div>
-            <div class="watermark">CLIPLUMIA · PREVIEW</div>
-          {:else if vidValidatedUrl}
-            <div class="preview-media validated"><video src={vidValidatedUrl} controls loop playsinline></video></div>
-            <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
-          {:else if lipPreviewUrl}
-          <div class="preview-media">
-          <video src={lipPreviewUrl} controls loop playsinline></video>
-          </div>
-          {/if}
-          {:else if voiceAudioUrl}
-            <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
-          {/if}
-        </div>
-      {/if}
+     <!-- ZONE DE PRÉVISUALISATION -->
+{#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || lipPreviewUrl || voiceAudioUrl}
+  <div class="preview-card glass">
+    <div class="preview-label">VOTRE CRÉATION</div>
+    
+    {#if imgPreviewUrl}
+      <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" /></div>
+      <div class="watermark">CLIPLUMIA · PREVIEW</div>
+    {:else if imgValidatedUrl}
+      <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
+      <a href={imgValidatedUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
+    {:else if vidPreviewUrl}
+      <div class="preview-media"><video src={vidPreviewUrl} controls loop muted playsinline></video></div>
+      <div class="watermark">CLIPLUMIA · PREVIEW</div>
+    {:else if vidValidatedUrl}
+      <div class="preview-media validated"><video src={vidValidatedUrl} controls loop playsinline></video></div>
+      <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
+    {:else if lipPreviewUrl}
+      <div class="preview-media validated">
+        <video src={lipPreviewUrl} controls loop playsinline></video>
+      </div>
+      <a href={lipPreviewUrl} download="cliplumia-lipsync.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO LIPSYNC</a>
+    {:else if voiceAudioUrl}
+      <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
+    {/if}
+  </div>
+{/if}
 
       <!-- BOUTONS J'AIME / REJETER (SAUF POUR CHAT) -->
       {#if activeTab !== 'chat'}
