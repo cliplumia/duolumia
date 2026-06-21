@@ -298,36 +298,35 @@
     voiceLoading = false;
   }
 
-  // === FONCTION GÉNÉRATION CHAT ===
-  async function generateChat() {
-    if (!chatPrompt.trim()) return;
-    chatLoading = true;
-    chatResponse = '';
+ // === FONCTION GÉNÉRATION VOIX ===
+async function generateVoice() {
+  if (!voiceText.trim()) return;
+  voiceLoading = true;
+  voiceAudioUrl = null;
+  
+  try {
+    const res = await fetch('/api/voice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        text: voiceText,
+        voice: voiceType,
+        lang: voiceLang    // ← AJOUTÉ pour envoyer la langue (FR ou EN)
+      })
+    });
+    const result = await res.json();
     
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          message: chatPrompt,
-          role: chatRole,
-          tone: chatTone,
-          format: chatFormat,
-          length: chatLength
-        })
-      });
-      const result = await res.json();
-      
-      if (res.ok) {
-        chatResponse = result.response;
-      } else {
-        chatResponse = 'Erreur: ' + (result.error || 'Impossible de générer');
-      }
-    } catch (e) {
-      chatResponse = 'Erreur réseau: ' + e.message;
+    if (result.success) {
+      voiceAudioUrl = result.url;
+    } else {
+      alert('Erreur: ' + (result.error || 'Impossible de générer'));
     }
-    chatLoading = false;
+  } catch (e) {
+    alert('Erreur réseau: ' + e.message);
   }
+  voiceLoading = false;
+}
+
 </script>
 
 <svelte:head>
