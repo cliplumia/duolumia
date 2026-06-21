@@ -247,8 +247,7 @@
           type: lipType
         })
       });
-      
-      const data = await res.json();
+       const data = await res.json();
       
       if (res.ok && data.success) {
         lipPreviewUrl = data.url;
@@ -262,44 +261,8 @@
     lipLoading = false;
   }
   
-  // === FONCTION RESET LIPSYNC ===
-  function resetLipsync() {
-    imageBase64 = '';
-    audioUrl = '';
-    lipPreviewUrl = null;
-    lipError = null;
-  }
-
   // === FONCTION GÉNÉRATION VOIX ===
-   async function generateVoice() {
-    if (!voiceText.trim()) return;
-    voiceLoading = true;
-    voiceAudioUrl = null;
-    
-    try {
-      const res = await fetch('/api/voice', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          text: voiceText,
-          voice: voiceType   // ← "femme" ou "homme" (plus besoin des autres champs)
-        })
-      });
-      const result = await res.json();
-      
-      if (result.success) {           // ← vérifie success, pas res.ok
-        voiceAudioUrl = result.url;   // ← c'est .url, pas .audioUrl
-      } else {
-        alert('Erreur: ' + (result.error || 'Impossible de générer'));
-      }
-    } catch (e) {
-      alert('Erreur réseau: ' + e.message);
-    }
-    voiceLoading = false;
-  }
-
- // === FONCTION GÉNÉRATION VOIX ===
-async function generateVoice() {
+  async function generateVoice() {
   if (!voiceText.trim()) return;
   voiceLoading = true;
   voiceAudioUrl = null;
