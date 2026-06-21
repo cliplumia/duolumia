@@ -497,26 +497,24 @@ function resetLipsync() {
       </select>
     </div>
   </div>
+          
+  <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || !imageBase64 || !audioUrl}>
+    {lipLoading ? '⏳ Synchronisation...' : '👄 CRÉER LE LIPSYNC'}
+  </button>
 {/if}
-          
-          <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || !imageBase64 || !audioUrl}>
-            {lipLoading ? '⏳ Synchronisation...' : '👄 CRÉER LE LIPSYNC'}
-          </button>
-        {/if}
 
-        <!-- SECTION VOIX -->
-        {#if activeTab === 'voice'}
-          <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
-          
-          <div class="options-grid">
-            <div class="option-group">
-              <label>Langue</label>
-              <select bind:value={voiceLang}>
-                <option value="FR">Français</option>
-                <option value="EN">Anglais</option>
-              </select>
-            </div>
-            
+<!-- SECTION VOIX -->
+{#if activeTab === 'voice'}
+  <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
+  
+  <div class="options-grid">
+    <div class="option-group">
+      <label>Langue</label>
+      <select bind:value={voiceLang}>
+        <option value="FR">Français</option>
+        <option value="EN">Anglais</option>
+      </select>
+    </div>
             <div class="option-group">
               <label>Type de Voix</label>
               <select bind:value={voiceType}>
