@@ -228,6 +228,18 @@ function handleImageUpload(event) {
   }
 }
 
+// === UPLOAD AUDIO LIPSYNC ===
+function handleAudioUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      audioUrl = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
 // === FONCTION GÉNÉRATION LIPSYNC ===
 async function generateLipsync() {
   if (!imageBase64 || !audioUrl) return;
@@ -431,49 +443,61 @@ function resetLipsync() {
           </button>
         {/if}
 
-        <!-- SECTION LIPSYNC -->
-        {#if activeTab === 'lipsync'}
-          <div class="input-group">
-            <label>1. Photo du visage</label>
-            <input type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
-          </div>
-          
-          <div class="input-group">
-            <label>2. Source Audio</label>
-            <select bind:value={lipAudioSource}>
-              <option value="upload">Upload fichier audio</option>
-              <option value="tts">Texte à vocaliser</option>
-              <option value="url">URL audio externe</option>
-            </select>
-          </div>
-          
-          <div class="input-group">
-            <label>3. URL Audio ou Texte</label>
-            <input type="text" bind:value={audioUrl} placeholder="https://..." class="text-input" />
-          </div>
-          
-          <div class="options-grid">
-            <div class="option-group">
-              <label>Expression Faciale</label>
-              <select bind:value={lipExpression}>
-                <option value="neutre">Neutre (naturelle)</option>
-                <option value="souriant">Souriant (joyeux)</option>
-                <option value="serieux">Sérieux (professionnel)</option>
-                <option value="intense">Émotion intense</option>
-                <option value="precise">Synchronisation précise</option>
-              </select>
-            </div>
-            
-            <div class="option-group">
-              <label>Type de Performance</label>
-              <select bind:value={lipType}>
-                <option value="parole">Parole seule (discours)</option>
-                <option value="chant">Chant (musique)</option>
-                <option value="performance">Performance artistique</option>
-                <option value="presentation">Présentation pro</option>
-              </select>
-            </div>
-          </div>
+       <!-- SECTION LIPSYNC -->
+  {#if activeTab === 'lipsync'}
+  <div class="input-group">
+    <label>1. Photo du visage</label>
+    <input type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
+  </div>
+  
+  <div class="input-group">
+    <label>2. Source Audio</label>
+    <select bind:value={lipAudioSource}>
+      <option value="upload">Upload fichier audio</option>
+      <option value="tts">Texte à vocaliser</option>
+      <option value="url">URL audio externe</option>
+    </select>
+  </div>
+  
+  <!-- BOUTON UPLOAD AUDIO -->
+  {#if lipAudioSource === 'upload'}
+    <div class="input-group">
+      <label>3. Fichier Audio</label>
+      <input type="file" accept="audio/*" on:change={handleAudioUpload} class="file-input" />
+    </div>
+  {/if}
+  
+  <!-- CHAMP TEXTE POUR URL OU TTS -->
+  {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
+    <div class="input-group">
+      <label>3. URL Audio ou Texte</label>
+      <input type="text" bind:value={audioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez votre texte ici...'} class="text-input" />
+    </div>
+  {/if}
+  
+  <div class="options-grid">
+    <div class="option-group">
+      <label>Expression Faciale</label>
+      <select bind:value={lipExpression}>
+        <option value="neutre">Neutre (naturelle)</option>
+        <option value="souriant">Souriant (joyeux)</option>
+        <option value="serieux">Sérieux (professionnel)</option>
+        <option value="intense">Émotion intense</option>
+        <option value="precise">Synchronisation précise</option>
+      </select>
+    </div>
+    
+    <div class="option-group">
+      <label>Type de Performance</label>
+      <select bind:value={lipType}>
+        <option value="parole">Parole seule (discours)</option>
+        <option value="chant">Chant (musique)</option>
+        <option value="performance">Performance artistique</option>
+        <option value="presentation">Présentation pro</option>
+      </select>
+    </div>
+  </div>
+{/if}
           
           <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || !imageBase64 || !audioUrl}>
             {lipLoading ? '⏳ Synchronisation...' : '👄 CRÉER LE LIPSYNC'}
