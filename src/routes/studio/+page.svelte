@@ -522,6 +522,22 @@ function resetLipsync() {
   </button>
 {/if}
 
+<!-- ZONE D'AFFICHAGE DE LA VIDÉO LIPSYNC -->
+{#if lipPreviewUrl}
+  <div style="margin-top: 30px; text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
+    <h3 style="color: #d4af37; margin-bottom: 15px;">✨ Votre Lipsync est prêt !</h3>
+    <video controls autoplay loop style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid #d4af37;">
+      <source src={lipPreviewUrl} type="video/mp4">
+      Votre navigateur ne supporte pas la vidéo.
+    </video>
+    <br>
+    <a href={lipPreviewUrl} download="lipsync-cliplumia.mp4" class="chrome-btn" style="margin-top: 15px; display: inline-block; text-decoration: none;">
+      ️ Télécharger la vidéo
+    </a>
+  </div>
+{/if}
+
+
 <!-- SECTION VOIX -->
 {#if activeTab === 'voice'}
   <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
