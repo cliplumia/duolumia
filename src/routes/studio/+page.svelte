@@ -228,45 +228,55 @@
     }
   }
   
-  // === FONCTION GÉNÉRATION LIPSYNC ===
-  async function generateLipsync() {
-    if (!imageBase64 || !audioUrl) return;
+ // === FONCTION GÉNÉRATION LIPSYNC ===
+async function generateLipsync() {
+  if (!imageBase64 || !audioUrl) return;
+  
+  lipLoading = true;
+  lipError = null;
+  lipPreviewUrl = null;
+  
+  try {
+    // ÉTAPE 1 : Upload de l'image sur R2 pour obtenir une URL publique
+    const uploadRes = await fetch('/api/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ imageBase64: imageBase64 })
+    });
     
-    lipLoading = true;
-    lipError = null;
-    lipPreviewUrl = null;
+    const uploadData = await uploadRes.json();
     
-    try {
-      const res = await fetch('/api/lipsync', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          image: imageBase64, 
-          audio: audioUrl,
-          expression: lipExpression,
-          type: lipType
-        })
-      });
-       const data = await res.json();
-      
-      if (res.ok && data.success) {
-        lipPreviewUrl = data.url;
-      } else {
-        lipError = data.error || 'Erreur de génération';
-      }
-    } catch (e) {
-      lipError = e.message;
+    if (!uploadRes.ok || !uploadData.success) {
+      throw new Error(uploadData.error || 'Erreur upload image');
     }
     
-    lipLoading = false;
-  }
+    const publicImageUrl = uploadData.url;
 
-  function resetLipsync() {
-    imageBase64 = null;
-    audioUrl = '';
-    lipPreviewUrl = null;
-    lipError = null;
+    // ÉTAPE 2 : Génération Lipsync avec l'URL publique
+    const res = await fetch('/api/lipsync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        image: publicImageUrl, // ← URL publique au lieu du base64
+        audio: audioUrl,
+        expression: lipExpression,
+        type: lipType
+      })
+    });
+    
+    const data = await res.json();
+    
+    if (res.ok && data.success) {
+      lipPreviewUrl = data.url;
+    } else {
+      lipError = data.error || 'Erreur de génération';
+    }
+  } catch (e) {
+    lipError = e.message;
   }
+  
+  lipLoading = false;
+}
   
   // === FONCTION GÉNÉRATION VOIX ===
   async function generateVoice() {
