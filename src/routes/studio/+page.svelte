@@ -260,6 +260,13 @@
     
     lipLoading = false;
   }
+
+  function resetLipsync() {
+    imageBase64 = null;
+    audioUrl = '';
+    lipPreviewUrl = null;
+    lipError = null;
+  }
   
   // === FONCTION GÉNÉRATION VOIX ===
   async function generateVoice() {
