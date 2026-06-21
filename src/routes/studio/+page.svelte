@@ -249,28 +249,47 @@ async function generateLipsync() {
   lipPreviewUrl = null;
   
   try {
-    // ÉTAPE 1 : Upload de l'image sur R2 pour obtenir une URL publique
-    const uploadRes = await fetch('/api/upload', {
+    // ÉTAPE 1 : Upload de l'image sur R2
+    const imageUploadRes = await fetch('/api/upload', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ imageBase64: imageBase64 })
+      body: JSON.stringify({ fileBase64: imageBase64, fileType: 'image' })
     });
     
-    const uploadData = await uploadRes.json();
+    const imageUploadData = await imageUploadRes.json();
     
-    if (!uploadRes.ok || !uploadData.success) {
-      throw new Error(uploadData.error || 'Erreur upload image');
+    if (!imageUploadRes.ok || !imageUploadData.success) {
+      throw new Error(imageUploadData.error || 'Erreur upload image');
     }
     
-    const publicImageUrl = uploadData.url;
+    const publicImageUrl = imageUploadData.url;
 
-    // ÉTAPE 2 : Génération Lipsync avec l'URL publique
+    // ÉTAPE 2 : Upload de l'audio sur R2 (si c'est du base64)
+    let publicAudioUrl = audioUrl;
+    
+    if (audioUrl.startsWith('data:audio')) {
+      const audioUploadRes = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileBase64: audioUrl, fileType: 'audio' })
+      });
+      
+      const audioUploadData = await audioUploadRes.json();
+      
+      if (!audioUploadRes.ok || !audioUploadData.success) {
+        throw new Error(audioUploadData.error || 'Erreur upload audio');
+      }
+      
+      publicAudioUrl = audioUploadData.url;
+    }
+
+    // ÉTAPE 3 : Génération Lipsync avec les URLs publiques
     const res = await fetch('/api/lipsync', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
         image: publicImageUrl,
-        audio: audioUrl,
+        audio: publicAudioUrl,
         expression: lipExpression,
         type: lipType
       })
