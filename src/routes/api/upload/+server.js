@@ -34,8 +34,8 @@ export async function POST({ request, platform }) {
     });
 
     // URL publique R2
-    const publicUrl = `https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/${filename}`;
-
+    const publicUrl = `https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/${filename}`;
+    
     return json({ success: true, url: publicUrl });
   } catch (err) {
     console.error('Upload error:', err);
