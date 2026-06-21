@@ -11,19 +11,38 @@ export async function POST({ request, platform, cookies }) {
 
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
 
-    const { text, voice } = await request.json();
+    const { text, voice, lang } = await request.json();
     if (!text) return json({ error: 'Texte manquant' }, { status: 400 });
 
-    // 🗣️ VOIX KOKORO (pas de fichier audio, juste un nom !)
-    const voixMap = {
-      'femme': 'af_bella',      // voix féminine
-      'homme': 'am_adam',       // voix masculine
-      'ana': 'af_bella',
-      'florence': 'af_nicole',  // autre voix féminine
-      'thomas': 'am_michael'    // autre voix masculine
-    };
-
-    const voiceId = voixMap[voice] || 'af_bella';
+    // 🌍 Choix de la voix selon la langue
+    const isFrench = lang === 'FR' || lang === 'fr' || lang === 'français';
+    
+    let voiceId;
+    if (isFrench) {
+      // 🇫🇷 VOIX FRANÇAISES
+      const voixMapFR = {
+        'femme': 'ff_siwis',
+        'homme': 'fm_alex',
+        'enfant': 'ff_siwis',
+        'mature': 'fm_alex',
+        'ana': 'ff_siwis',
+        'florence': 'ff_siwis',
+        'thomas': 'fm_alex'
+      };
+      voiceId = voixMapFR[voice] || 'ff_siwis';
+    } else {
+      // 🇬🇧 VOIX ANGLAISES
+      const voixMapEN = {
+        'femme': 'af_bella',
+        'homme': 'am_adam',
+        'enfant': 'af_bella',
+        'mature': 'am_adam',
+        'ana': 'af_bella',
+        'florence': 'af_nicole',
+        'thomas': 'am_michael'
+      };
+      voiceId = voixMapEN[voice] || 'af_bella';
+    }
 
     const rep = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
@@ -75,4 +94,3 @@ export async function POST({ request, platform, cookies }) {
     return json({ error: err.message }, { status: 500 });
   }
 }
-
