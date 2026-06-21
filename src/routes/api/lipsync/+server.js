@@ -53,7 +53,8 @@ if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 
   await platform.env.BD.prepare("UPDATE utilisateurs SET voices_restantes = voices_restantes - 1 WHERE id =?")
 .bind(userId).run();
  }
-return json({ success: true, url: videoUrl });
+    console.log('VIDÉO GÉNÉRÉE:', videoUrl);
+    return json({ success: true, url: videoUrl });
 
   } catch (err) {
     console.error('Lipsync error:', err);
