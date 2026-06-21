@@ -218,17 +218,17 @@
     vidReplicateId = null;
   }
   
-  // === UPLOAD IMAGE LIPSYNC ===
-  function handleImageUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => imageBase64 = e.target.result;
-      reader.readAsDataURL(file);
-    }
+// === UPLOAD IMAGE LIPSYNC ===
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => imageBase64 = e.target.result;
+    reader.readAsDataURL(file);
   }
-  
- // === FONCTION GÉNÉRATION LIPSYNC ===
+}
+
+// === FONCTION GÉNÉRATION LIPSYNC ===
 async function generateLipsync() {
   if (!imageBase64 || !audioUrl) return;
   
@@ -257,7 +257,7 @@ async function generateLipsync() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
-        image: publicImageUrl, // ← URL publique au lieu du base64
+        image: publicImageUrl,
         audio: audioUrl,
         expression: lipExpression,
         type: lipType
@@ -277,7 +277,15 @@ async function generateLipsync() {
   
   lipLoading = false;
 }
-  
+
+// === FONCTION RESET LIPSYNC ===
+function resetLipsync() {
+  imageBase64 = null;
+  audioUrl = '';
+  lipPreviewUrl = null;
+  lipError = null;
+}
+
   // === FONCTION GÉNÉRATION VOIX ===
   async function generateVoice() {
   if (!voiceText.trim()) return;
