@@ -662,6 +662,7 @@ function resetLipsync() {
       </div>
 
      <!-- ZONE DE PRÉVISUALISATION -->
+{#if activeTab !== 'chat'}
 {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || lipPreviewUrl || voiceAudioUrl}
   <div class="preview-card glass">
     <div class="preview-label">VOTRE CRÉATION</div>
@@ -683,6 +684,7 @@ function resetLipsync() {
     {/if}
     </div>
    {/if}
+ {/if}
 
       <!-- BOUTONS J'AIME / REJETER (SAUF POUR CHAT) -->
       {#if activeTab !== 'chat'}
