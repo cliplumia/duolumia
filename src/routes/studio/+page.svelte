@@ -738,6 +738,7 @@ function resetLipsync() {
       </div>
     </main>
   </div>
+</div>
 
 <style>
   :global(*) { box-sizing: border-box; }
