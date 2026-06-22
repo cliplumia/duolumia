@@ -696,7 +696,7 @@ function resetLipsync() {
           </button>
         </div>
       {/if}
-    </div>
+    
       <!-- GALERIE D'EXEMPLES (En bas, page déroulante) -->
       <div class="examples-section glass">
         <h2 class="chrome-text section-title">Exemples de Réalisations</h2>
@@ -706,8 +706,7 @@ function resetLipsync() {
           <div class="example-item">Exemple 3</div>
           <div class="example-item">Exemple 4</div>
         </div>
-      </div>
-
+     
       <!-- FAQ (En bas, page déroulante) -->
       <div class="faq-section glass">
         <h2 class="chrome-text section-title">Questions Fréquentes</h2>
@@ -739,7 +738,6 @@ function resetLipsync() {
       </div>
     </main>
   </div>
-</div>
 
 <style>
   :global(*) { box-sizing: border-box; }
