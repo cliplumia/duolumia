@@ -19,7 +19,7 @@ export async function POST({ request, platform, cookies }) {
         // Ligne 'Prefer': 'wait' SUPPRIMÉE <- c'est ça qui cassait
       },
       body: JSON.stringify({
-        version: "a519cc0cfebaaeaede068b23899165a11ec76aaa1d2b313d40d214f20f4ec957a3",
+        version: "a519cc0cfebaaeade068b23899165a11ec76aaa1d2b313d40d214f204ec957a3",
         input: {
           source_image: image,
           driven_audio: audio,
