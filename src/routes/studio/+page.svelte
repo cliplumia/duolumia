@@ -599,7 +599,6 @@ function resetLipsync() {
           </button>
         {/if}
 
-        <h1>DEBUG: {activeTab}</h1> 
         {#if activeTab === 'chat'}
           <textarea bind:value={chatPrompt} placeholder="Pose ta question ou donne tes instructions..."></textarea>
           
@@ -649,7 +648,7 @@ function resetLipsync() {
             </div>
           </div>
           
-          <button class="chrome-btn create-btn" on:click={generateChat} disabled={chatLoading}>
+          <button type="button" class="chrome-btn create-btn" on:click={generateChat} disabled={chatLoading}>
             {chatLoading ? '⏳ Réflexion...' : '💬 ENVOYER'}
           </button>
           
@@ -697,7 +696,7 @@ function resetLipsync() {
           </button>
         </div>
       {/if}
-
+    </div>
       <!-- GALERIE D'EXEMPLES (En bas, page déroulante) -->
       <div class="examples-section glass">
         <h2 class="chrome-text section-title">Exemples de Réalisations</h2>
