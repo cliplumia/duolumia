@@ -42,7 +42,7 @@ export async function POST({ request, platform, cookies }) {
 
     // DEBUT DE LA SEULE MODIF : on attend que Replicate finisse
     while (data.status === "starting" || data.status === "processing") {
-      await new Promise(r => setTimeout(r, 2000)); // attend 2s
+      await new Promise(r => setTimeout(r, 5000)); // attend 5s
       const pollRes = await fetch(`https://api.replicate.com/v1/predictions/${data.id}`, {
         headers: { 'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}` }
       });
