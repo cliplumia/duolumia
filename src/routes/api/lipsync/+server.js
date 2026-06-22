@@ -1,3 +1,8 @@
+export const config = {
+  runtime: 'edge',
+  maxDuration: 300
+};
+
 import { json } from '@sveltejs/kit';
 
 export async function POST({ request, platform, cookies }) {
