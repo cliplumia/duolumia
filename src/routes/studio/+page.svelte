@@ -599,7 +599,7 @@ function resetLipsync() {
           </button>
         {/if}
 
-        <!-- SECTION CHAT (SANS J'AIME/REJETER) -->
+        <h1>DEBUG: {activeTab}</h1> 
         {#if activeTab === 'chat'}
           <textarea bind:value={chatPrompt} placeholder="Pose ta question ou donne tes instructions..."></textarea>
           
@@ -662,9 +662,9 @@ function resetLipsync() {
       </div>
 
      <!-- ZONE DE PRÉVISUALISATION -->
-{#if activeTab !== 'chat'}
-{#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || lipPreviewUrl || voiceAudioUrl}
-  <div class="preview-card glass">
+   {#if activeTab !== 'chat'}
+   {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || lipPreviewUrl || voiceAudioUrl}
+   <div class="preview-card glass">
     <div class="preview-label">VOTRE CRÉATION</div>
     
     {#if imgPreviewUrl}
