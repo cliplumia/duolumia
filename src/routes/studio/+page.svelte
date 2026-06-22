@@ -361,19 +361,19 @@ function resetLipsync() {
     <aside class="sidebar glass">
       <div class="logo chrome-text">ClipLumia</div>
       
-      <button class="nav-item" class:active={activeTab === 'images'} on:click={() => activeTab = 'images'}>
+      <button type="button" class="nav-item" class:active={activeTab === 'images'} on:click={() => activeTab = 'images'}>
         🖼️ Images IA
       </button>
-      <button class="nav-item" class:active={activeTab === 'video'} on:click={() => activeTab = 'video'}>
+      <button type="button" class="nav-item" class:active={activeTab === 'video'} on:click={() => activeTab = 'video'}>
         🎬 Vidéos IA
       </button>
-      <button class="nav-item" class:active={activeTab === 'lipsync'} on:click={() => activeTab = 'lipsync'}>
+      <button type="button" class="nav-item" class:active={activeTab === 'lipsync'} on:click={() => activeTab = 'lipsync'}>
         👄 Lipsync
       </button>
-      <button class="nav-item" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>
+      <button type="button" class="nav-item" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>
         🎤 Voix IA
       </button>
-      <button class="nav-item" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
+      <button type="button" class="nav-item" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
         💬 Chat IA
       </button>
     </aside>
