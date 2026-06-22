@@ -678,16 +678,11 @@ function resetLipsync() {
     {:else if vidValidatedUrl}
       <div class="preview-media validated"><video src={vidValidatedUrl} controls loop playsinline></video></div>
       <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
-    {:else if lipPreviewUrl}
-      <div class="preview-media validated">
-        <video src={lipPreviewUrl} controls loop playsinline></video>
-      </div>
-      <a href={lipPreviewUrl} download="cliplumia-lipsync.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO LIPSYNC</a>
-       {:else if voiceAudioUrl}
+     {:else if voiceAudioUrl}
       <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
     {/if}
-  </div>
-{/if}
+    </div>
+   {/if}
 
       <!-- BOUTONS J'AIME / REJETER (SAUF POUR CHAT) -->
       {#if activeTab !== 'chat'}
