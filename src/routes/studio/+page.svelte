@@ -470,8 +470,8 @@ async function generateChat() {
           
           <div class="options-grid">
             <div class="option-group">
-              <label>Format</label>
-              <select bind:value={imgFormat}>
+             <label for="img-format">Format</label>
+              <select id="img-format" bind:value={imgFormat}>
                 <option value="1:1">1:1 (Carré)</option>
                 <option value="16:9">16:9 (Paysage)</option>
                 <option value="9:16">9:16 (Portrait)</option>
@@ -480,9 +480,9 @@ async function generateChat() {
               </select>
             </div>
             
-            <div class="option-group">
-              <label>Style</label>
-              <select bind:value={imgStyle}>
+           <div class="option-group">
+            <label for="img-style">Style</label>
+              <select id="img-style" bind:value={imgStyle}>
                 <option value="realiste">Réaliste</option>
                 <option value="cinematique">Cinématique</option>
                 <option value="3d">3D Render</option>
@@ -505,8 +505,8 @@ async function generateChat() {
           
           <div class="options-grid">
             <div class="option-group">
-              <label>Format</label>
-              <select bind:value={vidFormat}>
+              <label for="vid-format">Format</label>
+               <select id="vid-format" bind:value={vidFormat}>
                 <option value="16:9">16:9</option>
                 <option value="tiktok">TikTok</option>
                 <option value="1:1">1:1</option>
@@ -514,8 +514,8 @@ async function generateChat() {
             </div>
             
             <div class="option-group">
-              <label>Style</label>
-              <select bind:value={vidStyle}>
+             <label for="vid-style">Style</label>
+               <select id="vid-style" bind:value={vidStyle}>
                 <option value="cinematique">Cinématique</option>
                 <option value="dynamique">Dynamique</option>
                 <option value="lent">Lent/Slow</option>
@@ -532,41 +532,41 @@ async function generateChat() {
         {/if}
 
        <!-- SECTION LIPSYNC -->
-  {#if activeTab === 'lipsync'}
-  <div class="input-group">
-    <label>1. Photo du visage</label>
-    <input type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
-  </div>
+        {#if activeTab === 'lipsync'}
+         <div class="input-group">
+          <label for="lip-photo">1. Photo du visage</label>
+            <input id="lip-photo" type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
+             </div>
   
-  <div class="input-group">
-    <label>2. Source Audio</label>
-    <select bind:value={lipAudioSource}>
-      <option value="upload">Upload fichier audio</option>
-      <option value="tts">Texte à vocaliser</option>
+           <div class="input-group">
+          <label for="lip-audio-source">2. Source Audio</label>
+          <select id="lip-audio-source" bind:value={lipAudioSource}>
+         <option value="upload">Upload fichier audio</option>
+         <option value="tts">Texte à vocaliser</option>
       <option value="url">URL audio externe</option>
     </select>
   </div>
   
-  <!-- BOUTON UPLOAD AUDIO -->
-  {#if lipAudioSource === 'upload'}
-    <div class="input-group">
-      <label>3. Fichier Audio</label>
-      <input type="file" accept="audio/*" on:change={handleAudioUpload} class="file-input" />
-    </div>
-  {/if}
+    <!-- BOUTON UPLOAD AUDIO -->
+     {#if lipAudioSource === 'upload'}
+      <div class="input-group">
+      <label for="lip-audio-file">3. Fichier Audio</label>
+      <input id="lip-audio-file" type="file" accept="audio/*" on:change={handleAudioUpload} class="file-input" />
+      </div>
+      {/if}
   
-  <!-- CHAMP TEXTE POUR URL OU TTS -->
-  {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
-    <div class="input-group">
-      <label>3. URL Audio ou Texte</label>
-      <input type="text" bind:value={audioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez votre texte ici...'} class="text-input" />
-    </div>
-  {/if}
+     <!-- CHAMP TEXTE POUR URL OU TTS -->
+      {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
+      <div class="input-group">
+     <label for="lip-audio-text">3. URL Audio ou Texte</label>
+      <input id="lip-audio-text" type="text" bind:value={audioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez votre texte ici...'} class="text-input" />
+       </div>
+      {/if}
   
   <div class="options-grid">
     <div class="option-group">
-      <label>Expression Faciale</label>
-      <select bind:value={lipExpression}>
+      <label for="lip-expression">Expression Faciale</label>
+        <select id="lip-expression" bind:value={lipExpression}>
         <option value="neutre">Neutre (naturelle)</option>
         <option value="souriant">Souriant (joyeux)</option>
         <option value="serieux">Sérieux (professionnel)</option>
@@ -576,8 +576,8 @@ async function generateChat() {
     </div>
     
     <div class="option-group">
-      <label>Type de Performance</label>
-      <select bind:value={lipType}>
+      <label for="lip-type">Type de Performance</label>
+       <select id="lip-type" bind:value={lipType}>
         <option value="parole">Parole seule (discours)</option>
         <option value="chant">Chant (musique)</option>
         <option value="performance">Performance artistique</option>
