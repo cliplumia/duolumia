@@ -20,12 +20,11 @@
   </section>
 
   <section class="legal-section">
-    <h2>2. Hébergement</h2>
-    <p>
-      Ce site est hébergé par <strong>Netlify, Inc.</strong><br>
-      44 Montgomery Street, Suite 300<br>
-      San Francisco, California 94104<br>
-      États-Unis
+   <h2>2. Hébergement</h2>
+<p>Ce site est hébergé par <strong>Cloudflare, Inc.</strong></p>
+<p>101 Townsend Street</p>
+<p>San Francisco, CA 94107</p>
+<p>États-Unis</p>
     </p>
   </section>
 
