@@ -663,9 +663,8 @@ async function generateChat() {
               <option value="rapide">Rapide</option>
             </select>
           </div>
-        </div>
-          
-          <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
+       
+           <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
             {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
           </button>
         {/if}
