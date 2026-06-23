@@ -21,12 +21,11 @@
 
   <section class="legal-section">
    <h2>2. Hébergement</h2>
-<p>Ce site est hébergé par <strong>Cloudflare, Inc.</strong></p>
-<p>101 Townsend Street</p>
-<p>San Francisco, CA 94107</p>
-<p>États-Unis</p>
-    </p>
-  </section>
+   <p>Ce site est hébergé par <strong>Cloudflare, Inc.</strong></p>
+    <p>101 Townsend Street</p>
+    <p>San Francisco, CA 94107</p>
+    <p>États-Unis</p>
+    </section>
 
   <section class="legal-section">
     <h2>3. Propriété intellectuelle</h2>
