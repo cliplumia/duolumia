@@ -700,8 +700,7 @@ async function generateChat() {
           <div class="options-grid">
            <label for="chat-format">Format de réponse</label>
              <select id="chat-format" bind:value={chatFormat}>
-              <select bind:value={chatFormat}>
-                <option value="texte">Texte simple</option>
+               <option value="texte">Texte simple</option>
                 <option value="liste">Liste à puces</option>
                 <option value="etapes">Étapes détaillées</option>
                 <option value="tableau">Tableau</option>
@@ -718,7 +717,7 @@ async function generateChat() {
             </div>
           
           <button type="button" class="chrome-btn create-btn" on:click={generateChat} disabled={chatLoading}>
-            {chatLoading ? '⏳ Réflexion...' : '💬 ENVOYER'}
+          {chatLoading ? '⏳ Réflexion...' : '💬 ENVOYER'}
           </button>
           
           {#if chatResponse}
@@ -730,29 +729,28 @@ async function generateChat() {
       </div>
 
      <!-- ZONE DE PRÉVISUALISATION -->
-   {#if activeTab !== 'chat'}
-   {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || lipPreviewUrl || voiceAudioUrl}
-   <div class="preview-card glass">
-    <div class="preview-label">VOTRE CRÉATION</div>
-    
-    {#if imgPreviewUrl}
-      <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" /></div>
-      <div class="watermark">CLIPLUMIA · PREVIEW</div>
-    {:else if imgValidatedUrl}
-      <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
-      <a href={imgValidatedUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
-    {:else if vidPreviewUrl}
-      <div class="preview-media"><video src={vidPreviewUrl} controls loop muted playsinline></video></div>
-      <div class="watermark">CLIPLUMIA · PREVIEW</div>
-    {:else if vidValidatedUrl}
-      <div class="preview-media validated"><video src={vidValidatedUrl} controls loop playsinline></video></div>
-      <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
-     {:else if voiceAudioUrl}
-      <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
-    {/if}
-    </div>
-   {/if}
- {/if}
+      {#if activeTab !== 'chat'}
+       {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || lipPreviewUrl || voiceAudioUrl}
+         <div class="preview-card glass">
+         <div class="preview-label">VOTRE CRÉATION</div>
+          {#if imgPreviewUrl}
+           <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" /></div>
+          <div class="watermark">CLIPLUMIA · PREVIEW</div>
+           {:else if imgValidatedUrl}
+           <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
+           <a href={imgValidatedUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
+            {:else if vidPreviewUrl}
+            <div class="preview-media"><video src={vidPreviewUrl} controls loop muted playsinline></video></div>
+           <div class="watermark">CLIPLUMIA · PREVIEW</div>
+            {:else if vidValidatedUrl}
+           <div class="preview-media validated"><video src={vidValidatedUrl} controls loop playsinline></video></div>
+          <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
+         {:else if voiceAudioUrl}
+        <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
+        {/if}
+       </div>
+      {/if}
+     {/if}
 
       <!-- BOUTONS J'AIME / REJETER (SAUF POUR CHAT) -->
       {#if activeTab !== 'chat'}
