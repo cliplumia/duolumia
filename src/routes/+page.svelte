@@ -96,7 +96,7 @@
       <div class="demo-card glass">
         <div class="demo-top"><span>▶️ Vidéos IA</span><span class="tag">Preview</span></div>
         <div class="screen">
-          <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/video%20gtr%201.mp4" muted loop playsinline preload="metadata"></video>
+         <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/video%20gtr%201.mp4" autoplay muted loop playsinline preload="metadata"></video>
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
@@ -139,7 +139,7 @@
     <div class="demo-card glass">
       <div class="demo-top"><span>🎭 Lipsync IA</span><span class="tag">Preview</span></div>
        <div class="screen">
-        <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/VIDEOFEMME1%20ACCEUIL.mp4" muted loop playsinline preload="metadata"></video>
+        <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/VIDEOFEMME1%20ACCEUIL.mp4" autoplay muted loop playsinline preload="metadata"></video>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
