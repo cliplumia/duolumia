@@ -146,6 +146,7 @@ $: {
         imgValidatedUrl = imgPreviewUrl;
         imgPreviewUrl = null;
         imgGenerationId = null;
+       data.user.images_restantes--;
       } else {
         imgError = result.error || 'Erreur lors de la validation';
       }
@@ -236,6 +237,7 @@ $: {
         vidValidatedUrl = vidPreviewUrl;
         vidPreviewUrl = null;
         vidGenerationId = null;
+       data.user.videos_restantes--;
       } else {
         vidError = result.error || 'Erreur lors de la validation';
       }
