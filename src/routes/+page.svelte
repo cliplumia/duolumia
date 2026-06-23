@@ -61,7 +61,7 @@
       <span class="note">Sans engagement · Annulez en 2 clics</span>
     </div>
     <div class="hero-media glass">
-      <video src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/videocliplumia.%201.mp4" controls muted loop playsinline preload="metadata"></video>
+     <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/VIDEOFEMME1%20ACCEUIL.mp4" controls muted loop playsinline preload="metadata"></video>
       <p class="caption">Exemple généré avec ClipLumia</p>
     </div>
   </section>
@@ -96,7 +96,7 @@
       <div class="demo-card glass">
         <div class="demo-top"><span>▶️ Vidéos IA</span><span class="tag">Preview</span></div>
         <div class="screen">
-          <video src="https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/videocliplumia.%201.mp4" muted loop playsinline preload="metadata"></video>
+          <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/video%20gtr%201.mp4" muted loop playsinline preload="metadata"></video>
           <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
@@ -136,15 +136,11 @@
         <p class="demo-desc">Voix française IA</p>
       </div>
 
-      <div class="demo-card glass">
-        <div class="demo-top"><span>🎭 Lipsync IA</span><span class="tag">Preview</span></div>
-        <div class="screen">
-          <div class="img-placeholder video">
-            <div class="placeholder-shimmer"></div>
-            <span class="ph-icon">🎭</span>
-            <span class="ph-label">Votre lipsync IA</span>
-          </div>
-          <div class="watermark">CLIPLUMIA · PREVIEW</div>
+    <div class="demo-card glass">
+      <div class="demo-top"><span>🎭 Lipsync IA</span><span class="tag">Preview</span></div>
+       <div class="screen">
+        <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/VIDEOFEMME1%20ACCEUIL.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
           <button class="btn-like" on:click={()=>toggleLike('lip')}>❤️ J'aime (1 forfait)</button>
@@ -215,7 +211,7 @@
   </footer>
 </main>
 
-<style>
+  <style>
   :global(*){box-sizing:border-box}
   :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
