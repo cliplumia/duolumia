@@ -57,7 +57,7 @@
           Tu n'aimes pas? <strong>0€ décompté.</strong>
         </div>
       </div>
-      <a href="/studio" class="btn-primary">Tester gratuitement</a>
+     <a href="/studio" class="btn-primary">Essai 24h offert · 3 images + 3 vidéos</a>
       <span class="note">Sans engagement · Annulez en 2 clics</span>
     </div>
     <div class="hero-media glass">
