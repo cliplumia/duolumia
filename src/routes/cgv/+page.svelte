@@ -40,7 +40,7 @@
       <hr />
       
       <h2>6. Contact</h2>
-      <p>Pour toute question : <a href="mailto:contact@cliplumia.com" class="gold-link">contact@cliplumia.com</a></p>
+      <p>Pour toute question : <strong>contact@cliplumia.com</strong></p>
     </div>
   </div>
 </div>
