@@ -613,26 +613,26 @@ async function generateChat() {
   
   <div class="options-grid">
     <div class="option-group">
-      <label>Langue</label>
-      <select bind:value={voiceLang}>
+      <label for="voice-lang">Langue</label>
+        <select id="voice-lang" bind:value={voiceLang}>
         <option value="FR">Français</option>
-        <option value="EN">Anglais</option>
-      </select>
-    </div>
+         <option value="EN">Anglais</option>
+          </select>
+           </div>
+
             <div class="option-group">
-              <label>Type de Voix</label>
-              <select bind:value={voiceType}>
+              <label for="voice-type">Type de Voix</label>
+                <select id="voice-type" bind:value={voiceType}>
                 <option value="femme">Femme</option>
                 <option value="homme">Homme</option>
                 <option value="mature">Voix mature</option>
               </select>
             </div>
-          </div>
           
-          <div class="options-grid">
+           <div class="options-grid">
             <div class="option-group">
-              <label>Style</label>
-              <select bind:value={voiceStyle}>
+              <label for="voice-style">Style</label>
+               <select id="voice-style" bind:value={voiceStyle}>
                 <option value="professionnel">Professionnel</option>
                 <option value="chaleureux">Chaleureux</option>
                 <option value="dynamique">Dynamique</option>
@@ -641,10 +641,11 @@ async function generateChat() {
                 <option value="publicitaire">Publicitaire</option>
               </select>
             </div>
+          </div>
             
             <div class="option-group">
-              <label>Émotion</label>
-              <select bind:value={voiceEmotion}>
+              <label for="voice-emotion">Émotion</label>
+               <select id="voice-emotion" bind:value={voiceEmotion}>
                 <option value="neutre">Neutre</option>
                 <option value="joyeux">Joyeux</option>
                 <option value="serieux">Sérieux</option>
@@ -655,13 +656,14 @@ async function generateChat() {
           </div>
           
           <div class="option-group full-width">
-            <label>Vitesse</label>
-            <select bind:value={voiceSpeed}>
+            <label for="voice-speed">Vitesse</label>
+             <select id="voice-speed" bind:value={voiceSpeed}>
               <option value="lent">Lent</option>
               <option value="normal">Normal</option>
               <option value="rapide">Rapide</option>
             </select>
           </div>
+        </div>
           
           <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
             {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
@@ -673,8 +675,8 @@ async function generateChat() {
           
           <div class="options-grid">
             <div class="option-group">
-              <label>Rôle de l'IA</label>
-              <select bind:value={chatRole}>
+             <label for="chat-role">Rôle de l'IA</label>
+              <select id="chat-role" bind:value={chatRole}>
                 <option value="assistant">Assistant Général</option>
                 <option value="copywriter">Copywriter</option>
                 <option value="scenariste">Scénariste</option>
@@ -685,8 +687,8 @@ async function generateChat() {
             </div>
             
             <div class="option-group">
-              <label>Ton</label>
-              <select bind:value={chatTone}>
+              <label for="chat-tone">Ton</label>
+               <select id="chat-tone" bind:value={chatTone}>
                 <option value="pro">Professionnel</option>
                 <option value="creatif">Créatif</option>
                 <option value="direct">Direct</option>
@@ -697,8 +699,8 @@ async function generateChat() {
           </div>
           
           <div class="options-grid">
-            <div class="option-group">
-              <label>Format de réponse</label>
+           <label for="chat-format">Format de réponse</label>
+             <select id="chat-format" bind:value={chatFormat}>
               <select bind:value={chatFormat}>
                 <option value="texte">Texte simple</option>
                 <option value="liste">Liste à puces</option>
@@ -708,8 +710,8 @@ async function generateChat() {
             </div>
             
             <div class="option-group">
-              <label>Longueur</label>
-              <select bind:value={chatLength}>
+              <label for="chat-length">Longueur</label>
+               <select id="chat-length" bind:value={chatLength}>
                 <option value="resume">Résumé</option>
                 <option value="standard">Standard</option>
                 <option value="detaille">Très détaillé</option>
@@ -775,6 +777,7 @@ async function generateChat() {
           <div class="example-item">Exemple 3</div>
           <div class="example-item">Exemple 4</div>
         </div>
+       </div>
      
       <!-- FAQ (En bas, page déroulante) -->
       <div class="faq-section glass">
@@ -810,6 +813,7 @@ async function generateChat() {
 </div>
 
 <style>
+
   :global(*) { box-sizing: border-box; }
   :global(body) { 
     margin: 0; 
@@ -847,21 +851,6 @@ async function generateChat() {
     box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
   }
   
-  .chrome {
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-  }
-  
-  .gold-chrome text {
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-  }
 
   /* === FOND VIOLET FONCÉ AVEC IMAGE === */
   .studio-page {
