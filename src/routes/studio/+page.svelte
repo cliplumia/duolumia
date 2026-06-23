@@ -346,6 +346,36 @@ function resetLipsync() {
   voiceLoading = false;
 }
 
+// === FONCTION GÉNÉRATION CHAT ===
+async function generateChat() {
+  if (!chatPrompt.trim()) return;
+  
+  chatLoading = true;
+  chatResponse = '';
+  
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: chatPrompt
+      })
+    });
+    
+    const data = await res.json();
+    
+    if (res.ok && data.success) {
+      chatResponse = data.reply;
+    } else {
+      chatResponse = '❌ Erreur : ' + (data.error || 'Impossible de générer la réponse');
+    }
+  } catch (e) {
+    chatResponse = '❌ Erreur : ' + e.message;
+  }
+  
+  chatLoading = false;
+}
+
 </script>
 
 <svelte:head>
@@ -377,6 +407,8 @@ function resetLipsync() {
         💬 Chat IA
       </button>
     </aside>
+
+  
 
     <!-- CENTRE : STUDIO PRINCIPAL -->
     <main class="studio-main">
