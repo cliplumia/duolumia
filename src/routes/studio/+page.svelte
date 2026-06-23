@@ -716,7 +716,6 @@ async function generateChat() {
                 <option value="detaille">Très détaillé</option>
               </select>
             </div>
-          </div>
           
           <button type="button" class="chrome-btn create-btn" on:click={generateChat} disabled={chatLoading}>
             {chatLoading ? '⏳ Réflexion...' : '💬 ENVOYER'}
