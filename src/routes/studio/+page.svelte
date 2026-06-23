@@ -59,8 +59,45 @@
   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data?.user?.email);
   const canGenerateImg = isAdmin || (data?.user?.images_restantes > 0);
   const canGenerateVid = isAdmin || (data?.user?.videos_restantes > 0);
-  
-  // === FONCTION GÉNÉRATION IMAGE ===
+
+// === RESET QUAND ON CHANGE D'ONGLET ===
+$: {
+  if (activeTab === 'images') {
+    vidPreviewUrl = '';
+    vidValidatedUrl = '';
+    lipPreviewUrl = '';
+    voiceAudioUrl = '';
+    chatResponse = '';
+  } else if (activeTab === 'video') {
+    imgPreviewUrl = '';
+    imgValidatedUrl = '';
+    lipPreviewUrl = '';
+    voiceAudioUrl = '';
+    chatResponse = '';
+  } else if (activeTab === 'lipsync') {
+    imgPreviewUrl = '';
+    imgValidatedUrl = '';
+    vidPreviewUrl = '';
+    vidValidatedUrl = '';
+    voiceAudioUrl = '';
+    chatResponse = '';
+  } else if (activeTab === 'voice') {
+    imgPreviewUrl = '';
+    imgValidatedUrl = '';
+    vidPreviewUrl = '';
+    vidValidatedUrl = '';
+    lipPreviewUrl = '';
+    chatResponse = '';
+  } else if (activeTab === 'chat') {
+    imgPreviewUrl = '';
+    imgValidatedUrl = '';
+    vidPreviewUrl = '';
+    vidValidatedUrl = '';
+    lipPreviewUrl = '';
+    voiceAudioUrl = '';
+  }
+}
+ // === FONCTION GÉNÉRATION IMAGE ===
   async function generateImage() {
     if (!imgPrompt.trim()) return;
     imgLoading = true;
