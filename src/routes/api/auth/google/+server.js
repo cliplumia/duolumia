@@ -27,7 +27,7 @@ if (isAdmin) {
     .bind(id, payload.sub, payload.email, payload.name || '', 'admin', 999999, 999999, null, now, now).run();
 } else {
   // NOUVEAU CLIENT → Mini-forfait 24h (3 images + 3 vidéos)
-  const essaiExpire = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+  const essaiExpire = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
   await BD.prepare('INSERT OR REPLACE INTO utilisateurs (id, google_id, email, nom, plan, images_restantes, videos_restantes, essai_expire_a, cree_a, mis_a_jour_a) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
     .bind(id, payload.sub, payload.email, payload.name || '', plan, 3, 3, essaiExpire, now, now).run();
 }
