@@ -17,8 +17,20 @@ export async function POST({ request, platform, cookies }) {
     const id = crypto.randomUUID();
     const now = new Date().toISOString();
     
-    await BD.prepare('INSERT OR REPLACE INTO utilisateurs (id, google_id, email, nom, plan, cree_a, mis_a_jour_a) VALUES (?, ?, ?, ?, ?, ?, ?)')
-      .bind(id, payload.sub, payload.email, payload.name || '', plan, now, now).run();
+   // === GESTION FORFAITS ===
+const adminEmails = ['dussolliermarjorie@gmail.com', 'contact.cliplumia@gmail.com'];
+const isAdmin = adminEmails.includes(payload.email);
+
+if (isAdmin) {
+  // TOI → Illimité permanent
+  await BD.prepare('INSERT OR REPLACE INTO utilisateurs (id, google_id, email, nom, plan, images_restantes, videos_restantes, essai_expire_a, cree_a, mis_a_jour_a) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    .bind(id, payload.sub, payload.email, payload.name || '', 'admin', 999999, 999999, null, now, now).run();
+} else {
+  // NOUVEAU CLIENT → Mini-forfait 24h (3 images + 3 vidéos)
+  const essaiExpire = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+  await BD.prepare('INSERT OR REPLACE INTO utilisateurs (id, google_id, email, nom, plan, images_restantes, videos_restantes, essai_expire_a, cree_a, mis_a_jour_a) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    .bind(id, payload.sub, payload.email, payload.name || '', plan, 3, 3, essaiExpire, now, now).run();
+}
     
     cookies.set('user_id', id, { path: '/', httpOnly: true, secure: true, sameSite: 'lax', maxAge: 604800 });
     
