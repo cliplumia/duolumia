@@ -58,7 +58,7 @@
         </div>
       </div>
      <a href="/studio" class="btn-primary">Essai 48h offert · 3 images + 3 vidéos</a>
-      <span class="note">Sans engagement · Annulez en 2 clics</span>
+      <span class="note">CB requise . Sans engagement · Annulez en 2 clics</span>
     </div>
     <div class="hero-media glass">
      <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/VIDEOFEMME1%20ACCEUIL.mp4" controls muted loop playsinline preload="metadata"></video>
@@ -153,7 +153,7 @@
 
   <section class="pricing">
     <h2 class="section-title">Forfaits <span class="OR-CHROME">flexibles</span></h2>
-    <p class="sub">Essai gratuit 24h. CB requise.</p>
+    <p class="sub">Essai gratuit 48h. CB requise.</p>
     <div class="pricing-grid">
       <div class="price-card glass">
         <h3>Starter</h3>
