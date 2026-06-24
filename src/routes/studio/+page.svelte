@@ -425,7 +425,7 @@ async function generateChat() {
   <div class="studio-page">
   <div class="studio-container">
     
-    <!-- SIDEBAR GAUCHE -->
+      <!-- SIDEBAR GAUCHE -->
     <aside class="sidebar glass">
       <div class="logo chrome-text">ClipLumia</div>
       
@@ -439,13 +439,12 @@ async function generateChat() {
         👄 Lipsync
       </button>
       <button type="button" class="nav-item" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>
-        🎤 Voix IA
+        🎤 Voix IA <span class="lock-icon">🔒</span>
       </button>
       <button type="button" class="nav-item" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
-        💬 Chat IA
+        💬 Chat IA <span class="lock-icon">🔒</span>
       </button>
     </aside>
-
   
 
     <!-- CENTRE : STUDIO PRINCIPAL -->
@@ -820,7 +819,6 @@ async function generateChat() {
     background: #0c0618;
   }
 
-  
  .chrome-text {
   background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
   -webkit-background-clip: text;
@@ -879,8 +877,8 @@ async function generateChat() {
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 20px;
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.4), 
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 8px 32px rgba(0, 0, 0, 0.4), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
     z-index: 2;
   }
 
@@ -898,7 +896,7 @@ async function generateChat() {
   }
 
   /* === SIDEBAR GAUCHE === */
-  .sidebar {
+   .sidebar {
     width: 280px;
     padding: 30px 20px;
     display: flex;
@@ -1006,11 +1004,11 @@ async function generateChat() {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
-  textarea::placeholder {
+    textarea::placeholder {
     color: rgba(255, 255, 255, 0.4);
   }
 
-  textarea:focus {
+   textarea:focus {
     border-color: rgba(191, 149, 63, 0.4);
     background: rgba(0, 0, 0, 0.4);
     box-shadow: 0 0 20px rgba(191, 149, 63, 0.1);
@@ -1314,8 +1312,14 @@ async function generateChat() {
       padding: 15px; 
       gap: 10px; 
     }
+
+    .lock-icon {
+    font-size: 0.7rem;
+    margin-left: 4px;
+    opacity: 0.6;
+   }
     
-    .logo { 
+     .logo { 
       display: none; 
     }
     
