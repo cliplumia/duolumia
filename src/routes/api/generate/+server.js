@@ -55,10 +55,6 @@ export async function POST({ request, platform, cookies }) {
       .bind(generationId, userId, 'image', imageUrl, 'en_attente', new Date().toISOString())
       .run();
 
-    if (!isAdmin) {
-      await BD.prepare('UPDATE utilisateurs SET images_restantes = images_restantes - 1 WHERE id =?').bind(userId).run();
-    }
-
     // === MODIFICATION : Renvoyer l'ID en plus de l'image ===
     return json({ image: imageUrl, id: generationId });
     
