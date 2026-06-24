@@ -493,10 +493,16 @@ async function generateChat() {
             </div>
           </div>
           
-          <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || !canGenerateImg}>
-            {imgLoading ? '⏳ Génération en cours...' : '✨ CRÉER L\'IMAGE'}
-          </button>
-        {/if}
+         <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || (data?.user?.tentatives_images <= 0)}>
+     ✨ CRÉER L'IMAGE
+     </button>
+
+     {#if data?.user?.tentatives_images <= 0}
+      <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
+    ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
+    </p>
+  {/if}
+      
 
         <!-- SECTION VIDÉO -->
         {#if activeTab === 'video'}
@@ -525,10 +531,15 @@ async function generateChat() {
             </div>
           </div>
           
-          <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || !canGenerateVid}>
-            {vidLoading ? '⏳ Génération en cours...' : '🎬 CRÉER LA VIDÉO'}
-          </button>
-        {/if}
+         <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || (data?.user?.tentatives_videos <= 0)}>
+       🎬 CRÉER LA VIDÉO
+       </button>
+
+        {#if data?.user?.tentatives_videos <= 0}
+       <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
+    ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
+      </p>
+    {/if}
 
        <!-- SECTION LIPSYNC -->
         {#if activeTab === 'lipsync'}
@@ -585,10 +596,15 @@ async function generateChat() {
     </div>
   </div>
           
-  <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || !imageBase64 || !audioUrl}>
-    {lipLoading ? '⏳ Synchronisation...' : '👄 CRÉER LE LIPSYNC'}
-  </button>
-{/if}
+      <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (data?.user?.tentatives_videos <= 0)}>
+  👄 CRÉER LE LIPSYNC
+   </button>
+
+       {#if data?.user?.tentatives_videos <= 0}
+      <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
+    ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
+    </p>
+   {/if}
 
 <!-- ZONE D'AFFICHAGE DE LA VIDÉO LIPSYNC -->
 {#if lipPreviewUrl}
