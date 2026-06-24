@@ -60,44 +60,22 @@
   const canGenerateImg = isAdmin || (data?.user?.images_restantes > 0);
   const canGenerateVid = isAdmin || (data?.user?.videos_restantes > 0);
 
-// === RESET QUAND ON CHANGE D'ONGLET ===
-$: {
-  if (activeTab === 'images') {
-    vidPreviewUrl = '';
-    vidValidatedUrl = '';
-    lipPreviewUrl = '';
-    voiceAudioUrl = '';
-    chatResponse = '';
-  } else if (activeTab === 'video') {
-    imgPreviewUrl = '';
-    imgValidatedUrl = '';
-    lipPreviewUrl = '';
-    voiceAudioUrl = '';
-    chatResponse = '';
-  } else if (activeTab === 'lipsync') {
-    imgPreviewUrl = '';
-    imgValidatedUrl = '';
-    vidPreviewUrl = '';
-    vidValidatedUrl = '';
-    voiceAudioUrl = '';
-    chatResponse = '';
-  } else if (activeTab === 'voice') {
-    imgPreviewUrl = '';
-    imgValidatedUrl = '';
-    vidPreviewUrl = '';
-    vidValidatedUrl = '';
-    lipPreviewUrl = '';
-    chatResponse = '';
-  } else if (activeTab === 'chat') {
-    imgPreviewUrl = '';
-    imgValidatedUrl = '';
-    vidPreviewUrl = '';
-    vidValidatedUrl = '';
-    lipPreviewUrl = '';
-    voiceAudioUrl = '';
+  // === RESET QUAND ON CHANGE D'ONGLET ===
+  $: {
+    if (activeTab === 'images') {
+      vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; voiceAudioUrl = ''; chatResponse = '';
+    } else if (activeTab === 'video') {
+      imgPreviewUrl = ''; imgValidatedUrl = ''; lipPreviewUrl = ''; voiceAudioUrl = ''; chatResponse = '';
+    } else if (activeTab === 'lipsync') {
+      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; voiceAudioUrl = ''; chatResponse = '';
+    } else if (activeTab === 'voice') {
+      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; chatResponse = '';
+    } else if (activeTab === 'chat') {
+      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; voiceAudioUrl = '';
+    }
   }
-}
- // === FONCTION GÉNÉRATION IMAGE ===
+
+  // === FONCTION GÉNÉRATION IMAGE ===
   async function generateImage() {
     if (!imgPrompt.trim()) return;
     imgLoading = true;
@@ -109,11 +87,7 @@ $: {
       const res = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          prompt: imgPrompt,
-          format: imgFormat,
-          style: imgStyle
-        })
+        body: JSON.stringify({ prompt: imgPrompt, format: imgFormat, style: imgStyle })
       });
       const result = await res.json();
       
@@ -123,7 +97,7 @@ $: {
         return;
       }
       
-      imgPreviewUrl = result.image;  // ← "url" devient "image"
+      imgPreviewUrl = result.image;
       imgGenerationId = result.id;
     } catch (e) {
       imgError = e.message;
@@ -146,7 +120,7 @@ $: {
         imgValidatedUrl = imgPreviewUrl;
         imgPreviewUrl = null;
         imgGenerationId = null;
-       data.user.images_restantes--;
+        data.user.images_restantes--;
       } else {
         imgError = result.error || 'Erreur lors de la validation';
       }
@@ -176,11 +150,7 @@ $: {
       const res = await fetch('/api/generate-video', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          prompt: vidPrompt,
-          format: vidFormat,
-          style: vidStyle
-        })
+        body: JSON.stringify({ prompt: vidPrompt, format: vidFormat, style: vidStyle })
       });
       const result = await res.json();
       
@@ -237,7 +207,7 @@ $: {
         vidValidatedUrl = vidPreviewUrl;
         vidPreviewUrl = null;
         vidGenerationId = null;
-       data.user.videos_restantes--;
+        data.user.videos_restantes--;
       } else {
         vidError = result.error || 'Erreur lors de la validation';
       }
@@ -257,175 +227,164 @@ $: {
     vidReplicateId = null;
   }
   
-// === UPLOAD IMAGE LIPSYNC ===
-function handleImageUpload(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => imageBase64 = e.target.result;
-    reader.readAsDataURL(file);
-  }
-}
-
-// === UPLOAD AUDIO LIPSYNC ===
-function handleAudioUpload(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      audioUrl = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-}
-
-// === FONCTION GÉNÉRATION LIPSYNC ===
-async function generateLipsync() {
-  if (!imageBase64 || !audioUrl) return;
-  
-  lipLoading = true;
-  lipError = null;
-  lipPreviewUrl = null;
-  
-  try {
-    // ÉTAPE 1 : Upload de l'image sur R2
-    const imageUploadRes = await fetch('/api/upload', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fileBase64: imageBase64, fileType: 'image' })
-    });
-    
-    const imageUploadData = await imageUploadRes.json();
-    
-    if (!imageUploadRes.ok || !imageUploadData.success) {
-      throw new Error(imageUploadData.error || 'Erreur upload image');
+  // === UPLOAD IMAGE LIPSYNC ===
+  function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => imageBase64 = e.target.result;
+      reader.readAsDataURL(file);
     }
-    
-    const publicImageUrl = imageUploadData.url;
+  }
 
-    // ÉTAPE 2 : Upload de l'audio sur R2 (si c'est du base64)
-    let publicAudioUrl = audioUrl;
+  // === UPLOAD AUDIO LIPSYNC ===
+  function handleAudioUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => { audioUrl = e.target.result; };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // === FONCTION GÉNÉRATION LIPSYNC ===
+  async function generateLipsync() {
+    if (!imageBase64 || !audioUrl) return;
     
-    if (audioUrl.startsWith('data:audio')) {
-      const audioUploadRes = await fetch('/api/upload', {
+    lipLoading = true;
+    lipError = null;
+    lipPreviewUrl = null;
+    
+    try {
+      const imageUploadRes = await fetch('/api/upload', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fileBase64: audioUrl, fileType: 'audio' })
+        body: JSON.stringify({ fileBase64: imageBase64, fileType: 'image' })
       });
       
-      const audioUploadData = await audioUploadRes.json();
+      const imageUploadData = await imageUploadRes.json();
       
-      if (!audioUploadRes.ok || !audioUploadData.success) {
-        throw new Error(audioUploadData.error || 'Erreur upload audio');
+      if (!imageUploadRes.ok || !imageUploadData.success) {
+        throw new Error(imageUploadData.error || 'Erreur upload image');
       }
       
-      publicAudioUrl = audioUploadData.url;
-    }
+      const publicImageUrl = imageUploadData.url;
 
-    // ÉTAPE 3 : Génération Lipsync avec les URLs publiques
-    const res = await fetch('/api/lipsync', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        image: publicImageUrl,
-        audio: publicAudioUrl,
-        expression: lipExpression,
-        type: lipType
-      })
-    });
-    
-    const data = await res.json();
-    
-    if (res.ok && data.success) {
-      lipPreviewUrl = data.url;
-    } else {
-      lipError = data.error || 'Erreur de génération';
+      let publicAudioUrl = audioUrl;
+      
+      if (audioUrl.startsWith('data:audio')) {
+        const audioUploadRes = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fileBase64: audioUrl, fileType: 'audio' })
+        });
+        
+        const audioUploadData = await audioUploadRes.json();
+        
+        if (!audioUploadRes.ok || !audioUploadData.success) {
+          throw new Error(audioUploadData.error || 'Erreur upload audio');
+        }
+        
+        publicAudioUrl = audioUploadData.url;
+      }
+
+      const res = await fetch('/api/lipsync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          image: publicImageUrl,
+          audio: publicAudioUrl,
+          expression: lipExpression,
+          type: lipType
+        })
+      });
+      
+      const data = await res.json();
+      
+      if (res.ok && data.success) {
+        lipPreviewUrl = data.url;
+      } else {
+        lipError = data.error || 'Erreur de génération';
+      }
+    } catch (e) {
+      lipError = e.message;
     }
-  } catch (e) {
-    lipError = e.message;
+    
+    lipLoading = false;
   }
-  
-  lipLoading = false;
-}
 
-// === FONCTION RESET LIPSYNC ===
-function resetLipsync() {
-  imageBase64 = null;
-  audioUrl = '';
-  lipPreviewUrl = null;
-  lipError = null;
-}
+  // === FONCTION RESET LIPSYNC ===
+  function resetLipsync() {
+    imageBase64 = null;
+    audioUrl = '';
+    lipPreviewUrl = null;
+    lipError = null;
+  }
 
   // === FONCTION GÉNÉRATION VOIX ===
   async function generateVoice() {
-  if (!voiceText.trim()) return;
-  voiceLoading = true;
-  voiceAudioUrl = null;
-  
-  try {
-    const res = await fetch('/api/voice', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        text: voiceText,
-        voice: voiceType,
-        lang: voiceLang    // ← AJOUTÉ pour envoyer la langue (FR ou EN)
-      })
-    });
-    const result = await res.json();
+    if (!voiceText.trim()) return;
+    voiceLoading = true;
+    voiceAudioUrl = null;
     
-    if (result.success) {
-      voiceAudioUrl = result.url;
-    } else {
-      alert('Erreur: ' + (result.error || 'Impossible de générer'));
+    try {
+      const res = await fetch('/api/voice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: voiceText, voice: voiceType, lang: voiceLang })
+      });
+      const result = await res.json();
+      
+      if (result.success) {
+        voiceAudioUrl = result.url;
+      } else {
+        alert('Erreur: ' + (result.error || 'Impossible de générer'));
+      }
+    } catch (e) {
+      alert('Erreur réseau: ' + e.message);
     }
-  } catch (e) {
-    alert('Erreur réseau: ' + e.message);
+    voiceLoading = false;
   }
-  voiceLoading = false;
-}
 
-// === FONCTION GÉNÉRATION CHAT ===
-async function generateChat() {
-  if (!chatPrompt.trim()) return;
-  
-  chatLoading = true;
-  chatResponse = '';
-  
-  try {
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message: chatPrompt
-      })
-    });
+  // === FONCTION GÉNÉRATION CHAT ===
+  async function generateChat() {
+    if (!chatPrompt.trim()) return;
     
-    const data = await res.json();
+    chatLoading = true;
+    chatResponse = '';
     
-    if (res.ok && data.success) {
-      chatResponse = data.reply;
-    } else {
-      chatResponse = '❌ Erreur : ' + (data.error || 'Impossible de générer la réponse');
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: chatPrompt })
+      });
+      
+      const data = await res.json();
+      
+      if (res.ok && data.success) {
+        chatResponse = data.reply;
+      } else {
+        chatResponse = '❌ Erreur : ' + (data.error || 'Impossible de générer la réponse');
+      }
+    } catch (e) {
+      chatResponse = '❌ Erreur : ' + e.message;
     }
-  } catch (e) {
-    chatResponse = '❌ Erreur : ' + e.message;
+    
+    chatLoading = false;
   }
-  
-  chatLoading = false;
-}
 </script>
 
-  <svelte:head>
+<svelte:head>
   <title>Studio — ClipLumia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  </svelte:head>
+</svelte:head>
 
-  <div class="studio-page">
+<div class="studio-page">
   <div class="studio-container">
     
-      <!-- SIDEBAR GAUCHE -->
+    <!-- SIDEBAR GAUCHE -->
     <aside class="sidebar glass">
       <div class="logo chrome-text">ClipLumia</div>
       
@@ -445,31 +404,30 @@ async function generateChat() {
         💬 Chat IA <span class="lock-icon">🔒</span>
       </button>
     </aside>
-  
 
     <!-- CENTRE : STUDIO PRINCIPAL -->
     <main class="studio-main">
-     <!-- HEADER AVEC TITRE ET FORFAIT -->
+      <!-- HEADER AVEC TITRE ET FORFAIT -->
       <div class="studio-header">
         <h1 class="chrome-text studio-title">
           {activeTab === 'images' ? 'Générateur d\'Images IA' : 
            activeTab === 'video' ? 'Générateur de Vidéos IA' :
            activeTab === 'lipsync' ? 'Studio Lipsync' :
            activeTab === 'voice' ? 'Synthèse Vocale IA' : 'Chat IA Assistant'}
-          </h1>
-         <div class="forfait-badge chrome-gold">📸 {data?.user?.images_restantes || 0} | 🎬 {data?.user?.videos_restantes || 0}
-       </div>
+        </h1>
+        <div class="forfait-badge chrome-gold">📸 {data?.user?.images_restantes || 0} | 🎬 {data?.user?.videos_restantes || 0}</div>
       </div>
 
-      <!-- CARTE DE GÉNÉRATION (Effet Glass) -->
+      <!-- CARTE DE GÉNÉRATION -->
       <div class="generation-card glass">
+        
         <!-- SECTION IMAGES -->
         {#if activeTab === 'images'}
           <textarea bind:value={imgPrompt} placeholder="Décris ton image en détail... Une femme élégante dans un bureau moderne, éclairage doré..."></textarea>
            
-           <div class="options-grid">
+          <div class="options-grid">
             <div class="option-group">
-             <label for="img-format">Format</label>
+              <label for="img-format">Format</label>
               <select id="img-format" bind:value={imgFormat}>
                 <option value="1:1">1:1 (Carré)</option>
                 <option value="16:9">16:9 (Paysage)</option>
@@ -479,8 +437,8 @@ async function generateChat() {
               </select>
             </div>
             
-           <div class="option-group">
-            <label for="img-style">Style</label>
+            <div class="option-group">
+              <label for="img-style">Style</label>
               <select id="img-style" bind:value={imgStyle}>
                 <option value="realiste">Réaliste</option>
                 <option value="cinematique">Cinématique</option>
@@ -493,24 +451,25 @@ async function generateChat() {
             </div>
           </div>
           
-         <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || (data?.user?.tentatives_images <= 0)}>
-     ✨ CRÉER L'IMAGE
-     </button>
+          <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || (data?.user?.tentatives_images <= 0)}>
+            ✨ CRÉER L'IMAGE
+          </button>
 
-     {#if data?.user?.tentatives_images <= 0}
-      <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
-    ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
-    </p>
-  {/if}
-      
-       <!-- SECTION VIDÉO -->
+          {#if data?.user?.tentatives_images <= 0}
+            <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
+              ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
+            </p>
+          {/if}
+        {/if}
+
+        <!-- SECTION VIDÉO -->
         {#if activeTab === 'video'}
           <textarea bind:value={vidPrompt} placeholder="Décris ta vidéo... Un drone survolant une ville futuriste au crépuscule..."></textarea>
            
-           <div class="options-grid">
+          <div class="options-grid">
             <div class="option-group">
               <label for="vid-format">Format</label>
-               <select id="vid-format" bind:value={vidFormat}>
+              <select id="vid-format" bind:value={vidFormat}>
                 <option value="16:9">16:9</option>
                 <option value="tiktok">TikTok</option>
                 <option value="1:1">1:1</option>
@@ -518,8 +477,8 @@ async function generateChat() {
             </div>
             
             <div class="option-group">
-             <label for="vid-style">Style</label>
-               <select id="vid-style" bind:value={vidStyle}>
+              <label for="vid-style">Style</label>
+              <select id="vid-style" bind:value={vidStyle}>
                 <option value="cinematique">Cinématique</option>
                 <option value="dynamique">Dynamique</option>
                 <option value="lent">Lent/Slow</option>
@@ -530,122 +489,120 @@ async function generateChat() {
             </div>
           </div>
           
-         <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || (data?.user?.tentatives_videos <= 0)}>
-       🎬 CRÉER LA VIDÉO
-       </button>
+          <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || (data?.user?.tentatives_videos <= 0)}>
+            🎬 CRÉER LA VIDÉO
+          </button>
 
-        {#if data?.user?.tentatives_videos <= 0}
-       <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
-    ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
-      </p>
-    {/if}
+          {#if data?.user?.tentatives_videos <= 0}
+            <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
+              ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
+            </p>
+          {/if}
+        {/if}
 
-       <!-- SECTION LIPSYNC -->
+        <!-- SECTION LIPSYNC -->
         {#if activeTab === 'lipsync'}
-         <div class="input-group">
-          <label for="lip-photo">1. Photo du visage</label>
+          <div class="input-group">
+            <label for="lip-photo">1. Photo du visage</label>
             <input id="lip-photo" type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
-             </div>
+          </div>
+
+          <div class="input-group">
+            <label for="lip-audio-source">2. Source Audio</label>
+            <select id="lip-audio-source" bind:value={lipAudioSource}>
+              <option value="upload">Upload fichier audio</option>
+              <option value="tts">Texte à vocaliser</option>
+              <option value="url">URL audio externe</option>
+            </select>
+          </div>
   
-           <div class="input-group">
-          <label for="lip-audio-source">2. Source Audio</label>
-          <select id="lip-audio-source" bind:value={lipAudioSource}>
-         <option value="upload">Upload fichier audio</option>
-         <option value="tts">Texte à vocaliser</option>
-      <option value="url">URL audio externe</option>
-    </select>
-  </div>
+          {#if lipAudioSource === 'upload'}
+            <div class="input-group">
+              <label for="lip-audio-file">3. Fichier Audio</label>
+              <input id="lip-audio-file" type="file" accept="audio/*" on:change={handleAudioUpload} class="file-input" />
+            </div>
+          {/if}
   
-    <!-- BOUTON UPLOAD AUDIO -->
-     {#if lipAudioSource === 'upload'}
-      <div class="input-group">
-      <label for="lip-audio-file">3. Fichier Audio</label>
-      <input id="lip-audio-file" type="file" accept="audio/*" on:change={handleAudioUpload} class="file-input" />
-      </div>
-      {/if}
+          {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
+            <div class="input-group">
+              <label for="lip-audio-text">3. URL Audio ou Texte</label>
+              <input id="lip-audio-text" type="text" bind:value={audioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez votre texte ici...'} class="text-input" />
+            </div>
+          {/if}
   
-     <!-- CHAMP TEXTE POUR URL OU TTS -->
-      {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
-      <div class="input-group">
-     <label for="lip-audio-text">3. URL Audio ou Texte</label>
-      <input id="lip-audio-text" type="text" bind:value={audioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez votre texte ici...'} class="text-input" />
-       </div>
-      {/if}
-  
-  <div class="options-grid">
-    <div class="option-group">
-      <label for="lip-expression">Expression Faciale</label>
-        <select id="lip-expression" bind:value={lipExpression}>
-        <option value="neutre">Neutre (naturelle)</option>
-        <option value="souriant">Souriant (joyeux)</option>
-        <option value="serieux">Sérieux (professionnel)</option>
-        <option value="intense">Émotion intense</option>
-        <option value="precise">Synchronisation précise</option>
-      </select>
-    </div>
+          <div class="options-grid">
+            <div class="option-group">
+              <label for="lip-expression">Expression Faciale</label>
+              <select id="lip-expression" bind:value={lipExpression}>
+                <option value="neutre">Neutre (naturelle)</option>
+                <option value="souriant">Souriant (joyeux)</option>
+                <option value="serieux">Sérieux (professionnel)</option>
+                <option value="intense">Émotion intense</option>
+                <option value="precise">Synchronisation précise</option>
+              </select>
+            </div>
     
-    <div class="option-group">
-      <label for="lip-type">Type de Performance</label>
-       <select id="lip-type" bind:value={lipType}>
-        <option value="parole">Parole seule (discours)</option>
-        <option value="chant">Chant (musique)</option>
-        <option value="performance">Performance artistique</option>
-        <option value="presentation">Présentation pro</option>
-      </select>
-    </div>
-  </div>
+            <div class="option-group">
+              <label for="lip-type">Type de Performance</label>
+              <select id="lip-type" bind:value={lipType}>
+                <option value="parole">Parole seule (discours)</option>
+                <option value="chant">Chant (musique)</option>
+                <option value="performance">Performance artistique</option>
+                <option value="presentation">Présentation pro</option>
+              </select>
+            </div>
+          </div>
           
-      <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (data?.user?.tentatives_videos <= 0)}>
-  👄 CRÉER LE LIPSYNC
-   </button>
+          <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (data?.user?.tentatives_videos <= 0)}>
+            👄 CRÉER LE LIPSYNC
+          </button>
 
-       {#if data?.user?.tentatives_videos <= 0}
-      <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
-    ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
-    </p>
-   {/if}
+          {#if data?.user?.tentatives_videos <= 0}
+            <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
+              ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
+            </p>
+          {/if}
 
-<!-- ZONE D'AFFICHAGE DE LA VIDÉO LIPSYNC -->
-{#if lipPreviewUrl}
-  <div style="margin-top: 30px; text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
-    <h3 style="color: #d4af37; margin-bottom: 15px;">✨ Votre Lipsync est prêt !</h3>
-    <video controls autoplay loop style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid #d4af37;">
-      <source src={lipPreviewUrl} type="video/mp4">
-      Votre navigateur ne supporte pas la vidéo.
-      </video>
-     <br>
-    <a href={lipPreviewUrl} download="lipsync-cliplumia.mp4" class="chrome-btn" style="margin-top: 15px; display: inline-block; text-decoration: none;">
-    Télécharger la vidéo
-    </a>
-  </div>
-{/if}
+          {#if lipPreviewUrl}
+            <div style="margin-top: 30px; text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
+              <h3 style="color: #d4af37; margin-bottom: 15px;">✨ Votre Lipsync est prêt !</h3>
+              <video controls autoplay loop style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid #d4af37;">
+                <source src={lipPreviewUrl} type="video/mp4">
+                Votre navigateur ne supporte pas la vidéo.
+              </video>
+              <br>
+              <a href={lipPreviewUrl} download="lipsync-cliplumia.mp4" class="chrome-btn" style="margin-top: 15px; display: inline-block; text-decoration: none;">
+                Télécharger la vidéo
+              </a>
+            </div>
+          {/if}
+        {/if}
 
-<!-- SECTION VOIX -->
-{#if activeTab === 'voice'}
-  <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
+        <!-- SECTION VOIX -->
+        {#if activeTab === 'voice'}
+          <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
   
-  <div class="options-grid">
-    <div class="option-group">
-      <label for="voice-lang">Langue</label>
-        <select id="voice-lang" bind:value={voiceLang}>
-        <option value="FR">Français</option>
-         <option value="EN">Anglais</option>
-          </select>
-           </div>
+          <div class="options-grid">
+            <div class="option-group">
+              <label for="voice-lang">Langue</label>
+              <select id="voice-lang" bind:value={voiceLang}>
+                <option value="FR">Français</option>
+                <option value="EN">Anglais</option>
+              </select>
+            </div>
 
             <div class="option-group">
               <label for="voice-type">Type de Voix</label>
-                <select id="voice-type" bind:value={voiceType}>
+              <select id="voice-type" bind:value={voiceType}>
                 <option value="femme">Femme</option>
                 <option value="homme">Homme</option>
                 <option value="mature">Voix mature</option>
               </select>
             </div>
-          
-           <div class="options-grid">
+            
             <div class="option-group">
               <label for="voice-style">Style</label>
-               <select id="voice-style" bind:value={voiceStyle}>
+              <select id="voice-style" bind:value={voiceStyle}>
                 <option value="professionnel">Professionnel</option>
                 <option value="chaleureux">Chaleureux</option>
                 <option value="dynamique">Dynamique</option>
@@ -654,11 +611,10 @@ async function generateChat() {
                 <option value="publicitaire">Publicitaire</option>
               </select>
             </div>
-          </div>
-            
+
             <div class="option-group">
               <label for="voice-emotion">Émotion</label>
-               <select id="voice-emotion" bind:value={voiceEmotion}>
+              <select id="voice-emotion" bind:value={voiceEmotion}>
                 <option value="neutre">Neutre</option>
                 <option value="joyeux">Joyeux</option>
                 <option value="serieux">Sérieux</option>
@@ -666,28 +622,29 @@ async function generateChat() {
                 <option value="enthousiaste">Enthousiaste</option>
               </select>
             </div>
-          </div>
-          
-          <div class="option-group full-width">
-            <label for="voice-speed">Vitesse</label>
-             <select id="voice-speed" bind:value={voiceSpeed}>
-              <option value="lent">Lent</option>
-              <option value="normal">Normal</option>
-              <option value="rapide">Rapide</option>
-            </select>
+
+            <div class="option-group full-width">
+              <label for="voice-speed">Vitesse</label>
+              <select id="voice-speed" bind:value={voiceSpeed}>
+                <option value="lent">Lent</option>
+                <option value="normal">Normal</option>
+                <option value="rapide">Rapide</option>
+              </select>
+            </div>
           </div>
        
-           <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
+          <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
             {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
           </button>
         {/if}
 
+        <!-- SECTION CHAT -->
         {#if activeTab === 'chat'}
           <textarea bind:value={chatPrompt} placeholder="Pose ta question ou donne tes instructions..."></textarea>
           
           <div class="options-grid">
             <div class="option-group">
-             <label for="chat-role">Rôle de l'IA</label>
+              <label for="chat-role">Rôle de l'IA</label>
               <select id="chat-role" bind:value={chatRole}>
                 <option value="assistant">Assistant Général</option>
                 <option value="copywriter">Copywriter</option>
@@ -700,7 +657,7 @@ async function generateChat() {
             
             <div class="option-group">
               <label for="chat-tone">Ton</label>
-               <select id="chat-tone" bind:value={chatTone}>
+              <select id="chat-tone" bind:value={chatTone}>
                 <option value="pro">Professionnel</option>
                 <option value="creatif">Créatif</option>
                 <option value="direct">Direct</option>
@@ -711,9 +668,10 @@ async function generateChat() {
           </div>
           
           <div class="options-grid">
-           <label for="chat-format">Format de réponse</label>
-             <select id="chat-format" bind:value={chatFormat}>
-               <option value="texte">Texte simple</option>
+            <div class="option-group">
+              <label for="chat-format">Format de réponse</label>
+              <select id="chat-format" bind:value={chatFormat}>
+                <option value="texte">Texte simple</option>
                 <option value="liste">Liste à puces</option>
                 <option value="etapes">Étapes détaillées</option>
                 <option value="tableau">Tableau</option>
@@ -722,15 +680,16 @@ async function generateChat() {
             
             <div class="option-group">
               <label for="chat-length">Longueur</label>
-               <select id="chat-length" bind:value={chatLength}>
+              <select id="chat-length" bind:value={chatLength}>
                 <option value="resume">Résumé</option>
                 <option value="standard">Standard</option>
                 <option value="detaille">Très détaillé</option>
               </select>
             </div>
+          </div>
           
           <button type="button" class="chrome-btn create-btn" on:click={generateChat} disabled={chatLoading}>
-          {chatLoading ? '⏳ Réflexion...' : '💬 ENVOYER'}
+            {chatLoading ? '⏳ Réflexion...' : '💬 ENVOYER'}
           </button>
           
           {#if chatResponse}
@@ -738,47 +697,48 @@ async function generateChat() {
               <div class="chat-bubble">{chatResponse}</div>
             </div>
           {/if}
-         {/if}
-      
-
-     <!-- ZONE DE PRÉVISUALISATION -->
-      {#if activeTab !== 'chat'}
-       {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || lipPreviewUrl || voiceAudioUrl}
-         <div class="preview-card glass">
-         <div class="preview-label">VOTRE CRÉATION</div>
-          {#if imgPreviewUrl}
-           <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" /></div>
-          <div class="watermark">CLIPLUMIA · PREVIEW</div>
-           {:else if imgValidatedUrl}
-           <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
-           <a href={imgValidatedUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
-            {:else if vidPreviewUrl}
-            <div class="preview-media"><video src={vidPreviewUrl} controls loop muted playsinline></video></div>
-           <div class="watermark">CLIPLUMIA · PREVIEW</div>
-            {:else if vidValidatedUrl}
-           <div class="preview-media validated"><video src={vidValidatedUrl} controls loop playsinline></video></div>
-          <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
-         {:else if voiceAudioUrl}
-        <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
         {/if}
-       </div>
-      {/if}
-     {/if}
 
-      <!-- BOUTONS J'AIME / REJETER (SAUF POUR CHAT) -->
-      {#if activeTab !== 'chat'}
-        <div class="action-buttons">
-          <button class="btn-reject" on:click={activeTab === 'images' ? rejectImage : activeTab === 'video' ? rejectVideo : activeTab === 'lipsync' ? resetLipsync : null}>
-            ❌ Rejeter (0€)
-          </button>
-          <button class="btn-validate" on:click={activeTab === 'images' ? validateImage : activeTab === 'video' ? validateVideo : null}>
-            ✅ J'aime (1 Forfait)
-          </button>
-        </div>
-      {/if}
-    </div>
+        <!-- ZONE DE PRÉVISUALISATION -->
+        {#if activeTab !== 'chat'}
+          {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || lipPreviewUrl || voiceAudioUrl}
+            <div class="preview-card glass">
+              <div class="preview-label">VOTRE CRÉATION</div>
+              {#if imgPreviewUrl}
+                <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" /></div>
+                <div class="watermark">CLIPLUMIA · PREVIEW</div>
+              {:else if imgValidatedUrl}
+                <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
+                <a href={imgValidatedUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
+              {:else if vidPreviewUrl}
+                <div class="preview-media"><video src={vidPreviewUrl} controls loop muted playsinline></video></div>
+                <div class="watermark">CLIPLUMIA · PREVIEW</div>
+              {:else if vidValidatedUrl}
+                <div class="preview-media validated"><video src={vidValidatedUrl} controls loop playsinline></video></div>
+                <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
+              {:else if voiceAudioUrl}
+                <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
+              {/if}
+            </div>
+          {/if}
+        {/if}
 
-      <!-- GALERIE D'EXEMPLES (En bas, page déroulante) -->
+        <!-- BOUTONS J'AIME / REJETER (SAUF POUR CHAT) -->
+        {#if activeTab !== 'chat' && activeTab !== 'lipsync'}
+          {#if imgPreviewUrl || vidPreviewUrl || voiceAudioUrl}
+            <div class="action-buttons">
+              <button class="btn-reject" on:click={activeTab === 'images' ? rejectImage : activeTab === 'video' ? rejectVideo : null}>
+                ❌ Rejeter (0€)
+              </button>
+              <button class="btn-validate" on:click={activeTab === 'images' ? validateImage : activeTab === 'video' ? validateVideo : null}>
+                ✅ J'aime (1 Forfait)
+              </button>
+            </div>
+          {/if}
+        {/if}
+      </div>
+
+      <!-- GALERIE D'EXEMPLES -->
       <div class="examples-section glass">
         <h2 class="chrome-text section-title">Exemples de Réalisations</h2>
         <div class="examples-grid-full">
@@ -787,9 +747,9 @@ async function generateChat() {
           <div class="example-item">Exemple 3</div>
           <div class="example-item">Exemple 4</div>
         </div>
-       </div>
+      </div>
      
-      <!-- FAQ (En bas, page déroulante) -->
+      <!-- FAQ -->
       <div class="faq-section glass">
         <h2 class="chrome-text section-title">Questions Fréquentes</h2>
         
@@ -823,7 +783,6 @@ async function generateChat() {
 </div>
 
 <style>
-
   :global(*) { box-sizing: border-box; }
   :global(body) { 
     margin: 0; 
@@ -834,14 +793,14 @@ async function generateChat() {
     background: #0c0618;
   }
 
- .chrome-text {
-  background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 30px rgba(191, 149, 63, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.6));
-  font-weight: 900;
-  letter-spacing: 0.02em;
-}
+  .chrome-text {
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(191, 149, 63, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+    font-weight: 900;
+    letter-spacing: 0.02em;
+  }
 
   .chrome-btn {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
@@ -859,9 +818,7 @@ async function generateChat() {
     transform: translateY(-2px); 
     box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
   }
-  
 
-  /* === FOND VIOLET FONCÉ AVEC IMAGE === */
   .studio-page {
     position: relative;
     min-height: 100vh;
@@ -883,7 +840,6 @@ async function generateChat() {
     pointer-events: none;
   }
 
-  
   .glass {
     position: relative;
     background: rgba(255, 255, 255, 0.04);
@@ -892,12 +848,11 @@ async function generateChat() {
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 20px;
     box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.4), 
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      0 8px 32px rgba(0, 0, 0, 0.4), 
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
     z-index: 2;
   }
 
-  /* === CONTENEUR PRINCIPAL === */
   .studio-container {
     position: relative;
     z-index: 2;
@@ -910,8 +865,7 @@ async function generateChat() {
     margin: 0 auto;
   }
 
-  /* === SIDEBAR GAUCHE === */
-   .sidebar {
+  .sidebar {
     width: 280px;
     padding: 30px 20px;
     display: flex;
@@ -957,7 +911,12 @@ async function generateChat() {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
-  /* === CENTRE : STUDIO === */
+  .lock-icon {
+    font-size: 0.7rem;
+    margin-left: 4px;
+    opacity: 0.6;
+  }
+
   .studio-main {
     flex: 1;
     display: flex;
@@ -996,7 +955,6 @@ async function generateChat() {
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 
-  /* === CARTE DE GÉNÉRATION === */
   .generation-card {
     padding: 30px;
   }
@@ -1019,11 +977,11 @@ async function generateChat() {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
-    textarea::placeholder {
+  textarea::placeholder {
     color: rgba(255, 255, 255, 0.4);
   }
 
-   textarea:focus {
+  textarea:focus {
     border-color: rgba(191, 149, 63, 0.4);
     background: rgba(0, 0, 0, 0.4);
     box-shadow: 0 0 20px rgba(191, 149, 63, 0.1);
@@ -1120,10 +1078,10 @@ async function generateChat() {
     transition: all 0.3s ease;
   }
 
-  /* === CARTE DE PRÉVISUALISATION === */
   .preview-card {
     padding: 30px;
     position: relative;
+    margin-top: 25px;
   }
 
   .preview-label {
@@ -1173,10 +1131,10 @@ async function generateChat() {
     text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
   }
 
-  /* === BOUTONS J'AIME / REJETER === */
   .action-buttons {
     display: flex;
     gap: 16px;
+    margin-top: 20px;
   }
 
   .btn-reject {
@@ -1203,29 +1161,28 @@ async function generateChat() {
     box-shadow: 0 6px 20px rgba(255, 68, 68, 0.2);
   }
 
- .btn-validate {
-  flex: 1;
-  padding: 18px;
-  border-radius: 14px;
-  font-weight: 900;
-  font-size: 1rem;
-  cursor: pointer;
-  background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-  border: 2px solid #FCF6BA;
-  border-bottom: 3px solid #8B6508;
-  color: #1a0b2e;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(191, 149, 63, 0.6), inset 0 1px 0 rgba(255,255,255,0.6);
-  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-}
+  .btn-validate {
+    flex: 1;
+    padding: 18px;
+    border-radius: 14px;
+    font-weight: 900;
+    font-size: 1rem;
+    cursor: pointer;
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    border: 2px solid #FCF6BA;
+    border-bottom: 3px solid #8B6508;
+    color: #1a0b2e;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(191, 149, 63, 0.6), inset 0 1px 0 rgba(255,255,255,0.6);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  }
 
-.btn-validate:hover { 
-  filter: brightness(1.1);
-  transform: translateY(-3px); 
-  box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
-}
+  .btn-validate:hover { 
+    filter: brightness(1.1);
+    transform: translateY(-3px); 
+    box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
+  }
 
-  /* === GALERIE D'EXEMPLES === */
   .examples-section {
     margin-top: 40px;
     padding: 30px;
@@ -1267,10 +1224,10 @@ async function generateChat() {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
   }
 
-  /* === FAQ === */
   .faq-section {
     margin-top: 40px;
     padding: 30px;
+    margin-bottom: 40px;
   }
 
   .faq-item {
@@ -1296,7 +1253,6 @@ async function generateChat() {
     font-weight: 700;
   }
 
-  /* === CHAT RESPONSE === */
   .chat-response {
     margin-top: 20px;
   }
@@ -1312,7 +1268,31 @@ async function generateChat() {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
-  /* === RESPONSIVE MOBILE === */
+  .download-btn {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 14px;
+    font-weight: 900;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    border: 2px solid #FCF6BA;
+    border-bottom: 3px solid #8B6508;
+    color: #1a0b2e;
+    box-shadow: 0 0 20px rgba(191, 149, 63, 0.6), inset 0 1px 0 rgba(255,255,255,0.6);
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+    transition: all 0.3s ease;
+  }
+  
+  .download-btn:hover { 
+    filter: brightness(1.1); 
+    transform: translateY(-3px); 
+    box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+
   @media (max-width: 1024px) {
     .studio-container { 
       flex-direction: column; 
@@ -1327,14 +1307,8 @@ async function generateChat() {
       padding: 15px; 
       gap: 10px; 
     }
-
-    .lock-icon {
-    font-size: 0.7rem;
-    margin-left: 4px;
-    opacity: 0.6;
-   }
     
-     .logo { 
+    .logo { 
       display: none; 
     }
     
@@ -1384,31 +1358,4 @@ async function generateChat() {
       font-size: 1rem;
     }
   }
-
-  .download-btn {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    padding: 18px;
-    border-radius: 14px;
-    font-weight: 900;
-    font-size: 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-    border: 2px solid #FCF6BA;
-    border-bottom: 3px solid #8B6508;
-    color: #1a0b2e;
-    box-shadow: 0 0 20px rgba(191, 149, 63, 0.6), inset 0 1px 0 rgba(255,255,255,0.6);
-    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-    transition: all 0.3s ease;
-  }
-  
-  .download-btn:hover { 
-    filter: brightness(1.1); 
-    transform: translateY(-3px); 
-    box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
-  }
-
-
 </style>
