@@ -613,14 +613,13 @@ async function generateChat() {
     <video controls autoplay loop style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid #d4af37;">
       <source src={lipPreviewUrl} type="video/mp4">
       Votre navigateur ne supporte pas la vidéo.
-    </video>
-    <br>
+      </video>
+     <br>
     <a href={lipPreviewUrl} download="lipsync-cliplumia.mp4" class="chrome-btn" style="margin-top: 15px; display: inline-block; text-decoration: none;">
     Télécharger la vidéo
     </a>
   </div>
 {/if}
-
 
 <!-- SECTION VOIX -->
 {#if activeTab === 'voice'}
@@ -740,8 +739,8 @@ async function generateChat() {
               <div class="chat-bubble">{chatResponse}</div>
             </div>
           {/if}
-        {/if}
-      </div>
+         {/if}
+      
 
      <!-- ZONE DE PRÉVISUALISATION -->
       {#if activeTab !== 'chat'}
