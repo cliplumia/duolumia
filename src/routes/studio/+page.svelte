@@ -414,16 +414,15 @@ async function generateChat() {
   
   chatLoading = false;
 }
-
 </script>
 
-<svelte:head>
+  <svelte:head>
   <title>Studio — ClipLumia</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-</svelte:head>
+  </svelte:head>
 
-<div class="studio-page">
+  <div class="studio-page">
   <div class="studio-container">
     
     <!-- SIDEBAR GAUCHE -->
@@ -451,26 +450,25 @@ async function generateChat() {
 
     <!-- CENTRE : STUDIO PRINCIPAL -->
     <main class="studio-main">
-      
-      <!-- HEADER AVEC TITRE ET FORFAIT -->
+     <!-- HEADER AVEC TITRE ET FORFAIT -->
       <div class="studio-header">
         <h1 class="chrome-text studio-title">
           {activeTab === 'images' ? 'Générateur d\'Images IA' : 
            activeTab === 'video' ? 'Générateur de Vidéos IA' :
            activeTab === 'lipsync' ? 'Studio Lipsync' :
            activeTab === 'voice' ? 'Synthèse Vocale IA' : 'Chat IA Assistant'}
-        </h1>
-        <div class="forfait-badge chrome-gold">Forfait : {data?.user?.images_restantes || 0}</div>
+          </h1>
+         <div class="forfait-badge chrome-gold">📸 {data?.user?.images_restantes || 0} | 🎬 {data?.user?.videos_restantes || 0}
+       </div>
       </div>
 
       <!-- CARTE DE GÉNÉRATION (Effet Glass) -->
       <div class="generation-card glass">
-        
         <!-- SECTION IMAGES -->
         {#if activeTab === 'images'}
           <textarea bind:value={imgPrompt} placeholder="Décris ton image en détail... Une femme élégante dans un bureau moderne, éclairage doré..."></textarea>
-          
-          <div class="options-grid">
+           
+           <div class="options-grid">
             <div class="option-group">
              <label for="img-format">Format</label>
               <select id="img-format" bind:value={imgFormat}>
@@ -504,8 +502,8 @@ async function generateChat() {
         <!-- SECTION VIDÉO -->
         {#if activeTab === 'video'}
           <textarea bind:value={vidPrompt} placeholder="Décris ta vidéo... Un drone survolant une ville futuriste au crépuscule..."></textarea>
-          
-          <div class="options-grid">
+           
+           <div class="options-grid">
             <div class="option-group">
               <label for="vid-format">Format</label>
                <select id="vid-format" bind:value={vidFormat}>
