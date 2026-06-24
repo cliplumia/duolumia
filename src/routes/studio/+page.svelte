@@ -503,8 +503,7 @@ async function generateChat() {
     </p>
   {/if}
       
-
-        <!-- SECTION VIDÉO -->
+       <!-- SECTION VIDÉO -->
         {#if activeTab === 'video'}
           <textarea bind:value={vidPrompt} placeholder="Décris ta vidéo... Un drone survolant une ville futuriste au crépuscule..."></textarea>
            
@@ -777,7 +776,8 @@ async function generateChat() {
           </button>
         </div>
       {/if}
-    
+    </div>
+
       <!-- GALERIE D'EXEMPLES (En bas, page déroulante) -->
       <div class="examples-section glass">
         <h2 class="chrome-text section-title">Exemples de Réalisations</h2>
