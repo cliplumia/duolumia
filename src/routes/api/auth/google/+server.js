@@ -22,13 +22,16 @@ export async function POST({ request, platform, cookies }) {
     const adminEmails = ['dussolliermarjorie@gmail.com', 'contact.cliplumia@gmail.com'];
     const isAdmin = adminEmails.includes(payload.email);
     
+    let id; // Variable pour stocker l'ID
+
     if (existing) {
-      // UTILISATEUR EXISTANT → On met juste à jour la date (on ne touche PAS aux compteurs)
+      // UTILISATEUR EXISTANT → On garde son ID et on met à jour la date
+      id = existing.id;
       await BD.prepare('UPDATE utilisateurs SET mis_a_jour_a = ? WHERE google_id = ?')
         .bind(now, payload.sub).run();
     } else {
       // NOUVEL UTILISATEUR → On crée le compte
-      const id = crypto.randomUUID();
+      id = crypto.randomUUID();
       
       if (isAdmin) {
         await BD.prepare('INSERT INTO utilisateurs (id, google_id, email, nom, plan, images_restantes, videos_restantes, essai_expire_a, cree_a, mis_a_jour_a) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
@@ -38,9 +41,10 @@ export async function POST({ request, platform, cookies }) {
         await BD.prepare('INSERT INTO utilisateurs (id, google_id, email, nom, plan, images_restantes, videos_restantes, essai_expire_a, cree_a, mis_a_jour_a) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
           .bind(id, payload.sub, payload.email, payload.name || '', plan, 3, 3, essaiExpire, now, now).run();
       }
-      
-      cookies.set('user_id', id, { path: '/', httpOnly: true, secure: true, sameSite: 'lax', maxAge: 604800 });
     }
+    
+    // COOKIE DONNÉ À TOUS LES UTILISATEURS (pas seulement aux nouveaux)
+    cookies.set('user_id', id, { path: '/', httpOnly: true, secure: true, sameSite: 'lax', maxAge: 604800 });
     
     return json({ success: true, email: payload.email });
     
