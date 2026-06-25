@@ -419,10 +419,10 @@
         👄 Lipsync
       </button>
       <button type="button" class="nav-item" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>
-        🎤 Voix IA <span class="lock-icon">🔒</span>
+        🎤 Voix IA {#if data?.user?.plan === 'gratuit' || !data?.user?.plan}<span class="lock-icon">🔒</span>{/if}
       </button>
       <button type="button" class="nav-item" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
-        💬 Chat IA <span class="lock-icon">🔒</span>
+        💬 Chat IA {#if data?.user?.plan === 'gratuit' || !data?.user?.plan}<span class="lock-icon"></span>{/if}
       </button>
     </aside>
 
