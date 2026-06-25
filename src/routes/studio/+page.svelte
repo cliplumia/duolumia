@@ -1417,4 +1417,135 @@
       font-size: 1rem;
     }
   }
+
+  /* === STYLE BOUTON FORFAITS (Gold Chrome) === */
+  .btn-forfaits {
+    background: linear-gradient(135deg, #C9A86A 0%, #B69852 100%);
+    color: #1A0B2E;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+  }
+  .btn-forfaits:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(201, 168, 106, 0.4);
+  }
+
+  /* === STYLE MODALE (Violet Satiné + Gold Chrome) === */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(26, 11, 46, 0.9); /* Violet Satiné foncé */
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(201, 168, 106, 0.3);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 900px;
+    width: 90%;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 15px; right: 20px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .modal-close:hover { color: #C9A86A; } /* Gold Chrome */
+
+  .modal-plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+  }
+
+  .modal-plan {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(201, 168, 106, 0.3);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .modal-plan:hover {
+    transform: translateY(-5px);
+    border-color: #C9A86A;
+    box-shadow: 0 20px 40px rgba(201, 168, 106, 0.2);
+  }
+
+  .modal-plan h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 15px;
+  }
+
+  .modal-plan .price {
+    color: #C9A86A;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+  .modal-plan .price small {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 400;
+  }
+
+  .modal-plan .chrome-btn {
+    background: linear-gradient(135deg, #C9A86A 0%, #B69852 100%);
+    color: #1A0B2E;
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .modal-plan .chrome-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(201, 168, 106, 0.4);
+  }
+
+  .modal-plan.popular {
+    border: 2px solid #C9A86A;
+  }
+
+  .modal-plan .pop-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #C9A86A;
+    color: #1A0B2E;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+
 </style>
