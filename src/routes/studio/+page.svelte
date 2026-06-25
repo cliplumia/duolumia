@@ -3,7 +3,28 @@
   
   // === ÉTAT DES SECTIONS ===
   let activeTab = 'images';
-  
+  let showForfaits = false;
+
+  // === FONCTION CHOIX FORFAIT ===
+  async function selectPlan(plan) {
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan: plan })
+      });
+      const result = await res.json();
+      
+      if (result.url) {
+        window.location.href = result.url; // Envoie le client sur Stripe
+      } else {
+        alert('Erreur: ' + (result.error || 'Impossible de lancer le paiement'));
+      }
+    } catch (e) {
+      alert('Erreur réseau: ' + e.message);
+    }
+  }
+
   // === IMAGES ===
   let imgPrompt = '';
   let imgLoading = false;
@@ -416,9 +437,12 @@
            activeTab === 'voice' ? 'Synthèse Vocale IA' : 'Chat IA Assistant'}
         </h1>
         <div class="forfait-badge chrome-gold">📸 {data?.user?.images_restantes || 0} | 🎬 {data?.user?.videos_restantes || 0}</div>
-      </div>
+      <button class="btn-forfaits chrome-btn" on:click={() => showForfaits = true}>
+  💎 Forfaits
+  </button>
+</div>
 
-      <!-- CARTE DE GÉNÉRATION -->
+     <!-- CARTE DE GÉNÉRATION -->
       <div class="generation-card glass">
         
         <!-- SECTION IMAGES -->
@@ -781,6 +805,41 @@
     </main>
   </div>
 </div>
+
+<!-- FENÊTRE DES FORFAITS -->
+{#if showForfaits}
+  <div class="modal-overlay" on:click={() => showForfaits = false}>
+    <div class="modal-content glass" on:click|stopPropagation>
+      <button class="modal-close" on:click={() => showForfaits = false}>✖</button>
+      <h2 class="chrome-text" style="text-align:center; margin-bottom:20px;">Choisis ton forfait</h2>
+      
+      <div class="modal-plans">
+        <div class="modal-plan">
+          <h3>Starter</h3>
+          <div class="price">9€<small>/mois</small></div>
+          <button class="chrome-btn" on:click={() => selectPlan('starter')}>Choisir</button>
+        </div>
+        <div class="modal-plan">
+          <h3>Standard</h3>
+          <div class="price">19€<small>/mois</small></div>
+          <button class="chrome-btn" on:click={() => selectPlan('standard')}>Choisir</button>
+        </div>
+        <div class="modal-plan popular">
+          <div class="pop-badge">POPULAIRE</div>
+          <h3>Pro</h3>
+          <div class="price">39€<small>/mois</small></div>
+          <button class="chrome-btn" on:click={() => selectPlan('pro')}>Choisir</button>
+        </div>
+        <div class="modal-plan">
+          <h3>Studio</h3>
+          <div class="price">79€<small>/mois</small></div>
+          <button class="chrome-btn" on:click={() => selectPlan('studio')}>Choisir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{/if}
+
 
 <style>
   :global(*) { box-sizing: border-box; }
