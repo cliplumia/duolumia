@@ -37,35 +37,32 @@ export async function POST({ request, platform }) {
         return json({ error: 'User ID manquant' }, { status: 400 });
       }
 
-      // Récupérer l'abonnement pour avoir le plan
       const subscription = await stripe.subscriptions.retrieve(session.subscription);
       const priceId = subscription.items.data[0].price.id;
       
-      // Déterminer le plan selon le price ID
+      // Tes chiffres exacts
       let plan = 'starter';
       let videos = 30;
       let images = 100;
+      let voices = 0;
+      let chats = 20;
       
       if (priceId === 'price_1TP1gEEsGrpQC0pJiMzdzHjo') {
         plan = 'standard';
-        videos = 60;
-        images = 300;
+        videos = 60; images = 300; voices = 10; chats = 20;
       } else if (priceId === 'price_1TP1gIEsGrpQC0pJvr1PXmoD') {
         plan = 'pro';
-        videos = 120;
-        images = 600;
+        videos = 120; images = 600; voices = 20; chats = 30;
       } else if (priceId === 'price_1Tc71ZEsGrpQC0pJkijNahPK') {
         plan = 'studio';
-        videos = 180;
-        images = 800;
+        videos = 180; images = 800; voices = 40; chats = 50;
       }
 
-      // Mettre à jour l'utilisateur dans la base de données
       await BD.prepare(`
         UPDATE utilisateurs 
-        SET plan = ?, videos_restantes = ?, images_restantes = ?
+        SET plan = ?, videos_restantes = ?, images_restantes = ?, voices_restantes = ?, chat_restantes = ?
         WHERE id = ?
-      `).bind(plan, videos, images, userId).run();
+      `).bind(plan, videos, images, voices, chats, userId).run();
     }
 
     // Événement : Paiement récurrent réussi (renouvellement mensuel)
@@ -80,26 +77,21 @@ export async function POST({ request, platform }) {
 
       const priceId = subscription.items.data[0].price.id;
       
-      // Réinitialiser les compteurs selon le plan
-      let videos = 30;
-      let images = 100;
+      let videos = 30; let images = 100; let voices = 0; let chats = 20;
       
       if (priceId === 'price_1TP1gEEsGrpQC0pJiMzdzHjo') {
-        videos = 60;
-        images = 300;
+        videos = 60; images = 300; voices = 10; chats = 20;
       } else if (priceId === 'price_1TP1gIEsGrpQC0pJvr1PXmoD') {
-        videos = 120;
-        images = 600;
+        videos = 120; images = 600; voices = 20; chats = 30;
       } else if (priceId === 'price_1Tc71ZEsGrpQC0pJkijNahPK') {
-        videos = 180;
-        images = 800;
+        videos = 180; images = 800; voices = 40; chats = 50;
       }
 
       await BD.prepare(`
         UPDATE utilisateurs 
-        SET videos_restantes = ?, images_restantes = ?
+        SET videos_restantes = ?, images_restantes = ?, voices_restantes = ?, chat_restantes = ?
         WHERE id = ?
-      `).bind(videos, images, userId).run();
+      `).bind(videos, images, voices, chats, userId).run();
     }
 
     return json({ received: true });
