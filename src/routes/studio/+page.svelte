@@ -452,9 +452,9 @@
             </div>
           </div>
           
-          <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || (data?.user?.tentatives_images <= 0)}>
-            ✨ CRÉER L'IMAGE
-          </button>
+         <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || (data?.user?.tentatives_images <= 0)}>
+        {imgLoading ? '⏳ Génération en cours...' : '✨ CRÉER L'IMAGE'}
+        </button>
 
           {#if data?.user?.tentatives_images <= 0}
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
@@ -490,9 +490,9 @@
             </div>
           </div>
           
-          <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || (data?.user?.tentatives_videos <= 0)}>
-            🎬 CRÉER LA VIDÉO
-          </button>
+         <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || (data?.user?.tentatives_videos <= 0)}>
+         {vidLoading ? '⏳ Génération en cours...' : '🎬 CRÉER LA VIDÉO'}
+         </button>
 
           {#if data?.user?.tentatives_videos <= 0}
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
@@ -554,9 +554,9 @@
             </div>
           </div>
           
-          <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (data?.user?.tentatives_videos <= 0)}>
-            👄 CRÉER LE LIPSYNC
-          </button>
+         <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (data?.user?.tentatives_videos <= 0)}>
+         {lipLoading ? '⏳ Génération en cours...' : '👄 CRÉER LE LIPSYNC'}
+         </button>
 
           {#if data?.user?.tentatives_videos <= 0}
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
@@ -635,7 +635,7 @@
           </div>
        
           <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
-            {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
+           {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
           </button>
         {/if}
 
