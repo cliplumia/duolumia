@@ -3,7 +3,7 @@
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   
-  let plan = $page.url.searchParams.get('plan') || 'starter';
+  let plan = $page.url.searchParams.get('plan') || 'GRATUIT';
 
   onMount(() => {
     const script = document.createElement('script');
