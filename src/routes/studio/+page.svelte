@@ -584,7 +584,7 @@
           {/if}
         {/if}
 
-      <!-- SECTION VOIX -->
+     <!-- SECTION VOIX -->
 {#if activeTab === 'voice'}
   <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
 
@@ -593,8 +593,8 @@
       <label for="voice-lang">Langue</label>
       <select id="voice-lang" bind:value={voiceLang}>
         <option value="auto">Auto</option>
-        <option value="FR">Français</option>
-        <option value="EN">Anglais</option>
+        <option value="French">Français</option>
+        <option value="English">Anglais</option>
       </select>
     </div>
 
@@ -603,7 +603,6 @@
       <select id="voice-speaker" bind:value={voiceSpeaker}>
         <optgroup label="Féminines">
           <option value="Serena">Serena</option>
-          <option value="Vivian">Vivian</option>
           <option value="Ono_anna">Ono Anna</option>
         </optgroup>
         <optgroup label="Masculines">
@@ -613,6 +612,11 @@
           <option value="Dylan">Dylan</option>
           <option value="Uncle_fu">Uncle Fu</option>
           <option value="Sohee">Sohee</option>
+          <option value="Vivian">Vivian</option>
+        </optgroup>
+        <optgroup label="Enfant">
+          <option value="Ono_anna">Fille (Ono Anna)</option>
+          <option value="Dylan">Garçon (Dylan)</option>
         </optgroup>
       </select>
     </div>
