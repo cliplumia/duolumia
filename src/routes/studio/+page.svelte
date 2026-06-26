@@ -39,15 +39,14 @@
   
   // === VOIX ===
   let voiceSpeaker = 'Serena';
-  let voiceEmotion = '';
   let voiceText = '';
   let voiceLoading = false;
   let voiceAudioUrl = null;
   let voiceLang = 'FR';
-  let voiceType = 'femme';
-  let voiceStyle = 'professionnel';
-  let voiceEmotion = 'neutre';
-  let voiceSpeed = 'normal';
+ let voiceType = 'femme';
+ let voiceStyle = 'professionnel';
+ let voiceEmotion = 'neutre';
+ let voiceSpeed = 'normal';
   
   // === CHAT ===
   let chatPrompt = '';
