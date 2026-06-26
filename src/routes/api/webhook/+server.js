@@ -28,7 +28,7 @@ export async function POST({ request, platform }) {
 
     const BD = platform.env.BD;
 
-    // Événement : Paiement réussi (nouvel abonnement)
+    // Événement : Nouveau paiement réussi (premier abonnement)
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       const userId = session.metadata?.user_id;
@@ -40,23 +40,18 @@ export async function POST({ request, platform }) {
       const subscription = await stripe.subscriptions.retrieve(session.subscription);
       const priceId = subscription.items.data[0].price.id;
       
-      // Tes chiffres exacts
+      // === TES CHIFFRES EXACTS PAR FORFAIT ===
       let plan = 'starter';
-      let videos = 30;
-      let images = 100;
-      let voices = 0;
-      let chats = 20;
+      let videos = 15; let images = 50; let voices = 0; let chats = 20; // Starter par défaut
       
-      if (priceId === 'price_1TP1gEEsGrpQC0pJiMzdzHjo') {
-        plan = 'standard';
-        videos = 60; images = 300; voices = 10; chats = 20;
-      } else if (priceId === 'price_1TP1gIEsGrpQC0pJvr1PXmoD') {
-        plan = 'pro';
-        videos = 120; images = 600; voices = 20; chats = 30;
-      } else if (priceId === 'price_1Tc71ZEsGrpQC0pJkijNahPK') {
-        plan = 'studio';
-        videos = 180; images = 800; voices = 40; chats = 50;
+      if (priceId === 'price_1TP1gEEsGrpQC0pJiMzdzHjo') { // STANDARD 19€
+        plan = 'standard'; videos = 60; images = 300; voices = 10; chats = 20;
+      } else if (priceId === 'price_1TP1gIEsGrpQC0pJvr1PXmoD') { // PRO 39€
+        plan = 'pro'; videos = 120; images = 600; voices = 20; chats = 30;
+      } else if (priceId === 'price_1Tc71ZEsGrpQC0pJkijNahPK') { // STUDIO 79€
+        plan = 'studio'; videos = 180; images = 800; voices = 40; chats = 50;
       }
+      // Si c'est le Starter (9€), on garde les valeurs par défaut (15, 50, 0, 20)
 
       await BD.prepare(`
         UPDATE utilisateurs 
@@ -77,13 +72,13 @@ export async function POST({ request, platform }) {
 
       const priceId = subscription.items.data[0].price.id;
       
-      let videos = 30; let images = 100; let voices = 0; let chats = 20;
+      let videos = 15; let images = 50; let voices = 0; let chats = 20; // Starter par défaut
       
-      if (priceId === 'price_1TP1gEEsGrpQC0pJiMzdzHjo') {
+      if (priceId === 'price_1TP1gEEsGrpQC0pJiMzdzHjo') { // STANDARD
         videos = 60; images = 300; voices = 10; chats = 20;
-      } else if (priceId === 'price_1TP1gIEsGrpQC0pJvr1PXmoD') {
+      } else if (priceId === 'price_1TP1gIEsGrpQC0pJvr1PXmoD') { // PRO
         videos = 120; images = 600; voices = 20; chats = 30;
-      } else if (priceId === 'price_1Tc71ZEsGrpQC0pJkijNahPK') {
+      } else if (priceId === 'price_1Tc71ZEsGrpQC0pJkijNahPK') { // STUDIO
         videos = 180; images = 800; voices = 40; chats = 50;
       }
 
