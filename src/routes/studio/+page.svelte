@@ -452,9 +452,9 @@
             </div>
           </div>
           
-         <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || (data?.user?.tentatives_images <= 0)}>
-        {imgLoading ? '⏳ Génération en cours...' : '✨ CRÉER L'IMAGE'}
-        </button>
+        <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || (data?.user?.tentatives_images <= 0)}>
+        {imgLoading ? '⏳ Génération en cours...' : "✨ CRÉER L'IMAGE"}
+       </button>
 
           {#if data?.user?.tentatives_images <= 0}
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
