@@ -23,7 +23,6 @@ export async function POST({ request, platform, cookies }) {
       },
       body: JSON.stringify({
         version: "qwen/qwen3-tts",
-        use_cache: true,
         input: {
           text: text,
           mode: "custom_voice",
