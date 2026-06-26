@@ -402,7 +402,7 @@
         🎤 Voix IA {#if data?.user?.plan === 'gratuit' || !data?.user?.plan}<span class="lock-icon">🔒</span>{/if}
       </button>
       <button type="button" class="nav-item" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
-        💬 Chat IA {#if data?.user?.plan === 'gratuit' || !data?.user?.plan}<span class="lock-icon"></span>{/if}
+        💬 Chat IA {#if data?.user?.plan === 'gratuit' || !data?.user?.plan}<span class="lock-icon">🔒</span>{/if}
       </button>
     </aside>
 
