@@ -579,64 +579,66 @@
           {/if}
         {/if}
 
-        <!-- SECTION VOIX -->
-        {#if activeTab === 'voice'}
-          <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
-  
-          <div class="options-grid">
-            <div class="option-group">
-              <label for="voice-lang">Langue</label>
-              <select id="voice-lang" bind:value={voiceLang}>
-                <option value="FR">Français</option>
-                <option value="EN">Anglais</option>
-              </select>
-            </div>
+       <!-- SECTION VOIX -->
+  {#if activeTab === 'voice'}
+  <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
 
-           <select id="voice-type" bind:value={voiceType}>
-           <option value="femme">Femme</option>
-           <option value="homme">Homme</option>
-           <option value="enfant">Enfant</option>
-           <option value="mature">Voix mature</option>
-          </select>
-        </div>
-            
-            <div class="option-group">
-              <label for="voice-style">Style</label>
-              <select id="voice-style" bind:value={voiceStyle}>
-                <option value="professionnel">Professionnel</option>
-                <option value="chaleureux">Chaleureux</option>
-                <option value="dynamique">Dynamique</option>
-                <option value="calme">Calme</option>
-                <option value="narratif">Narratif</option>
-                <option value="publicitaire">Publicitaire</option>
-              </select>
-            </div>
+  <div class="options-grid">
+    <div class="option-group">
+      <label for="voice-lang">Langue</label>
+      <select id="voice-lang" bind:value={voiceLang}>
+        <option value="FR">Français</option>
+        <option value="EN">Anglais</option>
+      </select>
+    </div>
 
-            <div class="option-group">
-              <label for="voice-emotion">Émotion</label>
-              <select id="voice-emotion" bind:value={voiceEmotion}>
-                <option value="neutre">Neutre</option>
-                <option value="joyeux">Joyeux</option>
-                <option value="serieux">Sérieux</option>
-                <option value="dramatique">Dramatique</option>
-                <option value="enthousiaste">Enthousiaste</option>
-              </select>
-            </div>
+    <div class="option-group">
+      <label for="voice-type">Type de Voix</label>
+      <select id="voice-type" bind:value={voiceType}>
+        <option value="femme">Femme</option>
+        <option value="homme">Homme</option>
+        <option value="enfant">Enfant</option>
+        <option value="mature">Voix mature</option>
+      </select>
+    </div>
 
-            <div class="option-group full-width">
-              <label for="voice-speed">Vitesse</label>
-              <select id="voice-speed" bind:value={voiceSpeed}>
-                <option value="lent">Lent</option>
-                <option value="normal">Normal</option>
-                <option value="rapide">Rapide</option>
-              </select>
-            </div>
-          </div>
-       
-          <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
-           {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
-          </button>
-        {/if}
+    <div class="option-group">
+      <label for="voice-style">Style</label>
+      <select id="voice-style" bind:value={voiceStyle}>
+        <option value="professionnel">Professionnel</option>
+        <option value="chaleureux">Chaleureux</option>
+        <option value="dynamique">Dynamique</option>
+        <option value="calme">Calme</option>
+        <option value="narratif">Narratif</option>
+        <option value="publicitaire">Publicitaire</option>
+      </select>
+    </div>
+
+    <div class="option-group">
+      <label for="voice-emotion">Émotion</label>
+      <select id="voice-emotion" bind:value={voiceEmotion}>
+        <option value="neutre">Neutre</option>
+        <option value="joyeux">Joyeux</option>
+        <option value="serieux">Sérieux</option>
+        <option value="dramatique">Dramatique</option>
+        <option value="enthousiaste">Enthousiaste</option>
+      </select>
+    </div>
+
+    <div class="option-group full-width">
+      <label for="voice-speed">Vitesse</label>
+      <select id="voice-speed" bind:value={voiceSpeed}>
+        <option value="lent">Lent</option>
+        <option value="normal">Normal</option>
+        <option value="rapide">Rapide</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
+    {voiceLoading ? ' Génération...' : '🎤 CRÉER LA VOIX'}
+  </button>
+{/if}
 
         <!-- SECTION CHAT -->
         {#if activeTab === 'chat'}
