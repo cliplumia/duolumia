@@ -20,14 +20,14 @@ export async function POST({ request, platform, cookies }) {
     let voiceId;
     if (isFrench) {
       // 🇫🇷 VOIX FRANÇAISES
-      const voixMapFR = {
+            const voixMapFR = {
         'femme': 'ff_siwis',
-        'homme': 'fm_alex',
+        'homme': 'am_adam',
         'enfant': 'ff_siwis',
-        'mature': 'fm_alex',
+        'mature': 'am_michael',
         'ana': 'ff_siwis',
         'florence': 'ff_siwis',
-        'thomas': 'fm_alex'
+        'thomas': 'am_adam'
       };
       voiceId = voixMapFR[voice] || 'ff_siwis';
     } else {
