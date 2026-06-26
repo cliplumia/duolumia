@@ -592,14 +592,13 @@
               </select>
             </div>
 
-            <div class="option-group">
-              <label for="voice-type">Type de Voix</label>
-              <select id="voice-type" bind:value={voiceType}>
-                <option value="femme">Femme</option>
-                <option value="homme">Homme</option>
-                <option value="mature">Voix mature</option>
-              </select>
-            </div>
+           <select id="voice-type" bind:value={voiceType}>
+           <option value="femme">Femme</option>
+           <option value="homme">Homme</option>
+           <option value="enfant">Enfant</option>
+           <option value="mature">Voix mature</option>
+          </select>
+        </div>
             
             <div class="option-group">
               <label for="voice-style">Style</label>
