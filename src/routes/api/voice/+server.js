@@ -11,38 +11,8 @@ export async function POST({ request, platform, cookies }) {
 
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
 
-    const { text, voice, lang } = await request.json();
+    const { text, speaker, lang, emotion } = await request.json();
     if (!text) return json({ error: 'Texte manquant' }, { status: 400 });
-
-    // 🌍 Choix de la voix selon la langue
-    const isFrench = lang === 'FR' || lang === 'fr' || lang === 'français';
-    
-    let voiceId;
-    if (isFrench) {
-      // 🇫🇷 VOIX FRANÇAISES
-            const voixMapFR = {
-        'femme': 'ff_siwis',
-        'homme': 'am_adam',
-        'enfant': 'ff_siwis',
-        'mature': 'am_michael',
-        'ana': 'ff_siwis',
-        'florence': 'ff_siwis',
-        'thomas': 'am_adam'
-      };
-      voiceId = voixMapFR[voice] || 'ff_siwis';
-    } else {
-      // 🇬🇧 VOIX ANGLAISES
-      const voixMapEN = {
-        'femme': 'af_bella',
-        'homme': 'am_adam',
-        'enfant': 'af_bella',
-        'mature': 'am_adam',
-        'ana': 'af_bella',
-        'florence': 'af_nicole',
-        'thomas': 'am_michael'
-      };
-      voiceId = voixMapEN[voice] || 'af_bella';
-    }
 
     const rep = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
@@ -52,11 +22,13 @@ export async function POST({ request, platform, cookies }) {
         'Prefer': 'wait'
       },
       body: JSON.stringify({
-        version: "f559560eb822dc509045f3921a1921234918b91739db4bf3daab2169b71c7a13",
+        version: "qwen/qwen3-tts",
         input: {
           text: text,
-          voice: voiceId,
-          speed: 1
+          mode: "custom_voice",
+          language: lang || "auto",
+          speaker: speaker || "Serena",
+          style_instruction: emotion || ""
         }
       })
     });
