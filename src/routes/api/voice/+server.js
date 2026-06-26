@@ -66,3 +66,4 @@ export async function POST({ request, platform, cookies }) {
     console.error('Voice error:', err);
     return json({ error: err.message }, { status: 500 });
   }
+}
