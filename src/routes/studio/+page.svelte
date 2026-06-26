@@ -324,30 +324,34 @@
     lipError = null;
   }
 
-  // === FONCTION GÉNÉRATION VOIX ===
-  async function generateVoice() {
-    if (!voiceText.trim()) return;
-    voiceLoading = true;
-    voiceAudioUrl = null;
+ async function generateVoice() {
+  if (!voiceText.trim()) return;
+  voiceLoading = true;
+  voiceAudioUrl = null;
+  
+  try {
+    const res = await fetch('/api/voice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        text: voiceText, 
+        speaker: voiceSpeaker, 
+        lang: voiceLang,
+        emotion: voiceEmotion
+      })
+    });
+    const result = await res.json();
     
-    try {
-      const res = await fetch('/api/voice', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: voiceText, voice: voiceType, lang: voiceLang })
-      });
-      const result = await res.json();
-      
-      if (result.success) {
-        voiceAudioUrl = result.url;
-      } else {
-        alert('Erreur: ' + (result.error || 'Impossible de générer'));
-      }
-    } catch (e) {
-      alert('Erreur réseau: ' + e.message);
+    if (result.success) {
+      voiceAudioUrl = result.url;
+    } else {
+      alert('Erreur: ' + (result.error || 'Impossible de générer'));
     }
-    voiceLoading = false;
+  } catch (e) {
+    alert('Erreur réseau: ' + e.message);
   }
+  voiceLoading = false;
+}
 
   // === FONCTION GÉNÉRATION CHAT ===
   async function generateChat() {
