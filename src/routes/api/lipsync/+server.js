@@ -13,12 +13,9 @@ export async function POST({ request, platform, cookies }) {
     const user = await platform.env.BD.prepare("SELECT * FROM utilisateurs WHERE id =?").bind(userId).first();
     if (!user) return json({ error: 'Utilisateur introuvable' }, { status: 401 });
     const userEmail = user.email;
-    
-    // On accepte 'video' ou 'image' pour être sûr de ne rien casser côté frontend
-    const { video, image, audio } = await request.json();
-    const sourceFile = video || image;
 
-    if (!sourceFile || !audio) return json({ error: 'Vidéo et audio requis' }, { status: 400 });
+    const { image, audio } = await request.json();
+    if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 400 });
 
     const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
@@ -27,10 +24,13 @@ export async function POST({ request, platform, cookies }) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        // NOUVEAU MODÈLE
         version: "prunaai/p-video",
         input: {
-          video: sourceFile, // Utilisation du nouveau format vidéo
-          audio: audio       // Utilisation du nouveau format audio
+          // On garde source_image car tu veux uploader une image, pas une vidéo
+          source_image: image,
+          driven_audio: audio,
+          use_enhancer: true
         }
       })
     });
@@ -42,7 +42,7 @@ export async function POST({ request, platform, cookies }) {
 
     let data = await replicateRes.json();
 
-    // TA LOGIQUE DE POLLING (gardée intacte car excellente pour la vidéo)
+    // LOGIQUE DE POLLING (On attend que le modèle finisse)
     while (data.status === "starting" || data.status === "processing") {
       await new Promise(r => setTimeout(r, 5000)); // attend 5s
       const pollRes = await fetch(`https://api.replicate.com/v1/predictions/${data.id}`, {
@@ -55,18 +55,17 @@ export async function POST({ request, platform, cookies }) {
       throw new Error(data.error || 'Lipsync echoue');
     }
 
-    // CORRECTION : output est un objet avec une propriété .url
+    // Récupération de l'URL de résultat
     const videoUrl = data.output.url || (typeof data.output === 'string' ? data.output : null);
 
     if (!videoUrl) {
       throw new Error('URL vidéo introuvable dans la réponse');
     }
 
-    // DECOMPTE -1 SEULEMENT SI LA VIDÉO A RÉUSSI
+    // Décompte des crédits (uniquement si réussite)
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(userEmail);
 
     if (!isAdmin) {
-      // J'ai laissé 'voices_restantes' car c'est ce qui était dans ton code (crédits unifiés ?)
       await platform.env.BD.prepare("UPDATE utilisateurs SET voices_restantes = voices_restantes - 1 WHERE id =?")
       .bind(userId).run();
     }
