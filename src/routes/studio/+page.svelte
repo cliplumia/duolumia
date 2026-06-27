@@ -506,85 +506,87 @@
           {/if}
         {/if}
 
-        <!-- SECTION LIPSYNC -->
-        {#if activeTab === 'lipsync'}
-          <div class="input-group">
-            <label for="lip-photo">1. Photo du visage</label>
-            <input id="lip-photo" type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
-          </div>
 
-          <div class="input-group">
-            <label for="lip-audio-source">2. Source Audio</label>
-            <select id="lip-audio-source" bind:value={lipAudioSource}>
-              <option value="upload">Upload fichier audio</option>
-              <option value="tts">Texte à vocaliser</option>
-              <option value="url">URL audio externe</option>
-            </select>
-          </div>
+<!-- SECTION LIPSYNC -->
+{#if activeTab === 'lipsync'}
+  <div class="input-group">
+    <label for="lip-photo">1. Photo du visage</label>
+    <!-- RESTÉ SUR IMAGE COMME TU LE VOULAIS -->
+    <input id="lip-photo" type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
+  </div>
+
+  <div class="input-group">
+    <label for="lip-audio-source">2. Source Audio</label>
+    <select id="lip-audio-source" bind:value={lipAudioSource}>
+      <option value="upload">Upload fichier audio</option>
+      <option value="tts">Texte à vocaliser</option>
+      <option value="url">URL audio externe</option>
+    </select>
+  </div>
+
+  {#if lipAudioSource === 'upload'}
+    <div class="input-group">
+      <label for="lip-audio-file">3. Fichier Audio</label>
+      <input id="lip-audio-file" type="file" accept="audio/*" on:change={handleAudioUpload} class="file-input" />
+    </div>
+  {/if}
+
+  {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
+    <div class="input-group">
+      <label for="lip-audio-text">3. URL Audio ou Texte</label>
+      <input id="lip-audio-text" type="text" bind:value={audioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez votre texte ici...'} class="text-input" />
+    </div>
+  {/if}
+
+  <div class="options-grid">
+    <div class="option-group">
+      <label for="lip-expression">Expression Faciale</label>
+      <select id="lip-expression" bind:value={lipExpression}>
+        <option value="neutre">Neutre (naturelle)</option>
+        <option value="souriant">Souriant (joyeux)</option>
+        <option value="serieux">Sérieux (professionnel)</option>
+        <option value="intense">Émotion intense</option>
+        <option value="precise">Synchronisation précise</option>
+      </select>
+    </div>
+
+    <div class="option-group">
+      <label for="lip-type">Type de Performance</label>
+      <select id="lip-type" bind:value={lipType}>
+        <option value="parole">Parole seule (discours)</option>
+        <option value="chant">Chant (musique)</option>
+        <option value="performance">Performance artistique</option>
+        <option value="presentation">Présentation pro</option>
+      </select>
+    </div>
+  </div>
   
-          {#if lipAudioSource === 'upload'}
-            <div class="input-group">
-              <label for="lip-audio-file">3. Fichier Audio</label>
-              <input id="lip-audio-file" type="file" accept="audio/*" on:change={handleAudioUpload} class="file-input" />
-            </div>
-          {/if}
-  
-          {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
-            <div class="input-group">
-              <label for="lip-audio-text">3. URL Audio ou Texte</label>
-              <input id="lip-audio-text" type="text" bind:value={audioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez votre texte ici...'} class="text-input" />
-            </div>
-          {/if}
-  
-          <div class="options-grid">
-            <div class="option-group">
-              <label for="lip-expression">Expression Faciale</label>
-              <select id="lip-expression" bind:value={lipExpression}>
-                <option value="neutre">Neutre (naturelle)</option>
-                <option value="souriant">Souriant (joyeux)</option>
-                <option value="serieux">Sérieux (professionnel)</option>
-                <option value="intense">Émotion intense</option>
-                <option value="precise">Synchronisation précise</option>
-              </select>
-            </div>
-    
-            <div class="option-group">
-              <label for="lip-type">Type de Performance</label>
-              <select id="lip-type" bind:value={lipType}>
-                <option value="parole">Parole seule (discours)</option>
-                <option value="chant">Chant (musique)</option>
-                <option value="performance">Performance artistique</option>
-                <option value="presentation">Présentation pro</option>
-              </select>
-            </div>
-          </div>
-          
-         <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (data?.user?.tentatives_videos <= 0)}>
-         {lipLoading ? '⏳ Génération en cours...' : '👄 CRÉER LE LIPSYNC'}
-         </button>
+  <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (data?.user?.tentatives_videos <= 0)}>
+    {lipLoading ? '⏳ Génération en cours...' : '👄 CRÉER LE LIPSYNC'}
+  </button>
 
-          {#if data?.user?.tentatives_videos <= 0}
-            <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
-              ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
-            </p>
-          {/if}
+  {#if data?.user?.tentatives_videos <= 0}
+    <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
+      ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
+    </p>
+  {/if}
 
-          {#if lipPreviewUrl}
-            <div style="margin-top: 30px; text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
-              <h3 style="color: #d4af37; margin-bottom: 15px;">✨ Votre Lipsync est prêt !</h3>
-              <video controls autoplay loop style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid #d4af37;">
-                <source src={lipPreviewUrl} type="video/mp4">
-                Votre navigateur ne supporte pas la vidéo.
-              </video>
-              <br>
-              <a href={lipPreviewUrl} download="lipsync-cliplumia.mp4" class="chrome-btn" style="margin-top: 15px; display: inline-block; text-decoration: none;">
-                Télécharger la vidéo
-              </a>
-            </div>
-          {/if}
-        {/if}
+  {#if lipPreviewUrl}
+    <div style="margin-top: 30px; text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
+      <h3 style="color: #d4af37; margin-bottom: 15px;">✨ Votre Lipsync est prêt !</h3>
+      <video controls autoplay loop style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid #d4af37;">
+        <source src={lipPreviewUrl} type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo.
+      </video>
+      <br>
+      <a href={lipPreviewUrl} download="lipsync-cliplumia.mp4" class="chrome-btn" style="margin-top: 15px; display: inline-block; text-decoration: none;">
+        Télécharger la vidéo
+      </a>
+    </div>
+  {/if}
+{/if}
 
-     <!-- SECTION VOIX -->
+  <!-- SECTION VOIX -->
 {#if activeTab === 'voice'}
   <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
 
