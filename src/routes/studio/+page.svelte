@@ -37,14 +37,6 @@ let lipAudioSource = 'upload';
 let lipExpression = 'neutre';
 let lipPrompt = "The person in the image is speaking naturally, high quality"; // Prompt par défaut
 
-function handleAudioUpload(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => { lipAudioUrl = e.target.result; };
-    reader.readAsDataURL(file);
-  }
-}
  
   // === VOIX ===
   let voiceSpeaker = 'Serena';
@@ -249,6 +241,7 @@ function handleAudioUpload(event) {
   }
 
   // === UPLOAD AUDIO LIPSYNC ===
+
   function handleAudioUpload(event) {
     const file = event.target.files[0];
     if (file) {
