@@ -14,7 +14,9 @@ export async function POST({ request, platform, cookies }) {
     if (!user) return json({ error: 'Utilisateur introuvable' }, { status: 401 });
     const userEmail = user.email;
 
-    const { image, audio } = await request.json();
+    const { image, audio, prompt } = await request.json();
+    
+    // Le prompt est maintenant obligatoire pour ce modèle
     if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 400 });
 
     const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
@@ -24,12 +26,12 @@ export async function POST({ request, platform, cookies }) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        // NOUVEAU MODÈLE
         version: "prunaai/p-video",
         input: {
-          // On garde source_image car tu veux uploader une image, pas une vidéo
           source_image: image,
           driven_audio: audio,
+          // Ajout du prompt obligatoire
+          prompt: prompt || "The person in the image is speaking naturally", 
           use_enhancer: true
         }
       })
@@ -42,9 +44,9 @@ export async function POST({ request, platform, cookies }) {
 
     let data = await replicateRes.json();
 
-    // LOGIQUE DE POLLING (On attend que le modèle finisse)
+    // Polling (on attend la fin)
     while (data.status === "starting" || data.status === "processing") {
-      await new Promise(r => setTimeout(r, 5000)); // attend 5s
+      await new Promise(r => setTimeout(r, 5000));
       const pollRes = await fetch(`https://api.replicate.com/v1/predictions/${data.id}`, {
         headers: { 'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}` }
       });
@@ -55,14 +57,12 @@ export async function POST({ request, platform, cookies }) {
       throw new Error(data.error || 'Lipsync echoue');
     }
 
-    // Récupération de l'URL de résultat
     const videoUrl = data.output.url || (typeof data.output === 'string' ? data.output : null);
 
     if (!videoUrl) {
-      throw new Error('URL vidéo introuvable dans la réponse');
+      throw new Error('URL vidéo introuvable');
     }
 
-    // Décompte des crédits (uniquement si réussite)
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(userEmail);
 
     if (!isAdmin) {
@@ -70,7 +70,6 @@ export async function POST({ request, platform, cookies }) {
       .bind(userId).run();
     }
 
-    console.log('VIDÉO GÉNÉRÉE:', videoUrl);
     return json({ success: true, url: videoUrl });
 
   } catch (err) {
