@@ -27,15 +27,35 @@
   let vidFormat = '16:9';
   let vidStyle = 'cinematique';
   
-  // === LIPSYNC ===
-  let imageBase64 = '';
-  let audioUrl = '';
-  let lipLoading = false;
-  let lipPreviewUrl = null;
-  let lipError = null;
-  let lipAudioSource = 'upload';
-  let lipExpression = 'neutre';
-  let lipType = 'parole';
+ // === VARIABLES LIPSYNC ===
+let lipImageBase64 = ''; // Renommé pour éviter conflit
+let lipAudioUrl = '';
+let lipLoading = false;
+let lipPreviewUrl = null;
+let lipError = null;
+let lipAudioSource = 'upload';
+let lipExpression = 'neutre';
+let lipPrompt = "The person in the image is speaking naturally, high quality"; // Prompt par défaut
+
+// === UPLOADS ===
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => lipImageBase64 = e.target.result;
+    reader.readAsDataURL(file);
+  }
+}
+
+function handleAudioUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => { lipAudioUrl = e.target.result; };
+    reader.readAsDataURL(file);
+  }
+}
+
   
   // === VOIX ===
   let voiceSpeaker = 'Serena';
@@ -249,71 +269,92 @@
     }
   }
 
-  // === FONCTION GÉNÉRATION LIPSYNC ===
-  async function generateLipsync() {
-    if (!imageBase64 || !audioUrl) return;
-    
-    lipLoading = true;
-    lipError = null;
-    lipPreviewUrl = null;
-    
-    try {
-      const imageUploadRes = await fetch('/api/upload', {
+ // === FONCTION GÉNÉRATION LIPSYNC CORRIGÉE ===
+async function generateLipsync() {
+  if (!lipImageBase64) {
+    lipError = "Veuillez uploader une image";
+    return;
+  }
+  
+  lipLoading = true;
+  lipError = null;
+  lipPreviewUrl = null;
+  
+  try {
+    // 1. Upload Image
+    const imageUploadRes = await fetch('/api/upload', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fileBase64: lipImageBase64, fileType: 'image' })
+    });
+    const imageUploadData = await imageUploadRes.json();
+    if (!imageUploadRes.ok || !imageUploadData.success) throw new Error(imageUploadData.error || 'Erreur upload image');
+    const publicImageUrl = imageUploadData.url;
+
+    let finalAudioUrl = '';
+
+    // 2. Gestion de l'Audio (Upload, URL ou TTS)
+    if (lipAudioSource === 'upload') {
+      if (!lipAudioUrl || !lipAudioUrl.startsWith('data:')) {
+        throw new Error("Veuillez uploader un fichier audio valide");
+      }
+      const audioUploadRes = await fetch('/api/upload', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fileBase64: imageBase64, fileType: 'image' })
+        body: JSON.stringify({ fileBase64: lipAudioUrl, fileType: 'audio' })
       });
-      
-      const imageUploadData = await imageUploadRes.json();
-      
-      if (!imageUploadRes.ok || !imageUploadData.success) {
-        throw new Error(imageUploadData.error || 'Erreur upload image');
-      }
-      
-      const publicImageUrl = imageUploadData.url;
+      const audioUploadData = await audioUploadRes.json();
+      if (!audioUploadRes.ok || !audioUploadData.success) throw new Error(audioUploadData.error);
+      finalAudioUrl = audioUploadData.url;
 
-      let publicAudioUrl = audioUrl;
-      
-      if (audioUrl.startsWith('data:audio')) {
-        const audioUploadRes = await fetch('/api/upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ fileBase64: audioUrl, fileType: 'audio' })
-        });
-        
-        const audioUploadData = await audioUploadRes.json();
-        
-        if (!audioUploadRes.ok || !audioUploadData.success) {
-          throw new Error(audioUploadData.error || 'Erreur upload audio');
-        }
-        
-        publicAudioUrl = audioUploadData.url;
-      }
+    } else if (lipAudioSource === 'url') {
+      finalAudioUrl = lipAudioUrl;
 
-      const res = await fetch('/api/lipsync', {
+    } else if (lipAudioSource === 'tts') {
+      // === NOUVEAU : SI TTS, ON GÉNÈRE LA VOIX D'ABORD ===
+      if (!lipAudioUrl) throw new Error("Veuillez entrer le texte à vocaliser");
+      
+      const voiceRes = await fetch('/api/voice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          image: publicImageUrl,
-          audio: publicAudioUrl,
-          expression: lipExpression,
-          type: lipType
+          text: lipAudioUrl, 
+          speaker: 'Serena', // Voix par défaut pour le lipsync
+          lang: 'French',
+          emotion: ''
         })
       });
-      
-      const data = await res.json();
-      
-      if (res.ok && data.success) {
-        lipPreviewUrl = data.url;
-      } else {
-        lipError = data.error || 'Erreur de génération';
-      }
-    } catch (e) {
-      lipError = e.message;
+      const voiceData = await voiceRes.json();
+      if (!voiceData.success) throw new Error("Erreur génération voix : " + (voiceData.error || "Inconnue"));
+      finalAudioUrl = voiceData.url;
     }
+
+    if (!finalAudioUrl) throw new Error("Aucune audio valide trouvée");
+
+    // 3. Appel API Lipsync avec le PROMPT
+    const res = await fetch('/api/lipsync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        image: publicImageUrl,
+        audio: finalAudioUrl,
+        prompt: lipPrompt // ENVOI DU PROMPT OBLIGATOIRE
+      })
+    });
     
-    lipLoading = false;
+    const data = await res.json();
+    
+    if (res.ok && data.success) {
+      lipPreviewUrl = data.url;
+    } else {
+      lipError = data.error || 'Erreur de génération';
+    }
+  } catch (e) {
+    lipError = e.message;
   }
+  
+  lipLoading = false;
+}
 
   // === FONCTION RESET LIPSYNC ===
   function resetLipsync() {
@@ -511,15 +552,20 @@
 {#if activeTab === 'lipsync'}
   <div class="input-group">
     <label for="lip-photo">1. Photo du visage</label>
-    <!-- RESTÉ SUR IMAGE COMME TU LE VOULAIS -->
     <input id="lip-photo" type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
+  </div>
+
+  <!-- AJOUT DU CHAMP PROMPT OBLIGATOIRE -->
+  <div class="input-group">
+    <label for="lip-prompt">Description du mouvement (Prompt)</label>
+    <input id="lip-prompt" type="text" bind:value={lipPrompt} placeholder="Ex: The person is talking naturally" class="text-input" />
   </div>
 
   <div class="input-group">
     <label for="lip-audio-source">2. Source Audio</label>
     <select id="lip-audio-source" bind:value={lipAudioSource}>
       <option value="upload">Upload fichier audio</option>
-      <option value="tts">Texte à vocaliser</option>
+      <option value="tts">Texte à vocaliser (TTS)</option>
       <option value="url">URL audio externe</option>
     </select>
   </div>
@@ -533,42 +579,36 @@
 
   {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
     <div class="input-group">
-      <label for="lip-audio-text">3. URL Audio ou Texte</label>
-      <input id="lip-audio-text" type="text" bind:value={audioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez votre texte ici...'} class="text-input" />
+      <label for="lip-audio-text">3. {lipAudioSource === 'url' ? 'URL Audio' : 'Texte à lire'}</label>
+      <input id="lip-audio-text" type="text" bind:value={lipAudioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez le texte ici pour générer la voix...'} class="text-input" />
     </div>
   {/if}
 
   <div class="options-grid">
     <div class="option-group">
-      <label for="lip-expression">Expression Faciale</label>
+      <label for="lip-expression">Expression</label>
       <select id="lip-expression" bind:value={lipExpression}>
-        <option value="neutre">Neutre (naturelle)</option>
-        <option value="souriant">Souriant (joyeux)</option>
-        <option value="serieux">Sérieux (professionnel)</option>
-        <option value="intense">Émotion intense</option>
-        <option value="precise">Synchronisation précise</option>
+        <option value="neutre">Neutre</option>
+        <option value="souriant">Souriant</option>
+        <option value="serieux">Sérieux</option>
+        <option value="intense">Intense</option>
       </select>
     </div>
-
     <div class="option-group">
-      <label for="lip-type">Type de Performance</label>
+      <label for="lip-type">Type</label>
       <select id="lip-type" bind:value={lipType}>
-        <option value="parole">Parole seule (discours)</option>
-        <option value="chant">Chant (musique)</option>
-        <option value="performance">Performance artistique</option>
-        <option value="presentation">Présentation pro</option>
+        <option value="parole">Parole</option>
+        <option value="chant">Chant</option>
       </select>
     </div>
   </div>
   
   <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (data?.user?.tentatives_videos <= 0)}>
-    {lipLoading ? '⏳ Génération en cours...' : '👄 CRÉER LE LIPSYNC'}
+    {lipLoading ? '⏳ Génération...' : '👄 CRÉER LE LIPSYNC'}
   </button>
 
   {#if data?.user?.tentatives_videos <= 0}
-    <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
-      ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
-    </p>
+    <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">⚠️ Essais gratuits utilisés.</p>
   {/if}
 
   {#if lipPreviewUrl}
@@ -576,12 +616,8 @@
       <h3 style="color: #d4af37; margin-bottom: 15px;">✨ Votre Lipsync est prêt !</h3>
       <video controls autoplay loop style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid #d4af37;">
         <source src={lipPreviewUrl} type="video/mp4">
-        Votre navigateur ne supporte pas la vidéo.
       </video>
-      <br>
-      <a href={lipPreviewUrl} download="lipsync-cliplumia.mp4" class="chrome-btn" style="margin-top: 15px; display: inline-block; text-decoration: none;">
-        Télécharger la vidéo
-      </a>
+      <a href={lipPreviewUrl} download="lipsync-cliplumia.mp4" class="chrome-btn" style="margin-top: 15px; display: inline-block; text-decoration: none;">Télécharger</a>
     </div>
   {/if}
 {/if}
