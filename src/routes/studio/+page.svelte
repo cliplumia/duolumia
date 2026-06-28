@@ -1,9 +1,8 @@
-<script>
+ <script>
   export let data;
   
   // === ÉTAT DES SECTIONS ===
   let activeTab = 'images';
-
 
   // === IMAGES ===
   let imgPrompt = '';
@@ -37,6 +36,17 @@
   let voiceStyle = 'professionnel';
   let voiceEmotion = 'neutre';
   let voiceSpeed = 'normal';
+  
+  // === LIPSYNC ===
+  let lipImageBase64 = '';
+  let lipAudioUrl = '';
+  let lipLoading = false;
+  let lipPreviewUrl = null;
+  let lipError = null;
+  let lipAudioSource = 'upload';
+  let lipExpression = 'neutre';
+  let lipType = 'parole';
+  let lipPrompt = "La personne sur l'image parle naturellement, haute qualité";
   
   // === CHAT ===
   let chatPrompt = '';
@@ -219,133 +229,151 @@
     vidReplicateId = null;
   }
   
- 
-// === VARIABLES LIPSYNC ===
-let lipImageBase64 = '';
-let lipAudioUrl = '';
-let lipLoading = false;
-let lipPreviewUrl = null;
-let lipError = null;
-let lipAudioSource = 'upload';
-let lipExpression = 'neutre';
-let lipType = 'parole';
-let lipPrompt = "La personne sur l'image parle naturellement, haute qualité";
-
-// === UPLOAD IMAGE LIPSYNC ===
-function handleImageUpload(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => lipImageBase64 = e.target.result;
-    reader.readAsDataURL(file);
+  // === UPLOAD IMAGE LIPSYNC ===
+  function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => lipImageBase64 = e.target.result;
+      reader.readAsDataURL(file);
+    }
   }
-}
 
-// === UPLOAD AUDIO LIPSYNC ===
-function handleAudioUpload(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => { lipAudioUrl = e.target.result; };
-    reader.readAsDataURL(file);
+  // === UPLOAD AUDIO LIPSYNC ===
+  function handleAudioUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => { lipAudioUrl = e.target.result; };
+      reader.readAsDataURL(file);
+    }
   }
-}
 
-// === FONCTION GÉNÉRATION LIPSYNC ===
-async function generateLipsync() {
-  if (!lipImageBase64) {
-    lipError = "Veuillez uploader une image";
-    return;
-  }
-  
-  lipLoading = true;
-  lipError = null;
-  lipPreviewUrl = null;
-  
-  try {
-    // 1. Upload Image
-    const imageUploadRes = await fetch('/api/upload', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fileBase64: lipImageBase64, fileType: 'image' })
-    });
-    const imageUploadData = await imageUploadRes.json();
-    if (!imageUploadRes.ok || !imageUploadData.success) throw new Error(imageUploadData.error || 'Erreur upload image');
-    const publicImageUrl = imageUploadData.url;
-
-    let finalAudioUrl = '';
-
-    // 2. Gestion de l'Audio
-    if (lipAudioSource === 'upload') {
-      if (!lipAudioUrl || !lipAudioUrl.startsWith('data:')) {
-        throw new Error("Veuillez uploader un fichier audio valide");
-      }
-      const audioUploadRes = await fetch('/api/upload', {
+  // === FONCTION GÉNÉRATION LIPSYNC ===
+  async function generateLipsync() {
+    if (!lipImageBase64) {
+      lipError = "Veuillez uploader une image";
+      return;
+    }
+    
+    lipLoading = true;
+    lipError = null;
+    lipPreviewUrl = null;
+    
+    try {
+      // 1. Upload Image
+      const imageUploadRes = await fetch('/api/upload', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fileBase64: lipAudioUrl, fileType: 'audio' })
+        body: JSON.stringify({ fileBase64: lipImageBase64, fileType: 'image' })
       });
-      const audioUploadData = await audioUploadRes.json();
-      if (!audioUploadRes.ok || !audioUploadData.success) throw new Error(audioUploadData.error);
-      finalAudioUrl = audioUploadData.url;
+      const imageUploadData = await imageUploadRes.json();
+      if (!imageUploadRes.ok || !imageUploadData.success) throw new Error(imageUploadData.error || 'Erreur upload image');
+      const publicImageUrl = imageUploadData.url;
 
-    } else if (lipAudioSource === 'url') {
-      finalAudioUrl = lipAudioUrl;
+      let finalAudioUrl = '';
 
-    } else if (lipAudioSource === 'tts') {
-      if (!lipAudioUrl) throw new Error("Veuillez entrer le texte à vocaliser");
-      
-      const voiceRes = await fetch('/api/voice', {
+      // 2. Gestion de l'Audio
+      if (lipAudioSource === 'upload') {
+        if (!lipAudioUrl || !lipAudioUrl.startsWith('data:')) {
+          throw new Error("Veuillez uploader un fichier audio valide");
+        }
+        const audioUploadRes = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fileBase64: lipAudioUrl, fileType: 'audio' })
+        });
+        const audioUploadData = await audioUploadRes.json();
+        if (!audioUploadRes.ok || !audioUploadData.success) throw new Error(audioUploadData.error);
+        finalAudioUrl = audioUploadData.url;
+
+      } else if (lipAudioSource === 'url') {
+        finalAudioUrl = lipAudioUrl;
+
+      } else if (lipAudioSource === 'tts') {
+        if (!lipAudioUrl) throw new Error("Veuillez entrer le texte à vocaliser");
+        
+        const voiceRes = await fetch('/api/voice', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            text: lipAudioUrl, 
+            speaker: 'Serena', 
+            lang: 'French',
+            emotion: ''
+          })
+        });
+        const voiceData = await voiceRes.json();
+        if (!voiceData.success) throw new Error("Erreur génération voix : " + (voiceData.error || "Inconnue"));
+        finalAudioUrl = voiceData.url;
+      }
+
+      if (!finalAudioUrl) throw new Error("Aucune audio valide trouvée");
+
+      // 3. Appel API Lipsync
+      const res = await fetch('/api/lipsync', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          text: lipAudioUrl, 
-          speaker: 'Serena', 
-          lang: 'French',
-          emotion: ''
+          image: publicImageUrl,
+          audio: finalAudioUrl,
+          prompt: lipPrompt 
         })
       });
-      const voiceData = await voiceRes.json();
-      if (!voiceData.success) throw new Error("Erreur génération voix : " + (voiceData.error || "Inconnue"));
-      finalAudioUrl = voiceData.url;
+      
+      const data = await res.json();
+      
+      if (res.ok && data.success) {
+        lipPreviewUrl = data.url;
+      } else {
+        lipError = data.error || 'Erreur de génération';
+      }
+    } catch (e) {
+      lipError = e.message;
     }
-
-    if (!finalAudioUrl) throw new Error("Aucune audio valide trouvée");
-
-    // 3. Appel API Lipsync
-    const res = await fetch('/api/lipsync', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        image: publicImageUrl,
-        audio: finalAudioUrl,
-        prompt: lipPrompt 
-      })
-    });
     
-    const data = await res.json();
+    lipLoading = false;
+  }
+
+  // === FONCTION RESET LIPSYNC ===
+  function resetLipsync() {
+    lipImageBase64 = '';
+    lipAudioUrl = '';
+    lipPreviewUrl = null;
+    lipError = null;
+    lipPrompt = "La personne sur l'image parle naturellement, haute qualité";
+  }
+
+  // === FONCTION GÉNÉRATION VOIX ===
+  async function generateVoice() {
+    if (!voiceText.trim()) return;
+    voiceLoading = true;
+    voiceAudioUrl = null;
     
-    if (res.ok && data.success) {
-      lipPreviewUrl = data.url;
-    } else {
-      lipError = data.error || 'Erreur de génération';
+    try {
+      const res = await fetch('/api/voice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          text: voiceText, 
+          speaker: voiceSpeaker, 
+          lang: voiceLang,
+          emotion: voiceEmotion
+        })
+      });
+      const result = await res.json();
+      
+      if (result.success) {
+        voiceAudioUrl = result.url;
+      } else {
+        alert('Erreur: ' + (result.error || 'Impossible de générer'));
+      }
+    } catch (e) {
+      alert('Erreur réseau: ' + e.message);
     }
-  } catch (e) {
-    lipError = e.message;
+    voiceLoading = false;
   }
   
-  lipLoading = false;
-}
-
-// === FONCTION RESET LIPSYNC ===
-function resetLipsync() {
-  lipImageBase64 = '';
-  lipAudioUrl = '';
-  lipPreviewUrl = null;
-  lipError = null;
-  let lipPrompt = "La personne sur l'image parle naturellement, haute qualité";
-}
-
   // === FONCTION GÉNÉRATION CHAT ===
   async function generateChat() {
     if (!chatPrompt.trim()) return;
@@ -500,134 +528,149 @@ function resetLipsync() {
           {/if}
         {/if}
 
- <!-- SECTION LIPSYNC -->
-{#if activeTab === 'lipsync'}
-  <div class="input-group">
-    <label for="lip-photo">1. Photo du visage</label>
-    <input id="lip-photo" type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
-  </div>
+        <!-- SECTION LIPSYNC -->
+        {#if activeTab === 'lipsync'}
+          <div class="input-group">
+            <label for="lip-photo">1. Photo du visage</label>
+            <input id="lip-photo" type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
+          </div>
 
-  <div class="input-group">
-    <label for="lip-prompt">Description du mouvement (Prompt)</label>
-    <input id="lip-prompt" type="text" bind:value={lipPrompt} placeholder="Ex: La personne parle naturellement" class="text-input" />
-  </div>
+          <div class="input-group">
+            <label for="lip-prompt">Description du mouvement (Prompt)</label>
+            <input id="lip-prompt" type="text" bind:value={lipPrompt} placeholder="Ex: La personne parle naturellement" class="text-input" />
+          </div>
 
-  <div class="input-group">
-    <label for="lip-audio-source">2. Source Audio</label>
-    <select id="lip-audio-source" bind:value={lipAudioSource}>
-      <option value="upload">Upload fichier audio</option>
-      <option value="tts">Texte à vocaliser (TTS)</option>
-      <option value="url">URL audio externe</option>
-    </select>
-  </div>
+          <div class="input-group">
+            <label for="lip-audio-source">2. Source Audio</label>
+            <select id="lip-audio-source" bind:value={lipAudioSource}>
+              <option value="upload">Upload fichier audio</option>
+              <option value="tts">Texte à vocaliser (TTS)</option>
+              <option value="url">URL audio externe</option>
+            </select>
+          </div>
 
-  {#if lipAudioSource === 'upload'}
-    <div class="input-group">
-      <label for="lip-audio-file">3. Fichier Audio</label>
-      <input id="lip-audio-file" type="file" accept="audio/*" on:change={handleAudioUpload} class="file-input" />
-    </div>
-  {/if}
+          {#if lipAudioSource === 'upload'}
+            <div class="input-group">
+              <label for="lip-audio-file">3. Fichier Audio</label>
+              <input id="lip-audio-file" type="file" accept="audio/*" on:change={handleAudioUpload} class="file-input" />
+            </div>
+          {/if}
 
-  {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
-    <div class="input-group">
-      <label for="lip-audio-text">3. {lipAudioSource === 'url' ? 'URL Audio' : 'Texte à lire'}</label>
-      <input id="lip-audio-text" type="text" bind:value={lipAudioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez le texte ici...'} class="text-input" />
-    </div>
-  {/if}
+          {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
+            <div class="input-group">
+              <label for="lip-audio-text">3. {lipAudioSource === 'url' ? 'URL Audio' : 'Texte à lire'}</label>
+              <input id="lip-audio-text" type="text" bind:value={lipAudioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez le texte ici...'} class="text-input" />
+            </div>
+          {/if}
 
-  <div class="options-grid">
-    <div class="option-group">
-      <label for="lip-expression">Expression</label>
-      <select id="lip-expression" bind:value={lipExpression}>
-        <option value="neutre">Neutre</option>
-        <option value="souriant">Souriant</option>
-        <option value="serieux">Sérieux</option>
-        <option value="intense">Intense</option>
-      </select>
-    </div>
-    <div class="option-group">
-      <label for="lip-type">Type</label>
-      <select id="lip-type" bind:value={lipType}>
-        <option value="parole">Parole</option>
-        <option value="chant">Chant</option>
-      </select>
-    </div>
-  </div>
-  
-  <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (data?.user?.tentatives_videos <= 0)}>
-    {lipLoading ? '⏳ Génération...' : '👄 CRÉER LE LIPSYNC'}
-  </button>
+          <div class="options-grid">
+            <div class="option-group">
+              <label for="lip-expression">Expression</label>
+              <select id="lip-expression" bind:value={lipExpression}>
+                <option value="neutre">Neutre</option>
+                <option value="souriant">Souriant</option>
+                <option value="serieux">Sérieux</option>
+                <option value="intense">Intense</option>
+              </select>
+            </div>
+            <div class="option-group">
+              <label for="lip-type">Type</label>
+              <select id="lip-type" bind:value={lipType}>
+                <option value="parole">Parole</option>
+                <option value="chant">Chant</option>
+                <option value="danse">Danse</option>
+              </select>
+            </div>
+          </div>
+          
+          <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (data?.user?.tentatives_videos <= 0)}>
+            {lipLoading ? '⏳ Génération...' : '👄 CRÉER LE LIPSYNC'}
+          </button>
 
-  {#if data?.user?.tentatives_videos <= 0}
-    <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">⚠️ Essais gratuits utilisés.</p>
-  {/if}
+          {#if data?.user?.tentatives_videos <= 0}
+            <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">⚠️ Essais gratuits utilisés.</p>
+          {/if}
 
-  {#if lipPreviewUrl}
-    <div style="margin-top: 30px; text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
-      <h3 style="color: #d4af37; margin-bottom: 15px;">✨ Votre Lipsync est prêt !</h3>
-      <video controls autoplay loop style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid #d4af37;">
-        <source src={lipPreviewUrl} type="video/mp4">
-      </video>
-      <a href={lipPreviewUrl} download="lipsync-cliplumia.mp4" class="chrome-btn" style="margin-top: 15px; display: inline-block; text-decoration: none;">Télécharger</a>
-    </div>
-  {/if}
-{/if}
+          {#if lipPreviewUrl}
+            <div style="margin-top: 30px; text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
+              <h3 style="color: #d4af37; margin-bottom: 15px;">✨ Votre Lipsync est prêt !</h3>
+              <video controls autoplay loop style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid #d4af37;">
+                <source src={lipPreviewUrl} type="video/mp4">
+              </video>
+              <a href={lipPreviewUrl} download="lipsync-cliplumia.mp4" class="chrome-btn" style="margin-top: 15px; display: inline-block; text-decoration: none;">Télécharger</a>
+            </div>
+            
+            <!-- BOUTONS J'AIME / REJET POUR LIPSYNC -->
+            <div class="action-buttons" style="margin-top: 20px;">
+              <button class="btn-reject" on:click={resetLipsync}>
+                ❌ Rejeter (0€)
+              </button>
+              <button class="btn-validate" on:click={() => { 
+                if (data?.user?.tentatives_videos > 0 || isAdmin) {
+                  data.user.videos_restantes--;
+                  lipPreviewUrl = null;
+                }
+              }}>
+                ✅ J'aime (1 Forfait)
+              </button>
+            </div>
+          {/if}
+        {/if}
 
+        <!-- SECTION VOIX -->
+        {#if activeTab === 'voice'}
+          <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
 
-  <!-- SECTION VOIX -->
-{#if activeTab === 'voice'}
-  <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
+          <div class="options-grid">
+            <div class="option-group">
+              <label for="voice-lang">Langue</label>
+              <select id="voice-lang" bind:value={voiceLang}>
+                <option value="auto">Auto</option>
+                <option value="French">Français</option>
+                <option value="English">Anglais</option>
+              </select>
+            </div>
 
-  <div class="options-grid">
-    <div class="option-group">
-      <label for="voice-lang">Langue</label>
-      <select id="voice-lang" bind:value={voiceLang}>
-        <option value="auto">Auto</option>
-        <option value="French">Français</option>
-        <option value="English">Anglais</option>
-      </select>
-    </div>
+            <div class="option-group">
+              <label for="voice-speaker">Voix</label>
+              <select id="voice-speaker" bind:value={voiceSpeaker}>
+                <optgroup label="Féminines">
+                  <option value="Serena">Serena</option>
+                  <option value="Ono_anna">Ono Anna</option>
+                </optgroup>
+                <optgroup label="Masculines">
+                  <option value="Aiden">Aiden</option>
+                  <option value="Eric">Eric</option>
+                  <option value="Ryan">Ryan</option>
+                  <option value="Dylan">Dylan</option>
+                  <option value="Uncle_fu">Uncle Fu</option>
+                  <option value="Sohee">Sohee</option>
+                  <option value="Vivian">Vivian</option>
+                </optgroup>
+                <optgroup label="Enfant">
+                  <option value="Ono_anna">Fille (Ono Anna)</option>
+                  <option value="Dylan">Garçon (Dylan)</option>
+                </optgroup>
+              </select>
+            </div>
 
-    <div class="option-group">
-      <label for="voice-speaker">Voix</label>
-      <select id="voice-speaker" bind:value={voiceSpeaker}>
-        <optgroup label="Féminines">
-          <option value="Serena">Serena</option>
-          <option value="Ono_anna">Ono Anna</option>
-        </optgroup>
-        <optgroup label="Masculines">
-          <option value="Aiden">Aiden</option>
-          <option value="Eric">Eric</option>
-          <option value="Ryan">Ryan</option>
-          <option value="Dylan">Dylan</option>
-          <option value="Uncle_fu">Uncle Fu</option>
-          <option value="Sohee">Sohee</option>
-          <option value="Vivian">Vivian</option>
-        </optgroup>
-        <optgroup label="Enfant">
-          <option value="Ono_anna">Fille (Ono Anna)</option>
-          <option value="Dylan">Garçon (Dylan)</option>
-        </optgroup>
-      </select>
-    </div>
+            <div class="option-group">
+              <label for="voice-emotion">Émotion</label>
+              <select id="voice-emotion" bind:value={voiceEmotion}>
+                <option value="">Neutre</option>
+                <option value="ton joyeux et enthousiaste">Joyeux</option>
+                <option value="ton sérieux et posé">Sérieux</option>
+                <option value="ton doux et calme">Calme</option>
+                <option value="ton dramatique et intense">Dramatique</option>
+                <option value="ton dynamique et énergique">Dynamique</option>
+              </select>
+            </div>
+          </div>
 
-    <div class="option-group">
-      <label for="voice-emotion">Émotion</label>
-      <select id="voice-emotion" bind:value={voiceEmotion}>
-        <option value="">Neutre</option>
-        <option value="ton joyeux et enthousiaste">Joyeux</option>
-        <option value="ton sérieux et posé">Sérieux</option>
-        <option value="ton doux et calme">Calme</option>
-        <option value="ton dramatique et intense">Dramatique</option>
-        <option value="ton dynamique et énergique">Dynamique</option>
-      </select>
-    </div>
-  </div>
-
-  <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
-    {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
-  </button>
-{/if}
+          <button class="chrome-btn create-btn" on:click={generateVoice} disabled={voiceLoading}>
+            {voiceLoading ? '⏳ Génération...' : '🎤 CRÉER LA VOIX'}
+          </button>
+        {/if}
 
         <!-- SECTION CHAT -->
         {#if activeTab === 'chat'}
@@ -691,8 +734,8 @@ function resetLipsync() {
         {/if}
 
         <!-- ZONE DE PRÉVISUALISATION -->
-        {#if activeTab !== 'chat'}
-          {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || lipPreviewUrl || voiceAudioUrl}
+        {#if activeTab !== 'chat' && activeTab !== 'lipsync'}
+          {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || voiceAudioUrl}
             <div class="preview-card glass">
               <div class="preview-label">VOTRE CRÉATION</div>
               {#if imgPreviewUrl}
@@ -714,7 +757,7 @@ function resetLipsync() {
           {/if}
         {/if}
 
-        <!-- BOUTONS J'AIME / REJETER (SAUF POUR CHAT) -->
+        <!-- BOUTONS J'AIME / REJETER (SAUF POUR CHAT ET LIPSYNC) -->
         {#if activeTab !== 'chat' && activeTab !== 'lipsync'}
           {#if imgPreviewUrl || vidPreviewUrl || voiceAudioUrl}
             <div class="action-buttons">
@@ -772,8 +815,6 @@ function resetLipsync() {
     </main>
   </div>
 </div>
-
-
 
 <style>
   :global(*) { box-sizing: border-box; }
@@ -1351,6 +1392,4 @@ function resetLipsync() {
       font-size: 1rem;
     }
   }
-
- 
 </style>
