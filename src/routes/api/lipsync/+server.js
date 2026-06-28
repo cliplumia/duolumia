@@ -14,6 +14,13 @@ export async function POST({ request, platform, cookies }) {
     if (!user) return json({ error: 'Utilisateur introuvable' }, { status: 401 });
     const userEmail = user.email;
 
+    const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(userEmail);
+    
+    // Vérification stricte des crédits vidéos (lipsync = vidéo)
+    if (!isAdmin && (user.videos_restantes || 0) <= 0) {
+      return json({ error: 'Credits videos epuises. Passez a un forfait !' }, { status: 403 });
+    }
+
     const { image, audio, prompt } = await request.json();
     if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 400 });
 
@@ -67,11 +74,10 @@ export async function POST({ request, platform, cookies }) {
       throw new Error('URL vidéo introuvable');
     }
 
-    const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(userEmail);
-
+    // Décrémentation IMMÉDIATE des crédits vidéos (CORRIGÉ : videos_restantes au lieu de voices_restantes)
     if (!isAdmin) {
-      await platform.env.BD.prepare("UPDATE utilisateurs SET voices_restantes = voices_restantes - 1 WHERE id =?")
-      .bind(userId).run();
+      await platform.env.BD.prepare("UPDATE utilisateurs SET videos_restantes = videos_restantes - 1 WHERE id =?")
+        .bind(userId).run();
     }
 
     console.log('VIDÉO GÉNÉRÉE:', videoUrl);
