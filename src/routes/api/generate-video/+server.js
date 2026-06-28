@@ -11,14 +11,21 @@ export async function POST({ request, platform, cookies }) {
     
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
     
+    // Vérification stricte des crédits vidéos
     if (!isAdmin && (user.videos_restantes || 0) <= 0) {
-      return json({ error: 'Credits videos epuises' }, { status: 403 });
+      return json({ error: 'Credits videos epuises. Passez a un forfait !' }, { status: 403 });
     }
     
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
     
-    // ENVOI SANS ATTENDRE (pas de Prefer: wait)
+    // Décrémentation IMMÉDIATE des crédits (côté serveur)
+    if (!isAdmin) {
+      await BD.prepare('UPDATE utilisateurs SET videos_restantes = videos_restantes - 1 WHERE id = ?')
+        .bind(userId).run();
+    }
+    
+    // Envoi sans attendre (pas de Prefer: wait)
     const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
       headers: {
