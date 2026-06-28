@@ -36,6 +36,7 @@
   let lipAudioSource = 'upload';
   let lipExpression = 'neutre';
   let lipPrompt = "The person in the image is speaking naturally, high quality"; // Prompt par défaut
+  let lipType = 'parole';
 
   // === VOIX ===
   let voiceSpeaker = 'Serena';
