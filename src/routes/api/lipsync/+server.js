@@ -15,8 +15,6 @@ export async function POST({ request, platform, cookies }) {
     const userEmail = user.email;
 
     const { image, audio, prompt } = await request.json();
-    
-    // Le prompt est maintenant obligatoire pour ce modèle
     if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 400 });
 
     const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
@@ -28,11 +26,18 @@ export async function POST({ request, platform, cookies }) {
       body: JSON.stringify({
         version: "prunaai/p-video",
         input: {
-          source_image: image,
-          driven_audio: audio,
-          // Ajout du prompt obligatoire
-          prompt: prompt || "The person in the image is speaking naturally", 
-          use_enhancer: true
+          image: image,
+          audio: audio,
+          prompt: prompt || "La personne sur l'image parle naturellement, haute qualité",
+          duration: 10,
+          fps: 24,
+          resolution: "720p",
+          aspect_ratio: "16:9",
+          save_audio: true,
+          prompt_upsampling: false,
+          disable_safety_filter: true,
+          draft: false,
+          no_op: false
         }
       })
     });
@@ -44,7 +49,6 @@ export async function POST({ request, platform, cookies }) {
 
     let data = await replicateRes.json();
 
-    // Polling (on attend la fin)
     while (data.status === "starting" || data.status === "processing") {
       await new Promise(r => setTimeout(r, 5000));
       const pollRes = await fetch(`https://api.replicate.com/v1/predictions/${data.id}`, {
@@ -70,6 +74,7 @@ export async function POST({ request, platform, cookies }) {
       .bind(userId).run();
     }
 
+    console.log('VIDÉO GÉNÉRÉE:', videoUrl);
     return json({ success: true, url: videoUrl });
 
   } catch (err) {
