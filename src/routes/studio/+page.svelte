@@ -1,4 +1,4 @@
- <script>
+<script>
   export let data;
   
   // === ÉTAT DES SECTIONS ===
@@ -42,6 +42,7 @@
   let lipAudioUrl = '';
   let lipLoading = false;
   let lipPreviewUrl = null;
+  let lipValidatedUrl = null;
   let lipError = null;
   let lipAudioSource = 'upload';
   let lipExpression = 'neutre';
@@ -335,11 +336,26 @@
     lipLoading = false;
   }
 
+  // === FONCTION VALIDATION LIPSYNC ===
+  async function validateLipsync() {
+    if (!lipPreviewUrl) return;
+    try {
+      if (data?.user?.tentatives_videos > 0 || isAdmin) {
+        data.user.videos_restantes = (data.user.videos_restantes || 0) - 1;
+        lipValidatedUrl = lipPreviewUrl;
+        lipPreviewUrl = null;
+      }
+    } catch (e) {
+      lipError = e.message;
+    }
+  }
+
   // === FONCTION RESET LIPSYNC ===
   function resetLipsync() {
     lipImageBase64 = '';
     lipAudioUrl = '';
     lipPreviewUrl = null;
+    lipValidatedUrl = null;
     lipError = null;
     lipPrompt = "La personne sur l'image parle naturellement, haute qualité";
   }
@@ -401,6 +417,7 @@
     
     chatLoading = false;
   }
+
 </script>
 
 <svelte:head>
@@ -591,28 +608,30 @@
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">⚠️ Essais gratuits utilisés.</p>
           {/if}
 
-          {#if lipPreviewUrl}
-            <div style="margin-top: 30px; text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.3);">
-              <h3 style="color: #d4af37; margin-bottom: 15px;">✨ Votre Lipsync est prêt !</h3>
-              <video controls autoplay loop style="width: 100%; max-width: 500px; border-radius: 12px; border: 2px solid #d4af37;">
-                <source src={lipPreviewUrl} type="video/mp4">
-              </video>
-              <a href={lipPreviewUrl} download="lipsync-cliplumia.mp4" class="chrome-btn" style="margin-top: 15px; display: inline-block; text-decoration: none;">Télécharger</a>
-            </div>
-            
-            <!-- BOUTONS J'AIME / REJET POUR LIPSYNC -->
-            <div class="action-buttons" style="margin-top: 20px;">
-              <button class="btn-reject" on:click={resetLipsync}>
-                ❌ Rejeter (0€)
-              </button>
-              <button class="btn-validate" on:click={() => { 
-                if (data?.user?.tentatives_videos > 0 || isAdmin) {
-                  data.user.videos_restantes--;
-                  lipPreviewUrl = null;
-                }
-              }}>
-                ✅ J'aime (1 Forfait)
-              </button>
+          {#if lipPreviewUrl || lipValidatedUrl}
+            <div class="preview-card glass">
+              <div class="preview-label">VOTRE CRÉATION</div>
+              
+              {#if lipPreviewUrl}
+                <div class="preview-media">
+                  <video src={lipPreviewUrl} controls loop playsinline></video>
+                </div>
+                <div class="watermark">CLIPLUMIA · PREVIEW</div>
+                
+                <div class="action-buttons">
+                  <button class="btn-reject" on:click={resetLipsync}>
+                    ❌ Rejeter (0€)
+                  </button>
+                  <button class="btn-validate" on:click={validateLipsync}>
+                    ✅ J'aime (1 Forfait)
+                  </button>
+                </div>
+              {:else if lipValidatedUrl}
+                <div class="preview-media validated">
+                  <video src={lipValidatedUrl} controls loop playsinline></video>
+                </div>
+                <a href={lipValidatedUrl} download="lipsync-cliplumia.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
+              {/if}
             </div>
           {/if}
         {/if}
@@ -734,8 +753,8 @@
         {/if}
 
         <!-- ZONE DE PRÉVISUALISATION -->
-        {#if activeTab !== 'chat' && activeTab !== 'lipsync'}
-          {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || voiceAudioUrl}
+        {#if activeTab !== 'chat'}
+          {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || voiceAudioUrl || lipPreviewUrl || lipValidatedUrl}
             <div class="preview-card glass">
               <div class="preview-label">VOTRE CRÉATION</div>
               {#if imgPreviewUrl}
@@ -752,6 +771,16 @@
                 <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
               {:else if voiceAudioUrl}
                 <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
+              {:else if lipPreviewUrl}
+                <div class="preview-media">
+                  <video src={lipPreviewUrl} controls loop playsinline></video>
+                </div>
+                <div class="watermark">CLIPLUMIA · PREVIEW</div>
+              {:else if lipValidatedUrl}
+                <div class="preview-media validated">
+                  <video src={lipValidatedUrl} controls loop playsinline></video>
+                </div>
+                <a href={lipValidatedUrl} download="lipsync-cliplumia.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
               {/if}
             </div>
           {/if}
