@@ -27,27 +27,26 @@
   let vidFormat = '16:9';
   let vidStyle = 'cinematique';
   
- // === VARIABLES LIPSYNC ===
-let lipImageBase64 = ''; // Renommé pour éviter conflit
-let lipAudioUrl = '';
-let lipLoading = false;
-let lipPreviewUrl = null;
-let lipError = null;
-let lipAudioSource = 'upload';
-let lipExpression = 'neutre';
-let lipPrompt = "The person in the image is speaking naturally, high quality"; // Prompt par défaut
+ // === LIPSYNC ===
+  let lipImageBase64 = ''; 
+  let lipAudioUrl = '';
+  let lipLoading = false;
+  let lipPreviewUrl = null;
+  let lipError = null;
+  let lipAudioSource = 'upload';
+  let lipExpression = 'neutre';
+  let lipPrompt = "The person in the image is speaking naturally, high quality"; // Prompt par défaut
 
- 
   // === VOIX ===
   let voiceSpeaker = 'Serena';
   let voiceText = '';
   let voiceLoading = false;
   let voiceAudioUrl = null;
   let voiceLang = 'FR';
- let voiceType = 'femme';
- let voiceStyle = 'professionnel';
- let voiceEmotion = 'neutre';
- let voiceSpeed = 'normal';
+  let voiceType = 'femme';
+  let voiceStyle = 'professionnel';
+  let voiceEmotion = 'neutre';
+  let voiceSpeed = 'normal';
   
   // === CHAT ===
   let chatPrompt = '';
@@ -230,27 +229,7 @@ let lipPrompt = "The person in the image is speaking naturally, high quality"; /
     vidReplicateId = null;
   }
   
-  // === UPLOAD IMAGE LIPSYNC ===
-  function handleImageUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => imageBase64 = e.target.result;
-      reader.readAsDataURL(file);
-    }
-  }
-
-  // === UPLOAD AUDIO LIPSYNC ===
-
-  function handleAudioUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => { audioUrl = e.target.result; };
-      reader.readAsDataURL(file);
-    }
-  }
-
+ 
  // === FONCTION GÉNÉRATION LIPSYNC CORRIGÉE ===
 async function generateLipsync() {
   if (!lipImageBase64) {
@@ -338,13 +317,14 @@ async function generateLipsync() {
   lipLoading = false;
 }
 
-  // === FONCTION RESET LIPSYNC ===
+ // === FONCTION RESET LIPSYNC ===
   function resetLipsync() {
-    imageBase64 = null;
-    audioUrl = '';
-    lipPreviewUrl = null;
-    lipError = null;
-  }
+  lipImageBase64 = null;  // ✅ corrigé (était imageBase64)
+  lipAudioUrl = '';        // ✅ corrigé (était audioUrl)
+  lipPreviewUrl = null;
+  lipError = null;
+  lipPrompt = "The person in the image is speaking naturally, high quality"; // ✅ reset du prompt aussi
+}
 
  async function generateVoice() {
   if (!voiceText.trim()) return;
