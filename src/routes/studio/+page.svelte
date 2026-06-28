@@ -118,9 +118,10 @@
       const result = await res.json();
       
       if (result.success) {
-        imgValidatedUrl = imgPreviewUrl;
-        imgPreviewUrl = null;
-        imgGenerationId = null;
+      imgValidatedUrl = imgPreviewUrl;
+      imgPreviewUrl = null;
+      imgGenerationId = null;
+      data.user.images_restantes--; // ← AJOUTER CETTE LIGNE
       } else {
         imgError = result.error || 'Erreur lors de la validation';
       }
@@ -202,12 +203,13 @@
         body: JSON.stringify({ id: vidGenerationId, action: 'validate', type: 'video' })
       });
       const result = await res.json();
-      
+     
       if (result.success) {
-        vidValidatedUrl = vidPreviewUrl;
-        vidPreviewUrl = null;
-        vidGenerationId = null;
-      } else {
+      vidValidatedUrl = vidPreviewUrl;
+      vidPreviewUrl = null;
+      vidGenerationId = null;
+      data.user.videos_restantes--; // ← AJOUTER CETTE LIGNE
+     } else {
         vidError = result.error || 'Erreur lors de la validation';
       }
     } catch (e) {
@@ -216,7 +218,7 @@
   }
 
   // === FONCTION REJET VIDÉO ===
-  function rejectVideo() {
+   function rejectVideo() {
     if (vidInterval) clearInterval(vidInterval);
     vidInterval = null;
     vidPreviewUrl = null;
