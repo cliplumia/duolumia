@@ -229,7 +229,7 @@ let lipError = null;
 let lipAudioSource = 'upload';
 let lipExpression = 'neutre';
 let lipType = 'parole';
-let lipPrompt = "The person in the image is speaking naturally, high quality";
+let lipPrompt = "La personne sur l'image parle naturellement, haute qualité";
 
 // === UPLOAD IMAGE LIPSYNC ===
 function handleImageUpload(event) {
@@ -343,7 +343,7 @@ function resetLipsync() {
   lipAudioUrl = '';
   lipPreviewUrl = null;
   lipError = null;
-  lipPrompt = "The person in the image is speaking naturally, high quality";
+  let lipPrompt = "La personne sur l'image parle naturellement, haute qualité";
 }
 
   // === FONCTION GÉNÉRATION CHAT ===
@@ -500,7 +500,7 @@ function resetLipsync() {
           {/if}
         {/if}
 
-  <!-- SECTION LIPSYNC -->
+ <!-- SECTION LIPSYNC -->
 {#if activeTab === 'lipsync'}
   <div class="input-group">
     <label for="lip-photo">1. Photo du visage</label>
@@ -509,7 +509,7 @@ function resetLipsync() {
 
   <div class="input-group">
     <label for="lip-prompt">Description du mouvement (Prompt)</label>
-    <input id="lip-prompt" type="text" bind:value={lipPrompt} placeholder="Ex: The person is talking naturally" class="text-input" />
+    <input id="lip-prompt" type="text" bind:value={lipPrompt} placeholder="Ex: La personne parle naturellement" class="text-input" />
   </div>
 
   <div class="input-group">
