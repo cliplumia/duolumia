@@ -614,6 +614,7 @@
               
               {#if lipPreviewUrl}
                 <div class="preview-media">
+                  <!-- svelte-ignore a11y_media_has_caption -->
                   <video src={lipPreviewUrl} controls loop playsinline></video>
                 </div>
                 <div class="watermark">CLIPLUMIA · PREVIEW</div>
@@ -628,6 +629,7 @@
                 </div>
               {:else if lipValidatedUrl}
                 <div class="preview-media validated">
+                  <!-- svelte-ignore a11y_media_has_caption -->
                   <video src={lipValidatedUrl} controls loop playsinline></video>
                 </div>
                 <a href={lipValidatedUrl} download="lipsync-cliplumia.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
@@ -767,17 +769,22 @@
                 <div class="preview-media"><video src={vidPreviewUrl} controls loop muted playsinline></video></div>
                 <div class="watermark">CLIPLUMIA · PREVIEW</div>
               {:else if vidValidatedUrl}
-                <div class="preview-media validated"><video src={vidValidatedUrl} controls loop playsinline></video></div>
+                <div class="preview-media validated">
+                  <!-- svelte-ignore a11y_media_has_caption -->
+                  <video src={vidValidatedUrl} controls loop playsinline></video>
+                </div>
                 <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
               {:else if voiceAudioUrl}
                 <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
               {:else if lipPreviewUrl}
                 <div class="preview-media">
+                  <!-- svelte-ignore a11y_media_has_caption -->
                   <video src={lipPreviewUrl} controls loop playsinline></video>
                 </div>
                 <div class="watermark">CLIPLUMIA · PREVIEW</div>
               {:else if lipValidatedUrl}
                 <div class="preview-media validated">
+                  <!-- svelte-ignore a11y_media_has_caption -->
                   <video src={lipValidatedUrl} controls loop playsinline></video>
                 </div>
                 <a href={lipValidatedUrl} download="lipsync-cliplumia.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
@@ -1089,11 +1096,6 @@
   .option-group {
     display: flex;
     flex-direction: column;
-  }
-
-  .option-group.full-width {
-    grid-column: 1 / -1;
-    margin-top: 16px;
   }
 
   .option-group label {
