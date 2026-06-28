@@ -15,8 +15,10 @@ export async function POST({ request, platform, cookies }) {
     if (!user) return json({ error: 'Utilisateur inconnu' }, { status: 404 });
 
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
+    
+    // Vérification stricte des crédits images
     if (!isAdmin && (user.images_restantes || 0) <= 0) {
-      return json({ error: 'Credits images epuises' }, { status: 403 });
+      return json({ error: 'Credits images epuises. Passez a un forfait !' }, { status: 403 });
     }
 
     const { prompt } = await request.json();
@@ -34,8 +36,6 @@ export async function POST({ request, platform, cookies }) {
       }
     );
 
-    console.log('Replicate a repondu:', JSON.stringify(output));
-
     let imageUrl;
     if (Array.isArray(output)) {
       imageUrl = output[0];
@@ -49,13 +49,18 @@ export async function POST({ request, platform, cookies }) {
       return json({ error: 'Pas d URL retournee', details: output }, { status: 500 });
     }
 
-    // === AJOUT : Créer une entrée dans generations ===
+    // Décrémentation IMMÉDIATE des crédits (côté serveur)
+    if (!isAdmin) {
+      await BD.prepare('UPDATE utilisateurs SET images_restantes = images_restantes - 1 WHERE id =?')
+        .bind(userId).run();
+    }
+
+    // Création entrée dans generations
     const generationId = crypto.randomUUID();
     await BD.prepare('INSERT INTO generations (id, user_id, type, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?)')
       .bind(generationId, userId, 'image', imageUrl, 'en_attente', new Date().toISOString())
       .run();
 
-    // === MODIFICATION : Renvoyer l'ID en plus de l'image ===
     return json({ image: imageUrl, id: generationId });
     
   } catch (error) {
