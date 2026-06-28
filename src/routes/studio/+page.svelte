@@ -317,6 +317,16 @@ async function generateLipsync() {
   
   lipLoading = false;
 }
+
+// === FONCTION RESET LIPSYNC ===
+function resetLipsync() {
+  lipImageBase64 = null;  // ✅ corrigé (était imageBase64)
+  lipAudioUrl = '';        // ✅ corrigé (était audioUrl)
+  lipPreviewUrl = null;
+  lipError = null;
+  lipPrompt = "The person in the image is speaking naturally, high quality"; // ✅ reset du prompt aussi
+}
+
  async function generateVoice() {
   if (!voiceText.trim()) return;
   voiceLoading = true;
