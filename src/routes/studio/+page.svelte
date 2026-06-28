@@ -60,21 +60,19 @@
   
   // === PERMISSIONS ===
   const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(data?.user?.email);
-  const canGenerateImg = isAdmin || (data?.user?.images_restantes > 0);
-  const canGenerateVid = isAdmin || (data?.user?.videos_restantes > 0);
 
   // === RESET QUAND ON CHANGE D'ONGLET ===
   $: {
     if (activeTab === 'images') {
-      vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; voiceAudioUrl = ''; chatResponse = '';
+      vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; voiceAudioUrl = ''; chatResponse = '';
     } else if (activeTab === 'video') {
-      imgPreviewUrl = ''; imgValidatedUrl = ''; lipPreviewUrl = ''; voiceAudioUrl = ''; chatResponse = '';
+      imgPreviewUrl = ''; imgValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; voiceAudioUrl = ''; chatResponse = '';
     } else if (activeTab === 'lipsync') {
       imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; voiceAudioUrl = ''; chatResponse = '';
     } else if (activeTab === 'voice') {
-      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; chatResponse = '';
+      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; chatResponse = '';
     } else if (activeTab === 'chat') {
-      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; voiceAudioUrl = '';
+      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; voiceAudioUrl = '';
     }
   }
 
@@ -123,7 +121,6 @@
         imgValidatedUrl = imgPreviewUrl;
         imgPreviewUrl = null;
         imgGenerationId = null;
-        data.user.images_restantes--;
       } else {
         imgError = result.error || 'Erreur lors de la validation';
       }
@@ -210,7 +207,6 @@
         vidValidatedUrl = vidPreviewUrl;
         vidPreviewUrl = null;
         vidGenerationId = null;
-        data.user.videos_restantes--;
       } else {
         vidError = result.error || 'Erreur lors de la validation';
       }
@@ -262,7 +258,6 @@
     lipPreviewUrl = null;
     
     try {
-      // 1. Upload Image
       const imageUploadRes = await fetch('/api/upload', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -274,7 +269,6 @@
 
       let finalAudioUrl = '';
 
-      // 2. Gestion de l'Audio
       if (lipAudioSource === 'upload') {
         if (!lipAudioUrl || !lipAudioUrl.startsWith('data:')) {
           throw new Error("Veuillez uploader un fichier audio valide");
@@ -311,7 +305,6 @@
 
       if (!finalAudioUrl) throw new Error("Aucune audio valide trouvée");
 
-      // 3. Appel API Lipsync
       const res = await fetch('/api/lipsync', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -322,12 +315,12 @@
         })
       });
       
-      const data = await res.json();
+      const result = await res.json();
       
-      if (res.ok && data.success) {
-        lipPreviewUrl = data.url;
+      if (res.ok && result.success) {
+        lipPreviewUrl = result.url;
       } else {
-        lipError = data.error || 'Erreur de génération';
+        lipError = result.error || 'Erreur de génération';
       }
     } catch (e) {
       lipError = e.message;
@@ -340,11 +333,8 @@
   async function validateLipsync() {
     if (!lipPreviewUrl) return;
     try {
-      if (data?.user?.tentatives_videos > 0 || isAdmin) {
-        data.user.videos_restantes = (data.user.videos_restantes || 0) - 1;
-        lipValidatedUrl = lipPreviewUrl;
-        lipPreviewUrl = null;
-      }
+      lipValidatedUrl = lipPreviewUrl;
+      lipPreviewUrl = null;
     } catch (e) {
       lipError = e.message;
     }
@@ -442,10 +432,22 @@
       <button type="button" class="nav-item" class:active={activeTab === 'lipsync'} on:click={() => activeTab = 'lipsync'}>
         👄 Lipsync
       </button>
-      <button type="button" class="nav-item" class:active={activeTab === 'voice'} on:click={() => activeTab = 'voice'}>
+      <button type="button" class="nav-item" class:active={activeTab === 'voice'} on:click={() => {
+        if (data?.user?.plan === 'gratuit' || !data?.user?.plan) {
+          alert('🔒 Fonctionnalité réservée aux abonnés. Passez à un forfait pour accéder à la synthèse vocale !');
+          return;
+        }
+        activeTab = 'voice';
+      }}>
         🎤 Voix IA {#if data?.user?.plan === 'gratuit' || !data?.user?.plan}<span class="lock-icon">🔒</span>{/if}
       </button>
-      <button type="button" class="nav-item" class:active={activeTab === 'chat'} on:click={() => activeTab = 'chat'}>
+      <button type="button" class="nav-item" class:active={activeTab === 'chat'} on:click={() => {
+        if (data?.user?.plan === 'gratuit' || !data?.user?.plan) {
+          alert('🔒 Fonctionnalité réservée aux abonnés. Passez à un forfait pour accéder au Chat IA !');
+          return;
+        }
+        activeTab = 'chat';
+      }}>
         💬 Chat IA {#if data?.user?.plan === 'gratuit' || !data?.user?.plan}<span class="lock-icon">🔒</span>{/if}
       </button>
     </aside>
@@ -496,13 +498,13 @@
             </div>
           </div>
           
-        <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || (data?.user?.tentatives_images <= 0)}>
+        <button class="chrome-btn create-btn" on:click={generateImage} disabled={imgLoading || (!isAdmin && (data?.user?.images_restantes || 0) <= 0)}>
         {imgLoading ? '⏳ Génération en cours...' : "✨ CRÉER L'IMAGE"}
        </button>
 
-          {#if data?.user?.tentatives_images <= 0}
+          {#if !isAdmin && (data?.user?.images_restantes || 0) <= 0}
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
-              ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
+              ⚠️ Vous avez utilisé vos 3 essais gratuits. Passez à un forfait !
             </p>
           {/if}
         {/if}
@@ -534,13 +536,13 @@
             </div>
           </div>
           
-         <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || (data?.user?.tentatives_videos <= 0)}>
+         <button class="chrome-btn create-btn" on:click={generateVideo} disabled={vidLoading || (!isAdmin && (data?.user?.videos_restantes || 0) <= 0)}>
          {vidLoading ? '⏳ Génération en cours...' : '🎬 CRÉER LA VIDÉO'}
          </button>
 
-          {#if data?.user?.tentatives_videos <= 0}
+          {#if !isAdmin && (data?.user?.videos_restantes || 0) <= 0}
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
-              ⚠️ Vous avez utilisé vos 3 essais gratuits. Validez une création ou passez à un Forfait !
+              ⚠️ Vous avez utilisé vos 3 essais gratuits. Passez à un forfait !
             </p>
           {/if}
         {/if}
@@ -600,11 +602,11 @@
             </div>
           </div>
           
-          <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (data?.user?.tentatives_videos <= 0)}>
+          <button class="chrome-btn create-btn" on:click={generateLipsync} disabled={lipLoading || (!isAdmin && (data?.user?.videos_restantes || 0) <= 0)}>
             {lipLoading ? '⏳ Génération...' : '👄 CRÉER LE LIPSYNC'}
           </button>
 
-          {#if data?.user?.tentatives_videos <= 0}
+          {#if !isAdmin && (data?.user?.videos_restantes || 0) <= 0}
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">⚠️ Essais gratuits utilisés.</p>
           {/if}
 
@@ -624,7 +626,7 @@
                     ❌ Rejeter (0€)
                   </button>
                   <button class="btn-validate" on:click={validateLipsync}>
-                    ✅ J'aime (1 Forfait)
+                    ✅ J'aime
                   </button>
                 </div>
               {:else if lipValidatedUrl}
@@ -766,7 +768,10 @@
                 <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
                 <a href={imgValidatedUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
               {:else if vidPreviewUrl}
-                <div class="preview-media"><video src={vidPreviewUrl} controls loop muted playsinline></video></div>
+                <div class="preview-media">
+                  <!-- svelte-ignore a11y_media_has_caption -->
+                  <video src={vidPreviewUrl} controls loop muted playsinline></video>
+                </div>
                 <div class="watermark">CLIPLUMIA · PREVIEW</div>
               {:else if vidValidatedUrl}
                 <div class="preview-media validated">
@@ -801,7 +806,7 @@
                 ❌ Rejeter (0€)
               </button>
               <button class="btn-validate" on:click={activeTab === 'images' ? validateImage : activeTab === 'video' ? validateVideo : null}>
-                ✅ J'aime (1 Forfait)
+                ✅ J'aime
               </button>
             </div>
           {/if}
