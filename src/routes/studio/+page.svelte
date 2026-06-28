@@ -27,17 +27,6 @@
   let vidFormat = '16:9';
   let vidStyle = 'cinematique';
   
- // === LIPSYNC ===
-  let lipImageBase64 = ''; 
-  let lipAudioUrl = '';
-  let lipLoading = false;
-  let lipPreviewUrl = null;
-  let lipError = null;
-  let lipAudioSource = 'upload';
-  let lipExpression = 'neutre';
-  let lipPrompt = "The person in the image is speaking naturally, high quality"; // Prompt par défaut
-  let lipType = 'parole';
-
   // === VOIX ===
   let voiceSpeaker = 'Serena';
   let voiceText = '';
@@ -231,7 +220,38 @@
   }
   
  
- // === FONCTION GÉNÉRATION LIPSYNC CORRIGÉE ===
+// === VARIABLES LIPSYNC ===
+let lipImageBase64 = '';
+let lipAudioUrl = '';
+let lipLoading = false;
+let lipPreviewUrl = null;
+let lipError = null;
+let lipAudioSource = 'upload';
+let lipExpression = 'neutre';
+let lipType = 'parole';
+let lipPrompt = "The person in the image is speaking naturally, high quality";
+
+// === UPLOAD IMAGE LIPSYNC ===
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => lipImageBase64 = e.target.result;
+    reader.readAsDataURL(file);
+  }
+}
+
+// === UPLOAD AUDIO LIPSYNC ===
+function handleAudioUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => { lipAudioUrl = e.target.result; };
+    reader.readAsDataURL(file);
+  }
+}
+
+// === FONCTION GÉNÉRATION LIPSYNC ===
 async function generateLipsync() {
   if (!lipImageBase64) {
     lipError = "Veuillez uploader une image";
@@ -255,7 +275,7 @@ async function generateLipsync() {
 
     let finalAudioUrl = '';
 
-    // 2. Gestion de l'Audio (Upload, URL ou TTS)
+    // 2. Gestion de l'Audio
     if (lipAudioSource === 'upload') {
       if (!lipAudioUrl || !lipAudioUrl.startsWith('data:')) {
         throw new Error("Veuillez uploader un fichier audio valide");
@@ -273,7 +293,6 @@ async function generateLipsync() {
       finalAudioUrl = lipAudioUrl;
 
     } else if (lipAudioSource === 'tts') {
-      // === NOUVEAU : SI TTS, ON GÉNÈRE LA VOIX D'ABORD ===
       if (!lipAudioUrl) throw new Error("Veuillez entrer le texte à vocaliser");
       
       const voiceRes = await fetch('/api/voice', {
@@ -281,7 +300,7 @@ async function generateLipsync() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           text: lipAudioUrl, 
-          speaker: 'Serena', // Voix par défaut pour le lipsync
+          speaker: 'Serena', 
           lang: 'French',
           emotion: ''
         })
@@ -293,14 +312,14 @@ async function generateLipsync() {
 
     if (!finalAudioUrl) throw new Error("Aucune audio valide trouvée");
 
-    // 3. Appel API Lipsync avec le PROMPT
+    // 3. Appel API Lipsync
     const res = await fetch('/api/lipsync', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
         image: publicImageUrl,
         audio: finalAudioUrl,
-        prompt: lipPrompt // ENVOI DU PROMPT OBLIGATOIRE
+        prompt: lipPrompt 
       })
     });
     
@@ -320,40 +339,11 @@ async function generateLipsync() {
 
 // === FONCTION RESET LIPSYNC ===
 function resetLipsync() {
-  lipImageBase64 = null;  // ✅ corrigé (était imageBase64)
-  lipAudioUrl = '';        // ✅ corrigé (était audioUrl)
+  lipImageBase64 = '';
+  lipAudioUrl = '';
   lipPreviewUrl = null;
   lipError = null;
-  lipPrompt = "The person in the image is speaking naturally, high quality"; // ✅ reset du prompt aussi
-}
-
- async function generateVoice() {
-  if (!voiceText.trim()) return;
-  voiceLoading = true;
-  voiceAudioUrl = null;
-  
-  try {
-    const res = await fetch('/api/voice', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        text: voiceText, 
-        speaker: voiceSpeaker, 
-        lang: voiceLang,
-        emotion: voiceEmotion
-      })
-    });
-    const result = await res.json();
-    
-    if (result.success) {
-      voiceAudioUrl = result.url;
-    } else {
-      alert('Erreur: ' + (result.error || 'Impossible de générer'));
-    }
-  } catch (e) {
-    alert('Erreur réseau: ' + e.message);
-  }
-  voiceLoading = false;
+  lipPrompt = "The person in the image is speaking naturally, high quality";
 }
 
   // === FONCTION GÉNÉRATION CHAT ===
@@ -510,15 +500,13 @@ function resetLipsync() {
           {/if}
         {/if}
 
-
-<!-- SECTION LIPSYNC -->
+  <!-- SECTION LIPSYNC -->
 {#if activeTab === 'lipsync'}
   <div class="input-group">
     <label for="lip-photo">1. Photo du visage</label>
     <input id="lip-photo" type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
   </div>
 
-  <!-- AJOUT DU CHAMP PROMPT OBLIGATOIRE -->
   <div class="input-group">
     <label for="lip-prompt">Description du mouvement (Prompt)</label>
     <input id="lip-prompt" type="text" bind:value={lipPrompt} placeholder="Ex: The person is talking naturally" class="text-input" />
@@ -543,7 +531,7 @@ function resetLipsync() {
   {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
     <div class="input-group">
       <label for="lip-audio-text">3. {lipAudioSource === 'url' ? 'URL Audio' : 'Texte à lire'}</label>
-      <input id="lip-audio-text" type="text" bind:value={lipAudioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez le texte ici pour générer la voix...'} class="text-input" />
+      <input id="lip-audio-text" type="text" bind:value={lipAudioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez le texte ici...'} class="text-input" />
     </div>
   {/if}
 
@@ -584,6 +572,7 @@ function resetLipsync() {
     </div>
   {/if}
 {/if}
+
 
   <!-- SECTION VOIX -->
 {#if activeTab === 'voice'}
