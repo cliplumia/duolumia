@@ -632,11 +632,19 @@
               <div class="preview-label">VOTRE CRÉATION</div>
               
               {#if lipPreviewUrl}
-                <div class="preview-media">
-                  <!-- svelte-ignore a11y_media_has_caption -->
-                  <video src={lipPreviewUrl} controls loop playsinline></video>
+               <div class="preview-media">
+               <!-- svelte-ignore a11y_media_has_caption -->
+               <video 
+               src={lipPreviewUrl} 
+                loop 
+                playsinline 
+                disablepictureinpicture
+                controls={false}
+                class="preview-video"
+                ></video>
                 </div>
                 <div class="watermark">CLIPLUMIA · PREVIEW</div>
+
                 
                 <div class="action-buttons">
                   <button class="btn-reject" on:click={resetLipsync}>
@@ -775,7 +783,7 @@
 
         <!-- ZONE DE PRÉVISUALISATION -->
         {#if activeTab !== 'chat'}
-          {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || voiceAudioUrl || lipPreviewUrl || lipValidatedUrl}
+          {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || voiceAudioUrl}
             <div class="preview-card glass">
               <div class="preview-label">VOTRE CRÉATION</div>
               {#if imgPreviewUrl}
