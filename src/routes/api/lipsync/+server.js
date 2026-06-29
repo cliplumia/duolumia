@@ -16,11 +16,6 @@ export async function POST({ request, platform, cookies }) {
 
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(userEmail);
     
-    // Vérification stricte des crédits vidéos (lipsync = vidéo)
-    if (!isAdmin && (user.videos_restantes || 0) <= 0) {
-      return json({ error: 'Credits videos epuises. Passez a un forfait !' }, { status: 403 });
-    }
-
     const { image, audio, prompt } = await request.json();
     if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 400 });
 
