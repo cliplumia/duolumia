@@ -70,21 +70,17 @@ export async function POST({ request, platform, cookies }) {
 
     const videoUrl = data.output.url || (typeof data.output === 'string' ? data.output : null);
 
-    if (!videoUrl) {
+        if (!videoUrl) {
       throw new Error('URL vidéo introuvable');
     }
 
-    // Décrémentation IMMÉDIATE des crédits vidéos (CORRIGÉ : videos_restantes au lieu de voices_restantes)
-    if (!isAdmin) {
-      await platform.env.BD.prepare("UPDATE utilisateurs SET videos_restantes = videos_restantes - 1 WHERE id =?")
-        .bind(userId).run();
-    }
+    // Création de l'entrée dans la base de données pour le suivi
+    const generationId = crypto.randomUUID();
+    await platform.env.BD.prepare("INSERT INTO generations (id, user_id, type, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?)")
+      .bind(generationId, userId, 'lipsync', videoUrl, 'pending', new Date().toISOString())
+      .run();
 
     console.log('VIDÉO GÉNÉRÉE:', videoUrl);
-    return json({ success: true, url: videoUrl });
-
-  } catch (err) {
-    console.error('Lipsync error:', err);
-    return json({ error: err.message }, { status: 500 });
+    return json({ success: true, url: videoUrl, id: generationId });
   }
 }
