@@ -632,29 +632,28 @@
               <div class="preview-label">VOTRE CRÉATION</div>
               
               {#if lipPreviewUrl}
-               <div class="preview-media">
-               <!-- svelte-ignore a11y_media_has_caption -->
+              <div class="preview-media">
+              <!-- svelte-ignore a11y_media_has_caption -->
                <video 
-               src={lipPreviewUrl} 
+                src={lipPreviewUrl} 
                 loop 
                 playsinline 
                 disablepictureinpicture
-                controls={false}
+                controls={true}
                 class="preview-video"
                 ></video>
                 </div>
                 <div class="watermark">CLIPLUMIA · PREVIEW</div>
 
-                
-                <div class="action-buttons">
+                 <div class="action-buttons">
                   <button class="btn-reject" on:click={resetLipsync}>
-                    ❌ Rejeter (0€)
+                  ❌ Rejeter (0€)
                   </button>
                   <button class="btn-validate" on:click={validateLipsync}>
                     ✅ J'aime
                   </button>
-                </div>
-              {:else if lipValidatedUrl}
+                 </div>
+                {:else if lipValidatedUrl}
                 <div class="preview-media validated">
                   <!-- svelte-ignore a11y_media_has_caption -->
                   <video src={lipValidatedUrl} controls loop playsinline></video>
@@ -882,7 +881,14 @@
   </div>
 </div>
 
+
 <style>
+
+
+/* Cache le bouton plein écran dans la preview lipsync */
+.preview-media video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}
   :global(*) { box-sizing: border-box; }
   :global(body) { 
     margin: 0; 
