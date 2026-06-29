@@ -23,8 +23,8 @@ export async function POST({ request, platform, cookies }) {
       method: 'POST',
       headers: {
         'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}`,
-        'Content-Type': 'application/json'
-      },
+        'Content-Type': 'application/json'},
+     
       body: JSON.stringify({
         version: "prunaai/p-video",
         input: {
@@ -65,17 +65,20 @@ export async function POST({ request, platform, cookies }) {
 
     const videoUrl = data.output.url || (typeof data.output === 'string' ? data.output : null);
 
-        if (!videoUrl) {
+    if (!videoUrl) {
       throw new Error('URL vidéo introuvable');
     }
 
     // Création de l'entrée dans la base de données pour le suivi
     const generationId = crypto.randomUUID();
     await platform.env.BD.prepare("INSERT INTO generations (id, user_id, type, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?)")
-      .bind(generationId, userId, 'lipsync', videoUrl, 'pending', new Date().toISOString())
-      .run();
+      .bind(generationId, userId, 'lipsync', videoUrl, 'pending', new Date().toISOString()).run();
 
     console.log('VIDÉO GÉNÉRÉE:', videoUrl);
     return json({ success: true, url: videoUrl, id: generationId });
+  }
+  catch (err) {
+    console.error('Lipsync error:', err);
+    return json({ error: err.message }, { status: 500 });
   }
 }
