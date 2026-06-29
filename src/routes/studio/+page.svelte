@@ -37,12 +37,13 @@
   let voiceEmotion = 'neutre';
   let voiceSpeed = 'normal';
   
-  // === LIPSYNC ===
+ // === LIPSYNC ===
   let lipImageBase64 = '';
   let lipAudioUrl = '';
   let lipLoading = false;
   let lipPreviewUrl = null;
   let lipValidatedUrl = null;
+  let lipGenerationId = null;
   let lipError = null;
   let lipAudioSource = 'upload';
   let lipExpression = 'neutre';
@@ -319,8 +320,9 @@
       
       const result = await res.json();
       
-      if (res.ok && result.success) {
+       if (res.ok && result.success) {
         lipPreviewUrl = result.url;
+        lipGenerationId = result.id;
       } else {
         lipError = result.error || 'Erreur de génération';
       }
@@ -333,10 +335,23 @@
 
   // === FONCTION VALIDATION LIPSYNC ===
   async function validateLipsync() {
-    if (!lipPreviewUrl) return;
+    if (!lipGenerationId) return;
     try {
-      lipValidatedUrl = lipPreviewUrl;
-      lipPreviewUrl = null;
+      const res = await fetch('/api/action', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: lipGenerationId, action: 'validate', type: 'video' })
+      });
+      const result = await res.json();
+      
+      if (result.success) {
+        lipValidatedUrl = lipPreviewUrl;
+        lipPreviewUrl = null;
+        lipGenerationId = null;
+        data.user.videos_restantes--;
+      } else {
+        lipError = result.error || 'Erreur lors de la validation';
+      }
     } catch (e) {
       lipError = e.message;
     }
