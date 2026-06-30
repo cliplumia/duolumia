@@ -625,6 +625,7 @@
           {#if !isAdmin && (data?.user?.videos_restantes || 0) <= 0}
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">⚠️ Essais gratuits utilisés.</p>
           {/if}
+        {/if}
 
          
         <!-- SECTION VOIX -->
