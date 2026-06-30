@@ -66,15 +66,15 @@
   // === RESET QUAND ON CHANGE D'ONGLET ===
   $: {
     if (activeTab === 'images') {
-      vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; voiceAudioUrl = ''; chatResponse = '';
+      vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; voiceAudioUrl = ''; chatResponse = ''; vidPrompt = ''; lipPrompt = ''; voiceText = ''; chatPrompt = '';
     } else if (activeTab === 'video') {
-      imgPreviewUrl = ''; imgValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; voiceAudioUrl = ''; chatResponse = '';
+      imgPreviewUrl = ''; imgValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; voiceAudioUrl = ''; chatResponse = ''; imgPrompt = ''; lipPrompt = ''; voiceText = ''; chatPrompt = '';
     } else if (activeTab === 'lipsync') {
-      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; voiceAudioUrl = ''; chatResponse = '';
+      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; voiceAudioUrl = ''; chatResponse = ''; imgPrompt = ''; vidPrompt = ''; voiceText = ''; chatPrompt = '';
     } else if (activeTab === 'voice') {
-      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; chatResponse = '';
+      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; chatResponse = ''; imgPrompt = ''; vidPrompt = ''; lipPrompt = ''; chatPrompt = '';
     } else if (activeTab === 'chat') {
-      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; voiceAudioUrl = '';
+      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; voiceAudioUrl = ''; imgPrompt = ''; vidPrompt = ''; lipPrompt = ''; voiceText = '';
     }
   }
 
