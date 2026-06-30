@@ -45,8 +45,6 @@
   let lipLoading = false;
   let lipPreviewUrl = null;
   let lipValidatedUrl = null;
-  let lipGenerationId = null;
-  let vidDownloadUrl = null;
   let lipError = null;
   let lipAudioSource = 'upload';
   let lipExpression = 'neutre';
