@@ -46,6 +46,7 @@
   let lipPreviewUrl = null;
   let lipValidatedUrl = null;
   let lipGenerationId = null;
+  let lipError = null;
   let lipAudioSource = 'upload';
   let lipExpression = 'neutre';
   let lipType = 'parole';
