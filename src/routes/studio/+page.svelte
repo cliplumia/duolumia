@@ -742,6 +742,7 @@
             </div>
           {/if}
         {/if}
+      </div>
 
 <!-- ZONE DE PRÉVISUALISATION -->
 {#if activeTab !== 'chat'}
