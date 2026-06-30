@@ -10,6 +10,7 @@
   let imgPreviewUrl = null;
   let imgValidatedUrl = null;
   let imgGenerationId = null;
+  let imgDownloadUrl = null;
   let imgError = null;
   let imgFormat = '1:1';
   let imgStyle = 'realiste';
@@ -20,6 +21,7 @@
   let vidPreviewUrl = null;
   let vidValidatedUrl = null;
   let vidGenerationId = null;
+  let vidDownloadUrl = null;
   let vidReplicateId = null;
   let vidInterval = null;
   let vidError = null;
@@ -44,6 +46,7 @@
   let lipPreviewUrl = null;
   let lipValidatedUrl = null;
   let lipGenerationId = null;
+  let vidDownloadUrl = null;
   let lipError = null;
   let lipAudioSource = 'upload';
   let lipExpression = 'neutre';
@@ -627,43 +630,7 @@
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">⚠️ Essais gratuits utilisés.</p>
           {/if}
 
-          {#if lipPreviewUrl || lipValidatedUrl}
-            <div class="preview-card glass">
-              <div class="preview-label">VOTRE CRÉATION</div>
-              
-              {#if lipPreviewUrl}
-              <div class="preview-media">
-              <!-- svelte-ignore a11y_media_has_caption -->
-               <video 
-                src={lipPreviewUrl} 
-                loop 
-                playsinline 
-                disablepictureinpicture
-                controls={true}
-                class="preview-video"
-                ></video>
-                </div>
-                <div class="watermark">CLIPLUMIA · PREVIEW</div>
-
-                 <div class="action-buttons">
-                  <button class="btn-reject" on:click={resetLipsync}>
-                  ❌ Rejeter (0€)
-                  </button>
-                  <button class="btn-validate" on:click={validateLipsync}>
-                    ✅ J'aime
-                  </button>
-                 </div>
-                {:else if lipValidatedUrl}
-                <div class="preview-media validated">
-                  <!-- svelte-ignore a11y_media_has_caption -->
-                  <video src={lipValidatedUrl} controls loop playsinline></video>
-                </div>
-                <a href={lipValidatedUrl} download="lipsync-cliplumia.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
-              {/if}
-            </div>
-          {/if}
-        {/if}
-
+         
         <!-- SECTION VOIX -->
         {#if activeTab === 'voice'}
           <textarea bind:value={voiceText} placeholder="Écris le texte à vocaliser..."></textarea>
@@ -780,7 +747,7 @@
           {/if}
         {/if}
 
-      <!-- ZONE DE PRÉVISUALISATION -->
+<!-- ZONE DE PRÉVISUALISATION -->
 {#if activeTab !== 'chat'}
   {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || voiceAudioUrl || lipPreviewUrl || lipValidatedUrl}
     <div class="preview-card glass">
@@ -789,21 +756,33 @@
       {#if imgPreviewUrl}
         <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" /></div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
-      {:else if imgValidatedUrl && imgGenerationId}
+        <div class="action-buttons">
+          <button class="btn-reject" on:click={rejectImage}>❌ Rejeter (0€)</button>
+          <button class="btn-validate" on:click={validateImage}>✅ J'aime</button>
+        </div>
+      {:else if imgValidatedUrl}
         <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
-        <a href={imgValidatedUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
+        {#if imgDownloadUrl}
+          <a href={imgDownloadUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
+        {/if}
       {:else if vidPreviewUrl}
         <div class="preview-media">
           <!-- svelte-ignore a11y_media_has_caption -->
           <video src={vidPreviewUrl} controls loop muted playsinline></video>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
-      {:else if vidValidatedUrl && vidGenerationId}
+        <div class="action-buttons">
+          <button class="btn-reject" on:click={rejectVideo}>❌ Rejeter (0€)</button>
+          <button class="btn-validate" on:click={validateVideo}>✅ J'aime</button>
+        </div>
+      {:else if vidValidatedUrl}
         <div class="preview-media validated">
           <!-- svelte-ignore a11y_media_has_caption -->
           <video src={vidValidatedUrl} controls loop playsinline></video>
         </div>
-        <a href={vidValidatedUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
+        {#if vidDownloadUrl}
+          <a href={vidDownloadUrl} download="cliplumia-video.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
+        {/if}
       {:else if voiceAudioUrl}
         <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
       {:else if lipPreviewUrl}
@@ -812,16 +791,21 @@
           <video src={lipPreviewUrl} controls loop playsinline></video>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
-      {:else if lipValidatedUrl && lipGenerationId}
+        <div class="action-buttons">
+          <button class="btn-reject" on:click={resetLipsync}>❌ Rejeter (0€)</button>
+          <button class="btn-validate" on:click={validateLipsync}>✅ J'aime</button>
+        </div>
+      {:else if lipValidatedUrl}
         <div class="preview-media validated">
           <!-- svelte-ignore a11y_media_has_caption -->
           <video src={lipValidatedUrl} controls loop playsinline></video>
         </div>
-        <a href={lipValidatedUrl} download="lipsync-cliplumia.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
+        <a href={lipValidatedUrl} download="lipsync-cliplumia.mp4" class="download-btn">️⬇️ TÉLÉCHARGER LA VIDÉO</a>
       {/if}
     </div>
   {/if}
 {/if}
+     
 
       <!-- GALERIE D'EXEMPLES -->
       <div class="examples-section glass">
