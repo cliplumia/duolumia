@@ -573,10 +573,16 @@
             <input id="lip-photo" type="file" accept="image/*" on:change={handleImageUpload} class="file-input" />
           </div>
 
-          <div class="input-group">
-            <label for="lip-prompt">Description du mouvement (Prompt)</label>
-            <input id="lip-prompt" type="text" bind:value={lipPrompt} placeholder="Ex: La personne parle naturellement" class="text-input" />
-          </div>
+      <div class="input-group">
+        <label for="lip-prompt">Description du mouvement (Prompt)</label>
+         <textarea 
+          id="lip-prompt" 
+          bind:value={lipPrompt} 
+          placeholder="Ex: La personne parle naturellement, haute qualité..."
+          class="text-input"
+          style="min-height: 100px;"
+          ></textarea>
+       </div>
 
           <div class="input-group">
             <label for="lip-audio-source">2. Source Audio</label>
