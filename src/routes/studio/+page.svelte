@@ -45,6 +45,7 @@
   let lipLoading = false;
   let lipPreviewUrl = null;
   let lipValidatedUrl = null;
+  let lipDownloadUrl = null;
   let lipGenerationId = null;
   let lipError = null;
   let lipAudioSource = 'upload';
@@ -120,8 +121,9 @@
       });
       const result = await res.json();
       
-      if (result.success) {
+     if (result.success) {
       imgValidatedUrl = imgPreviewUrl;
+      imgDownloadUrl = result.downloadUrl;
       imgPreviewUrl = null;
       imgGenerationId = null;
       data.user.images_restantes--; // ← AJOUTER CETTE LIGNE
@@ -207,8 +209,9 @@
       });
       const result = await res.json();
      
-      if (result.success) {
+     if (result.success) {
       vidValidatedUrl = vidPreviewUrl;
+      vidDownloadUrl = result.downloadUrl;
       vidPreviewUrl = null;
       vidGenerationId = null;
       data.user.videos_restantes--; // ← AJOUTER CETTE LIGNE
@@ -346,8 +349,9 @@
       });
       const result = await res.json();
       
-      if (result.success) {
+       if (result.success) {
         lipValidatedUrl = lipPreviewUrl;
+        lipDownloadUrl = result.downloadUrl;
         lipPreviewUrl = null;
         lipGenerationId = null;
         data.user.videos_restantes--;
@@ -807,7 +811,7 @@
           <!-- svelte-ignore a11y_media_has_caption -->
           <video src={lipValidatedUrl} controls loop playsinline></video>
         </div>
-        <a href={lipValidatedUrl} download="lipsync-cliplumia.mp4" class="download-btn">️⬇️ TÉLÉCHARGER LA VIDÉO</a>
+       <a href={lipDownloadUrl} download="lipsync-cliplumia.mp4" class="download-btn">️⬇️ TÉLÉCHARGER LA VIDÉO</a>
       {/if}
     </div>
   {/if}
