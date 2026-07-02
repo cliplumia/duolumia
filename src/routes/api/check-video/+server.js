@@ -22,7 +22,7 @@ export async function POST({ request, platform, cookies }) {
     
     const prediction = await res.json();
     
-        if (prediction.status === 'succeeded') {
+    if (prediction.status === 'succeeded') {
       const videoUrl = Array.isArray(prediction.output) ? prediction.output[0] : prediction.output;
       const finalKey = `videos/${genId}.mp4`;
 
@@ -33,12 +33,17 @@ export async function POST({ request, platform, cookies }) {
         httpMetadata: { contentType: 'video/mp4' }
       });
 
-      // Mettre à jour la DB avec l'URL (pour la preview) et la clé R2 (pour le téléchargement)
-      await BD.prepare("UPDATE generations SET url = ?, final_key = ?, status = 'preview' WHERE id = ?")
-        .bind(videoUrl, finalKey, genId).run();
+      // Créer le token de preview (valable 24h)
+      const previewToken = crypto.randomUUID();
+      const previewExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+
+      // Mettre à jour la DB
+      await BD.prepare("UPDATE generations SET url = ?, final_key = ?, preview_token = ?, preview_token_expires_at = ?, status = 'preview' WHERE id = ?")
+        .bind(videoUrl, finalKey, previewToken, previewExpiresAt, genId).run();
       
-      return json({ status: 'succeeded', url: videoUrl });
-      
+      const previewUrl = `/api/serve?token=${previewToken}`;
+      return json({ status: 'succeeded', url: previewUrl });
+    
       return json({ status: 'succeeded', url: videoUrl });
     } else if (prediction.status === 'failed' || prediction.status === 'canceled') {
       await BD.prepare("UPDATE generations SET status = 'failed' WHERE id = ?")
