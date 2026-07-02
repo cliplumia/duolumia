@@ -54,7 +54,7 @@ export async function POST({ request, platform, cookies }) {
       const downloadUrl = `/api/serve?token=${finalToken}`;
       return json({ success: true, downloadUrl: downloadUrl });
     
-    return json({ error: 'Action inconnue' }, { status: 400 });
+    return json({ error: 'Action inconnue' }, { status: 400 }); 
     
   } catch (err) {
     console.error('Action error:', err);
