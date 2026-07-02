@@ -49,11 +49,19 @@ export async function POST({ request, platform, cookies }) {
       return json({ error: 'Pas d URL retournee', details: output }, { status: 500 });
     }
 
-  
-    // Création entrée dans generations
+      // Création entrée dans generations
     const generationId = crypto.randomUUID();
-    await BD.prepare('INSERT INTO generations (id, user_id, type, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?)')
-      .bind(generationId, userId, 'image', imageUrl, 'en_attente', new Date().toISOString())
+    const finalKey = `images/${generationId}.webp`;
+
+    // Télécharger l'image depuis Replicate et l'uploader dans le bucket R2 privé
+    const imageRes = await fetch(imageUrl);
+    const imageBuffer = await imageRes.arrayBuffer();
+    await platform.env.R2_GENERATIONS_BUCKET.put(finalKey, imageBuffer, {
+      httpMetadata: { contentType: 'image/webp' }
+    });
+
+    await BD.prepare('INSERT INTO generations (id, user_id, type, url, final_key, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)')
+      .bind(generationId, userId, 'image', imageUrl, finalKey, 'en_attente', new Date().toISOString())
       .run();
 
     return json({ image: imageUrl, id: generationId });
