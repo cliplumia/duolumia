@@ -69,13 +69,23 @@ export async function POST({ request, platform, cookies }) {
       throw new Error('URL vidéo introuvable');
     }
 
-    // Création de l'entrée dans la base de données pour le suivi
     const generationId = crypto.randomUUID();
-    await platform.env.BD.prepare("INSERT INTO generations (id, user_id, type, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?)")
-      .bind(generationId, userId, 'lipsync', videoUrl, 'pending', new Date().toISOString()).run();
+    const finalKey = `lipsync/${generationId}.mp4`;
+
+    // Télécharger la vidéo depuis Replicate et l'uploader dans le bucket R2 privé
+    const videoRes = await fetch(videoUrl);
+    const videoBuffer = await videoRes.arrayBuffer();
+    await platform.env.R2_GENERATIONS_BUCKET.put(finalKey, videoBuffer, {
+      httpMetadata: { contentType: 'video/mp4' }
+    });
+
+    // Création de l'entrée dans la base de données pour le suivi
+    await platform.env.BD.prepare("INSERT INTO generations (id, user_id, type, url, final_key, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind(generationId, userId, 'lipsync', videoUrl, finalKey, 'pending', new Date().toISOString()).run();
 
     console.log('VIDÉO GÉNÉRÉE:', videoUrl);
     return json({ success: true, url: videoUrl, id: generationId });
+    
   }
   catch (err) {
     console.error('Lipsync error:', err);
