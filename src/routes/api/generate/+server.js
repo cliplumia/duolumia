@@ -49,12 +49,7 @@ export async function POST({ request, platform, cookies }) {
       return json({ error: 'Pas d URL retournee', details: output }, { status: 500 });
     }
 
-    // Décrémentation IMMÉDIATE des crédits (côté serveur)
-    if (!isAdmin) {
-      await BD.prepare('UPDATE utilisateurs SET images_restantes = images_restantes - 1 WHERE id =?')
-        .bind(userId).run();
-    }
-
+  
     // Création entrée dans generations
     const generationId = crypto.randomUUID();
     await BD.prepare('INSERT INTO generations (id, user_id, type, url, status, created_at) VALUES (?, ?, ?, ?, ?, ?)')
