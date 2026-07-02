@@ -64,7 +64,15 @@ export async function POST({ request, platform, cookies }) {
       .bind(generationId, userId, 'image', imageUrl, finalKey, 'en_attente', new Date().toISOString())
       .run();
 
-    return json({ image: imageUrl, id: generationId });
+        const previewToken = crypto.randomUUID();
+    const previewExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // Expire dans 24h
+
+    await BD.prepare("UPDATE generations SET preview_token = ?, preview_token_expires_at = ? WHERE id = ?")
+      .bind(previewToken, previewExpiresAt, generationId).run();
+
+    const previewUrl = `/api/serve?token=${previewToken}`;
+
+    return json({ image: previewUrl, id: generationId });
     
   } catch (error) {
     console.error('Erreur:', error);
