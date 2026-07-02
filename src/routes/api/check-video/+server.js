@@ -22,12 +22,22 @@ export async function POST({ request, platform, cookies }) {
     
     const prediction = await res.json();
     
-    if (prediction.status === 'succeeded') {
+        if (prediction.status === 'succeeded') {
       const videoUrl = Array.isArray(prediction.output) ? prediction.output[0] : prediction.output;
+      const finalKey = `videos/${genId}.mp4`;
+
+      // Télécharger la vidéo depuis Replicate et l'uploader dans le bucket R2 privé
+      const videoRes = await fetch(videoUrl);
+      const videoBuffer = await videoRes.arrayBuffer();
+      await platform.env.R2_GENERATIONS_BUCKET.put(finalKey, videoBuffer, {
+        httpMetadata: { contentType: 'video/mp4' }
+      });
+
+      // Mettre à jour la DB avec l'URL (pour la preview) et la clé R2 (pour le téléchargement)
+      await BD.prepare("UPDATE generations SET url = ?, final_key = ?, status = 'preview' WHERE id = ?")
+        .bind(videoUrl, finalKey, genId).run();
       
-      // Mettre à jour la DB avec l'URL
-      await BD.prepare("UPDATE generations SET url = ?, status = 'preview' WHERE id = ?")
-        .bind(videoUrl, genId).run();
+      return json({ status: 'succeeded', url: videoUrl });
       
       return json({ status: 'succeeded', url: videoUrl });
     } else if (prediction.status === 'failed' || prediction.status === 'canceled') {
