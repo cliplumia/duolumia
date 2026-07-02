@@ -45,10 +45,14 @@ export async function POST({ request, platform, cookies }) {
       return json({ success: true });
     }
     
-    if (action === 'reject') {
-      await BD.prepare("UPDATE generations SET status = 'rejete' WHERE id = ?").bind(id).run();
-      return json({ success: true });
-    }
+          const finalToken = crypto.randomUUID();
+      const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString(); // Expire dans 15 min
+      
+      await BD.prepare("UPDATE generations SET status = 'valide', final_token = ?, final_token_expires_at = ? WHERE id = ?")
+        .bind(finalToken, expiresAt, id).run();
+        
+      const downloadUrl = `/api/serve?token=${finalToken}`;
+      return json({ success: true, downloadUrl: downloadUrl });
     
     return json({ error: 'Action inconnue' }, { status: 400 });
     
