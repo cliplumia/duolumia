@@ -79,9 +79,18 @@ export async function POST({ request, platform, cookies }) {
       httpMetadata: { contentType: 'video/mp4' }
     });
 
+       // Créer le token de preview (valable 24h)
+    const previewToken = crypto.randomUUID();
+    const previewExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+
     // Création de l'entrée dans la base de données pour le suivi
-    await platform.env.BD.prepare("INSERT INTO generations (id, user_id, type, url, final_key, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
-      .bind(generationId, userId, 'lipsync', videoUrl, finalKey, 'pending', new Date().toISOString()).run();
+    await platform.env.BD.prepare("INSERT INTO generations (id, user_id, type, url, final_key, preview_token, preview_token_expires_at, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(generationId, userId, 'lipsync', videoUrl, finalKey, previewToken, previewExpiresAt, 'pending', new Date().toISOString()).run();
+
+    const previewUrl = `/api/serve?token=${previewToken}`;
+
+    console.log('VIDÉO GÉNÉRÉE:', videoUrl);
+    return json({ success: true, url: previewUrl, id: generationId });
 
     console.log('VIDÉO GÉNÉRÉE:', videoUrl);
     return json({ success: true, url: videoUrl, id: generationId });
