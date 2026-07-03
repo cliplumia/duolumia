@@ -785,7 +785,7 @@
       {:else if vidPreviewUrl}
         <div class="preview-media">
           <!-- svelte-ignore a11y_media_has_caption -->
-         <video src={vidPreviewUrl} controls loop muted playsinline></video><on:contextmenu={blockContextMenu}></video>
+        <video src={vidPreviewUrl} controls loop muted playsinline on:contextmenu={blockContextMenu}></video>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         <div class="action-buttons">
@@ -805,7 +805,7 @@
       {:else if lipPreviewUrl}
         <div class="preview-media">
           <!-- svelte-ignore a11y_media_has_caption -->
-        <video src={lipPreviewUrl} controls={false} loop playsinline></video><on:contextmenu={blockContextMenu}></video>
+        <video src={lipPreviewUrl} controls loop muted playsinline on:contextmenu={blockContextMenu}></video>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         <div class="action-buttons">
@@ -904,6 +904,14 @@
     overflow-x: hidden; 
     background: #0c0618;
   }
+ :global(select) {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+:global(option) {
+  background-color: #1a1a2e;
+  color: #fff;
+}
 
   .chrome-text {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
