@@ -135,7 +135,7 @@
           </div>
           <button class="btn-play" on:click={playVoiceDemo}>▶ Écouter la voix</button>
         </div>
-        <p class="demo-desc">Voix française IA</p>
+      <p class="demo-desc">Voix française IA</p>
       </div>
 
     <div class="demo-card glass">
@@ -165,7 +165,7 @@
           <li><strong>50</strong> images/mois</li>
           <li>Paye que si tu valides 🔥</li>
         </ul>
-        <a href="/signup?plan=starter" class="btn-outline">Commencer</a>
+       <a href="/signup?plan=starter" class="btn-outline">Commencer</a>
       </div>
       <div class="price-card glass">
         <h3>Standard</h3>
