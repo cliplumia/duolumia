@@ -27,6 +27,7 @@
       window.speechSynthesis.speak(u);
     }
   }
+
 </script>
 
 <svelte:head>
@@ -50,7 +51,7 @@
         <div class="concept-line">
           ✓ <strong>STOP LES CRÉDITS</strong><br>
           80 vidéos/mois. Pas de compteur qui stresse.
-        </div>
+         </div>
         <div class="concept-line">
           ✓ <strong>STOP LES VIDÉOS RATÉES</strong><br>
           Tu génères avec filigrane.<br>
@@ -212,7 +213,8 @@
   </footer>
 </main>
 
-<style>
+ <style>
+
   :global(*){box-sizing:border-box}
   :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
@@ -225,8 +227,7 @@
     color:transparent;
     filter:drop-shadow(0 0 8px rgba(191,149,63,.6));
   }
-
- .page{
+  .page{
     position:relative;
     min-height:100vh;
     overflow-x:hidden;
@@ -245,7 +246,6 @@
     z-index:0;
     pointer-events:none
   }
-
  .glass{
     position:relative;
     background:rgba(255,255,255,.04);
@@ -256,8 +256,7 @@
     box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);
     z-index:2
   }
-
- .nav{
+  .nav{
     position:fixed;
     top:0;
     left:0;
@@ -364,8 +363,7 @@
     color:#FCF6BA;
     font-weight:700
   }
-
- .btn-primary{
+  .btn-primary{
     display:inline-block;
     background:linear-gradient(135deg,rgba(191,149,63,.2),rgba(191,149,63,.05));
     color:#FCF6BA;
@@ -384,8 +382,7 @@
     box-shadow:0 8px 25px rgba(191,149,63,.3);
     transform:translateY(-2px)
   }
-
- .note{
+  .note{
     font-size:.85rem;
     color:rgba(255,255,255,.6);
     display:block;
@@ -411,7 +408,6 @@
     margin-top:12px;
     text-shadow:0 1px 4px rgba(0,0,0,.8)
   }
-
  .concept{
     position:relative;
     z-index:2;
@@ -464,7 +460,6 @@
     color:rgba(191,149,63,.5);
     font-size:1.5rem
   }
-
  .demos{
     position:relative;
     z-index:2;
@@ -497,7 +492,6 @@
     border-radius:100px;
     color:#FCF6BA
   }
-
   .screen{
     position:relative;
     border-radius:14px;
@@ -570,8 +564,7 @@
     text-align:center;
     text-shadow:0 1px 4px rgba(0,0,0,.8)
   }
-
- .chat-box{
+  .chat-box{
     height:120px;
     overflow-y:auto;
     padding:12px;
@@ -587,8 +580,8 @@
     align-items:flex-start;
     gap:6px
   }
- .msg.user{
-    flex-direction:row-reverse
+  .msg.user{
+   flex-direction:row-reverse
   }
  .bubble{
     background:rgba(191,149,63,.12);
@@ -626,8 +619,7 @@
     cursor:pointer;
     font-size:.9rem
   }
-
- .voice-box{
+  .voice-box{
     padding:20px;
     text-align:center
   }
@@ -669,8 +661,7 @@
     background:rgba(191,149,63,.1);
     box-shadow:0 0 15px rgba(191,149,63,.15)
   }
-
- .pricing{
+  .pricing{
     position:relative;
     z-index:2;
     padding:60px 24px;
@@ -757,14 +748,13 @@
     font-size:.7rem;
     font-weight:700
   }
-
- .footer{
+  .footer{
     position:relative;
     z-index:2;
     text-align:center;
     padding:40px 24px;
     border-top:1px solid rgba(255,255,255,.06);
-      background:rgba(0,0,0,.2)
+    background:rgba(0,0,0,.2)
   }
   .footer-brand{
     font-family:'Playfair Display',serif;
@@ -784,8 +774,7 @@
     color:rgba(255,255,255,.3);
     margin:0
   }
-
-  @media(max-width:900px){
+   @media(max-width:900px){
     .nav{padding:16px;width:100%;left:0;transform:none;border-radius:0}
     .hero{grid-template-columns:1fr;padding:120px 16px 60px;gap:30px}
     .hero h1{font-size:2.4rem}
