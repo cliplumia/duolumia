@@ -30,10 +30,10 @@
 
 <svelte:head>
   <title>ClipLumia - Forfait simple.</title>
-  <meta name="description" content="ClipLumia - Forfait simple. STOP LES VIDÉOS RATÉES : Tu génères avec filigrane avant validation. Tu kiffes? Tu valides = 1 sur forfait. Tu kiffes pas? Rejeter =[...]
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-</svelte:head>
+ <meta name="description" content="ClipLumia - Forfait simple. STOP LES VIDÉOS RATÉES : Tu génères avec filigrane avant validation. Tu kiffes? Tu valides = 1 sur forfait. Tu kiffes pas? Rejeter =[...]
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+ </svelte:head>
 
 <main class="page">
   <nav class="nav">
