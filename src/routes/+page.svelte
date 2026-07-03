@@ -1,4 +1,5 @@
 <script>
+
   let demoLiked = {img: false, vid: false, lip: false};
   let chatInput = '';
   let chatMsgs = [{who:'bot', text:'Bonjour! Décrivez votre vision...'}];
