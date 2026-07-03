@@ -592,7 +592,7 @@
           class="text-input"
           style="min-height: 100px;"
           ></textarea>
-       </div>
+         </div>
 
           <div class="input-group">
             <label for="lip-audio-source">2. Source Audio</label>
@@ -771,21 +771,21 @@
       <div class="preview-label">VOTRE CRÉATION</div>
       
       {#if imgPreviewUrl}
-        <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" draggable="false" on:contextmenu={blockContextMenu} /></div>
+        <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" on:contextmenu={blockContextMenu} /></div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         <div class="action-buttons">
           <button class="btn-reject" on:click={rejectImage}>❌ Rejeter (0€)</button>
           <button class="btn-validate" on:click={validateImage}>✅ J'aime</button>
         </div>
       {:else if imgValidatedUrl}
-        <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" draggable="false" /></div>
+        <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
         {#if imgDownloadUrl}
           <a href={imgDownloadUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
         {/if}
       {:else if vidPreviewUrl}
         <div class="preview-media">
           <!-- svelte-ignore a11y_media_has_caption -->
-          <video src={vidPreviewUrl} controls={false} loop muted playsinline on:contextmenu={blockContextMenu}></video>
+         <video src={vidPreviewUrl} controls loop muted playsinline></video><on:contextmenu={blockContextMenu}></video>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         <div class="action-buttons">
@@ -805,7 +805,7 @@
       {:else if lipPreviewUrl}
         <div class="preview-media">
           <!-- svelte-ignore a11y_media_has_caption -->
-          <video src={lipPreviewUrl} controls={false} loop playsinline on:contextmenu={blockContextMenu}></video>
+        <video src={lipPreviewUrl} controls={false} loop playsinline></video><on:contextmenu={blockContextMenu}></video>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         <div class="action-buttons">
