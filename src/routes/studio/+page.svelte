@@ -76,7 +76,7 @@
     } else if (activeTab === 'voice') {
       imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; chatResponse = ''; imgPrompt = ''; vidPrompt = ''; lipPrompt = ''; chatPrompt = '';
     } else if (activeTab === 'chat') {
-      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; voiceAudioUrl = ''; imgPrompt = ''; vidPrompt = ''; lipPrompt = ''; voiceText = '';
+      imgPreviewUrl = ''; imgValidatedUrl = ''; vidPreviewUrl = ''; vidValidatedUrl = ''; lipPreviewUrl = ''; lipValidatedUrl = ''; voiceAudioUrl = ''; imgPrompt = ''; vidPrompt = ''; lipPrompt = ''; chatPrompt = '';
     }
   }
 
@@ -431,6 +431,12 @@
     chatLoading = false;
   }
 
+  // === FONCTION BLOQUER CLIC DROIT ===
+  function blockContextMenu(e) {
+    e.preventDefault();
+    return false;
+  }
+
 </script>
 
 <svelte:head>
@@ -765,21 +771,21 @@
       <div class="preview-label">VOTRE CRÉATION</div>
       
       {#if imgPreviewUrl}
-        <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" /></div>
+        <div class="preview-media"><img src={imgPreviewUrl} alt="Preview" draggable="false" on:contextmenu={blockContextMenu} /></div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         <div class="action-buttons">
           <button class="btn-reject" on:click={rejectImage}>❌ Rejeter (0€)</button>
           <button class="btn-validate" on:click={validateImage}>✅ J'aime</button>
         </div>
       {:else if imgValidatedUrl}
-        <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
+        <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" draggable="false" /></div>
         {#if imgDownloadUrl}
           <a href={imgDownloadUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
         {/if}
       {:else if vidPreviewUrl}
         <div class="preview-media">
           <!-- svelte-ignore a11y_media_has_caption -->
-          <video src={vidPreviewUrl} controls loop muted playsinline></video>
+          <video src={vidPreviewUrl} controls={false} loop muted playsinline on:contextmenu={blockContextMenu}></video>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         <div class="action-buttons">
@@ -799,7 +805,7 @@
       {:else if lipPreviewUrl}
         <div class="preview-media">
           <!-- svelte-ignore a11y_media_has_caption -->
-          <video src={lipPreviewUrl} controls loop playsinline></video>
+          <video src={lipPreviewUrl} controls={false} loop playsinline on:contextmenu={blockContextMenu}></video>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         <div class="action-buttons">
@@ -840,7 +846,7 @@
         
         <div class="faq-item glass">
           <h3 class="chrome-gold-text">❓ Que se passe-t-il si je n'aime pas le résultat ?</h3>
-          <p>C'est la force ClipLumia ! Si le résultat ne vous convient pas, cliquez sur <strong class="chrome-gold-text">"Rejeter (0€)"</strong> : vous ne payez rien et pouvez relancer une nouvelle génération. Si vous aimez, cliquez sur <strong class="chrome-gold-text">"J'aime (1 Forfait)"</strong> : le forfait est utilisé et la création est à vous.</p>
+          <p>C'est la force ClipLumia ! Si le résultat ne vous convient pas, cliquez sur <strong class="chrome-gold-text">"Rejeter (0€)"</strong> : vous ne payez rien et pouvez relancer une nouvelle création.</p>
         </div>
         
         <div class="faq-item glass">
@@ -865,11 +871,30 @@
 
 <style>
 
+/* === PROTECTION DES PRÉVISUALISATIONS === */
+.preview-media img {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+}
 
-/* Cache le bouton plein écran dans la preview lipsync */
+.preview-media video {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 .preview-media video::-webkit-media-controls-fullscreen-button {
   display: none;
 }
+
+.preview-media video::-webkit-media-controls {
+  display: none !important;
+}
+
   :global(*) { box-sizing: border-box; }
   :global(body) { 
     margin: 0; 
@@ -999,19 +1024,17 @@
   }
 
   .lock-icon {
-    font-size: 0.7rem;
-    margin-left: 4px;
-    opacity: 0.6;
+    margin-left: 8px;
+    font-size: 0.9rem;
   }
 
   .studio-main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     overflow-y: auto;
     padding-right: 10px;
-    max-width: calc(100% - 300px);
   }
 
   .studio-header {
@@ -1019,262 +1042,225 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 15px;
-    padding: 10px;
+    gap: 20px;
   }
 
   .studio-title {
-    font-size: 1.8rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
     margin: 0;
-    font-weight: 900;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
   }
 
   .forfait-badge {
-    font-size: 1rem;
-    padding: 12px 22px;
-    border-radius: 25px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    background: rgba(191, 149, 63, 0.15);
     border: 1px solid rgba(191, 149, 63, 0.3);
-    font-weight: 700;
-    white-space: nowrap;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    font-weight: 600;
+    font-size: 1.1rem;
   }
 
   .generation-card {
-    padding: 30px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
-  textarea {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.3);
+  textarea, select, input[type="text"], input[type="file"] {
+    background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
-    color: #ffffff;
-    font-size: 1.05rem;
-    min-height: 150px;
-    outline: none;
-    resize: vertical;
+    color: #fff;
+    padding: 12px 16px;
+    font-size: 1rem;
     font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    padding: 18px;
-    box-sizing: border-box;
     transition: all 0.3s ease;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
-  textarea::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-  }
-
-  textarea:focus {
-    border-color: rgba(191, 149, 63, 0.4);
-    background: rgba(0, 0, 0, 0.4);
-    box-shadow: 0 0 20px rgba(191, 149, 63, 0.1);
-  }
-
-  .input-group {
-    margin-bottom: 20px;
-  }
-
-  .input-group label {
-    display: block;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-  }
-
-  .file-input,
-  .text-input {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-    padding: 14px;
-    color: #ffffff;
-    font-size: 0.95rem;
-    box-sizing: border-box;
-  }
-
-  .text-input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+  textarea:focus, select:focus, input[type="text"]:focus, input[type="file"]:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(191, 149, 63, 0.5);
+    box-shadow: 0 0 15px rgba(191, 149, 63, 0.2);
   }
 
   .options-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
   }
 
   .option-group {
     display: flex;
     flex-direction: column;
+    gap: 8px;
   }
 
   .option-group label {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.9rem;
     font-weight: 600;
-    margin-bottom: 8px;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-  }
-
-  select {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #f0f0f5;
-    padding: 14px 16px;
-    border-radius: 10px;
     font-size: 0.95rem;
-    outline: none;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: all 0.3s ease;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-  }
-
-  select:hover {
-    border-color: rgba(191, 149, 63, 0.4);
-  }
-
-  select:focus {
-    border-color: rgba(191, 149, 63, 0.5);
-    box-shadow: 0 0 15px rgba(191, 149, 63, 0.15);
+    color: rgba(255, 255, 255, 0.9);
   }
 
   .create-btn {
-    width: 100%;
-    padding: 20px;
+    padding: 16px 32px;
     font-size: 1.1rem;
-    border-radius: 14px;
-    border: none;
+    border-radius: 12px;
     cursor: pointer;
-    letter-spacing: 0.08em;
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    margin-top: 25px;
+    width: 100%;
     transition: all 0.3s ease;
   }
 
+  .create-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   .preview-card {
-    padding: 30px;
-    position: relative;
-    margin-top: 25px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
   }
 
   .preview-label {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 20px;
     font-weight: 700;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 
   .preview-media {
     width: 100%;
-    border-radius: 14px;
+    max-width: 600px;
+    border-radius: 12px;
     overflow: hidden;
-    background: #000;
-    min-height: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(191, 149, 63, 0.3);
   }
 
-  .preview-media img, 
-  .preview-media video {
-    max-width: 100%;
-    max-height: 450px;
+  .preview-media img, .preview-media video {
+    width: 100%;
+    height: auto;
     display: block;
+  }
+
+  .preview-media.validated {
+    box-shadow: 0 0 40px rgba(76, 175, 80, 0.4);
   }
 
   .watermark {
     position: absolute;
-    top: 50%; 
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-15deg);
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1.5rem;
+    font-size: 3rem;
     font-weight: 900;
+    color: rgba(191, 149, 63, 0.15);
     pointer-events: none;
-    white-space: nowrap;
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    padding: 12px 25px;
-    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    text-transform: uppercase;
     letter-spacing: 3px;
-    border-radius: 10px;
-    text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   }
 
   .action-buttons {
     display: flex;
-    gap: 16px;
-    margin-top: 20px;
+    gap: 15px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .btn-reject, .btn-validate {
+    padding: 14px 28px;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
   }
 
   .btn-reject {
-    flex: 1;
-    padding: 18px;
-    border-radius: 14px;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.8);
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
+    background: rgba(255, 107, 107, 0.2);
+    border: 1px solid rgba(255, 107, 107, 0.5);
+    color: #ff6b6b;
   }
-  
-  .btn-reject:hover { 
-    border-color: #ff6b6b; 
-    color: #ff6b6b; 
-    background: rgba(255, 68, 68, 0.1);
+
+  .btn-reject:hover {
+    background: rgba(255, 107, 107, 0.3);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.2);
   }
 
   .btn-validate {
-    flex: 1;
-    padding: 18px;
-    border-radius: 14px;
-    font-weight: 900;
-    font-size: 1rem;
-    cursor: pointer;
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-    border: 2px solid #FCF6BA;
-    border-bottom: 3px solid #8B6508;
     color: #1a0b2e;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 20px rgba(191, 149, 63, 0.6), inset 0 1px 0 rgba(255,255,255,0.6);
-    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+    border: none;
   }
 
-  .btn-validate:hover { 
+  .btn-validate:hover {
     filter: brightness(1.1);
-    transform: translateY(-3px); 
-    box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
+    transform: translateY(-2px);
+  }
+
+  .download-btn {
+    padding: 14px 28px;
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    color: #1a0b2e;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    display: inline-block;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .download-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+  }
+
+  .audio-player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(191, 149, 63, 0.1);
+    border-radius: 12px;
+  }
+
+  .audio-player audio {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .chat-response {
+    width: 100%;
+    padding: 20px;
+    background: rgba(191, 149, 63, 0.1);
+    border-radius: 12px;
+    margin-top: 20px;
+  }
+
+  .chat-bubble {
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   .examples-section {
-    margin-top: 40px;
-    padding: 30px;
+    padding: 40px;
   }
 
   .section-title {
-    font-size: 1.6rem;
-    margin-bottom: 25px;
-    text-align: center;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    margin: 0 0 30px 0;
   }
 
   .examples-grid-full {
@@ -1284,160 +1270,104 @@
   }
 
   .example-item {
-    aspect-ratio: 16/9;
-    background: rgba(0, 0, 0, 0.3);
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
     color: rgba(255, 255, 255, 0.5);
-    font-size: 0.9rem;
-    cursor: pointer;
+    font-weight: 600;
     transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 
   .example-item:hover {
-    border-color: rgba(191, 149, 63, 0.5);
-    background: rgba(191, 149, 63, 0.1);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .faq-section {
-    margin-top: 40px;
-    padding: 30px;
-    margin-bottom: 40px;
+    padding: 40px;
   }
 
   .faq-item {
-    margin-bottom: 25px;
-    padding: 20px;
-    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 15px;
+    border-left: 4px solid rgba(191, 149, 63, 0.5);
   }
 
   .faq-item h3 {
-    margin-bottom: 12px;
-    font-weight: 700;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+    margin: 0 0 12px 0;
+    font-size: 1.1rem;
   }
 
   .faq-item p {
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.7;
-    font-size: 0.95rem;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
   }
 
-  .faq-item strong {
+  .chrome-gold-text {
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-weight: 700;
   }
 
-  .chat-response {
-    margin-top: 20px;
-  }
-  
-  .chat-bubble {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 14px;
-    padding: 20px;
-    color: #f0f0f5;
-    font-size: 1rem;
-    line-height: 1.7;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  .download-btn {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    padding: 18px;
-    border-radius: 14px;
-    font-weight: 900;
-    font-size: 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-    border: 2px solid #FCF6BA;
-    border-bottom: 3px solid #8B6508;
-    color: #1a0b2e;
-    box-shadow: 0 0 20px rgba(191, 149, 63, 0.6), inset 0 1px 0 rgba(255,255,255,0.6);
-    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-    transition: all 0.3s ease;
+  .input-group label {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
   }
-  
-  .download-btn:hover { 
-    filter: brightness(1.1); 
-    transform: translateY(-3px); 
-    box-shadow: 0 0 30px rgba(191, 149, 63, 0.9), inset 0 1px 0 rgba(255,255,255,0.8);
+
+  .file-input {
+    padding: 12px;
+  }
+
+  .text-input {
+    padding: 12px;
   }
 
   @media (max-width: 1024px) {
-    .studio-container { 
-      flex-direction: column; 
-      padding: 15px; 
-      gap: 15px;
-    }
-    
-    .sidebar { 
-      width: 100%; 
-      flex-direction: row; 
-      overflow-x: auto; 
-      padding: 15px; 
-      gap: 10px; 
-    }
-    
-    .logo { 
-      display: none; 
-    }
-    
-    .nav-item { 
-      white-space: nowrap; 
-      padding: 14px 18px; 
-      font-size: 0.95rem;
-      min-width: fit-content;
-    }
-    
-    .studio-main {
-      max-width: 100%;
-    }
-    
-    .options-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .action-buttons {
+    .studio-container {
       flex-direction: column;
     }
-    
-    .studio-title {
-      font-size: 1.4rem;
+
+    .sidebar {
+      width: 100%;
+      flex-direction: row;
+      gap: 10px;
     }
 
-    .studio-page {
-      background-attachment: scroll;
+    .logo {
+      display: none;
+    }
+
+    .studio-title {
+      font-size: 2rem;
     }
   }
 
   @media (max-width: 768px) {
-    .generation-card,
-    .preview-card,
-    .examples-section,
-    .faq-section {
+    .studio-page {
+      padding: 10px;
+    }
+
+    .generation-card, .preview-card {
       padding: 20px;
     }
-    
-    textarea {
-      min-height: 120px;
-      font-size: 0.95rem;
+
+    .studio-title {
+      font-size: 1.5rem;
     }
-    
-    .create-btn {
-      padding: 16px;
-      font-size: 1rem;
+
+    .options-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>
