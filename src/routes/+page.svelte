@@ -30,7 +30,7 @@
 
 <svelte:head>
   <title>ClipLumia - Forfait simple.</title>
-  <meta name="description" content="ClipLumia - Forfait simple. STOP LES VIDÉOS RATÉES : Tu génères avec filigrane avant validation. Tu kiffes? Tu valides = 1 sur forfait. Tu kiffes pas? Rejeter = 0 sur forfait. Sans engagement. Annule en 2 clics.">
+  <meta name="description" content="ClipLumia - Forfait simple. STOP LES VIDÉOS RATÉES : Tu génères avec filigrane avant validation. Tu kiffes? Tu valides = 1 sur forfait. Tu kiffes pas? Rejeter =[...]
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </svelte:head>
@@ -472,24 +472,13 @@
     margin:0 auto
   }
  .demos-grid{
-    display:flex;
-    flex-direction:column;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
     gap:24px;
-    width:100%;
-  }
-  @media (min-width:901px){
-   .demos-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:24px;
-    }
   }
  .demo-card{
     padding:24px;
     width:100%
-  }
- .demo-card.wide{
-    grid-column:1/-1
   }
  .demo-top{
     display:flex;
@@ -508,8 +497,7 @@
     color:#FCF6BA
   }
 
-  /* PATCH CARRÉ - pas trop petit sur ordi */
- .screen{
+  .screen{
     position:relative;
     border-radius:14px;
     overflow:hidden;
@@ -519,13 +507,6 @@
     width:100%;
     aspect-ratio:1/1;
     height:auto;
-  }
-  @media (min-width:901px){
-   .screen{
-      max-width:480px;
-      margin-left:auto;
-      margin-right:auto;
-    }
   }
  .screen img,.screen video{
     width:100%;
@@ -617,10 +598,6 @@
     font-size:.85rem;
     max-width:85%
   }
- .msg.user.bubble{
-    background:rgba(90,54,150,.25);
-    border-color:rgba(90,54,150,.35)
-  }
  .chat-input{
     display:flex;
     gap:6px
@@ -690,45 +667,6 @@
  .btn-play:hover{
     background:rgba(191,149,63,.1);
     box-shadow:0 0 15px rgba(191,149,63,.15)
-  }
-
- .img-placeholder{
-    position:relative;
-    width:100%;
-    height:100%;
-    background:linear-gradient(135deg,#1a0a2e 0%,#2d1b4e 50%,#1a0a2e 100%);
-    border-radius:12px;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:12px
-  }
- .placeholder-shimmer{
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:100%;
-    height:100%;
-    background:linear-gradient(90deg,transparent,rgba(191,149,63,.08),transparent);
-    animation:shimmer 3s infinite
-  }
-  @keyframes shimmer{
-    0%{left:-100%}
-    100%{left:100%}
-  }
- .ph-icon{
-    font-size:2rem;
-    z-index:2;
-    opacity:.8
-  }
- .ph-label{
-    color:rgba(255,255,255,.5);
-    font-size:.9rem;
-    font-weight:500;
-    z-index:2;
-    letter-spacing:1px
   }
 
  .pricing{
@@ -859,20 +797,4 @@
     .demo-actions{flex-direction:column}
     .page{background-attachment:scroll}
   }
-  .demos-grid{
-  display:flex !important;
-  flex-direction:column !important;
-  gap:24px !important;
-  width:100% !important;
-  max-width:520px !important;
-  margin:0 auto !important;
-}
-
-.demo-card{
-  width:100% !important;
-  max-width:520px !important;
-  margin:0 auto !important;
-}
-
 </style>
-
