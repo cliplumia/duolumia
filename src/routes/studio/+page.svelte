@@ -432,18 +432,19 @@
     chatLoading = false;
   }
 
- function togglePlay(id) {
+function togglePlay(id) {
   const video = document.getElementById(id);
   if (video) {
     if (video.paused) video.play();
     else video.pause();
   }
+}
 
-  // === FONCTION BLOQUER CLIC DROIT ===
-  function blockContextMenu(e) {
-    e.preventDefault();
-    return false;
-  }
+// === FONCTION BLOQUER CLIC DROIT ===
+function blockContextMenu(e) {
+  e.preventDefault();
+  return false;
+}
 
 </script>
 
