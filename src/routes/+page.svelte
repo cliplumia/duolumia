@@ -1,4 +1,5 @@
 <script>
+
   let demoLiked = {img: false, vid: false, lip: false};
   let chatInput = '';
   let chatMsgs = [{who:'bot', text:'Bonjour! Décrivez votre vision...'}];
@@ -12,11 +13,9 @@
       chatMsgs = [...chatMsgs, {who:'bot', text:`"${prev}" — Voici votre aperçu!`}];
     }, 800);
   }
-
-  function toggleLike(t) {
+   function toggleLike(t) {
     demoLiked[t] =!demoLiked[t];
   }
-
   function playVoiceDemo() {
     if ('speechSynthesis' in window) {
       const u = new SpeechSynthesisUtterance("Bonjour, bienvenue sur mon site ClipLumia");
