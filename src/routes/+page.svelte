@@ -790,6 +790,6 @@
     .demo-actions{flex-direction:column}
     .page{background-attachment:scroll}
   }
-
+}
 </style>
  
