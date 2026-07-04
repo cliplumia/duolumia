@@ -26,6 +26,7 @@
       window.speechSynthesis.speak(u);
     }
   }
+
 </script>
 
 <svelte:head>
@@ -35,11 +36,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </svelte:head>
 
-<main class="page">
+  <main class="page">
   <nav class="nav">
     <a href="/" class="logo">ClipLumia</a>
     <a href="/studio" class="nav-link">Studio</a>
-  </nav>
+   </nav>
 
   <section class="hero">
     <div class="hero-text">
