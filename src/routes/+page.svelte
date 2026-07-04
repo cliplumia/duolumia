@@ -213,17 +213,22 @@
 
  <style>
 
-  :global(*){box-sizing:border-box}
-  :global(body){margin:0;font-family:'Inter',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-
-  /* GOLD-CHROME METALLIQUE IDENTIQUE AU LOGO */
-    .OR-CHROME {
-    background:linear-gradient(135deg,#BF953F,#FCF6BA,#B38728,#FBF5B7,#AA771C);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-    color:transparent;
-    filter:drop-shadow(0 0 8px rgba(191,149,63,.6));
+  :global(*) { box-sizing: border-box; 
+  :global(body) { 
+    margin: 0; 
+    font-family: 'Inter', system-ui, sans-serif; 
+    color: #fff; 
+    -webkit-font-smoothing: antialiased; 
+    overflow-x: hidden; 
+    background: #0c0618;
+  }
+  .chrome-text {
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(191, 149, 63, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+    font-weight: 900;
+    letter-spacing: 0.02em;
   }
   .page{
     position:relative;
@@ -245,14 +250,16 @@
     pointer-events:none
   }
  .glass{
-    position:relative;
-    background:rgba(255,255,255,.04);
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:20px;
-    box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);
-    z-index:2
+    position: relative;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.4), 
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    z-index: 2;
   }
   .nav{
     position:fixed;
@@ -277,7 +284,7 @@
     font-size:2.2rem;
     font-weight:900;
     letter-spacing:-1px;
-    background:linear-gradient(135deg,#BF953F,#FCF6BA,#B38728,#FBF5B7,#AA771C);
+    background:linear-gradient(45deg,#BF953F,#FCF6BA,#B38728,#FBF5B7,#AA771C);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     background-clip:text;
@@ -297,7 +304,6 @@
     border-color:rgba(191,149,63,.5);
     color:#FCF6BA
   }
-
  .hero{
     position:relative;
     z-index:2;
@@ -330,7 +336,7 @@
     margin:0 0 20px;
     text-shadow:0 2px 10px rgba(0,0,0,.9)
   }
- .hero p{
+ .hero{
     font-size:1.1rem;
     line-height:1.7;
     color:rgba(255,255,255,.85);
@@ -338,7 +344,6 @@
     font-weight:300;
     text-shadow:0 2px 8px rgba(0,0,0,.9)
   }
-
  .hero-concept{
     margin:28px 0;
     display:flex;
@@ -363,7 +368,7 @@
   }
   .btn-primary{
     display:inline-block;
-    background:linear-gradient(135deg,rgba(191,149,63,.2),rgba(191,149,63,.05));
+    background:linear-gradient(45deg,rgba(191,149,63,.2),rgba(191,149,63,.05));
     color:#FCF6BA;
     border:1.5px solid rgba(191,149,63,.5);
     padding:14px 32px;
@@ -447,7 +452,7 @@
     font-size:1rem;
     text-shadow:0 1px 4px rgba(0,0,0,.8)
   }
- .step p{
+ .step{
     margin:0;
     font-size:.85rem;
     color:rgba(255,255,255,.7);
@@ -785,5 +790,6 @@
     .demo-actions{flex-direction:column}
     .page{background-attachment:scroll}
   }
+
 </style>
  
