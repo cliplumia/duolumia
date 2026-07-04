@@ -22,6 +22,7 @@
   let vidValidatedUrl = null;
   let vidGenerationId = null;
   let vidDownloadUrl = null;
+  let vidPlayer;
   let vidReplicateId = null;
   let vidInterval = null;
   let vidError = null;
@@ -431,6 +432,13 @@
     chatLoading = false;
   }
 
+ function togglePlay(id) {
+  const video = document.getElementById(id);
+  if (video) {
+    if (video.paused) video.play();
+    else video.pause();
+  }
+
   // === FONCTION BLOQUER CLIC DROIT ===
   function blockContextMenu(e) {
     e.preventDefault();
@@ -780,12 +788,13 @@
       {:else if imgValidatedUrl}
         <div class="preview-media validated"><img src={imgValidatedUrl} alt="Validated" /></div>
         {#if imgDownloadUrl}
-          <a href={imgDownloadUrl} download="cliplumia-creation.webp" class="download-btn">⬇️ TÉLÉCHARGER L'IMAGE</a>
+          <a href={imgDownloadUrl} download="cliplumia-creation.webp" class="download-btn">️⬇️ TÉLÉCHARGER L'IMAGE</a>
         {/if}
       {:else if vidPreviewUrl}
-        <div class="preview-media">
+        <div class="preview-media custom-video-wrapper">
           <!-- svelte-ignore a11y_media_has_caption -->
-        <video src={vidPreviewUrl} controls loop muted playsinline on:contextmenu={blockContextMenu}></video>
+          <video id="preview-vid" src={vidPreviewUrl} loop muted playsinline on:contextmenu={blockContextMenu}></video>
+          <button class="custom-play-btn" on:click={() => togglePlay('preview-vid')}>▶</button>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         <div class="action-buttons">
@@ -803,9 +812,10 @@
       {:else if voiceAudioUrl}
         <div class="preview-media audio-player"><audio src={voiceAudioUrl} controls></audio></div>
       {:else if lipPreviewUrl}
-        <div class="preview-media">
+        <div class="preview-media custom-video-wrapper">
           <!-- svelte-ignore a11y_media_has_caption -->
-        <video src={lipPreviewUrl} controls loop muted playsinline on:contextmenu={blockContextMenu}></video>
+          <video id="preview-lip" src={lipPreviewUrl} loop muted playsinline on:contextmenu={blockContextMenu}></video>
+          <button class="custom-play-btn" on:click={() => togglePlay('preview-lip')}>▶</button>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         <div class="action-buttons">
@@ -817,12 +827,12 @@
           <!-- svelte-ignore a11y_media_has_caption -->
           <video src={lipValidatedUrl} controls loop playsinline></video>
         </div>
-       <a href={lipDownloadUrl} download="lipsync-cliplumia.mp4" class="download-btn">️⬇️ TÉLÉCHARGER LA VIDÉO</a>
+       <a href={lipDownloadUrl} download="lipsync-cliplumia.mp4" class="download-btn">⬇️ TÉLÉCHARGER LA VIDÉO</a>
       {/if}
     </div>
   {/if}
 {/if}
-     
+
 
       <!-- GALERIE D'EXEMPLES -->
       <div class="examples-section glass">
@@ -1382,6 +1392,46 @@
     .examples-grid-full {
       grid-template-columns: repeat(2, 1fr);
     }
+    .custom-video-wrapper {
+    position: relative;
   }
-    
-  </style>
+  
+  .custom-video-wrapper { position: relative; }
+  .custom-play-btn {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    color: #1a0b2e; border: 2px solid #FCF6BA; border-radius: 50%;
+    width: 60px; height: 60px; font-size: 24px; font-weight: 900; cursor: pointer;
+    z-index: 20; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 20px rgba(191, 149, 63, 0.6); transition: all 0.3s ease;
+  }
+  .custom-play-btn:hover { transform: translate(-50%, -50%) scale(1.1); }
+  }
+  .custom-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    color: #1a0b2e;
+    border: 2px solid #FCF6BA;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    font-weight: 900;
+    cursor: pointer;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(191, 149, 63, 0.6);
+    transition: all 0.3s ease;
+  }
+   .custom-play-btn:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 30px rgba(191, 149, 63, 0.9);
+  }
+}
+  
+</style>
