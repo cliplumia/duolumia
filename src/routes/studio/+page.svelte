@@ -1160,19 +1160,20 @@
   }
 
   .watermark {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-15deg);
-    font-size: 3rem;
-    font-weight: 900;
-    color: rgba(191, 149, 63, 0.15);
-    pointer-events: none;
-    z-index: 1;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  font-size: 2rem;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 10;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  user-select: none;
+}
 
   .action-buttons {
     display: flex;
@@ -1341,14 +1342,14 @@
     padding: 12px;
   }
 
-  @media (max-width: 1024px) {
+   @media (max-width: 1024px) {
     .studio-container {
       flex-direction: column;
     }
 
     .sidebar {
       width: 100%;
-      flex-direction: row;
+      flex-direction: column;
       gap: 10px;
     }
 
@@ -1366,7 +1367,7 @@
       padding: 10px;
     }
 
-    .generation-card, .preview-card {
+    .generation-card, .preview-card, .faq-section, .examples-section {
       padding: 20px;
     }
 
@@ -1377,5 +1378,10 @@
     .options-grid {
       grid-template-columns: 1fr;
     }
+
+    .examples-grid-full {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
-</style>
+    
+  </style>
