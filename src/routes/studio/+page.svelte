@@ -430,17 +430,18 @@
     }
     chatLoading = false;
   }
+
+// === FONCTION BLOQUER CLIC DROIT ===
+function blockContextMenu(e) {
+  e.preventDefault();
+  return false;
+ }
  function togglePlay(id) {
   const video = document.getElementById(id);
   if (video) {
     if (video.paused) video.play();
     else video.pause();
   }
- }
-// === FONCTION BLOQUER CLIC DROIT ===
-function blockContextMenu(e) {
-  e.preventDefault();
-  return false;
  }
 
 </script>
@@ -1431,4 +1432,5 @@ function blockContextMenu(e) {
     box-shadow: 0 0 30px rgba(191, 149, 63, 0.9);
   }
  }   
+
 </style>
