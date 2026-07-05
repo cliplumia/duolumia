@@ -359,7 +359,7 @@
       } else {
         lipError = result.error || 'Erreur lors de la validation';
       }
-    } catch (e) {
+    }catch (e) {
       lipError = e.message;
     }
   }
@@ -431,19 +431,18 @@
     
     chatLoading = false;
   }
-
-function togglePlay(id) {
+ function togglePlay(id) {
   const video = document.getElementById(id);
   if (video) {
     if (video.paused) video.play();
     else video.pause();
   }
 }
-
 // === FONCTION BLOQUER CLIC DROIT ===
 function blockContextMenu(e) {
   e.preventDefault();
   return false;
+ }
 }
 
 </script>
