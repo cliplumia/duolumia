@@ -436,13 +436,12 @@
     if (video.paused) video.play();
     else video.pause();
   }
-
+ }
 // === FONCTION BLOQUER CLIC DROIT ===
 function blockContextMenu(e) {
   e.preventDefault();
   return false;
  }
-}
 
 </script>
 
@@ -1431,6 +1430,5 @@ function blockContextMenu(e) {
     transform: translate(-50%, -50%) scale(1.1);
     box-shadow: 0 0 30px rgba(191, 149, 63, 0.9);
   }
-}
-  
+ }   
 </style>
