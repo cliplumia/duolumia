@@ -428,7 +428,6 @@
     } catch (e) {
       chatResponse = '❌ Erreur : ' + e.message;
     }
-    
     chatLoading = false;
   }
  function togglePlay(id) {
@@ -437,7 +436,7 @@
     if (video.paused) video.play();
     else video.pause();
   }
-}
+
 // === FONCTION BLOQUER CLIC DROIT ===
 function blockContextMenu(e) {
   e.preventDefault();
