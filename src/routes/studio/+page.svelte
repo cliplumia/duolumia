@@ -1,4 +1,4 @@
-<script>
+  <script>
   export let data;
   
   // === ÉTAT DES SECTIONS ===
@@ -22,7 +22,7 @@
   let vidValidatedUrl = null;
   let vidGenerationId = null;
   let vidDownloadUrl = null;
-  let vidPlayer;
+  let vidPlayer = null;
   let vidReplicateId = null;
   let vidInterval = null;
   let vidError = null;
