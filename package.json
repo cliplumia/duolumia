@@ -14,7 +14,7 @@
     "replicate": "^0.32.0",
     "openai": "^4.0.0",
     "stripe": "^14.0.0",
-    "@fontsource/fira-mono": "^4.5.10",
+    "@fontsource/fira-mono": "^4.5.10"
     
   },
   "type": "module",
