@@ -1,7 +1,7 @@
   <script>
   export let data;
   
-  // === ÉTAT DES SECTIONS ===
+// === ÉTAT DES SECTIONS ===
   let activeTab = 'images';
 
   // === IMAGES ===
@@ -903,8 +903,7 @@ function blockContextMenu(e) {
 .preview-media video::-webkit-media-controls {
   display: none !important;
 }
-
-  :global(*) { box-sizing: border-box; }
+ :global(*) { box-sizing: border-box; }
   :global(body) { 
     margin: 0; 
     font-family: 'Inter', system-ui, sans-serif; 
@@ -1180,7 +1179,7 @@ function blockContextMenu(e) {
   z-index: 10;
   text-transform: uppercase;
   letter-spacing: 3px;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
   user-select: none;
 }
 
