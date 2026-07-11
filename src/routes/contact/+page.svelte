@@ -84,7 +84,7 @@
     margin: 2rem 0;
   }
   
-  .gold-link {
+  .gold chrome {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -94,7 +94,7 @@
     font-size: 1.2rem;
   }
   
-  .gold-link:hover {
+  .gold-chrome {
     filter: drop-shadow(0 0 15px rgba(252, 246, 186, 0.8));
   }
 </style>
