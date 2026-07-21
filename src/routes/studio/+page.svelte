@@ -511,7 +511,7 @@ function blockContextMenu(e) {
            activeTab === 'lipsync' ? 'Studio Lipsync' :
            activeTab === 'voice' ? 'Synthèse Vocale IA' : 'Chat IA Assistant'}
         </h1>
-        <div class="forfait-badge chrome-gold">📸 {data?.user?.images_restantes || 0} | 🎬 {data?.user?.videos_restantes || 0}</div>
+        <div class="forfait-badge chrome-gold">📸 {data?.user?.images_restantes || 0} | 🎬 {data?.user?.videos_restantes || 0} | 🎤 {data?.user?.voices_restantes || 0} | 💬 {data?.user?.chat_restantes || 0}</div>
        </div>
 
      <!-- CARTE DE GÉNÉRATION -->

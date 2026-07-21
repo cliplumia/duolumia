@@ -11,6 +11,10 @@ export async function POST({ request, platform, cookies }) {
 
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
 
+    if (!isAdmin && (user.voices_restantes || 0) <= 0) {
+      return json({ error: 'Credits voix epuises. Passez a un forfait !' }, { status: 403 });
+    }
+
     const { text, speaker, lang, emotion } = await request.json();
     if (!text) return json({ error: 'Texte manquant' }, { status: 400 });
 
