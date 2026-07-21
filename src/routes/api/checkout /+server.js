@@ -8,7 +8,7 @@ const PRICES = {
   studio: 'price_1Tc71ZEsGrpQC0pJkijNahPK'
 };
 
-export async function POST({ request, platform, cookies }) {
+ export async function POST({ request, platform, cookies }) {
   try {
     const secretKey = platform?.env?.STRIPE_SECRET_KEY;
     
