@@ -139,7 +139,7 @@
     <div class="demo-card glass">
       <div class="demo-top"><span>🎭 Lipsync IA</span><span class="tag">Preview</span></div>
        <div class="screen">
-        <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/VIDEOFEMMECHANTE.mp4" controls loop playsinline preload="metadata"></video>
+        <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/VIDEOFEMMECHANTE.mp4" controls loop playsinline preload="metadata" style="object-position: 50% 15%;"></video>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
