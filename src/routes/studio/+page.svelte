@@ -1,6 +1,19 @@
   <script>
+  import { onMount } from 'svelte';
+
   export let data;
-  
+
+  // === BLOCAGE ENREGISTREMENT PAGE (Ctrl+S / Cmd+S) TANT QU'UN APERÇU EST AFFICHÉ ===
+  onMount(() => {
+    function blockSaveShortcut(e) {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+        e.preventDefault();
+      }
+    }
+    window.addEventListener('keydown', blockSaveShortcut);
+    return () => window.removeEventListener('keydown', blockSaveShortcut);
+  });
+
 // === ÉTAT DES SECTIONS ===
   let activeTab = 'images';
 
@@ -774,7 +787,7 @@ function blockContextMenu(e) {
 <!-- ZONE DE PRÉVISUALISATION -->
 {#if activeTab !== 'chat'}
   {#if imgPreviewUrl || imgValidatedUrl || vidPreviewUrl || vidValidatedUrl || voiceAudioUrl || lipPreviewUrl || lipValidatedUrl}
-    <div class="preview-card glass">
+    <div class="preview-card glass" on:contextmenu={blockContextMenu}>
       <div class="preview-label">VOTRE CRÉATION</div>
       
       {#if imgPreviewUrl}
