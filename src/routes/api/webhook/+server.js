@@ -44,11 +44,11 @@ export async function POST({ request, platform }) {
       let plan = 'starter';
       let videos = 15; let images = 50; let voices = 0; let chats = 20; // Starter par défaut
       
-      if (priceId === 'price_1TP1gEEsGrpQC0pJiMzdzHjo') { // STANDARD 19€
+      if (priceId === 'price_1TZybSEWOUWbzB3Cpkihq08y') { // STANDARD 19€
         plan = 'standard'; videos = 40; images = 150; voices = 10; chats = 20;
-      } else if (priceId === 'price_1TP1gIEsGrpQC0pJvr1PXmoD') { // PRO 39€
+      } else if (priceId === 'price_1TZyi9EWOUWbzB3CyN7bfOY1') { // PRO 39€
         plan = 'pro'; videos = 80; images = 300; voices = 20; chats = 30;
-      } else if (priceId === 'price_1Tc71ZEsGrpQC0pJkijNahPK') { // STUDIO 79€
+      } else if (priceId === 'price_1TZymdEWOUWbzB3CClmjHBJg') { // STUDIO 79€
         plan = 'studio'; videos = 180; images = 800; voices = 40; chats = 50;
       }
       // Si c'est le Starter (9€), on garde les valeurs par défaut (15, 50, 0, 20)
@@ -74,11 +74,11 @@ export async function POST({ request, platform }) {
       
       let videos = 15; let images = 50; let voices = 0; let chats = 20; // Starter par défaut
       
-      if (priceId === 'price_1TP1gEEsGrpQC0pJiMzdzHjo') { // STANDARD
+      if (priceId === 'price_1TZybSEWOUWbzB3Cpkihq08y') { // STANDARD
         videos = 40; images = 150; voices = 10; chats = 20;
-      } else if (priceId === 'price_1TP1gIEsGrpQC0pJvr1PXmoD') { // PRO
+      } else if (priceId === 'price_1TZyi9EWOUWbzB3CyN7bfOY1') { // PRO
         videos = 80; images = 300; voices = 20; chats = 30;
-      } else if (priceId === 'price_1Tc71ZEsGrpQC0pJkijNahPK') { // STUDIO
+      } else if (priceId === 'price_1TZymdEWOUWbzB3CClmjHBJg') { // STUDIO
         videos = 180; images = 800; voices = 40; chats = 50;
       }
 

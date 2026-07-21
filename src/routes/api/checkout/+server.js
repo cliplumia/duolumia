@@ -3,9 +3,9 @@ import { json } from '@sveltejs/kit';
 
 const PRICES = {
   starter: 'price_1TZyOcEWOUWbzB3CqJOBxhFw',
-  standard: 'price_1TP1gEEsGrpQC0pJiMzdzHjo',
-  pro: 'price_1TP1gIEsGrpQC0pJvr1PXmoD',
-  studio: 'price_1Tc71ZEsGrpQC0pJkijNahPK'
+  standard: 'price_1TZybSEWOUWbzB3Cpkihq08y',
+  pro: 'price_1TZyi9EWOUWbzB3CyN7bfOY1',
+  studio: 'price_1TZymdEWOUWbzB3CClmjHBJg'
 };
 
  export async function POST({ request, platform, cookies }) {
