@@ -228,6 +228,7 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 0 30px rgba(191, 149, 63, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+    text-shadow: none;
     font-weight: 900;
     letter-spacing: 0.02em;
   }
