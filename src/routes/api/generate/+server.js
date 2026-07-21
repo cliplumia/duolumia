@@ -1,12 +1,7 @@
 import { json } from '@sveltejs/kit';
-import Replicate from 'replicate';
 
 export async function POST({ request, platform, cookies }) {
   try {
-    const replicate = new Replicate({
-      auth: platform.env.REPLICATE_API_TOKEN,
-    });
-
     const userId = cookies.get('user_id') || cookies.get('userid');
     if (!userId) return json({ error: 'Non connecte' }, { status: 401 });
 
@@ -24,17 +19,35 @@ export async function POST({ request, platform, cookies }) {
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
 
-    const output = await replicate.run(
-      "black-forest-labs/flux-schnell",
-      {
+    const repRes = await fetch('https://api.replicate.com/v1/models/black-forest-labs/flux-schnell/predictions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'wait'
+      },
+      body: JSON.stringify({
         input: {
           prompt: prompt,
           aspect_ratio: "1:1",
           output_format: "webp",
           output_quality: 90
         }
-      }
-    );
+      })
+    });
+
+    if (!repRes.ok) {
+      const err = await repRes.json();
+      throw new Error(err.detail || 'Erreur Replicate');
+    }
+
+    const prediction = await repRes.json();
+
+    if (prediction.status !== 'succeeded') {
+      throw new Error(prediction.error || 'Generation echouee');
+    }
+
+    const output = prediction.output;
 
     let imageUrl;
     if (Array.isArray(output)) {
