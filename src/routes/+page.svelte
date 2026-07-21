@@ -61,7 +61,7 @@
       <span class="note">Sans engagement · Annulez en 2 clics</span>
     </div>
     <div class="hero-media glass">
-     <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/VIDEOFEMME1%20ACCEUIL.mp4" controls muted loop playsinline preload="metadata"></video>
+     <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/femmepresentationCLIPLUMIA.mp4" controls loop playsinline preload="metadata"></video>
       <p class="caption">Exemple généré avec ClipLumia</p>
     </div>
   </section>
@@ -139,7 +139,7 @@
     <div class="demo-card glass">
       <div class="demo-top"><span>🎭 Lipsync IA</span><span class="tag">Preview</span></div>
        <div class="screen">
-        <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/VIDEOFEMME1%20ACCEUIL.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/VIDEOFEMMECHANTE.mp4" controls loop playsinline preload="metadata"></video>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
         </div>
         <div class="demo-actions">
