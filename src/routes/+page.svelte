@@ -213,8 +213,8 @@
 
  <style>
 
-  :global(*) { box-sizing: border-box; 
-  :global(body) { 
+  :global(*) { box-sizing: border-box; }
+  :global(body) {
     margin: 0; 
     font-family: 'Inter', system-ui, sans-serif; 
     color: #fff; 
@@ -222,9 +222,10 @@
     overflow-x: hidden; 
     background: #0c0618;
   }
-  .chrome-text {
+  .chrome-text, .OR-CHROME {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 0 30px rgba(191, 149, 63, 0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.6));
     font-weight: 900;
@@ -790,6 +791,5 @@
     .demo-actions{flex-direction:column}
     .page{background-attachment:scroll}
   }
-}
 </style>
  
