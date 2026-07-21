@@ -473,7 +473,9 @@
   }
  .demos-grid{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:1fr;
+    max-width:560px;
+    margin:0 auto;
     gap:24px;
   }
  .demo-card{
