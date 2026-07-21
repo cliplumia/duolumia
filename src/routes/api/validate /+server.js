@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 
-export async function POST({ request, platform, cookies }) {
+ export async function POST({ request, platform, cookies }) {
   try {
    const userId = cookies.get('userid');
    if (!userId) return json({ error: 'Non connecte' }, { status: 401 });
