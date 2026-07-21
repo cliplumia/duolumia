@@ -21,10 +21,10 @@ export async function POST({ request, platform, cookies }) {
     if (!generation) return json({ error: 'Generation introuvable' }, { status: 404 });
     
     if (action === 'validate') {
-      if (generation.status === 'valide') {
-        return json({ success: true, message: 'Deja valide' });
+      if (generation.status === 'valide' && generation.final_token) {
+        return json({ success: true, message: 'Deja valide', downloadUrl: `/api/serve?token=${generation.final_token}` });
       }
-      
+
       if (!isAdmin) {
         if (type === 'video') {
           if ((user.videos_restantes || 0) <= 0) {
@@ -40,22 +40,19 @@ export async function POST({ request, platform, cookies }) {
             .bind(userId).run();
         }
       }
-      
-      await BD.prepare("UPDATE generations SET status = 'valide' WHERE id = ?").bind(id).run();
-      return json({ success: true });
-    }
-    
-          const finalToken = crypto.randomUUID();
+
+      const finalToken = crypto.randomUUID();
       const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString(); // Expire dans 15 min
-      
+
       await BD.prepare("UPDATE generations SET status = 'valide', final_token = ?, final_token_expires_at = ? WHERE id = ?")
         .bind(finalToken, expiresAt, id).run();
-        
+
       const downloadUrl = `/api/serve?token=${finalToken}`;
-      return json({ success: true, downloadUrl: downloadUrl });
-    
-    return json({ error: 'Action inconnue' }, { status: 400 }); 
-    
+      return json({ success: true, downloadUrl });
+    }
+
+    return json({ error: 'Action inconnue' }, { status: 400 });
+
   } catch (err) {
     console.error('Action error:', err);
     return json({ error: err.message }, { status: 500 });

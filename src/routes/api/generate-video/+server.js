@@ -18,13 +18,7 @@ export async function POST({ request, platform, cookies }) {
     
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
-    
-    // Décrémentation IMMÉDIATE des crédits (côté serveur)
-    if (!isAdmin) {
-      await BD.prepare('UPDATE utilisateurs SET videos_restantes = videos_restantes - 1 WHERE id = ?')
-        .bind(userId).run();
-    }
-    
+
     // Envoi sans attendre (pas de Prefer: wait)
     const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
       method: 'POST',
