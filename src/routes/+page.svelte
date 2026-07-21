@@ -786,6 +786,7 @@
     .steps{flex-direction:column;padding:0 8px}
     .arrow{transform:rotate(90deg)}
     .demos-grid{grid-template-columns:1fr}
+    .screen{aspect-ratio:16/10}
     .pricing-grid{grid-template-columns:1fr}
     .concept,.demos,.pricing{padding-left:16px;padding-right:16px}
     .demo-actions{flex-direction:column}
