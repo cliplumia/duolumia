@@ -28,10 +28,35 @@
             alert('Erreur: ' + text.substring(0,200)); 
             return; 
           }
-          if (res.ok) { 
-            goto('/dashboard'); 
-          } else { 
-            alert('Erreur: ' + (data.error||'Inconnue')); 
+          if (res.ok) {
+            const planLower = plan.toLowerCase();
+            const forfaitsPayants = ['starter', 'standard', 'pro', 'studio'];
+
+            if (forfaitsPayants.includes(planLower)) {
+              try {
+                const checkoutRes = await fetch('/api/checkout', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ plan: planLower })
+                });
+                const checkoutData = await checkoutRes.json();
+
+                if (checkoutRes.ok && checkoutData.url) {
+                  window.location.href = checkoutData.url;
+                  return;
+                } else {
+                  alert('Erreur paiement: ' + (checkoutData.error || 'Inconnue'));
+                  goto('/dashboard');
+                }
+              } catch (e) {
+                alert('Erreur de connexion au paiement: ' + e.message);
+                goto('/dashboard');
+              }
+            } else {
+              goto('/dashboard');
+            }
+          } else {
+            alert('Erreur: ' + (data.error||'Inconnue'));
           }
         }
       });
