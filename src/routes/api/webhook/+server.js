@@ -45,9 +45,9 @@ export async function POST({ request, platform }) {
       let videos = 15; let images = 50; let voices = 0; let chats = 20; // Starter par défaut
       
       if (priceId === 'price_1TP1gEEsGrpQC0pJiMzdzHjo') { // STANDARD 19€
-        plan = 'standard'; videos = 60; images = 300; voices = 10; chats = 20;
+        plan = 'standard'; videos = 40; images = 150; voices = 10; chats = 20;
       } else if (priceId === 'price_1TP1gIEsGrpQC0pJvr1PXmoD') { // PRO 39€
-        plan = 'pro'; videos = 120; images = 600; voices = 20; chats = 30;
+        plan = 'pro'; videos = 80; images = 300; voices = 20; chats = 30;
       } else if (priceId === 'price_1Tc71ZEsGrpQC0pJkijNahPK') { // STUDIO 79€
         plan = 'studio'; videos = 180; images = 800; voices = 40; chats = 50;
       }
@@ -75,9 +75,9 @@ export async function POST({ request, platform }) {
       let videos = 15; let images = 50; let voices = 0; let chats = 20; // Starter par défaut
       
       if (priceId === 'price_1TP1gEEsGrpQC0pJiMzdzHjo') { // STANDARD
-        videos = 60; images = 300; voices = 10; chats = 20;
+        videos = 40; images = 150; voices = 10; chats = 20;
       } else if (priceId === 'price_1TP1gIEsGrpQC0pJvr1PXmoD') { // PRO
-        videos = 120; images = 600; voices = 20; chats = 30;
+        videos = 80; images = 300; voices = 20; chats = 30;
       } else if (priceId === 'price_1Tc71ZEsGrpQC0pJkijNahPK') { // STUDIO
         videos = 180; images = 800; voices = 40; chats = 50;
       }
