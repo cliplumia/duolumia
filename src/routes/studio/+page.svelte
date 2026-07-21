@@ -1366,8 +1366,18 @@ function blockContextMenu(e) {
 
     .sidebar {
       width: 100%;
-      flex-direction: column;
-      gap: 10px;
+      flex-direction: row;
+      gap: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-item {
+      width: auto;
+      flex-shrink: 0;
+      white-space: nowrap;
+      padding: 10px 16px;
     }
 
     .logo {
