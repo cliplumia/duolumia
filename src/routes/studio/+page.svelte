@@ -805,7 +805,7 @@ function blockContextMenu(e) {
       {:else if vidPreviewUrl}
         <div class="preview-media custom-video-wrapper">
           <!-- svelte-ignore a11y_media_has_caption -->
-          <video id="preview-vid" src={vidPreviewUrl} loop muted playsinline on:contextmenu={blockContextMenu}></video>
+          <video id="preview-vid" src={vidPreviewUrl} loop muted playsinline disablepictureinpicture disableRemotePlayback controlsList="nodownload noplaybackrate" on:contextmenu={blockContextMenu}></video>
           <button class="custom-play-btn" on:click={() => togglePlay('preview-vid')}>▶</button>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
@@ -826,7 +826,7 @@ function blockContextMenu(e) {
       {:else if lipPreviewUrl}
         <div class="preview-media custom-video-wrapper">
           <!-- svelte-ignore a11y_media_has_caption -->
-          <video id="preview-lip" src={lipPreviewUrl} loop muted playsinline on:contextmenu={blockContextMenu}></video>
+          <video id="preview-lip" src={lipPreviewUrl} loop muted playsinline disablepictureinpicture disableRemotePlayback controlsList="nodownload noplaybackrate" on:contextmenu={blockContextMenu}></video>
           <button class="custom-play-btn" on:click={() => togglePlay('preview-lip')}>▶</button>
         </div>
         <div class="watermark">CLIPLUMIA · PREVIEW</div>
