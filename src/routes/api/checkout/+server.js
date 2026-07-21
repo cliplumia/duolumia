@@ -1,4 +1,4 @@
-import Stripe from 'stripe';
+﻿import Stripe from 'stripe';
 import { json } from '@sveltejs/kit';
 
 const PRICES = {
