@@ -12,7 +12,7 @@ export async function POST({ request, platform, cookies }) {
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
 
     if (!isAdmin && (user.chat_restantes || 0) <= 0) {
-      return json({ error: 'Credits chat epuises' }, { status: 403 });
+      return json({ error: 'Forfait chat epuise' }, { status: 403 });
     }
 
     const { message } = await request.json();

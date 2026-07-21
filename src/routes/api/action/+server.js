@@ -28,13 +28,13 @@ export async function POST({ request, platform, cookies }) {
       if (!isAdmin) {
         if (type === 'video') {
           if ((user.videos_restantes || 0) <= 0) {
-            return json({ error: 'Credits videos epuises' }, { status: 403 });
+            return json({ error: 'Forfait videos epuise' }, { status: 403 });
           }
           await BD.prepare('UPDATE utilisateurs SET videos_restantes = videos_restantes - 1 WHERE id = ?')
             .bind(userId).run();
         } else {
           if ((user.images_restantes || 0) <= 0) {
-            return json({ error: 'Credits images epuises' }, { status: 403 });
+            return json({ error: 'Forfait images epuise' }, { status: 403 });
           }
           await BD.prepare('UPDATE utilisateurs SET images_restantes = images_restantes - 1 WHERE id = ?')
             .bind(userId).run();

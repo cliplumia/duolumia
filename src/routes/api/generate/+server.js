@@ -11,9 +11,9 @@ export async function POST({ request, platform, cookies }) {
 
     const isAdmin = ['contact.cliplumia@gmail.com', 'dussolliermarjorie@gmail.com'].includes(user.email);
     
-    // Vérification stricte des crédits images
+    // Vérification stricte du forfait images
     if (!isAdmin && (user.images_restantes || 0) <= 0) {
-      return json({ error: 'Credits images epuises. Passez a un forfait !' }, { status: 403 });
+      return json({ error: 'Forfait images epuise. Passez a un forfait superieur !' }, { status: 403 });
     }
 
     const { prompt } = await request.json();
