@@ -32,7 +32,8 @@ const PRICES = {
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       line_items: [{ price: PRICES[plan], quantity: 1 }],
-      metadata: { user_id: userId }, // ← AJOUT : On envoie l'ID du client à Stripe
+      metadata: { user_id: userId }, // ← utilisé par le webhook checkout.session.completed
+      subscription_data: { metadata: { user_id: userId } }, // ← utilisé par le webhook invoice.payment_succeeded (renouvellements)
       success_url: 'https://cliplumia.com/dashboard?paid=1',
       cancel_url: 'https://cliplumia.com/dashboard'
     });

@@ -483,7 +483,9 @@ function blockContextMenu(e) {
       </button>
       <button type="button" class="nav-item" class:active={activeTab === 'voice'} on:click={() => {
         if (data?.user?.plan === 'gratuit' || !data?.user?.plan) {
-          alert('🔒 Fonctionnalité réservée aux abonnés. Passez à un forfait pour accéder à la synthèse vocale !');
+          if (confirm('🔒 Fonctionnalité réservée aux abonnés. Passez à un forfait pour accéder à la synthèse vocale. Aller à la page des forfaits ?')) {
+            window.location.href = '/dashboard';
+          }
           return;
         }
         activeTab = 'voice';
@@ -492,7 +494,9 @@ function blockContextMenu(e) {
       </button>
       <button type="button" class="nav-item" class:active={activeTab === 'chat'} on:click={() => {
         if (data?.user?.plan === 'gratuit' || !data?.user?.plan) {
-          alert('🔒 Fonctionnalité réservée aux abonnés. Passez à un forfait pour accéder au Chat IA !');
+          if (confirm('🔒 Fonctionnalité réservée aux abonnés. Passez à un forfait pour accéder au Chat IA. Aller à la page des forfaits ?')) {
+            window.location.href = '/dashboard';
+          }
           return;
         }
         activeTab = 'chat';
@@ -553,7 +557,7 @@ function blockContextMenu(e) {
 
           {#if !isAdmin && (data?.user?.images_restantes || 0) <= 0}
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
-              ⚠️ Vous avez utilisé vos 3 essais gratuits. Passez à un forfait !
+              ⚠️ Vous avez utilisé vos 3 essais gratuits. <a href="/dashboard" style="color:#FCF6BA;">Passez à un forfait !</a>
             </p>
           {/if}
         {/if}
@@ -591,7 +595,7 @@ function blockContextMenu(e) {
 
           {#if !isAdmin && (data?.user?.videos_restantes || 0) <= 0}
             <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">
-              ⚠️ Vous avez utilisé vos 3 essais gratuits. Passez à un forfait !
+              ⚠️ Vous avez utilisé vos 3 essais gratuits. <a href="/dashboard" style="color:#FCF6BA;">Passez à un forfait !</a>
             </p>
           {/if}
         {/if}
@@ -662,7 +666,7 @@ function blockContextMenu(e) {
           </button>
 
           {#if !isAdmin && (data?.user?.videos_restantes || 0) <= 0}
-            <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">⚠️ Essais gratuits utilisés.</p>
+            <p style="text-align:center; color:#ff6b6b; margin-top:10px; font-size:0.9rem;">⚠️ Essais gratuits utilisés. <a href="/dashboard" style="color:#FCF6BA;">Passez à un forfait !</a></p>
           {/if}
         {/if}
 
