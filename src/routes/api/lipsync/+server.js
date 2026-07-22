@@ -19,48 +19,64 @@ export async function POST({ request, platform, cookies }) {
     const { image, audio, prompt } = await request.json();
     if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 400 });
 
-    const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}`,
-        'Content-Type': 'application/json'},
-     
-      body: JSON.stringify({
-        version: "prunaai/p-video",
-        input: {
-          image: image,
-          audio: audio,
-          prompt: prompt || "La personne sur l'image parle naturellement, haute qualité",
-          duration: 10,
-          fps: 24,
-          resolution: "720p",
-          aspect_ratio: "16:9",
-          save_audio: true,
-          prompt_upsampling: false,
-          disable_safety_filter: true,
-          draft: false,
-          no_op: false
-        }
-      })
-    });
+    // Jusqu'a 2 tentatives : Replicate a parfois une erreur ponctuelle de routage interne
+    // (ex: "Director: unexpected error handling prediction"), sans rapport avec notre code.
+    const MAX_TENTATIVES = 2;
+    let data;
+    let derniereErreur;
 
-    if (!replicateRes.ok) {
-      const err = await replicateRes.json();
-      throw new Error(err.detail || 'Erreur Replicate');
-    }
-
-    let data = await replicateRes.json();
-
-    while (data.status === "starting" || data.status === "processing") {
-      await new Promise(r => setTimeout(r, 5000));
-      const pollRes = await fetch(`https://api.replicate.com/v1/predictions/${data.id}`, {
-        headers: { 'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}` }
+    for (let tentative = 1; tentative <= MAX_TENTATIVES; tentative++) {
+      const replicateRes = await fetch('https://api.replicate.com/v1/predictions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          version: "prunaai/p-video",
+          input: {
+            image: image,
+            audio: audio,
+            prompt: prompt || "La personne sur l'image parle naturellement, haute qualité",
+            duration: 10,
+            fps: 24,
+            resolution: "720p",
+            aspect_ratio: "16:9",
+            save_audio: true,
+            prompt_upsampling: false,
+            disable_safety_filter: true,
+            draft: false,
+            no_op: false
+          }
+        })
       });
-      data = await pollRes.json();
+
+      if (!replicateRes.ok) {
+        const err = await replicateRes.json();
+        derniereErreur = err.detail || 'Erreur Replicate';
+        continue;
+      }
+
+      let tentativeData = await replicateRes.json();
+
+      while (tentativeData.status === "starting" || tentativeData.status === "processing") {
+        await new Promise(r => setTimeout(r, 5000));
+        const pollRes = await fetch(`https://api.replicate.com/v1/predictions/${tentativeData.id}`, {
+          headers: { 'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}` }
+        });
+        tentativeData = await pollRes.json();
+      }
+
+      if (tentativeData.status !== "failed") {
+        data = tentativeData;
+        break;
+      }
+
+      derniereErreur = tentativeData.error || 'Lipsync echoue';
     }
 
-    if (data.status === "failed") {
-      throw new Error(data.error || 'Lipsync echoue');
+    if (!data) {
+      throw new Error(derniereErreur || 'Lipsync echoue');
     }
 
     const videoUrl = data.output.url || (typeof data.output === 'string' ? data.output : null);

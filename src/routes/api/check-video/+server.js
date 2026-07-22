@@ -43,9 +43,34 @@ export async function POST({ request, platform, cookies }) {
       
       const previewUrl = `/api/serve?token=${previewToken}`;
       return json({ status: 'succeeded', url: previewUrl });
-    
-      return json({ status: 'succeeded', url: videoUrl });
+
     } else if (prediction.status === 'failed' || prediction.status === 'canceled') {
+      // Jusqu'a 1 nouvelle tentative : Replicate a parfois une erreur ponctuelle de
+      // routage interne (ex: "Director: unexpected error handling prediction"),
+      // sans rapport avec notre code.
+      const generation = await BD.prepare('SELECT prompt, retry_count FROM generations WHERE id = ?').bind(genId).first();
+      const retryCount = generation?.retry_count || 0;
+
+      if (generation?.prompt && retryCount < 1) {
+        const retryRes = await fetch('https://api.replicate.com/v1/predictions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            version: "minimax/video-01",
+            input: { prompt: generation.prompt }
+          })
+        });
+
+        if (retryRes.ok) {
+          const retryPrediction = await retryRes.json();
+          await BD.prepare('UPDATE generations SET retry_count = retry_count + 1 WHERE id = ?').bind(genId).run();
+          return json({ status: 'pending', replicateId: retryPrediction.id });
+        }
+      }
+
       await BD.prepare("UPDATE generations SET status = 'failed' WHERE id = ?")
         .bind(genId).run();
       return json({ status: 'failed', error: 'Generation echoue' });

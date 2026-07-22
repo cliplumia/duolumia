@@ -191,7 +191,7 @@
             body: JSON.stringify({ replicateId: vidReplicateId, genId: vidGenerationId })
           });
           const check = await checkRes.json();
-          
+
           if (check.status === 'succeeded') {
             clearInterval(vidInterval);
             vidInterval = null;
@@ -202,6 +202,9 @@
             vidInterval = null;
             vidError = check.error || 'Génération échouée';
             vidLoading = false;
+          } else if (check.status === 'pending' && check.replicateId) {
+            // Nouvelle tentative lancee automatiquement cote serveur
+            vidReplicateId = check.replicateId;
           }
         } catch (e) {}
       }, 4000);

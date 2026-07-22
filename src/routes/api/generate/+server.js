@@ -19,32 +19,48 @@ export async function POST({ request, platform, cookies }) {
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
 
-    const repRes = await fetch('https://api.replicate.com/v1/models/black-forest-labs/flux-schnell/predictions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'wait'
-      },
-      body: JSON.stringify({
-        input: {
-          prompt: prompt,
-          aspect_ratio: "1:1",
-          output_format: "webp",
-          output_quality: 90
-        }
-      })
-    });
+    // Jusqu'a 2 tentatives : Replicate a parfois une erreur ponctuelle de routage interne
+    // (ex: "Director: unexpected error handling prediction"), sans rapport avec notre code.
+    const MAX_TENTATIVES = 2;
+    let prediction;
+    let derniereErreur;
 
-    if (!repRes.ok) {
-      const err = await repRes.json();
-      throw new Error(err.detail || 'Erreur Replicate');
+    for (let tentative = 1; tentative <= MAX_TENTATIVES; tentative++) {
+      const repRes = await fetch('https://api.replicate.com/v1/models/black-forest-labs/flux-schnell/predictions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Token ${platform.env.REPLICATE_API_TOKEN}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'wait'
+        },
+        body: JSON.stringify({
+          input: {
+            prompt: prompt,
+            aspect_ratio: "1:1",
+            output_format: "webp",
+            output_quality: 90
+          }
+        })
+      });
+
+      if (!repRes.ok) {
+        const err = await repRes.json();
+        derniereErreur = err.detail || 'Erreur Replicate';
+        continue;
+      }
+
+      const tentativePrediction = await repRes.json();
+
+      if (tentativePrediction.status === 'succeeded') {
+        prediction = tentativePrediction;
+        break;
+      }
+
+      derniereErreur = tentativePrediction.error || 'Generation echouee';
     }
 
-    const prediction = await repRes.json();
-
-    if (prediction.status !== 'succeeded') {
-      throw new Error(prediction.error || 'Generation echouee');
+    if (!prediction) {
+      throw new Error(derniereErreur || 'Generation echouee');
     }
 
     const output = prediction.output;
