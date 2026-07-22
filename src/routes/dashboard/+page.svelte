@@ -82,7 +82,7 @@
             disabled={upgrading !== '' || data.user.plan === p.id}
             on:click={() => upgrade(p.id)}
           >
-            {data.user.plan === p.id ? '✓ ' : ''}{p.label} — {p.price}{upgrading === p.id ? '…' : ''}
+            {data.user.plan === p.id ? '✓ ' : ''}{p.label} — <span class="plan-price">{p.price}</span>{upgrading === p.id ? '…' : ''}
           </button>
         {/each}
       </div>
@@ -170,25 +170,35 @@
   }
   .btn-plan {
     background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(191,149,63,0.4);
     color: #fff;
-    padding: 10px 8px;
-    border-radius: 12px;
+    padding: 12px 8px;
+    border-radius: 14px;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
   }
   .btn-plan:hover:not(:disabled) {
-    background: rgba(191,149,63,0.2);
+    background: rgba(191,149,63,0.15);
+    border-color: rgba(191,149,63,0.8);
+    box-shadow: 0 4px 15px rgba(191,149,63,0.2);
+    transform: translateY(-2px);
   }
   .btn-plan:disabled {
     opacity: 0.6;
     cursor: default;
+    transform: none;
   }
   .btn-plan.current {
     border-color: #3cb371;
-    color: #3cb371;
+  }
+  .btn-plan .plan-price {
+    background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   .upgrade-error {
     color: #ff6b6b;
