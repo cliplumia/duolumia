@@ -21,9 +21,9 @@ export async function POST({ request, platform }) {
     
     let event;
     try {
-      event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+      event = await stripe.webhooks.constructEventAsync(body, signature, webhookSecret);
     } catch (err) {
-      return json({ error: 'Signature invalide' }, { status: 400 });
+      return json({ error: 'Signature invalide: ' + err.message }, { status: 400 });
     }
 
     const BD = platform.env.BD;
