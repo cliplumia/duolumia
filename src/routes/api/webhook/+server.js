@@ -54,10 +54,10 @@ export async function POST({ request, platform }) {
       // Si c'est le Starter (9€), on garde les valeurs par défaut (15, 50, 0, 20)
 
       await BD.prepare(`
-        UPDATE utilisateurs 
-        SET plan = ?, videos_restantes = ?, images_restantes = ?, voices_restantes = ?, chat_restantes = ?
+        UPDATE utilisateurs
+        SET plan = ?, videos_restantes = ?, images_restantes = ?, voices_restantes = ?, chat_restantes = ?, stripe_customer_id = ?
         WHERE id = ?
-      `).bind(plan, videos, images, voices, chats, userId).run();
+      `).bind(plan, videos, images, voices, chats, session.customer, userId).run();
     }
 
     // Événement : Paiement récurrent réussi (renouvellement mensuel)

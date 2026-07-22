@@ -10,6 +10,10 @@
 
   let upgrading = '';
   let upgradeError = '';
+  let managingSubscription = false;
+  let manageError = '';
+
+  const forfaitsPayants = ['starter', 'standard', 'pro', 'studio'];
 
   function logout() {
     document.cookie = 'user_id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
@@ -35,6 +39,24 @@
     } catch (e) {
       upgradeError = e.message;
       upgrading = '';
+    }
+  }
+
+  async function manageSubscription() {
+    manageError = '';
+    managingSubscription = true;
+    try {
+      const res = await fetch('/api/customer-portal', { method: 'POST' });
+      const data = await res.json();
+      if (res.ok && data.url) {
+        window.location.href = data.url;
+      } else {
+        manageError = data.error || 'Erreur inconnue';
+        managingSubscription = false;
+      }
+    } catch (e) {
+      manageError = e.message;
+      managingSubscription = false;
     }
   }
 </script>
@@ -68,6 +90,15 @@
         <p class="upgrade-error">{upgradeError}</p>
       {/if}
     </div>
+
+    {#if forfaitsPayants.includes(data.user.plan)}
+      <button class="btn-manage" on:click={manageSubscription} disabled={managingSubscription}>
+        {managingSubscription ? 'Redirection…' : '⚙️ Gérer / Annuler mon abonnement'}
+      </button>
+      {#if manageError}
+        <p class="upgrade-error">{manageError}</p>
+      {/if}
+    {/if}
 
     <button class="btn-logout" on:click={logout}>← Déconnexion</button>
   </div>
@@ -163,6 +194,27 @@
     color: #ff6b6b;
     font-size: 0.85rem;
     margin: 10px 0 0 0;
+  }
+  .btn-manage {
+    display: block;
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(191,149,63,0.4);
+    color: #FCF6BA;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+  }
+  .btn-manage:hover:not(:disabled) {
+    background: rgba(191,149,63,0.15);
+  }
+  .btn-manage:disabled {
+    opacity: 0.6;
+    cursor: default;
   }
   .btn-logout {
     background: transparent;
