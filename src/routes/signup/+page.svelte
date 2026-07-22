@@ -31,8 +31,9 @@
           if (res.ok) {
             const planLower = plan.toLowerCase();
             const forfaitsPayants = ['starter', 'standard', 'pro', 'studio'];
+            const dejaAbonnePayant = forfaitsPayants.includes((data.plan || '').toLowerCase());
 
-            if (forfaitsPayants.includes(planLower)) {
+            if (forfaitsPayants.includes(planLower) && !dejaAbonnePayant) {
               try {
                 const checkoutRes = await fetch('/api/checkout', {
                   method: 'POST',

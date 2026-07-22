@@ -1,4 +1,8 @@
 <script>
+  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
+  import { invalidateAll } from '$app/navigation';
+
   export let data;
 
   const PLANS = [
@@ -12,8 +16,28 @@
   let upgradeError = '';
   let managingSubscription = false;
   let manageError = '';
+  let confirmationEnCours = false;
 
   const forfaitsPayants = ['starter', 'standard', 'pro', 'studio'];
+
+  // Juste après un paiement Stripe (?paid=1), le webhook peut prendre quelques
+  // secondes : on rafraichit automatiquement en arriere-plan jusqu'a ce que le
+  // forfait apparaisse, au lieu de laisser le client recharger lui-meme.
+  onMount(() => {
+    if ($page.url.searchParams.get('paid') === '1' && !forfaitsPayants.includes(data.user.plan)) {
+      confirmationEnCours = true;
+      let tentatives = 0;
+      const interval = setInterval(async () => {
+        tentatives++;
+        await invalidateAll();
+        if (forfaitsPayants.includes(data.user.plan) || tentatives >= 10) {
+          confirmationEnCours = false;
+          clearInterval(interval);
+        }
+      }, 2000);
+      return () => clearInterval(interval);
+    }
+  });
 
   function logout() {
     document.cookie = 'user_id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
@@ -67,6 +91,9 @@
     <h2>Bienvenue {data.user.nom || ''} !</h2>
     <p class="email">📧 {data.user.email}</p>
     <p class="plan">Plan : {data.user.plan?.toUpperCase() || 'STARTER'}</p>
+    {#if confirmationEnCours}
+      <p class="confirmation-en-cours">⏳ Confirmation du paiement en cours…</p>
+    {/if}
 
     <!-- BOUTON STUDIO -->
     <a href="/studio" class="btn-studio">🎨 Générer mes contenus IA</a>
@@ -135,7 +162,8 @@
   }
   h2 { color: #fff; font-size: 1.6rem; margin: 0 0 10px 0; }
   .email { color: rgba(255,255,255,0.9); font-size: 1rem; margin: 5px 0; word-break: break-all; }
-  .plan { color: #fff; font-size: 1.2rem; margin: 10px 0 30px 0; font-weight: bold; }
+  .plan { color: #fff; font-size: 1.2rem; margin: 10px 0 10px 0; font-weight: bold; }
+  .confirmation-en-cours { color: #FCF6BA; font-size: 0.9rem; margin: 0 0 20px 0; }
   
   .btn-studio {
     display: block;

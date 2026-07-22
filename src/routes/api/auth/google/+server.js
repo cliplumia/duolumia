@@ -62,7 +62,9 @@ export async function POST({ request, platform, cookies }) {
 
     cookies.set('user_id', id, { path: '/', httpOnly: true, secure: true, sameSite: 'lax', maxAge: 604800 });
 
-    return json({ success: true, email: payload.email });
+    const planActuel = existing ? existing.plan : (isAdmin ? 'admin' : 'gratuit');
+
+    return json({ success: true, email: payload.email, plan: planActuel });
 
   } catch (err) {
     return json({ error: err.message }, { status: 500 });
