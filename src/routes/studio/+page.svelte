@@ -251,21 +251,31 @@
   // === UPLOAD IMAGE LIPSYNC ===
   function handleImageUpload(event) {
     const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => lipImageBase64 = e.target.result;
-      reader.readAsDataURL(file);
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      lipError = "Le fichier choisi n'est pas une image (" + (file.type || 'type inconnu') + "). Merci de choisir une photo (JPG, PNG, WEBP...).";
+      event.target.value = '';
+      return;
     }
+    lipError = null;
+    const reader = new FileReader();
+    reader.onload = (e) => lipImageBase64 = e.target.result;
+    reader.readAsDataURL(file);
   }
 
   // === UPLOAD AUDIO LIPSYNC ===
   function handleAudioUpload(event) {
     const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => { lipAudioUrl = e.target.result; };
-      reader.readAsDataURL(file);
+    if (!file) return;
+    if (!file.type.startsWith('audio/')) {
+      lipError = "Le fichier choisi n'est pas un son (" + (file.type || 'type inconnu') + "). Merci de choisir un fichier audio (MP3, WAV...).";
+      event.target.value = '';
+      return;
     }
+    lipError = null;
+    const reader = new FileReader();
+    reader.onload = (e) => { lipAudioUrl = e.target.result; };
+    reader.readAsDataURL(file);
   }
 
   // === FONCTION GÉNÉRATION LIPSYNC ===
