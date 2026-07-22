@@ -39,8 +39,8 @@
     }
   });
 
-  function logout() {
-    document.cookie = 'user_id=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  async function logout() {
+    await fetch('/api/logout', { method: 'POST' });
     window.location.href = '/';
   }
 

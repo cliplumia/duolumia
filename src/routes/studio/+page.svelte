@@ -472,6 +472,11 @@ function blockContextMenu(e) {
   }
  }
 
+ async function logout() {
+  await fetch('/api/logout', { method: 'POST' });
+  window.location.href = '/';
+ }
+
 </script>
 
 <svelte:head>
@@ -481,6 +486,7 @@ function blockContextMenu(e) {
 </svelte:head>
 
 <div class="studio-page">
+  <button type="button" class="logout-fixed glass" on:click={logout}><span class="chrome-gold-text">← Déconnexion</span></button>
   <div class="studio-container">
     
     <!-- SIDEBAR GAUCHE -->
@@ -1106,6 +1112,36 @@ function blockContextMenu(e) {
     border: 1px solid rgba(191, 149, 63, 0.3);
     font-weight: 600;
     font-size: 1.1rem;
+  }
+
+  .logout-fixed {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 50;
+    border-radius: 50px;
+    border: 1px solid rgba(191, 149, 63, 0.4);
+    cursor: pointer;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    transition: all 0.3s ease;
+  }
+
+  .logout-fixed:hover {
+    border-color: rgba(191, 149, 63, 0.9);
+    box-shadow: 0 4px 15px rgba(191, 149, 63, 0.25);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    .logout-fixed {
+      top: 8px;
+      right: 8px;
+      font-size: 0.75rem;
+      padding: 6px 14px;
+    }
   }
 
   .generation-card {
