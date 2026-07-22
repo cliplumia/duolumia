@@ -89,8 +89,24 @@ export async function POST({ request, platform }) {
       `).bind(videos, images, voices, chats, userId).run();
     }
 
+    // Événement : Abonnement annulé - pas de retour au forfait gratuit, compte bloque
+    if (event.type === 'customer.subscription.deleted') {
+      const subscription = event.data.object;
+      const userId = subscription.metadata?.user_id;
+
+      if (!userId) {
+        return json({ error: 'User ID manquant' }, { status: 400 });
+      }
+
+      await BD.prepare(`
+        UPDATE utilisateurs
+        SET plan = 'annule', videos_restantes = 0, images_restantes = 0, voices_restantes = 0, chat_restantes = 0
+        WHERE id = ?
+      `).bind(userId).run();
+    }
+
     return json({ received: true });
-    
+
   } catch (err) {
     console.error('Webhook error:', err);
     return json({ error: err.message }, { status: 500 });
