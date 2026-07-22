@@ -408,6 +408,7 @@
       
       if (result.success) {
         voiceAudioUrl = result.url;
+        if (!isAdmin) data.user.voices_restantes--;
       } else {
         alert('Erreur: ' + (result.error || 'Impossible de générer'));
       }
@@ -430,13 +431,14 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: chatPrompt })
       });
-      
-      const data = await res.json();
-      
-      if (res.ok && data.success) {
-        chatResponse = data.reply;
+
+      const result = await res.json();
+
+      if (res.ok && result.success) {
+        chatResponse = result.reply;
+        if (!isAdmin) data.user.chat_restantes--;
       } else {
-        chatResponse = '❌ Erreur : ' + (data.error || 'Impossible de générer la réponse');
+        chatResponse = '❌ Erreur : ' + (result.error || 'Impossible de générer la réponse');
       }
     } catch (e) {
       chatResponse = '❌ Erreur : ' + e.message;
