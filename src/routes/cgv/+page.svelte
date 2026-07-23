@@ -39,7 +39,14 @@
       
       <hr />
       
-      <h2>6. Contact</h2>
+      <h2>6. Résiliation et annulation d'abonnement</h2>
+      <p>Vous pouvez annuler votre abonnement à tout moment depuis votre espace client, sans engagement ni frais de résiliation. En cas d'annulation, votre accès au forfait souscrit reste actif jusqu'à la fin de la période déjà facturée. Aucun renouvellement ni prélèvement ne sera effectué après cette date.</p>
+
+      <p><strong>Important :</strong> Conformément à l'article 5 (Droit de rétractation), aucun remboursement au prorata n'est possible pour la période en cours, le service numérique étant déjà en cours d'exécution.</p>
+
+      <hr />
+
+      <h2>7. Contact</h2>
       <p>Pour toute question : <strong>contact@cliplumia.com</strong></p>
     </div>
   </div>

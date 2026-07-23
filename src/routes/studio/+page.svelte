@@ -910,6 +910,11 @@ function blockContextMenu(e) {
           <h3 class="chrome-gold-text">❓ Comment contacter le support en cas de problème ?</h3>
           <p>Notre équipe est disponible via le formulaire de contact ou par email à contact@cliplumia.com. Nous répondons sous 24h maximum.</p>
         </div>
+
+        <div class="faq-item glass">
+          <h3 class="chrome-gold-text">❓ Comment annuler mon abonnement ?</h3>
+          <p>Depuis votre tableau de bord, cliquez sur "Gérer/Annuler mon abonnement". Vous gardez l'accès à votre forfait jusqu'à la fin de votre période déjà payée — pas de coupure immédiate, et pas de prélèvement le mois suivant.</p>
+        </div>
       </div>
     </main>
   </div>
