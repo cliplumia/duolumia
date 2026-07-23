@@ -215,12 +215,17 @@
 
   :global(*) { box-sizing: border-box; }
   :global(body) {
-    margin: 0; 
-    font-family: 'Inter', system-ui, sans-serif; 
-    color: #fff; 
-    -webkit-font-smoothing: antialiased; 
-    overflow-x: hidden; 
-    background: #0c0618;
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    background-color: #0c0618;
+    background-image: url('https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/image%20fond%20page%20svelte.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
   }
   .chrome-text, .OR-CHROME {
     background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
@@ -237,11 +242,6 @@
     min-height:100vh;
     overflow-x:hidden;
     max-width:100vw;
-    background-image:url('https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/image%20fond%20page%20svelte.png');
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
-    background-repeat:no-repeat
   }
  .page::before{
     content:'';

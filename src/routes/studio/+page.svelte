@@ -947,13 +947,18 @@ function blockContextMenu(e) {
   display: none !important;
 }
  :global(*) { box-sizing: border-box; }
-  :global(body) { 
-    margin: 0; 
-    font-family: 'Inter', system-ui, sans-serif; 
-    color: #fff; 
-    -webkit-font-smoothing: antialiased; 
-    overflow-x: hidden; 
-    background: #0c0618;
+  :global(body) {
+    margin: 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    background-color: #0c0618;
+    background-image: url('https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/image%20fond%20page%20svelte.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
   }
  :global(select) {
   color: #fff;
@@ -995,11 +1000,6 @@ function blockContextMenu(e) {
     min-height: 100vh;
     overflow-x: hidden;
     max-width: 100vw;
-    background-image: url('https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/image%20fond%20page%20svelte.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
   }
 
   .studio-page::before {
