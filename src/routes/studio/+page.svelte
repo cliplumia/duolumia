@@ -954,7 +954,7 @@ function blockContextMenu(e) {
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     background-color: #0c0618;
-    background-image: url('https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/image%20fond%20page%20svelte.png');
+    background-image: url('https://pub-6476d128f599432f96789b76ebbca25a.r2.dev/image%20fond%20page%20svelte.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
