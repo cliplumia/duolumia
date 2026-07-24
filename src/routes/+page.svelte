@@ -159,8 +159,8 @@
         <h3>Starter</h3>
         <div class="price"><span class="OR-CHROME">9€</span><small>/mois</small></div>
         <ul>
-          <li><strong>15</strong> vidéos/mois</li>
-          <li><strong>50</strong> images/mois</li>
+          <li><strong>50</strong> images IA/mois</li>
+          <li><strong>15</strong> vidéos IA/mois (lipsync inclus)</li>
           <li><strong>20</strong> messages chat/mois</li>
           <li>Paye que si tu valides 🔥</li>
         </ul>
@@ -170,9 +170,9 @@
         <h3>Standard</h3>
         <div class="price"><span class="OR-CHROME">19€</span><small>/mois</small></div>
         <ul>
-          <li><strong>40</strong> vidéos/mois</li>
-          <li><strong>150</strong> images/mois</li>
-          <li>Voix IA Lynk · <strong>10</strong>/mois</li>
+          <li><strong>150</strong> images IA/mois</li>
+          <li><strong>40</strong> vidéos IA/mois (lipsync inclus)</li>
+          <li><strong>10</strong> voix IA/mois</li>
           <li><strong>20</strong> messages chat/mois</li>
           <li>Paye que si tu valides 🔥</li>
         </ul>
@@ -183,9 +183,9 @@
         <h3>Pro</h3>
         <div class="price"><span class="OR-CHROME">39€</span><small>/mois</small></div>
         <ul>
-          <li><strong>80</strong> vidéos/mois</li>
-          <li><strong>300</strong> images/mois</li>
-          <li>Voix IA Lynk · <strong>20</strong>/mois</li>
+          <li><strong>300</strong> images IA/mois</li>
+          <li><strong>80</strong> vidéos IA/mois (lipsync inclus)</li>
+          <li><strong>20</strong> voix IA/mois</li>
           <li><strong>30</strong> messages chat/mois</li>
           <li>Support prioritaire</li>
           <li>Paye que si tu valides 🔥</li>
@@ -196,9 +196,9 @@
         <h3>Studio</h3>
         <div class="price"><span class="OR-CHROME">79€</span><small>/mois</small></div>
         <ul>
-          <li><strong>180</strong> vidéos/mois</li>
-          <li><strong>800</strong> images/mois</li>
-          <li>Voix IA Lynk · <strong>40</strong>/mois</li>
+          <li><strong>800</strong> images IA/mois</li>
+          <li><strong>180</strong> vidéos IA/mois (lipsync inclus)</li>
+          <li><strong>40</strong> voix IA/mois</li>
           <li><strong>50</strong> messages chat/mois</li>
           <li>Support prioritaire</li>
           <li>Paye que si tu valides 🔥</li>
