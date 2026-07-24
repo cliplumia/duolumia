@@ -161,6 +161,7 @@
         <ul>
           <li><strong>15</strong> vidéos/mois</li>
           <li><strong>50</strong> images/mois</li>
+          <li><strong>20</strong> messages chat/mois</li>
           <li>Paye que si tu valides 🔥</li>
         </ul>
        <a href="/signup?plan=starter" class="btn-outline">Commencer</a>
@@ -171,7 +172,8 @@
         <ul>
           <li><strong>40</strong> vidéos/mois</li>
           <li><strong>150</strong> images/mois</li>
-          <li>Voix IA Lynk</li>
+          <li>Voix IA Lynk · <strong>10</strong>/mois</li>
+          <li><strong>20</strong> messages chat/mois</li>
           <li>Paye que si tu valides 🔥</li>
         </ul>
         <a href="/signup?plan=standard" class="btn-outline">Commencer</a>
@@ -183,7 +185,8 @@
         <ul>
           <li><strong>80</strong> vidéos/mois</li>
           <li><strong>300</strong> images/mois</li>
-          <li>Voix IA Lynk</li>
+          <li>Voix IA Lynk · <strong>20</strong>/mois</li>
+          <li><strong>30</strong> messages chat/mois</li>
           <li>Support prioritaire</li>
           <li>Paye que si tu valides 🔥</li>
         </ul>
@@ -195,7 +198,8 @@
         <ul>
           <li><strong>180</strong> vidéos/mois</li>
           <li><strong>800</strong> images/mois</li>
-          <li>Voix IA Lynk</li>
+          <li>Voix IA Lynk · <strong>40</strong>/mois</li>
+          <li><strong>50</strong> messages chat/mois</li>
           <li>Support prioritaire</li>
           <li>Paye que si tu valides 🔥</li>
         </ul>
