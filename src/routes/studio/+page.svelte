@@ -916,6 +916,8 @@ function blockContextMenu(e) {
           <p>Depuis votre tableau de bord, cliquez sur "Gérer/Annuler mon abonnement". Vous gardez l'accès à votre forfait jusqu'à la fin de votre période déjà payée — pas de coupure immédiate, et pas de prélèvement le mois suivant.</p>
         </div>
       </div>
+
+      <p class="studio-evolve">✨ ClipLumia grandit chaque jour : de nouvelles fonctionnalités arrivent régulièrement, à l'écoute de vos idées. ❤️</p>
     </main>
   </div>
 </div>
@@ -1387,6 +1389,15 @@ function blockContextMenu(e) {
 
   .faq-section {
     padding: 40px;
+  }
+
+  .studio-evolve {
+    text-align: center;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 600px;
+    margin: 30px auto 10px;
+    line-height: 1.6;
   }
 
   .faq-item {

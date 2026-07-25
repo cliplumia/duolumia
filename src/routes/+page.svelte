@@ -211,6 +211,7 @@
   <footer class="footer">
     <div class="footer-brand OR-CHROME">ClipLumia</div>
     <p class="creator">Créé avec passion par une créatrice</p>
+    <p class="evolve">✨ ClipLumia grandit chaque jour : de nouvelles fonctionnalités arrivent régulièrement, à l'écoute de vos idées. ❤️</p>
     <p class="copy">© 2026 ClipLumia. Tous droits réservés.</p>
   </footer>
 </main>
@@ -779,6 +780,14 @@
     color:rgba(255,255,255,.6);
     margin:0 0 6px;
     font-style:italic
+  }
+  .evolve{
+    font-size:.85rem;
+    color:rgba(255,255,255,.55);
+    margin:0 auto 10px;
+    max-width:560px;
+    line-height:1.6;
+    text-shadow:0 1px 4px rgba(0,0,0,.8)
   }
   .copy{
     font-size:.8rem;
