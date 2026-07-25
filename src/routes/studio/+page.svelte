@@ -871,7 +871,7 @@ function blockContextMenu(e) {
                 <li>Studio → outil <strong>Images IA</strong></li>
                 <li>Je décris mon idée (ici un <strong>loup</strong> dans une forêt brumeuse), en précisant le <strong>style réaliste</strong> et le format</li>
                 <li>Je génère → j'obtiens un aperçu avec filigrane</li>
-                <li>Si j'aime → <strong>je valide ✅</strong> et je télécharge en HD</li>
+                <li>Le rendu me plaît ? → <strong>je valide ✅</strong> et je télécharge en HD</li>
               </ol>
             </div>
           </div>
@@ -888,7 +888,7 @@ function blockContextMenu(e) {
                 <li>Studio → outil <strong>Vidéos IA</strong></li>
                 <li>Je décris la scène et le <strong>mouvement</strong> (ici un survol de ville, ambiance cinéma)</li>
                 <li>Je choisis le format, je génère → aperçu avec filigrane</li>
-                <li>Si j'aime → <strong>je valide ✅</strong></li>
+                <li>Si ça me convient → <strong>je valide ✅</strong></li>
               </ol>
             </div>
           </div>
@@ -907,7 +907,7 @@ function blockContextMenu(e) {
                 <li>Je charge mon <strong>fichier audio</strong> (étape « 2. Fichier Audio »)</li>
                 <li>Je décris le mouvement (ex. « la personne parle naturellement, haute qualité »)</li>
                 <li>Je clique sur <strong>Créer le lipsync</strong> → aperçu</li>
-                <li>Si j'aime → <strong>je valide ✅</strong></li>
+                <li>Si le résultat est bon → <strong>je valide ✅</strong></li>
               </ol>
               <p class="example-tip">💡 Pour une pub pro : une belle voix + une musique libre de droit en fond.</p>
             </div>
