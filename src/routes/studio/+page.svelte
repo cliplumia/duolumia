@@ -909,7 +909,6 @@ function blockContextMenu(e) {
                 <li>Je clique sur <strong>Créer le lipsync</strong> → aperçu</li>
                 <li>Si le résultat est bon → <strong>je valide ✅</strong></li>
               </ol>
-              <p class="example-tip">💡 Pour une pub pro : une belle voix + une musique libre de droit en fond.</p>
             </div>
           </div>
 
