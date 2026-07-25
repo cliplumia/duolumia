@@ -856,11 +856,79 @@ function blockContextMenu(e) {
       <!-- GALERIE D'EXEMPLES -->
       <div class="examples-section glass">
         <h2 class="chrome-text section-title">Exemples de Réalisations</h2>
+        <p class="examples-intro">De vraies créations faites avec ClipLumia, avec le mode d'emploi pour les reproduire. 👇</p>
         <div class="examples-grid-full">
-          <div class="example-item">Exemple 1</div>
-          <div class="example-item">Exemple 2</div>
-          <div class="example-item">Exemple 3</div>
-          <div class="example-item">Exemple 4</div>
+
+          <!-- IMAGE -->
+          <div class="example-card">
+            <div class="example-media">
+              <img src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/LOUP.webp" alt="Image IA - loup réaliste" loading="lazy" />
+            </div>
+            <div class="example-guide">
+              <h3>🖼️ Image IA</h3>
+              <p class="guide-title">📝 Comment j'ai créé cette image</p>
+              <ol>
+                <li>Studio → outil <strong>Images IA</strong></li>
+                <li>Je décris mon idée (ici un <strong>loup</strong> dans une forêt brumeuse), en précisant le <strong>style réaliste</strong> et le format</li>
+                <li>Je génère → j'obtiens un aperçu avec filigrane</li>
+                <li>Si j'aime → <strong>je valide ✅</strong> et je télécharge en HD</li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- VIDEO -->
+          <div class="example-card">
+            <div class="example-media">
+              <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/video%20ville%20vide.mp4" controls loop playsinline preload="metadata"></video>
+            </div>
+            <div class="example-guide">
+              <h3>▶️ Vidéo IA</h3>
+              <p class="guide-title">📝 Comment j'ai créé cette vidéo</p>
+              <ol>
+                <li>Studio → outil <strong>Vidéos IA</strong></li>
+                <li>Je décris la scène et le <strong>mouvement</strong> (ici un survol de ville, ambiance cinéma)</li>
+                <li>Je choisis le format, je génère → aperçu avec filigrane</li>
+                <li>Si j'aime → <strong>je valide ✅</strong></li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- LIPSYNC 1 (homme FR) -->
+          <div class="example-card">
+            <div class="example-media">
+              <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/VIDEO%20HOMME%20D%20AFFAIRE.mp4" controls loop playsinline preload="metadata"></video>
+            </div>
+            <div class="example-guide">
+              <h3>🎭 Lipsync IA</h3>
+              <p class="guide-title">📝 Comment j'ai créé ce lipsync</p>
+              <ol>
+                <li><strong>D'abord, je crée ma voix</strong> dans l'onglet <strong>Voix IA</strong> (je tape mon texte, je choisis l'expression), puis je télécharge le fichier audio</li>
+                <li>Je vais dans <strong>Lipsync</strong> → j'ajoute la <strong>photo du visage</strong></li>
+                <li>Je charge mon <strong>fichier audio</strong> (étape « 2. Fichier Audio »)</li>
+                <li>Je décris le mouvement (ex. « la personne parle naturellement, haute qualité »)</li>
+                <li>Je clique sur <strong>Créer le lipsync</strong> → aperçu</li>
+                <li>Si j'aime → <strong>je valide ✅</strong></li>
+              </ol>
+              <p class="example-tip">💡 Pour une pub pro : une belle voix + une musique libre de droit en fond.</p>
+            </div>
+          </div>
+
+          <!-- LIPSYNC 2 (femme EN) -->
+          <div class="example-card">
+            <div class="example-media">
+              <video src="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/femme%20anglais%20presentation.mp4" controls loop playsinline preload="metadata"></video>
+            </div>
+            <div class="example-guide">
+              <h3>🎭 Lipsync IA <span class="lang-badge">en anglais</span></h3>
+              <p class="guide-title">📝 Même méthode que ci-dessus</p>
+              <ol>
+                <li>Ici, la voix a été créée <strong>en anglais</strong> : le lipsync fonctionne dans <strong>toutes les langues</strong></li>
+                <li>Idéal pour des <strong>présentations pro</strong>, tutos ou pubs internationales</li>
+              </ol>
+              <p class="example-tip">💡 Parfait pour toucher des clients à l'international. 🌍</p>
+            </div>
+          </div>
+
         </div>
       </div>
      
@@ -1346,27 +1414,105 @@ function blockContextMenu(e) {
     margin: 0 0 30px 0;
   }
 
-  .examples-grid-full {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+  .examples-intro {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    margin: -15px 0 30px 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
   }
 
-  .example-item {
-    aspect-ratio: 1;
-    background: rgba(255, 255, 255, 0.05);
+  .examples-grid-full {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+    align-items: start;
+  }
+
+  .example-card {
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    border-radius: 16px;
+    overflow: hidden;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 600;
+    flex-direction: column;
     transition: all 0.3s ease;
   }
 
-  .example-item:hover {
-    background: rgba(255, 255, 255, 0.08);
+  .example-card:hover {
+    border-color: rgba(191, 149, 63, 0.4);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  }
+
+  .example-media {
+    width: 100%;
+    background: #000;
+    line-height: 0;
+  }
+
+  .example-media img,
+  .example-media video {
+    width: 100%;
+    display: block;
+    max-height: 400px;
+    object-fit: contain;
+    background: #000;
+  }
+
+  .example-guide {
+    padding: 20px;
+  }
+
+  .example-guide h3 {
+    margin: 0 0 12px 0;
+    font-size: 1.15rem;
+    color: #FCF6BA;
+  }
+
+  .lang-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #FCF6BA;
+    background: rgba(191, 149, 63, 0.12);
+    border: 1px solid rgba(191, 149, 63, 0.3);
+    border-radius: 100px;
+    padding: 2px 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .guide-title {
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+  }
+
+  .example-guide ol {
+    margin: 0;
+    padding-left: 20px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .example-guide li {
+    margin-bottom: 5px;
+  }
+
+  .example-guide li strong {
+    color: #FCF6BA;
+  }
+
+  .example-tip {
+    margin: 14px 0 0 0;
+    font-size: 0.85rem;
+    color: #FCF6BA;
+    background: rgba(191, 149, 63, 0.08);
+    border: 1px solid rgba(191, 149, 63, 0.2);
+    border-radius: 8px;
+    padding: 10px 12px;
+    line-height: 1.5;
   }
 
   .faq-section {
@@ -1473,7 +1619,7 @@ function blockContextMenu(e) {
     }
 
     .examples-grid-full {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
     }
   }
   .custom-play-btn {
