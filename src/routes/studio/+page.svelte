@@ -640,27 +640,9 @@ function blockContextMenu(e) {
          </div>
 
           <div class="input-group">
-            <label for="lip-audio-source">2. Source Audio</label>
-            <select id="lip-audio-source" bind:value={lipAudioSource}>
-              <option value="upload">Upload fichier audio</option>
-              <option value="tts">Texte à vocaliser (TTS)</option>
-              <option value="url">URL audio externe</option>
-            </select>
+            <label for="lip-audio-file">2. Fichier Audio</label>
+            <input id="lip-audio-file" type="file" accept="audio/*" on:change={handleAudioUpload} class="file-input" />
           </div>
-
-          {#if lipAudioSource === 'upload'}
-            <div class="input-group">
-              <label for="lip-audio-file">3. Fichier Audio</label>
-              <input id="lip-audio-file" type="file" accept="audio/*" on:change={handleAudioUpload} class="file-input" />
-            </div>
-          {/if}
-
-          {#if lipAudioSource === 'url' || lipAudioSource === 'tts'}
-            <div class="input-group">
-              <label for="lip-audio-text">3. {lipAudioSource === 'url' ? 'URL Audio' : 'Texte à lire'}</label>
-              <input id="lip-audio-text" type="text" bind:value={lipAudioUrl} placeholder={lipAudioSource === 'url' ? 'https://...' : 'Tapez le texte ici...'} class="text-input" />
-            </div>
-          {/if}
 
           <div class="options-grid">
             <div class="option-group">
