@@ -151,9 +151,32 @@
     </div>
   </section>
 
+  <section class="audience">
+    <h2 class="section-title">Pour qui <span class="OR-CHROME">c'est fait ?</span></h2>
+    <div class="audience-grid">
+      <div class="audience-card glass">
+        <span class="audience-icon">🛍️</span>
+        <p>Commerçants &amp; boutiques</p>
+      </div>
+      <div class="audience-card glass">
+        <span class="audience-icon">📱</span>
+        <p>Créateurs TikTok / Insta…</p>
+      </div>
+      <div class="audience-card glass">
+        <span class="audience-icon">🏡</span>
+        <p>Petites entreprises</p>
+      </div>
+      <div class="audience-card glass">
+        <span class="audience-icon">🎉</span>
+        <p>Événements &amp; occasions</p>
+      </div>
+    </div>
+  </section>
+
   <section class="pricing">
     <h2 class="section-title">Forfaits <span class="OR-CHROME">flexibles</span></h2>
-    <p class="sub"> CB requise.</p>
+    <p class="sub">🔒 Paiement sécurisé Stripe · CB requise</p>
+    <p class="reassure">🛡️ Tes créations restent 100% privées</p>
     <div class="pricing-grid">
       <div class="price-card glass">
         <h3>Starter</h3>
@@ -683,8 +706,44 @@
  .sub{
     text-align:center;
     color:rgba(255,255,255,.6);
-    margin:-36px 0 40px;
+    margin:-36px 0 6px;
     font-size:.95rem;
+    text-shadow:0 1px 4px rgba(0,0,0,.8)
+  }
+ .reassure{
+    text-align:center;
+    color:rgba(252,246,186,.75);
+    margin:0 0 40px;
+    font-size:.85rem;
+    text-shadow:0 1px 4px rgba(0,0,0,.8)
+  }
+ .audience{
+    position:relative;
+    z-index:2;
+    padding:40px 24px 20px;
+    max-width:1000px;
+    margin:0 auto
+  }
+ .audience-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px
+  }
+ .audience-card{
+    padding:26px 16px;
+    text-align:center
+  }
+ .audience-icon{
+    font-size:2.2rem;
+    display:block;
+    margin-bottom:12px
+  }
+ .audience-card p{
+    margin:0;
+    font-size:.9rem;
+    color:rgba(255,255,255,.85);
+    font-weight:500;
+    line-height:1.4;
     text-shadow:0 1px 4px rgba(0,0,0,.8)
   }
  .pricing-grid{
@@ -804,7 +863,8 @@
     .demos-grid{grid-template-columns:1fr}
     .screen{aspect-ratio:16/10}
     .pricing-grid{grid-template-columns:1fr}
-    .concept,.demos,.pricing{padding-left:16px;padding-right:16px}
+    .audience-grid{grid-template-columns:repeat(2,1fr)}
+    .concept,.demos,.pricing,.audience{padding-left:16px;padding-right:16px}
     .demo-actions{flex-direction:column}
     .page{background-attachment:scroll}
   }
