@@ -29,8 +29,8 @@
 </script>
 
 <svelte:head>
-  <title>ClipLumia - Forfait simple.</title>
-  <meta name="description" content="ClipLumia - Forfait simple. STOP LES VIDÉOS RATÉES : Tu génères avec filigrane avant validation. Tu kiffes? Tu valides = 1 sur forfait. Tu kiffes pas? Rejeter = 0 sur forfait. Sans engagement. Annule en 2 clics.">
+  <title>ClipLumia — Studio IA : images, vidéos & lipsync · Forfaits dès 9€/mois</title>
+  <meta name="description" content="ClipLumia, le studio IA honnête : crée tes images, vidéos, lipsync et voix. 4 forfaits dès 9€/mois — tu paies UNIQUEMENT si le résultat te plaît (les ratés = 0€). Sans crédits, sans engagement, annulable en 2 clics.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <link rel="canonical" href="https://cliplumia.com">
   <!-- Aperçu lors du partage (Facebook, Instagram, WhatsApp...) -->
