@@ -71,7 +71,7 @@
           Tu n'aimes pas? <strong>0€ décompté.</strong>
         </div>
       </div>
-     <a href="/studio" class="btn-primary">Essai 48h offert · 3 images + 3 vidéos</a>
+     <a href="/studio" class="btn-primary">🎁 Essai 48h offert · 3 images + 3 vidéos (lipsync inclus)</a>
       <span class="note">Sans engagement · Annulez en 2 clics</span>
     </div>
     <div class="hero-media glass">
@@ -189,6 +189,7 @@
 
   <section class="pricing">
     <h2 class="section-title">Forfaits <span class="OR-CHROME">flexibles</span></h2>
+    <p class="trial-badge">🎁 Essai 48h offert · 3 images + 3 vidéos <strong>(lipsync inclus)</strong></p>
     <p class="sub">🔒 Paiement sécurisé Stripe · CB requise</p>
     <p class="reassure">🛡️ Tes créations restent 100% privées</p>
     <div class="pricing-grid">
@@ -717,10 +718,29 @@
     max-width:1200px;
     margin:0 auto
   }
+ .trial-badge{
+    display:block;
+    width:fit-content;
+    max-width:92%;
+    margin:-30px auto 14px;
+    padding:10px 20px;
+    text-align:center;
+    background:rgba(191,149,63,.14);
+    border:1px solid rgba(191,149,63,.45);
+    border-radius:100px;
+    color:#FCF6BA;
+    font-size:.95rem;
+    font-weight:600;
+    box-shadow:0 0 20px rgba(191,149,63,.15);
+    text-shadow:0 1px 4px rgba(0,0,0,.6)
+  }
+ .trial-badge strong{
+    color:#fff
+  }
  .sub{
     text-align:center;
     color:rgba(255,255,255,.6);
-    margin:-36px 0 6px;
+    margin:0 0 6px;
     font-size:.95rem;
     text-shadow:0 1px 4px rgba(0,0,0,.8)
   }
