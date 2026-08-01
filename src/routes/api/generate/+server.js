@@ -16,6 +16,21 @@ export async function POST({ request, platform, cookies }) {
       return json({ error: 'Forfait images epuise. Passez a un forfait superieur !' }, { status: 403 });
     }
 
+    // Limite anti-cout : max 4 apercus non valides par type sur 24h (fail-safe : ne bloque pas si erreur)
+    if (!isAdmin) {
+      try {
+        const depuis = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        const apercus = await BD.prepare(
+          "SELECT COUNT(*) AS n FROM generations WHERE user_id = ? AND type = ? AND status != 'valide' AND created_at > ?"
+        ).bind(userId, 'image', depuis).first();
+        if (apercus && (apercus.n || 0) >= 4) {
+          return json({ error: 'Tu as utilise tes 4 essais pour cette image. Valides-en une, ou reessaie plus tard.' }, { status: 429 });
+        }
+      } catch (e) {
+        console.error('Comptage apercus image (non bloquant):', e);
+      }
+    }
+
     const { prompt } = await request.json();
     if (!prompt) return json({ error: 'Prompt manquant' }, { status: 400 });
 

@@ -19,6 +19,21 @@ export async function POST({ request, platform, cookies }) {
     const { image, audio, prompt } = await request.json();
     if (!image || !audio) return json({ error: 'Image et audio requis' }, { status: 400 });
 
+    // Limite anti-cout : max 4 apercus non valides par type sur 24h (fail-safe : ne bloque pas si erreur)
+    if (!isAdmin) {
+      try {
+        const depuis = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        const apercus = await platform.env.BD.prepare(
+          "SELECT COUNT(*) AS n FROM generations WHERE user_id = ? AND type = ? AND status != 'valide' AND created_at > ?"
+        ).bind(userId, 'lipsync', depuis).first();
+        if (apercus && (apercus.n || 0) >= 4) {
+          return json({ error: 'Tu as utilise tes 4 essais pour ce lipsync. Valides-en un, ou reessaie plus tard.' }, { status: 429 });
+        }
+      } catch (e) {
+        console.error('Comptage apercus lipsync (non bloquant):', e);
+      }
+    }
+
     // Jusqu'a 2 tentatives : Replicate a parfois une erreur ponctuelle de routage interne
     // (ex: "Director: unexpected error handling prediction"), sans rapport avec notre code.
     const MAX_TENTATIVES = 2;
