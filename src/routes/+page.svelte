@@ -32,6 +32,20 @@
   <title>ClipLumia - Forfait simple.</title>
   <meta name="description" content="ClipLumia - Forfait simple. STOP LES VIDÉOS RATÉES : Tu génères avec filigrane avant validation. Tu kiffes? Tu valides = 1 sur forfait. Tu kiffes pas? Rejeter = 0 sur forfait. Sans engagement. Annule en 2 clics.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <link rel="canonical" href="https://cliplumia.com">
+  <!-- Aperçu lors du partage (Facebook, Instagram, WhatsApp...) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ClipLumia">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://cliplumia.com">
+  <meta property="og:title" content="ClipLumia — Studio IA : images & vidéos. Tu paies que si ça te plaît.">
+  <meta property="og:description" content="Crée tes images et vidéos avec l'IA. Tu génères, et tu paies UNIQUEMENT si le résultat te plaît — les ratés = 0€. Sans crédits, sans engagement. 👉 cliplumia.com">
+  <meta property="og:image" content="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/LOUP.webp">
+  <meta property="og:image:alt" content="Création IA réalisée avec ClipLumia">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ClipLumia — Studio IA honnête">
+  <meta name="twitter:description" content="Crée tes images et vidéos avec l'IA. Tu paies que si le résultat te plaît. Sans crédits, sans engagement.">
+  <meta name="twitter:image" content="https://pub-735f3b0c41604ae28dc263d976e80d1e.r2.dev/LOUP.webp">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </svelte:head>
 
