@@ -52,10 +52,10 @@ export async function POST({ request, platform, cookies }) {
       if (!user.avis_email_envoye) {
         try {
           await envoyerEmailDemandeAvis(platform.env, user);
+          await BD.prepare('UPDATE utilisateurs SET avis_email_envoye = 1 WHERE id = ?').bind(userId).run();
         } catch (e) {
-          console.error('Envoi email avis echoue:', e);
+          console.error('Envoi email avis echoue, on reessaiera a la prochaine validation:', e);
         }
-        await BD.prepare('UPDATE utilisateurs SET avis_email_envoye = 1 WHERE id = ?').bind(userId).run();
       }
 
       const downloadUrl = `/api/serve?token=${finalToken}`;
