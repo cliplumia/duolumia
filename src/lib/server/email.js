@@ -40,7 +40,7 @@ export async function envoyerEmailDemandeAvis(env, user) {
       to: user.email,
       subject: 'Votre avis compte pour nous 💜',
       html,
-      scheduled_at: 'in 24h'
+      scheduled_at: 'in 2min'
     })
   });
 
