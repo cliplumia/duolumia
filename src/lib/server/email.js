@@ -1,4 +1,4 @@
-const DELAI_ENVOI_MS = 2 * 60 * 1000; // TEST: 2 minutes (remettre a 24 * 60 * 60 * 1000 apres test)
+const DELAI_ENVOI_MS = 24 * 60 * 60 * 1000; // 24h apres la premiere creation validee
 
 export async function envoyerEmailDemandeAvis(env, user) {
   const apiKey = env.RESEND_API_KEY;
