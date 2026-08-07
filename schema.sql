@@ -13,3 +13,12 @@ CREATE TABLE IF NOT EXISTS utilisateurs (
 
 CREATE INDEX IF NOT EXISTS idx_users_email ON utilisateurs(email);
 CREATE INDEX IF NOT EXISTS idx_users_google_id ON utilisateurs(google_id);
+
+CREATE TABLE IF NOT EXISTS avis (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    note INTEGER,
+    commentaire TEXT,
+    autorise_publication INTEGER NOT NULL DEFAULT 0,
+    cree_a TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,4 +1,5 @@
 import { json } from '@sveltejs/kit';
+import { envoyerEmailDemandeAvis } from '$lib/server/email.js';
 
 export async function POST({ request, platform, cookies }) {
   try {
@@ -46,6 +47,16 @@ export async function POST({ request, platform, cookies }) {
 
       await BD.prepare("UPDATE generations SET status = 'valide', final_token = ?, final_token_expires_at = ? WHERE id = ?")
         .bind(finalToken, expiresAt, id).run();
+
+      // Premiere creation validee par ce client : on lui demande son avis (best-effort)
+      if (!user.avis_email_envoye) {
+        try {
+          await envoyerEmailDemandeAvis(platform.env, user);
+        } catch (e) {
+          console.error('Envoi email avis echoue:', e);
+        }
+        await BD.prepare('UPDATE utilisateurs SET avis_email_envoye = 1 WHERE id = ?').bind(userId).run();
+      }
 
       const downloadUrl = `/api/serve?token=${finalToken}`;
       return json({ success: true, downloadUrl });
