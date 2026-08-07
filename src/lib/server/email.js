@@ -1,3 +1,5 @@
+const DELAI_ENVOI_MS = 2 * 60 * 1000; // TEST: 2 minutes (remettre a 24 * 60 * 60 * 1000 apres test)
+
 export async function envoyerEmailDemandeAvis(env, user) {
   const apiKey = env.RESEND_API_KEY;
   if (!apiKey) {
@@ -40,12 +42,13 @@ export async function envoyerEmailDemandeAvis(env, user) {
       to: user.email,
       subject: 'Votre avis compte pour nous 💜',
       html,
-      scheduled_at: 'in 2min'
+      scheduled_at: new Date(Date.now() + DELAI_ENVOI_MS).toISOString()
     })
   });
 
   if (!res.ok) {
     const err = await res.text();
     console.error('Erreur envoi email avis Resend:', err);
+    throw new Error(`Resend ${res.status}: ${err}`);
   }
 }
