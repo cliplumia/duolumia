@@ -52,7 +52,7 @@
   <main class="page">
   <nav class="nav">
     <a href="/" class="logo">ClipLumia</a>
-    <a href="/studio" class="nav-link">Studio</a>
+    <a href="/studio" class="nav-link">🔑 Mon espace<span>Studio</span></a>
    </nav>
 
   <section class="hero">
@@ -71,7 +71,7 @@
           Tu n'aimes pas? <strong>0€ décompté.</strong>
         </div>
       </div>
-     <a href="/studio" class="btn-primary">🎁 Essai 48h offert · 3 images + 3 vidéos (lipsync inclus)</a>
+     <a href="/studio" class="btn-primary"><span class="btn-offer">🎁 Essai 48h offert · 3 images + 3 vidéos (lipsync inclus)</span><span class="btn-signup">S'inscrire ✍️</span></a>
       <span class="note">Sans engagement · Annulez en 2 clics</span>
     </div>
     <div class="hero-media glass">
@@ -337,13 +337,23 @@
     text-decoration:none
   }
  .nav-link{
-    color:rgba(255,255,255,.6);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
     text-decoration:none;
     padding:8px 20px;
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:100px;
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:12px;
     font-size:.9rem;
+    line-height:1.3;
+    text-align:center;
     transition:all.3s
+  }
+ .nav-link span{
+    font-size:.75rem;
+    color:rgba(255,255,255,.7)
   }
  .nav-link:hover{
     border-color:rgba(191,149,63,.5);
@@ -412,7 +422,11 @@
     font-weight:700
   }
   .btn-primary{
-    display:inline-block;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
     background:linear-gradient(45deg,rgba(191,149,63,.2),rgba(191,149,63,.05));
     color:#FCF6BA;
     border:1.5px solid rgba(191,149,63,.5);
@@ -429,6 +443,14 @@
     border-color:rgba(191,149,63,.8);
     box-shadow:0 8px 25px rgba(191,149,63,.3);
     transform:translateY(-2px)
+  }
+ .btn-signup{
+    color:#fff;
+    font-weight:900;
+    font-size:1.3rem;
+    white-space:nowrap;
+    margin-left:auto;
+    text-shadow:0 0 16px rgba(255,255,255,.75)
   }
   .note{
     font-size:.85rem;
