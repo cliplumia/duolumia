@@ -6,6 +6,7 @@ export async function envoyerEmailDemandeAvis(env, user) {
     console.error('RESEND_API_KEY manquante, email avis non envoye');
     return;
     `}
+   }
     
   const prenom = (user.nom || '').split(' ')[0] || '';
   const lienAvis = `https://cliplumia.com/avis?uid=${user.id}`;
