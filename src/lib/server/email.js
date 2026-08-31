@@ -1,13 +1,12 @@
-const DELAI_ENVOI_MS = 24 * 60 * 60 * 1000; //24h apres la premiere creation validee
+const DELAI_ENVOI_MS = 24 * 60 * 60 * 1000; // 24h apres la premiere creation validee
 
 export async function envoyerEmailDemandeAvis(env, user) {
   const apiKey = env.RESEND_API_KEY;
   if (!apiKey) {
     console.error('RESEND_API_KEY manquante, email avis non envoye');
     return;
-    `}
-   }
-    
+  }
+
   const prenom = (user.nom || '').split(' ')[0] || '';
   const lienAvis = `https://cliplumia.com/avis?uid=${user.id}`;
 
@@ -30,7 +29,7 @@ export async function envoyerEmailDemandeAvis(env, user) {
         Votre créatrice IA, ClipLumia <span style="color: #8b5cf6;">💜</span>
       </p>
     </div>
-  ;
+  `;
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
